@@ -10,8 +10,10 @@ public class HUD : MonoBehaviour {
     public Text turnCounter;
     public Color playerColor;
     public Color enemyColor;
+    public GameObject warning;
     int amountTurns;
     int maxTurns;
+    int amountActions = 2;
     bool isPlayerTurn;
     
 
@@ -22,34 +24,66 @@ public class HUD : MonoBehaviour {
 	}
 
 	void Update () {
+        /*if(amountActions == 0)
+        {
+            pressEnd(false);
+        }*/
     }
 
-    public void pressEnd()
+    public void pressEnd(bool forceEnd)
     {
-        if (isPlayerTurn)
-        {
-            titleText.text = "YOUR TURN";
-            titleText.color = playerColor;
-        }
-        else
-        {
-            titleText.text = "ENEMY TURN";
-            titleText.color = enemyColor;
-        }
-        anim.Play("turnFadeIn");
-        isPlayerTurn = !isPlayerTurn;
-        
-        if (!isPlayerTurn)
-            amountTurns++;
+        warning.SetActive(false);
 
-        if (amountTurns > maxTurns)
+
+        // REMOVE LATER //
+        if (!isPlayerTurn)
         {
-            //SceneManager.LoadScene(highScore);
+            amountActions = 2;
         }
         else
         {
-            
-            turnCounter.text = amountTurns + "/" + maxTurns;
+            amountActions = 0;
+        }
+        // REMOVE LATER //
+
+        if (amountActions <= 0 || forceEnd)
+        {
+            if (isPlayerTurn)
+            {
+                titleText.text = "YOUR TURN";
+                titleText.color = playerColor;
+            }
+            else
+            {
+                titleText.text = "ENEMY TURN";
+                titleText.color = enemyColor;
+            }
+            anim.Play("turnFadeIn");
+            isPlayerTurn = !isPlayerTurn;
+
+            if (!isPlayerTurn)
+                amountTurns++;
+
+            if (amountTurns > maxTurns)
+            {
+                //SceneManager.LoadScene(highScore);
+            }
+            else
+            {
+
+                turnCounter.text = amountTurns + "/" + maxTurns;
+            }
+        }
+        else
+        {
+            warning.SetActive(true);
+        }
+    }
+    public void abortPress()
+    {
+        if (warning.activeSelf)
+        {
+            warning.SetActive(false);
         }
     }
 }
