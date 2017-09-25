@@ -46,6 +46,7 @@ public class HUD : MonoBehaviour {
         }
         // REMOVE LATER //
 
+        //If player has used all moves he is taking to the next turn
         if (amountActions <= 0 || forceEnd)
         {
             if (isPlayerTurn)
@@ -66,7 +67,7 @@ public class HUD : MonoBehaviour {
 
             if (amountTurns > maxTurns)
             {
-                //SceneManager.LoadScene(highScore);
+                SceneManager.LoadScene("highScore");
             }
             else
             {
@@ -74,7 +75,7 @@ public class HUD : MonoBehaviour {
                 turnCounter.text = amountTurns + "/" + maxTurns;
             }
         }
-        else
+        else //If not the warning is shown
         {
             warning.SetActive(true);
         }
