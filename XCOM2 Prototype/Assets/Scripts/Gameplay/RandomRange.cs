@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour {
+public class NewBehaviourScript : MonoBehaviour
+{
 
     //int diceRolls;
     int n;
     public int numberOfSides;
     public int numberOfDice;
 
-    void Start () {
+    void Start ()
+    {
         /*
         diceRolls = 0;
         while(true)
