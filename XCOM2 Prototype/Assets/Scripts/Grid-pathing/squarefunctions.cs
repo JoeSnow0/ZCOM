@@ -27,6 +27,7 @@ public class squarefunctions : MonoBehaviour {
         else if(timer < 0)
         {
             timer = 0;
+            GetComponent<Health>().TakeDamage(1000);
         }
 
 	}
