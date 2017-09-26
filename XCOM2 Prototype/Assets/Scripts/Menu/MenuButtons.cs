@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class mainMenuButtons : MonoBehaviour {
+public class MenuButtons : MonoBehaviour {
 
 
     public void onButtonPress(string sceneName)
