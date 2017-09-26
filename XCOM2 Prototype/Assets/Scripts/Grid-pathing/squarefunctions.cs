@@ -24,7 +24,7 @@ public class squarefunctions : MonoBehaviour {
             currentColor = Color.Lerp(orgColor, currentColor, timer);
             
         }
-        else
+        else if(timer < 0)
         {
             timer = 0;
         }
