@@ -135,7 +135,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &494122683
 MonoBehaviour:
@@ -151,6 +151,7 @@ MonoBehaviour:
   hoverCursor: {fileID: 2100000, guid: 1173a88a2c4501b4baffc5afe6d8af5f, type: 2}
   orgMat: {fileID: 2100000, guid: 5090cc194d1ffdb4cac2ef925ff6363a, type: 2}
   hoverMat: {fileID: 2100000, guid: 6ddc89dabf4e176488eb9fcfcadb2ca3, type: 2}
+  muoseHoverColor: {r: 0, g: 1, b: 1, a: 0.5019608}
 --- !u!1 &538660940
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,8 +213,7 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1740908385}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
@@ -326,7 +326,7 @@ Transform:
   m_Children:
   - {fileID: 613797154}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1740908384
 GameObject:
@@ -350,12 +350,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1740908384}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 538660942}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1740908386
 MonoBehaviour:
@@ -375,9 +375,7 @@ MonoBehaviour:
   - name: notWalk
     tileVisualPrefab: {fileID: 1259978649528960, guid: e431ae35f38dcb84195ea77a8bba4606,
       type: 2}
-  mapSizeX: 50
-  mapSizeY: 50
-  offset: 2.1
+  offset: 2
 --- !u!1 &2092045033
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,5 +463,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}

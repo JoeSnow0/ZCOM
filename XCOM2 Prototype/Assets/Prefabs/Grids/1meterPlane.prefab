@@ -136,4 +136,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 1
   currentColor: {r: 1, g: 1, b: 1, a: 1}
-  orgColor: {r: 1, g: 1, b: 1, a: 1}
+  orgColor: {r: 0.1102941, g: 0.1102941, b: 0.1102941, a: 1}

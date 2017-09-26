@@ -9,6 +9,7 @@ public class cursor : MonoBehaviour {
     Camera cam;
     public Material orgMat;
     public Material hoverMat;
+    public Color muoseHoverColor;
     private void Awake()
     {
         cam = Camera.main;
@@ -35,7 +36,7 @@ public class cursor : MonoBehaviour {
             {
                 
                 GameObject hit = hitPosition.collider.gameObject;
-                hit.GetComponent<squarefunctions>().currentColor = Color.black;
+                hit.GetComponent<squarefunctions>().currentColor = muoseHoverColor;
                 hit.GetComponent<squarefunctions>().timer = 1;
             }
         }
