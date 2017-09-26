@@ -53,9 +53,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileType:
   - name: walk
-    tileVisualPrefab: {fileID: 1259978649528960, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
+    tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
       type: 2}
   - name: notWalk
-    tileVisualPrefab: {fileID: 1259978649528960, guid: e431ae35f38dcb84195ea77a8bba4606,
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
   offset: 2
