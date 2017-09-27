@@ -28,6 +28,11 @@ public class HUD : MonoBehaviour {
     }
 
 	void Update () {
+        //Ends turn if the enemy doesn't have any actions left
+        if (!isPlayerTurn && amountActions <= 0)
+        {
+            pressEnd(true);
+        }
     }
 
     public void pressEnd(bool forceEnd)
