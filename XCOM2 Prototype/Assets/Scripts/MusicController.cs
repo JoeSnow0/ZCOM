@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 public class MusicController : MonoBehaviour {
 
-    float volumeMaster = 0.50f;
+    float volumeMaster = 0.75f;
     int volumeEffects = 100;
     int volumeMusic = 100;
 
@@ -17,7 +17,8 @@ public class MusicController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
         
     }
 	
@@ -25,20 +26,37 @@ public class MusicController : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            PlaySound(1);
+            PlaySound(0);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            PlaySound(2);
+            PlaySound(1);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            PlaySound(0);
+            PlaySound(2);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PlaySound(3, true);
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            PlaySound(4);
         }
     }
-    void PlaySound(int soundIndex)
+    void PlaySound(int soundIndex, bool isLooping = false, bool playAlone = false)
     {
-        audioSource.PlayOneShot(soundClip[soundIndex], volumeMaster);
-        
+        //AudioSource aS = audioSource.GetComponent<AudioSource>();
+        audioSource.Stop();
+        audioSource.loop = isLooping;
+
+        audioSource.clip = soundClip[soundIndex];
+        audioSource.Play();
+    }
+
+    void MusicLoop(int SoundIndex)
+    {
+
     }
 }

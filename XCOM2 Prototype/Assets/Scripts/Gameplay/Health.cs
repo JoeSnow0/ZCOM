@@ -5,7 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour {
 
     // Use this for initialization
-    int health;
+    public int health;
     [SerializeField, Range(0, 100)]
     int MAX_HEALTH = 100;
     int MIN_HEALTH = 0;
@@ -15,7 +15,7 @@ public class Health : MonoBehaviour {
         health -= damageAmount;
         if (health <= 0)
         {
-            // Die
+            Destroy(this.gameObject);
         }
     }
 
