@@ -9,15 +9,18 @@ public class HUD : MonoBehaviour {
     public Text titleText;
     public Text turnText;
     public Text turnCounter;
+    public Text warningText;
     public Color playerColor;
     public Color enemyColor;
     public GameObject warning;
     public Animator turnAnimator;
     int amountTurns;
     int maxTurns;
-    int amountActions = 2;
+    int totalActions;
     bool isPlayerTurn;
     string text;
+
+    public TurnSystem turnSystem;
 
     void Start () {
         anim = GetComponentInChildren<Animator>();
@@ -28,11 +31,14 @@ public class HUD : MonoBehaviour {
     }
 
 	void Update () {
+        totalActions = turnSystem.totalActions;
+        
         //Ends turn if the enemy doesn't have any actions left
-        if (!isPlayerTurn && amountActions <= 0)
+        if (!isPlayerTurn && totalActions <= 0)
         {
             pressEnd(true);
         }
+        
     }
 
     public void pressEnd(bool forceEnd)
@@ -40,7 +46,7 @@ public class HUD : MonoBehaviour {
         warning.SetActive(false);
 
         //If player has used all actions he is taken to the next turn
-        if (amountActions <= 0 || !isPlayerTurn || forceEnd)
+        if (totalActions <= 0 || !isPlayerTurn || forceEnd)
         {
             if (!isPlayerTurn)
             {
@@ -59,6 +65,8 @@ public class HUD : MonoBehaviour {
             turnText.text = text;
             anim.Play("turnFadeIn");
 
+            turnSystem.resetActions(isPlayerTurn);
+
             if (isPlayerTurn)
                 amountTurns++;
 
@@ -74,6 +82,7 @@ public class HUD : MonoBehaviour {
         else //Show warning if player has more than 0 actions
         {
             warning.SetActive(true);
+            warningText.text = "Are you sure? You still have " + turnSystem.totalActions + " actions left";
         }
     }
     public void abortPress()
