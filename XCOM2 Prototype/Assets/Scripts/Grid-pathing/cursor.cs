@@ -37,7 +37,7 @@ public class cursor : MonoBehaviour {
                 
                 GameObject hit = hitPosition.collider.gameObject;
                 hit.GetComponent<squarefunctions>().currentColor = muoseHoverColor;
-                hit.GetComponent<squarefunctions>().timer = 1;
+
             }
         }
     }

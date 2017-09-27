@@ -27,7 +27,11 @@ public class TileMap : MonoBehaviour {
             for (int y = 0; y < mapSizeY; y++)
             {
                 TileType tt = tileType[tiles[x, y]];
-                Instantiate(tt.tileVisualPrefab, new Vector3(x* offset, 0, y*offset), Quaternion.identity);
+                GameObject go = Instantiate(tt.tileVisualPrefab, new Vector3(x* offset, 0, y*offset), Quaternion.identity);
+
+                ClickebleTile ct = go.GetComponent<ClickebleTile>();
+                ct.tileX = x;
+                ct.tileY = y;
             }
         }
     }
