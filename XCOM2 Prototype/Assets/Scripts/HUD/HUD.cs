@@ -24,13 +24,14 @@ public class HUD : MonoBehaviour {
         amountTurns = 1;
         maxTurns = 10;
         text = "YOUR TURN";
-	}
+        isPlayerTurn = true;
+    }
 
 	void Update () {
-        /*if(amountActions == 0)
+        if (isPlayerTurn)
         {
-            pressEnd(false);
-        }*/
+            pressEnd(true);
+        }
     }
 
     public void pressEnd(bool forceEnd)
@@ -39,7 +40,7 @@ public class HUD : MonoBehaviour {
 
 
         // REMOVE LATER //
-        if (!isPlayerTurn)
+        if (isPlayerTurn)
         {
             amountActions = 2;
         }
@@ -69,7 +70,7 @@ public class HUD : MonoBehaviour {
             anim.Play("turnFadeIn");
             isPlayerTurn = !isPlayerTurn;
 
-            if (!isPlayerTurn)
+            if (isPlayerTurn)
                 amountTurns++;
 
             if (amountTurns > maxTurns)
