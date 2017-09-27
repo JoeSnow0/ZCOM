@@ -39,7 +39,6 @@ public class HUD : MonoBehaviour {
     {
         warning.SetActive(false);
 
-
         //If player has used all actions he is taken to the next turn
         if (amountActions <= 0 || !isPlayerTurn || forceEnd)
         {
@@ -53,12 +52,12 @@ public class HUD : MonoBehaviour {
                 text = "ENEMY TURN";
                 titleText.color = enemyColor;
             }
+            //Add all functionality here
             isPlayerTurn = !isPlayerTurn;
             turnAnimator.SetBool("isPlayerTurn", isPlayerTurn);
             titleText.text = text;
             turnText.text = text;
             anim.Play("turnFadeIn");
-
 
             if (isPlayerTurn)
                 amountTurns++;
@@ -69,7 +68,6 @@ public class HUD : MonoBehaviour {
             }
             else
             {
-
                 turnCounter.text = amountTurns + "/" + maxTurns;
             }
         }
