@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileMap : MonoBehaviour {
-
+    public GameObject selectedUnit;
     public TileType[] tileType;
     int[,] tiles;
     int mapSizeX = 50;//map size
@@ -32,6 +32,7 @@ public class TileMap : MonoBehaviour {
                 ClickebleTile ct = go.GetComponent<ClickebleTile>();
                 ct.tileX = x;
                 ct.tileY = y;
+                ct.map = this;
             }
         }
     }
@@ -66,5 +67,10 @@ public class TileMap : MonoBehaviour {
         tiles[5, 7] = 1;
         tiles[6, 7] = 1;
 
+    }
+
+    public void MoveSelectedUnitTo(int x, int y)
+    {
+        selectedUnit.transform.position = new Vector3(x*offset, 0, y*offset);
     }
 }
