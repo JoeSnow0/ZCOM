@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class squarefunctions : MonoBehaviour {
     float t = 0;
-    public float timer =0;
+
     Renderer rend;
     public Color currentColor;
     public Color orgColor;
+    public Color highlightedColor;
 	// Use this for initialization
 	void Start () {
         rend = GetComponentInChildren<Renderer>();
-        
-	}
+        rend.material.color = currentColor;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            rend.material.color = currentColor;
-            currentColor = Color.Lerp(orgColor, currentColor, timer);
             
-        }
-        else if(timer < 0)
-        {
-            timer = 0;
-        }
-
 	}
+    private void OnMouseOver()
+    {
+        currentColor = highlightedColor;
+        rend.material.color = currentColor;
+    }
+    private void OnMouseExit()
+    {
+        currentColor = orgColor;
+        rend.material.color = currentColor;
+    }
 }
