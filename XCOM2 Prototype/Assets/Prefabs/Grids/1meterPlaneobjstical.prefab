@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409900694101306}
   - component: {fileID: 65539010962291100}
+  - component: {fileID: 114541768617998152}
   m_Layer: 0
   m_Name: 1meterPlaneobjstical
   m_TagString: Untagged
@@ -122,3 +123,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.1, z: 2}
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &114541768617998152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1214502950277038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a518ca3d64838e646a02851017d6f37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileX: 0
+  tileY: 0

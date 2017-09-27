@@ -7,62 +7,59 @@ using UnityEngine.SceneManagement;
 public class HUD : MonoBehaviour {
     Animator anim;
     public Text titleText;
+    public Text turnText;
     public Text turnCounter;
     public Color playerColor;
     public Color enemyColor;
     public GameObject warning;
+    public Animator turnAnimator;
     int amountTurns;
     int maxTurns;
     int amountActions = 2;
     bool isPlayerTurn;
-    
+    string text;
 
     void Start () {
         anim = GetComponentInChildren<Animator>();
         amountTurns = 1;
         maxTurns = 10;
-	}
+        text = "YOUR TURN";
+        isPlayerTurn = true;
+    }
 
 	void Update () {
-        /*if(amountActions == 0)
+        //Ends turn if the enemy doesn't have any actions left
+        if (!isPlayerTurn && amountActions <= 0)
         {
-            pressEnd(false);
-        }*/
+            pressEnd(true);
+        }
     }
 
     public void pressEnd(bool forceEnd)
     {
         warning.SetActive(false);
 
-
-        // REMOVE LATER //
-        if (!isPlayerTurn)
+        //If player has used all actions he is taken to the next turn
+        if (amountActions <= 0 || !isPlayerTurn || forceEnd)
         {
-            amountActions = 2;
-        }
-        else
-        {
-            amountActions = 0;
-        }
-        // REMOVE LATER //
-
-        //If player has used all moves he is taking to the next turn
-        if (amountActions <= 0 || forceEnd)
-        {
-            if (isPlayerTurn)
+            if (!isPlayerTurn)
             {
-                titleText.text = "YOUR TURN";
+                text = "YOUR TURN";
                 titleText.color = playerColor;
             }
             else
             {
-                titleText.text = "ENEMY TURN";
+                text = "ENEMY TURN";
                 titleText.color = enemyColor;
             }
-            anim.Play("turnFadeIn");
+            //Add all functionality here
             isPlayerTurn = !isPlayerTurn;
+            turnAnimator.SetBool("isPlayerTurn", isPlayerTurn);
+            titleText.text = text;
+            turnText.text = text;
+            anim.Play("turnFadeIn");
 
-            if (!isPlayerTurn)
+            if (isPlayerTurn)
                 amountTurns++;
 
             if (amountTurns > maxTurns)
@@ -71,11 +68,10 @@ public class HUD : MonoBehaviour {
             }
             else
             {
-
                 turnCounter.text = amountTurns + "/" + maxTurns;
             }
         }
-        else //If not the warning is shown
+        else //Show warning if player has more than 0 actions
         {
             warning.SetActive(true);
         }

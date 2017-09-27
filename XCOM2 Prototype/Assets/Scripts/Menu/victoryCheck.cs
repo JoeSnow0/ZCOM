@@ -20,7 +20,7 @@ public class victoryCheck : MonoBehaviour {
         {
             winCheck(true);
         }
-        if (Input.GetKeyDown(KeyCode.D) && gameEndCanvas.activeInHierarchy == false)
+        if (Input.GetKeyDown(KeyCode.F) && gameEndCanvas.activeInHierarchy == false)
         {
             winCheck(false);
         }
