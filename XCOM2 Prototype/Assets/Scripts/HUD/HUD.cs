@@ -28,11 +28,6 @@ public class HUD : MonoBehaviour {
     }
 
 	void Update () {
-        if (!isPlayerTurn)
-        {
-            pressEnd(true);
-        }
-        Debug.Log(amountActions);
     }
 
     public void pressEnd(bool forceEnd)
@@ -40,19 +35,8 @@ public class HUD : MonoBehaviour {
         warning.SetActive(false);
 
 
-        // REMOVE LATER //
-        if (isPlayerTurn)
-        {
-            amountActions = 2;
-        }
-        else
-        {
-            amountActions = 0;
-        }
-        // REMOVE LATER //
-
-        //If player has used all moves he is taken to the next turn
-        if (amountActions <= 0 || forceEnd)
+        //If player has used all actions he is taken to the next turn
+        if (amountActions <= 0 || !isPlayerTurn || forceEnd)
         {
             if (!isPlayerTurn)
             {
@@ -84,9 +68,8 @@ public class HUD : MonoBehaviour {
                 turnCounter.text = amountTurns + "/" + maxTurns;
             }
         }
-        else //If not the warning is shown
+        else //Show warning if player has more than 0 actions
         {
-            Debug.Log("Warning");
             warning.SetActive(true);
         }
     }
