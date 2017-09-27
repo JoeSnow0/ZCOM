@@ -28,10 +28,11 @@ public class HUD : MonoBehaviour {
     }
 
 	void Update () {
-        if (isPlayerTurn)
+        if (!isPlayerTurn)
         {
             pressEnd(true);
         }
+        Debug.Log(amountActions);
     }
 
     public void pressEnd(bool forceEnd)
@@ -50,10 +51,10 @@ public class HUD : MonoBehaviour {
         }
         // REMOVE LATER //
 
-        //If player has used all moves he is taking to the next turn
+        //If player has used all moves he is taken to the next turn
         if (amountActions <= 0 || forceEnd)
         {
-            if (isPlayerTurn)
+            if (!isPlayerTurn)
             {
                 text = "YOUR TURN";
                 titleText.color = playerColor;
@@ -63,12 +64,12 @@ public class HUD : MonoBehaviour {
                 text = "ENEMY TURN";
                 titleText.color = enemyColor;
             }
-
+            isPlayerTurn = !isPlayerTurn;
             turnAnimator.SetBool("isPlayerTurn", isPlayerTurn);
             titleText.text = text;
             turnText.text = text;
             anim.Play("turnFadeIn");
-            isPlayerTurn = !isPlayerTurn;
+
 
             if (isPlayerTurn)
                 amountTurns++;
@@ -85,6 +86,7 @@ public class HUD : MonoBehaviour {
         }
         else //If not the warning is shown
         {
+            Debug.Log("Warning");
             warning.SetActive(true);
         }
     }
