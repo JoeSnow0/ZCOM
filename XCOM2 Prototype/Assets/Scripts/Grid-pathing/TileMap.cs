@@ -21,6 +21,10 @@ public class TileMap : MonoBehaviour {
 
     private void Start()
     {
+        //setup the selected units varibals
+        selectedUnit.GetComponent<BaseUnit>().tileX = (int)selectedUnit.transform.position.x;
+        selectedUnit.GetComponent<BaseUnit>().tileY = (int)selectedUnit.transform.position.z;
+        selectedUnit.GetComponent<BaseUnit>().map = this;
         //spawn grid
         GenerateMapData();
         GeneratePathfindingGraph();
