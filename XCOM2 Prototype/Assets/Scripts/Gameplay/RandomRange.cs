@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class RandomRange : MonoBehaviour
 {
 
     //int diceRolls;
     int n;
-    public int numberOfSides;
-    public int numberOfDice;
 
-    void Start ()
+    public int RollDice(int numberOfDice, int numberOfSides)
     {
         /*
         diceRolls = 0;
@@ -28,7 +26,7 @@ public class NewBehaviourScript : MonoBehaviour
             n = n + Random.Range(1, numberOfSides);
         }
         
-        print(n);
+        return(n);
 	}
 	
 	
