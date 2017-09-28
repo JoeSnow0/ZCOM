@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class menuToggle : MonoBehaviour {
 
-    public bool isPaused = false;
+    public bool isPaused;
     public GameObject ingameMenu;
-    
+    private void Start()
+    {
+        isPaused = false;
+    }
+ 
 	void Update ()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //Toggle menu
-            if (!isPaused)
-            {
-                isPaused = true;
-            }
-            else
-            {
-                isPaused = false;
-            }
+            ////Toggle menu
+            //if (!isPaused)
+            //{
+            //    isPaused = true;
+            //}
+            //else
+            //{
+            //    isPaused = false;
+            //}
             toggleMenu();
         }
     }
-    void toggleMenu()
+    public void toggleMenu()
 
     {
+        isPaused = !isPaused;
         ingameMenu.SetActive(isPaused);
         //Pause and unpause the gameplay
         if (isPaused)
