@@ -61,7 +61,7 @@ public class Unit : MonoBehaviour {
         healthSlider.value = health;
         if (health <= 0)
         {
-            Destroy(this.gameObject);
+            turnSystem.destroyUnit(this);
         }
     }
 }

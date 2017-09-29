@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnSystem : MonoBehaviour {
     public GameObject[] allUnits;
     public List<Unit> playerUnits = new List<Unit>();
     public List<Unit> enemyUnits = new List<Unit>();
     public int totalActions;
+    public GameObject gameOver;
 
     public Unit selectedUnit;
     bool playerTurn = true;
+    int maxTurns;
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -32,18 +35,15 @@ public class TurnSystem : MonoBehaviour {
         selectedUnit.isSelected = true;
 
         displayAP(true);
+
+        maxTurns = 3;
     }
 
 	void Update () {
         selectUnit();
         attackUnit();
 
-        //Deselects unit when it's the enemy turn
-        if (!playerTurn && selectedUnit != null)
-        {
-            selectedUnit.isSelected = false;
-            selectedUnit = null;
-        }
+
 	}
     public void displayAP(bool isPlayerTurn)
     {
@@ -73,7 +73,13 @@ public class TurnSystem : MonoBehaviour {
 
     public void selectUnit()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
+        {
+            selectedUnit.isSelected = false;
+            selectedUnit = null;
+        }
+
+        if (Input.GetMouseButtonDown(0) && playerTurn)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -110,6 +116,7 @@ public class TurnSystem : MonoBehaviour {
                         Unit target = hit.collider.GetComponent<Unit>();
                         if (!target.isFriendly) //Checks if the unit hit is friendly
                         {
+                            
                             target.TakeDamage(selectedUnit.damage);
                             totalActions -= selectedUnit.actions;
                             selectedUnit.actions = 0;
@@ -156,5 +163,23 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit.GetComponent<Unit>().isSelected = true;
             }
         }
+    }
+    public int getCurrentTurn(int currentTurn)
+    {
+        if(currentTurn > maxTurns)
+        {
+            gameOver.SetActive(true);
+        }
+        return maxTurns;
+    }
+
+    public void destroyUnit(Unit unit)
+    {
+        if (unit.isFriendly)
+            playerUnits.Remove(unit);
+        else
+            enemyUnits.Remove(unit);
+
+        Destroy(unit.gameObject);
     }
 }

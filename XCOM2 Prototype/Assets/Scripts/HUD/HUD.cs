@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 public class HUD : MonoBehaviour {
     public Animator anim;
@@ -27,7 +27,6 @@ public class HUD : MonoBehaviour {
 
     void Start () {
         amountTurns = 1;
-        maxTurns = 10;
         text = "YOUR TURN";
         isPlayerTurn = true;
     }
@@ -35,8 +34,8 @@ public class HUD : MonoBehaviour {
 	void Update () {
         totalActions = turnSystem.totalActions;
         
-        //Ends turn if the enemy doesn't have any actions left
-        if (!isPlayerTurn && totalActions <= 0)
+        
+        if (!isPlayerTurn && totalActions <= 0) //Ends turn if the enemy doesn't have any actions left
         {
             pressEnd(true);
         }
@@ -47,8 +46,7 @@ public class HUD : MonoBehaviour {
     {
         warning.SetActive(false);
 
-        //If player has used all actions he is taken to the next turn
-        if (totalActions <= 0 || !isPlayerTurn || forceEnd)
+        if (totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
         {
             if (!isPlayerTurn)
             {
@@ -62,7 +60,7 @@ public class HUD : MonoBehaviour {
                 titleText.color = enemyColor;
                 line.color = enemyColor;
             }
-            //Add all functionality here
+            //Add all functionality here, END TURN
             isPlayerTurn = !isPlayerTurn;
             turnAnimator.SetBool("isPlayerTurn", isPlayerTurn);
             titleText.text = text;
@@ -72,6 +70,7 @@ public class HUD : MonoBehaviour {
 
             turnSystem.resetActions(isPlayerTurn);
             turnSystem.displayAP(isPlayerTurn);
+            
             if (isPlayerTurn)
             {
                 turnSystem.selectNextUnit();
@@ -80,14 +79,12 @@ public class HUD : MonoBehaviour {
             if (isPlayerTurn)
                 amountTurns++;
 
-            if (amountTurns > maxTurns)
-            {
-                SceneManager.LoadScene("highScore");
-            }
-            else
-            {
+            maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
+
+            if (amountTurns <= maxTurns)
                 turnCounter.text = amountTurns + "/" + maxTurns;
-            }
+            else
+                turnCounter.text = "VICTORY";
         }
         else //Show warning if player has more than 0 actions
         {
