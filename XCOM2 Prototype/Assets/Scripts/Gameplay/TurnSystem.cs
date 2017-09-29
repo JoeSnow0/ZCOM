@@ -9,6 +9,7 @@ public class TurnSystem : MonoBehaviour {
     public int totalActions;
 
     public Unit selectedUnit;
+    bool playerTurn = true;
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -36,6 +37,13 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
         selectUnit();
         attackUnit();
+
+        //Deselects unit when it's the enemy turn
+        if (!playerTurn && selectedUnit != null)
+        {
+            selectedUnit.isSelected = false;
+            selectedUnit = null;
+        }
 	}
     public void displayAP(bool isPlayerTurn)
     {
@@ -75,7 +83,10 @@ public class TurnSystem : MonoBehaviour {
                 {
                     if (hit.collider.GetComponent<Unit>().isFriendly)
                     {
-                        selectedUnit.GetComponent<Unit>().isSelected = false;
+                        if (selectedUnit != null)
+                        {
+                            selectedUnit.GetComponent<Unit>().isSelected = false;
+                        }
                         selectedUnit = hit.collider.GetComponent<Unit>();
                         selectedUnit.GetComponent<Unit>().isSelected = true;
                     }
@@ -86,21 +97,24 @@ public class TurnSystem : MonoBehaviour {
 
     void attackUnit()
     {
-        if (Input.GetMouseButtonDown(0) && selectedUnit.actions > 1)
+        if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (selectedUnit.actions > 1) //Checks if the unit can attack
             {
-                if (hit.collider.GetComponent<Unit>())//Checks if it hits an enemy
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    Unit target = hit.collider.GetComponent<Unit>();
-                    if (!target.isFriendly)
+                    if (hit.collider.GetComponent<Unit>())//Checks if the unit hit an enemy
                     {
-                        target.TakeDamage(selectedUnit.damage);
-                        totalActions -= selectedUnit.actions;
-                        selectedUnit.actions = 0;
-                        selectNextUnit();
+                        Unit target = hit.collider.GetComponent<Unit>();
+                        if (!target.isFriendly) //Checks if the unit hit is friendly
+                        {
+                            target.TakeDamage(selectedUnit.damage);
+                            totalActions -= selectedUnit.actions;
+                            selectedUnit.actions = 0;
+                            selectNextUnit();
+                        }
                     }
                 }
             }
@@ -125,6 +139,8 @@ public class TurnSystem : MonoBehaviour {
                 enemyUnits[i].actions = 2;
             }
         }
+        playerTurn = isPlayerTurn;
+        
     }
     public void selectNextUnit()
     {
@@ -132,7 +148,10 @@ public class TurnSystem : MonoBehaviour {
         {
             if(playerUnits[i].actions > 0)
             {
-                selectedUnit.GetComponent<Unit>().isSelected = false;
+                if (selectedUnit != null)
+                {
+                    selectedUnit.GetComponent<Unit>().isSelected = false;
+                }
                 selectedUnit = playerUnits[i];
                 selectedUnit.GetComponent<Unit>().isSelected = true;
             }

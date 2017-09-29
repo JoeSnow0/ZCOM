@@ -72,6 +72,10 @@ public class HUD : MonoBehaviour {
 
             turnSystem.resetActions(isPlayerTurn);
             turnSystem.displayAP(isPlayerTurn);
+            if (isPlayerTurn)
+            {
+                turnSystem.selectNextUnit();
+            }
 
             if (isPlayerTurn)
                 amountTurns++;
