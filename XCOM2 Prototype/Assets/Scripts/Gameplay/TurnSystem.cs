@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnSystem : MonoBehaviour {
     public GameObject[] allUnits;
     public List<Unit> playerUnits = new List<Unit>();
     public List<Unit> enemyUnits = new List<Unit>();
     public int totalActions;
+    public GameObject gameOver;
 
     public Unit selectedUnit;
+    bool playerTurn = true;
+    int maxTurns;
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -28,16 +32,54 @@ public class TurnSystem : MonoBehaviour {
         totalActions = playerUnits.Count * 2;
 
         selectedUnit = playerUnits[0];
+        selectedUnit.isSelected = true;
+
+        displayAP(true);
+
+        maxTurns = 3;
     }
 
 	void Update () {
         selectUnit();
         attackUnit();
+
+
 	}
+    public void displayAP(bool isPlayerTurn)
+    {
+        if (isPlayerTurn)
+        {
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                playerUnits[i].animUI.SetBool("display", true);
+            }
+            for(int i = 0; i < enemyUnits.Count; i++)
+            {
+                enemyUnits[i].animUI.SetBool("display", false);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                playerUnits[i].animUI.SetBool("display", false);
+            }
+            for (int i = 0; i < enemyUnits.Count; i++)
+            {
+                enemyUnits[i].animUI.SetBool("display", true);
+            }
+        }
+    }
 
     public void selectUnit()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
+        {
+            selectedUnit.isSelected = false;
+            selectedUnit = null;
+        }
+
+        if (Input.GetMouseButtonDown(0) && playerTurn)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -47,7 +89,10 @@ public class TurnSystem : MonoBehaviour {
                 {
                     if (hit.collider.GetComponent<Unit>().isFriendly)
                     {
-                        selectedUnit.GetComponent<Unit>().isSelected = false;
+                        if (selectedUnit != null)
+                        {
+                            selectedUnit.GetComponent<Unit>().isSelected = false;
+                        }
                         selectedUnit = hit.collider.GetComponent<Unit>();
                         selectedUnit.GetComponent<Unit>().isSelected = true;
                     }
@@ -58,21 +103,25 @@ public class TurnSystem : MonoBehaviour {
 
     void attackUnit()
     {
-        if (Input.GetMouseButtonDown(0) && selectedUnit.actions > 1)
+        if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (selectedUnit.actions > 1) //Checks if the unit can attack
             {
-                if (hit.collider.GetComponent<Unit>())//Checks if it hits an enemy
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    Unit target = hit.collider.GetComponent<Unit>();
-                    if (!target.isFriendly)
+                    if (hit.collider.GetComponent<Unit>())//Checks if the unit hit an enemy
                     {
-                        target.TakeDamage(selectedUnit.damage);
-                        totalActions -= selectedUnit.actions;
-                        selectedUnit.actions = 0;
-                        selectNextUnit();
+                        Unit target = hit.collider.GetComponent<Unit>();
+                        if (!target.isFriendly) //Checks if the unit hit is friendly
+                        {
+                            
+                            target.TakeDamage(selectedUnit.damage);
+                            totalActions -= selectedUnit.actions;
+                            selectedUnit.actions = 0;
+                            selectNextUnit();
+                        }
                     }
                 }
             }
@@ -97,6 +146,8 @@ public class TurnSystem : MonoBehaviour {
                 enemyUnits[i].actions = 2;
             }
         }
+        playerTurn = isPlayerTurn;
+        
     }
     public void selectNextUnit()
     {
@@ -104,10 +155,31 @@ public class TurnSystem : MonoBehaviour {
         {
             if(playerUnits[i].actions > 0)
             {
-                selectedUnit.GetComponent<Unit>().isSelected = false;
+                if (selectedUnit != null)
+                {
+                    selectedUnit.GetComponent<Unit>().isSelected = false;
+                }
                 selectedUnit = playerUnits[i];
                 selectedUnit.GetComponent<Unit>().isSelected = true;
             }
         }
+    }
+    public int getCurrentTurn(int currentTurn)
+    {
+        if(currentTurn > maxTurns)
+        {
+            gameOver.SetActive(true);
+        }
+        return maxTurns;
+    }
+
+    public void destroyUnit(Unit unit)
+    {
+        if (unit.isFriendly)
+            playerUnits.Remove(unit);
+        else
+            enemyUnits.Remove(unit);
+
+        Destroy(unit.gameObject);
     }
 }

@@ -2,30 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 public class HUD : MonoBehaviour {
-    Animator anim;
+    public Animator anim;
+    public Animator turnAnimator;
     public Text titleText;
     public Text turnText;
     public Text turnCounter;
     public Text warningText;
+    public Image line;
     public Color playerColor;
     public Color enemyColor;
     public GameObject warning;
-    public Animator turnAnimator;
+
+
     int amountTurns;
     int maxTurns;
     int totalActions;
-    bool isPlayerTurn;
+    public bool isPlayerTurn;
     string text;
 
     public TurnSystem turnSystem;
 
     void Start () {
-        anim = GetComponentInChildren<Animator>();
         amountTurns = 1;
-        maxTurns = 10;
         text = "YOUR TURN";
         isPlayerTurn = true;
     }
@@ -33,8 +34,8 @@ public class HUD : MonoBehaviour {
 	void Update () {
         totalActions = turnSystem.totalActions;
         
-        //Ends turn if the enemy doesn't have any actions left
-        if (!isPlayerTurn && totalActions <= 0)
+        
+        if (!isPlayerTurn && totalActions <= 0) //Ends turn if the enemy doesn't have any actions left
         {
             pressEnd(true);
         }
@@ -45,39 +46,45 @@ public class HUD : MonoBehaviour {
     {
         warning.SetActive(false);
 
-        //If player has used all actions he is taken to the next turn
-        if (totalActions <= 0 || !isPlayerTurn || forceEnd)
+        if (totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
         {
             if (!isPlayerTurn)
             {
                 text = "YOUR TURN";
                 titleText.color = playerColor;
+                line.color = playerColor;
             }
             else
             {
                 text = "ENEMY TURN";
                 titleText.color = enemyColor;
+                line.color = enemyColor;
             }
-            //Add all functionality here
+            //Add all functionality here, END TURN
             isPlayerTurn = !isPlayerTurn;
             turnAnimator.SetBool("isPlayerTurn", isPlayerTurn);
             titleText.text = text;
             turnText.text = text;
+
             anim.Play("turnFadeIn");
 
             turnSystem.resetActions(isPlayerTurn);
+            turnSystem.displayAP(isPlayerTurn);
+            
+            if (isPlayerTurn)
+            {
+                turnSystem.selectNextUnit();
+            }
 
             if (isPlayerTurn)
                 amountTurns++;
 
-            if (amountTurns > maxTurns)
-            {
-                SceneManager.LoadScene("highScore");
-            }
-            else
-            {
+            maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
+
+            if (amountTurns <= maxTurns)
                 turnCounter.text = amountTurns + "/" + maxTurns;
-            }
+            else
+                turnCounter.text = "VICTORY";
         }
         else //Show warning if player has more than 0 actions
         {

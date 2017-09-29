@@ -5,15 +5,22 @@ using UnityEngine;
 public class Accuracy : MonoBehaviour
 {
 
-	// Use this for initialization
-	void Start ()
+    int hitRoll;
+    int hitChance;
+
+    public void Hit()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+        //hitRoll;
+        hitRoll = GetComponent<RandomRange>().RollDice(1, 100);
+        if (hitRoll <= hitChance)
+        {
+            //Run damage script
+        }
+        else
+        {
+            //Return "Missed" Message
+        }
+
+    }
+
 }

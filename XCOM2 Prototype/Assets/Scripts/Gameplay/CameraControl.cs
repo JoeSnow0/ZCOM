@@ -22,60 +22,64 @@ public class CameraControl : MonoBehaviour {
     [Tooltip("Speed for camera movement")]
     [SerializeField]
     float rotSpeed  = 45.0f;
-
+    [Header("Camera Target")]
+    public GameObject CameraTarget;
+    public GameObject Camera;
+    private Vector3 m_targetRotation;
 
     void Update()
     {
         //
         //Move left and right with A & D
-        if (transform.position.x >= xPosMin && transform.position.x <= xPosMax)
+        if (CameraTarget.transform.position.x >= xPosMin && CameraTarget.transform.position.x <= xPosMax)
         {
-            if (Input.GetKey(KeyCode.A) && transform.position.x >= xPosMin)
+            if (Input.GetKey(KeyCode.A) && CameraTarget.transform.position.x >= xPosMin)
             {
-                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                CameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.D) && transform.position.x <= xPosMax)
+            if (Input.GetKey(KeyCode.D) && CameraTarget.transform.position.x <= xPosMax)
             {
-                transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+                CameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             } 
         }
         //reset movement within boundries
-        if (transform.position.x < xPosMin || transform.position.x > xPosMax)
+        if (CameraTarget.transform.position.x < xPosMin || CameraTarget.transform.position.x > xPosMax)
         {
-            Vector3 p = transform.position;
-            transform.position = new Vector3(Mathf.Clamp(p.x, xPosMin, xPosMax), p.y, p.z);
+            Vector3 p = CameraTarget.transform.position;
+            CameraTarget.transform.position = new Vector3(Mathf.Clamp(p.x, xPosMin, xPosMax), p.y, p.z);
         }
 
         //
         //Move forwards and backwards with W & S
-        if (transform.position.z >= zPosMin && transform.position.z <= zPosMax)
+        if (CameraTarget.transform.position.z >= zPosMin && CameraTarget.transform.position.z <= zPosMax)
         {
-            if (Input.GetKey(KeyCode.S) && transform.position.z >= zPosMin)
+            if (Input.GetKey(KeyCode.S) && CameraTarget.transform.position.z >= zPosMin)
             {
-                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+                CameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
-            else if (Input.GetKey(KeyCode.W) && transform.position.z <= zPosMax)
+            else if (Input.GetKey(KeyCode.W) && CameraTarget.transform.position.z <= zPosMax)
             {
-                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                CameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
             
         }
         //reset movement within boundries
-        if (transform.position.z < zPosMin || transform.position.z > zPosMax)
+        if (CameraTarget.transform.position.z < zPosMin || CameraTarget.transform.position.z > zPosMax)
         {
-            Vector3 p = transform.position;
-            transform.position = new Vector3(p.x, p.y, Mathf.Clamp(p.z, zPosMin, zPosMax));
+            Vector3 p = CameraTarget.transform.position;
+            CameraTarget.transform.position = new Vector3(p.x, p.y, Mathf.Clamp(p.z, zPosMin, zPosMax));
         }
 
         //
         //Rotate camera
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime, Space.World);
+            if (m_targetRotation != CameraTarget.transform.rotation.eulerAngles)
+                CameraTarget.transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime, Space.World);
         }
         if (Input.GetKey(KeyCode.E))
         {
-            transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime, Space.World);
+            CameraTarget.transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime, Space.World);
         }
 
         //
@@ -83,13 +87,13 @@ public class CameraControl : MonoBehaviour {
         
         if (Input.GetAxis("Mouse ScrollWheel") != 0f)
         {
-            transform.Translate(Vector3.down * moveSpeed * Input.GetAxis("Mouse ScrollWheel"));
+            Camera.transform.Translate(Vector3.down * moveSpeed * Input.GetAxis("Mouse ScrollWheel"), Space.World);
         }
         //reset position if out of bounds
-        if (transform.position.y < yPosMin || transform.position.y > yPosMax)
+        if (Camera.transform.position.y < yPosMin || Camera.transform.position.y > yPosMax)
         {
-            Vector3 p = transform.position;
-            transform.position = new Vector3(p.x, Mathf.Clamp(p.y, yPosMin, yPosMax), p.z);
+            Vector3 p = Camera.transform.position;
+            Camera.transform.position = new Vector3(p.x, Mathf.Clamp(p.y, yPosMin, yPosMax), p.z);
         }
     }
 }

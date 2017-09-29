@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node{
-
-    public bool walkable;
-    public Vector3 worldPosition;
-
-    public Node(bool _walkable, Vector3 _worldPos)
+public class Node
+{
+    public List<Node> neighbours;
+    public int x;
+    public int y;
+    public Node()
     {
-        walkable = _walkable;
-        worldPosition = _worldPos;
+        neighbours = new List<Node>();
+    }
+    public float DistanceTo(Node n)
+    {
+        return Vector2.Distance(
+            new Vector2(x, y),
+            new Vector2(n.x, n.y));
     }
 }
+
