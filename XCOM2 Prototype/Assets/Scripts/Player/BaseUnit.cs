@@ -28,7 +28,7 @@ public class BaseUnit : MonoBehaviour {
             {
                 Vector3 previousPosition = map.TileCoordToWorldCoord(currentPath[pathIndex].x, currentPath[pathIndex].y);
                 Vector3 nextPosition = map.TileCoordToWorldCoord(currentPath[pathIndex + 1].x, currentPath[pathIndex + 1].y);
-
+                
                 pathProgress += Time.deltaTime * animaitionSpeed;
                 transform.position = Vector3.Lerp(previousPosition, nextPosition, pathProgress);
 
