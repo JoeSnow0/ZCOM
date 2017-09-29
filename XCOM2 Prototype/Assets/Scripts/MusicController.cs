@@ -52,7 +52,7 @@ public class MusicController : MonoBehaviour {
             isPlaying = true;
 
         }
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1) && !isPlaying)
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) && !isPlaying)
         {
             PlaySound(2, true);
             PlaySound(3, true);
@@ -60,19 +60,19 @@ public class MusicController : MonoBehaviour {
         }
 
         //debug load main menu scene
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SceneManager.LoadScene(0);
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    SceneManager.LoadScene(0);
             
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
 
 
-            StopAllSound();
+        //    StopAllSound();
             
 
-        }
+        //}
 
     }
 
