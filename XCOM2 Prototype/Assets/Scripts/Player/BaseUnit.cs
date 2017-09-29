@@ -65,7 +65,7 @@ public class BaseUnit : MonoBehaviour {
     {
         int remainingMovement = moveSpeed;
         int moveTo = currentPath.Count-1;
-        Debug.Log(moveTo);
+        
         
         if (currentPath == null)
         {
@@ -78,8 +78,7 @@ public class BaseUnit : MonoBehaviour {
             {
                 remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1+cost].x, currentPath[1+cost].y);
                 
-                Debug.Log("remainingMovement: " + remainingMovement);
-                Debug.Log(cost + " and " + moveTo);
+               
                 if (remainingMovement < 0)
                     break;
             }
