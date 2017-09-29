@@ -14,6 +14,8 @@ public class HUD : MonoBehaviour {
     public Image line;
     public Color playerColor;
     public Color enemyColor;
+    public Color victoryColor;
+    public Color defeatColor;
     public GameObject warning;
 
 
@@ -29,6 +31,9 @@ public class HUD : MonoBehaviour {
         amountTurns = 1;
         text = "YOUR TURN";
         isPlayerTurn = true;
+        
+        maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
+        turnCounter.text = amountTurns + "/" + maxTurns;
     }
 
 	void Update () {
@@ -81,10 +86,13 @@ public class HUD : MonoBehaviour {
 
             maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
 
-            if (amountTurns <= maxTurns)
+            if (amountTurns <= maxTurns) //Displays VICTORY instead of the turn if the player won
                 turnCounter.text = amountTurns + "/" + maxTurns;
             else
+            {
                 turnCounter.text = "VICTORY";
+                turnCounter.color = victoryColor;
+            }
         }
         else //Show warning if player has more than 0 actions
         {

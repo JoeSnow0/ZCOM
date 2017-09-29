@@ -20,7 +20,9 @@ public class Unit : MonoBehaviour {
     public int actions = 2;
     Unit target;
 
-    public Animator animUI;
+    public Animator animAP;
+    public Transform dmgStartPos;
+    public GameObject floatingDmg;
 
     public TurnSystem turnSystem;
     public bool isSelected = false;
@@ -56,6 +58,8 @@ public class Unit : MonoBehaviour {
 
     public void TakeDamage(int damageAmount)
     {
+        GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
+        dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
         health -= damageAmount;
         healthText.text = health + "/" + healthMax;
         healthSlider.value = health;
