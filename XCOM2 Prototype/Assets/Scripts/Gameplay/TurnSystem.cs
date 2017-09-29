@@ -28,6 +28,7 @@ public class TurnSystem : MonoBehaviour {
         totalActions = playerUnits.Count * 2;
 
         selectedUnit = playerUnits[0];
+        selectedUnit.isSelected = true;
     }
 
 	void Update () {

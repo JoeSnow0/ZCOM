@@ -5,15 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class HUD : MonoBehaviour {
-    Animator anim;
+    public Animator anim;
+    public Animator turnAnimator;
     public Text titleText;
     public Text turnText;
     public Text turnCounter;
     public Text warningText;
+    public Image line;
     public Color playerColor;
     public Color enemyColor;
     public GameObject warning;
-    public Animator turnAnimator;
+
+
     int amountTurns;
     int maxTurns;
     int totalActions;
@@ -23,7 +26,6 @@ public class HUD : MonoBehaviour {
     public TurnSystem turnSystem;
 
     void Start () {
-        anim = GetComponentInChildren<Animator>();
         amountTurns = 1;
         maxTurns = 10;
         text = "YOUR TURN";
@@ -52,17 +54,20 @@ public class HUD : MonoBehaviour {
             {
                 text = "YOUR TURN";
                 titleText.color = playerColor;
+                line.color = playerColor;
             }
             else
             {
                 text = "ENEMY TURN";
                 titleText.color = enemyColor;
+                line.color = enemyColor;
             }
             //Add all functionality here
             isPlayerTurn = !isPlayerTurn;
             turnAnimator.SetBool("isPlayerTurn", isPlayerTurn);
             titleText.text = text;
             turnText.text = text;
+
             anim.Play("turnFadeIn");
 
             turnSystem.resetActions(isPlayerTurn);
