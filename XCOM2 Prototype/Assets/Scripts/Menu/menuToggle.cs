@@ -32,16 +32,6 @@ public class menuToggle : MonoBehaviour {
     {
         isPaused = !isPaused;
         ingameMenu.SetActive(isPaused);
-        //Pause and unpause the gameplay
-        if (isPaused)
-        {
-            Time.timeScale = 0;
-        }
-        else if (!isPaused)
-        {
-            Time.timeScale = 1;
-        }
-        
     }
 
 }
