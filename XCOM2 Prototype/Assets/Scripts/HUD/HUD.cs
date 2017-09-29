@@ -20,7 +20,7 @@ public class HUD : MonoBehaviour {
     int amountTurns;
     int maxTurns;
     int totalActions;
-    bool isPlayerTurn;
+    public bool isPlayerTurn;
     string text;
 
     public TurnSystem turnSystem;
@@ -71,6 +71,7 @@ public class HUD : MonoBehaviour {
             anim.Play("turnFadeIn");
 
             turnSystem.resetActions(isPlayerTurn);
+            turnSystem.displayAP(isPlayerTurn);
 
             if (isPlayerTurn)
                 amountTurns++;

@@ -29,12 +29,39 @@ public class TurnSystem : MonoBehaviour {
 
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
+
+        displayAP(true);
     }
 
 	void Update () {
         selectUnit();
         attackUnit();
 	}
+    public void displayAP(bool isPlayerTurn)
+    {
+        if (isPlayerTurn)
+        {
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                playerUnits[i].animUI.SetBool("display", true);
+            }
+            for(int i = 0; i < enemyUnits.Count; i++)
+            {
+                enemyUnits[i].animUI.SetBool("display", false);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                playerUnits[i].animUI.SetBool("display", false);
+            }
+            for (int i = 0; i < enemyUnits.Count; i++)
+            {
+                enemyUnits[i].animUI.SetBool("display", true);
+            }
+        }
+    }
 
     public void selectUnit()
     {
