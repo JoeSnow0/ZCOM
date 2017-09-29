@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TurnSystem : MonoBehaviour {
     public GameObject[] allUnits;
@@ -9,6 +10,8 @@ public class TurnSystem : MonoBehaviour {
     public List<Unit> enemyUnits = new List<Unit>();
     public int totalActions;
     public GameObject gameOver;
+    public Text gameOverText;
+    public Color defeatColor;
 
     public Unit selectedUnit;
     bool playerTurn = true;
@@ -43,7 +46,6 @@ public class TurnSystem : MonoBehaviour {
         selectUnit();
         attackUnit();
 
-
 	}
     public void displayAP(bool isPlayerTurn)
     {
@@ -51,22 +53,22 @@ public class TurnSystem : MonoBehaviour {
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].animUI.SetBool("display", true);
+                playerUnits[i].animAP.SetBool("display", true);
             }
             for(int i = 0; i < enemyUnits.Count; i++)
             {
-                enemyUnits[i].animUI.SetBool("display", false);
+                enemyUnits[i].animAP.SetBool("display", false);
             }
         }
         else
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].animUI.SetBool("display", false);
+                playerUnits[i].animAP.SetBool("display", false);
             }
             for (int i = 0; i < enemyUnits.Count; i++)
             {
-                enemyUnits[i].animUI.SetBool("display", true);
+                enemyUnits[i].animAP.SetBool("display", true);
             }
         }
     }
@@ -181,5 +183,11 @@ public class TurnSystem : MonoBehaviour {
             enemyUnits.Remove(unit);
 
         Destroy(unit.gameObject);
+        if(enemyUnits.Count <= 0)
+        {
+            gameOver.SetActive(true);
+            gameOverText.text = "DEFEAT";
+            gameOverText.color = defeatColor;
+        }
     }
 }

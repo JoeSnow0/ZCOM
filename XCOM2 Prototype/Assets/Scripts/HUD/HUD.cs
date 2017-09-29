@@ -14,6 +14,8 @@ public class HUD : MonoBehaviour {
     public Image line;
     public Color playerColor;
     public Color enemyColor;
+    public Color victoryColor;
+    public Color defeatColor;
     public GameObject warning;
 
 
@@ -84,7 +86,10 @@ public class HUD : MonoBehaviour {
             if (amountTurns <= maxTurns)
                 turnCounter.text = amountTurns + "/" + maxTurns;
             else
+            {
                 turnCounter.text = "VICTORY";
+                turnCounter.color = victoryColor;
+            }
         }
         else //Show warning if player has more than 0 actions
         {
