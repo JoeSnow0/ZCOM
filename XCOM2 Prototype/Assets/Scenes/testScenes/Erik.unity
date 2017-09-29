@@ -698,6 +698,7 @@ MonoBehaviour:
   tileX: 0
   tileY: 0
   map: {fileID: 0}
+  animaitionSpeed: 1
 --- !u!1 &2092045033
 GameObject:
   m_ObjectHideFlags: 0
