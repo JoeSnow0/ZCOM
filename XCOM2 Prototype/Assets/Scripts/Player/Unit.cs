@@ -58,7 +58,7 @@ public class Unit : MonoBehaviour {
 
     public void TakeDamage(int damageAmount)
     {
-        GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.identity);
+        GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
         health -= damageAmount;
         healthText.text = health + "/" + healthMax;
@@ -67,6 +67,5 @@ public class Unit : MonoBehaviour {
         {
             turnSystem.destroyUnit(this);
         }
-        
     }
 }

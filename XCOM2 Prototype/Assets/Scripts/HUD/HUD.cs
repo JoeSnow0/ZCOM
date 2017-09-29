@@ -31,6 +31,9 @@ public class HUD : MonoBehaviour {
         amountTurns = 1;
         text = "YOUR TURN";
         isPlayerTurn = true;
+        
+        maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
+        turnCounter.text = amountTurns + "/" + maxTurns;
     }
 
 	void Update () {
@@ -83,7 +86,7 @@ public class HUD : MonoBehaviour {
 
             maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
 
-            if (amountTurns <= maxTurns)
+            if (amountTurns <= maxTurns) //Displays VICTORY instead of the turn if the player won
                 turnCounter.text = amountTurns + "/" + maxTurns;
             else
             {

@@ -15,7 +15,7 @@ public class TurnSystem : MonoBehaviour {
 
     public Unit selectedUnit;
     bool playerTurn = true;
-    int maxTurns;
+    int maxTurns = 3;
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -38,8 +38,6 @@ public class TurnSystem : MonoBehaviour {
         selectedUnit.isSelected = true;
 
         displayAP(true);
-
-        maxTurns = 3;
     }
 
 	void Update () {
@@ -107,13 +105,13 @@ public class TurnSystem : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            if (selectedUnit.actions > 1) //Checks if the unit can attack
+            if (selectedUnit.actions > 1) //Checks if the unit has enough action points
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.collider.GetComponent<Unit>())//Checks if the unit hit an enemy
+                    if (hit.collider.GetComponent<Unit>()) //Checks if the unit hit an enemy
                     {
                         Unit target = hit.collider.GetComponent<Unit>();
                         if (!target.isFriendly) //Checks if the unit hit is friendly
