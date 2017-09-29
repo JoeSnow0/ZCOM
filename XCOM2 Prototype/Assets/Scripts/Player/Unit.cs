@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour {
     public Image[] healthBar;
     public Text healthText;
     public Slider healthSlider;
+    public Text apText;
     public bool isFriendly;
     [SerializeField, Range(0, 100)]
     public int health;
@@ -18,6 +19,8 @@ public class Unit : MonoBehaviour {
 
     public int actions = 2;
     Unit target;
+
+    public Animator animUI;
 
     public TurnSystem turnSystem;
     public bool isSelected = false;
@@ -33,6 +36,7 @@ public class Unit : MonoBehaviour {
         }
         healthMax = health;
         healthText.text = health + "/" + healthMax;
+
     }
 
     void Update()
@@ -45,6 +49,9 @@ public class Unit : MonoBehaviour {
         {
             GetComponent<Renderer>().material.color = Color.white;
         }
+        apText.text = "(" + actions + ")";
+
+        transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
 
     public void TakeDamage(int damageAmount)
@@ -54,7 +61,7 @@ public class Unit : MonoBehaviour {
         healthSlider.value = health;
         if (health <= 0)
         {
-            Destroy(this.gameObject);
+            turnSystem.destroyUnit(this);
         }
     }
 }
