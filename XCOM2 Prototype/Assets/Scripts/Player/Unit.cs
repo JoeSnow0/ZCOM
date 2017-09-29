@@ -63,6 +63,7 @@ public class Unit : MonoBehaviour {
         health -= damageAmount;
         healthText.text = health + "/" + healthMax;
         healthSlider.value = health;
+
         if (health <= 0)
         {
             turnSystem.destroyUnit(this);
