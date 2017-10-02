@@ -5,9 +5,15 @@ using UnityEngine.Audio;
 using MundoSoundUtil;
 using UnityEngine.SceneManagement;
 
+
 [RequireComponent(typeof(AudioSource))]
 
+
 public class MusicController : MonoBehaviour {
+
+    //initialization and tooltips
+
+    static MusicController _instance = null;
 
     static List<AudioSource> playingSources = new List<AudioSource>();
 
@@ -22,29 +28,44 @@ public class MusicController : MonoBehaviour {
     [Tooltip("Audio Source used:")]
     public AudioSource audioSource;
     bool isPlaying = false;
+    int gameScreen;
+    
 
     private void Awake()
     {
-        
+        //removes audioSource duplicates
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        _instance = this;
         DontDestroyOnLoad(this.gameObject);
+            
+        
+        //gets Scene Build Index
+        gameScreen = SceneManager.GetActiveScene().buildIndex;
 
+        //adds audioSource to itself
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
-
-        
     }
 
     // Use this for initialization
     void Start () {
 
-        
 
-        //SceneManager.GetSceneByBuildIndex(0);
     }
 	
 	// Update is called once per frame
 	void Update () {
 
+        
+        if (gameScreen != SceneManager.GetActiveScene().buildIndex)
+        {
+            StopAllSound();
+            gameScreen = SceneManager.GetActiveScene().buildIndex;
+
+        }
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) && !isPlaying)
         {
             PlaySound(0, true);
@@ -58,24 +79,9 @@ public class MusicController : MonoBehaviour {
             PlaySound(3, true);
             isPlaying = true;
         }
-
-        //debug load main menu scene
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    SceneManager.LoadScene(0);
-            
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-
-
-        //    StopAllSound();
-            
-
-        //}
-
     }
 
+    //plays an AudioClip from the AudioSource
     public void PlaySound(int soundIndex, bool isLooping = false)
     {              
         foreach( var audioSource in playingSources)
@@ -90,6 +96,7 @@ public class MusicController : MonoBehaviour {
         playingSources.Add(audioSource);     
     }
 
+    //stops the sound with matching index
     public void StopSound(int soundIndex)
     {
         foreach (var audioSource in playingSources)
@@ -100,6 +107,7 @@ public class MusicController : MonoBehaviour {
         isPlaying = false;
     }
 
+    //stops all sound
     public void StopAllSound()
     {
         for (int i = 0; i < soundClip.Length; i++)
