@@ -64,6 +64,7 @@ public class HUD : MonoBehaviour {
                 text = "ENEMY TURN";
                 titleText.color = enemyColor;
                 line.color = enemyColor;
+                turnSystem.spawnEnemy();
             }
             //Add all functionality here, END TURN
             isPlayerTurn = !isPlayerTurn;
@@ -76,6 +77,7 @@ public class HUD : MonoBehaviour {
             turnSystem.resetActions(isPlayerTurn);
             turnSystem.displayAP(isPlayerTurn);
             
+            
             if (isPlayerTurn)
             {
                 turnSystem.selectNextUnit();
@@ -85,6 +87,8 @@ public class HUD : MonoBehaviour {
                 amountTurns++;
 
             maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
+            
+
 
             if (amountTurns <= maxTurns) //Displays VICTORY instead of the turn if the player won
                 turnCounter.text = amountTurns + "/" + maxTurns;

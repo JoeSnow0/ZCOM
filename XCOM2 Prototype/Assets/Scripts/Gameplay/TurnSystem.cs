@@ -14,8 +14,13 @@ public class TurnSystem : MonoBehaviour {
     public Color defeatColor;
 
     public Unit selectedUnit;
+    public GameObject enemyUnit; //Enemy to spawn, can be changed to an array to randomize
+
+    public EnemySpawn enemySpawnNodes;
     bool playerTurn = true;
-    int maxTurns = 3;
+    public int maxTurns;
+    int thisTurn = 1;
+    public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -167,9 +172,8 @@ public class TurnSystem : MonoBehaviour {
     public int getCurrentTurn(int currentTurn)
     {
         if(currentTurn > maxTurns)
-        {
             gameOver.SetActive(true);
-        }
+        thisTurn = currentTurn;
         return maxTurns;
     }
 
@@ -186,6 +190,18 @@ public class TurnSystem : MonoBehaviour {
             gameOver.SetActive(true);
             gameOverText.text = "DEFEAT";
             gameOverText.color = defeatColor;
+        }
+    }
+    public void spawnEnemy()
+    {
+        foreach (int i in spawnEnemyTurns) // Checks if current turn should spawn an enemy
+        {
+            if(i == thisTurn)
+            {
+                Unit unitSpawned = Instantiate(enemyUnit, enemySpawnNodes.getSpawnNode(), Quaternion.identity).GetComponent<Unit>();
+                unitSpawned.turnSystem = this;
+                enemyUnits.Add(unitSpawned);
+            }
         }
     }
 }
