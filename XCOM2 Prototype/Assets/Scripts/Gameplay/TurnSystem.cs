@@ -97,8 +97,11 @@ public class TurnSystem : MonoBehaviour {
                         if (selectedUnit != null)
                         {
                             selectedUnit.GetComponent<Unit>().isSelected = false;
+                            selectedUnit.GetComponent<BaseUnit>().isSelected = false;
                         }
                         selectedUnit = hit.collider.GetComponent<Unit>();
+                        GetComponent<TileMap>().selectedUnit = selectedUnit.gameObject;
+                        selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                         selectedUnit.GetComponent<Unit>().isSelected = true;
                     }
                 }
@@ -110,7 +113,7 @@ public class TurnSystem : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            if (selectedUnit.actions > 1) //Checks if the unit has enough action points
+            if (selectedUnit.actions >= 1) //Checks if the unit has enough action points
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -163,8 +166,11 @@ public class TurnSystem : MonoBehaviour {
                 if (selectedUnit != null)
                 {
                     selectedUnit.GetComponent<Unit>().isSelected = false;
+                    selectedUnit.GetComponent<BaseUnit>().isSelected = false;
                 }
                 selectedUnit = playerUnits[i];
+                GetComponent<TileMap>().selectedUnit = selectedUnit.gameObject;
+                selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                 selectedUnit.GetComponent<Unit>().isSelected = true;
             }
         }

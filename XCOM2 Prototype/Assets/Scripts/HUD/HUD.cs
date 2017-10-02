@@ -44,7 +44,10 @@ public class HUD : MonoBehaviour {
         {
             pressEnd(true);
         }
-        
+        if(totalActions <= 0)
+        {
+            pressEnd(true);
+        }
     }
 
     public void pressEnd(bool forceEnd)

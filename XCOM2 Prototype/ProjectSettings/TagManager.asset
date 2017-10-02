@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Unit
   - EnemySpawn
+  - Map
   layers:
   - Default
   - TransparentFX
