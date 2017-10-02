@@ -27,6 +27,8 @@ public class Unit : MonoBehaviour {
     public TurnSystem turnSystem;
     public bool isSelected = false;
 
+    public BaseUnit baseUnit;
+
     void Start () {
         //Sets color of healthbar
         if (!isFriendly)
@@ -38,18 +40,23 @@ public class Unit : MonoBehaviour {
         }
         healthMax = health;
         healthText.text = health + "/" + healthMax;
-
+        baseUnit = GetComponent<BaseUnit>();
     }
 
     void Update()
     {
+        if (isSelected && Input.GetMouseButtonDown(1))
+        {
+            baseUnit.MoveNextTile();
+        }
+
         if (isSelected && actions > 0)
         {
-            GetComponent<Renderer>().material.color = Color.green;
+            GetComponentInChildren<Renderer>().material.color = Color.green;
         }
         else
         {
-            GetComponent<Renderer>().material.color = Color.white;
+            GetComponentInChildren<Renderer>().material.color = Color.white;
         }
         apText.text = "(" + actions + ")";
 

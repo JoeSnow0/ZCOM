@@ -20,8 +20,28 @@ public class BaseUnit : MonoBehaviour {
     int pathIndex = 0;
     public float pathProgress;
 
+    public bool isSelected;
+
+    Unit unit;
+    TurnSystem turnSystem;
+
+    private void Start()
+    {
+        
+        map = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
+        Vector3 tileCoords = map.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);//get unit tile coord
+        tileX = (int)tileCoords.x;// set unit position on grid
+        tileY = (int)tileCoords.z;
+
+        unit = GetComponent<Unit>();
+        turnSystem = unit.turnSystem;
+    }
     private void Update()
-    {        
+    {
+
+        if (!isSelected)
+            currentPath = null;
+
         if (isMoving == true) {
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
@@ -62,8 +82,7 @@ public class BaseUnit : MonoBehaviour {
     }
     public void MoveNextTile()//start to try to move unit
     {
-        int remainingMovement = moveSpeed;
-        int moveTo = currentPath.Count-1;
+
                 
         if (currentPath == null)// if there is no path leave funktion
         {
@@ -72,6 +91,8 @@ public class BaseUnit : MonoBehaviour {
         
         else
         {
+            int remainingMovement = moveSpeed;
+            int moveTo = currentPath.Count - 1;
             for (int cost = 0; cost < moveTo;cost++)//is the path posseble
             {
                 remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1+cost].x, currentPath[1+cost].y);
@@ -82,6 +103,8 @@ public class BaseUnit : MonoBehaviour {
             if (remainingMovement >= 0)//can you move the unit 
             {
                 isMoving = true;//start moving in the update
+                unit.actions--;
+                turnSystem.totalActions--;
             }
             else//is too far away do not move
             {

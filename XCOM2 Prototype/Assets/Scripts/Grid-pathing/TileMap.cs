@@ -31,6 +31,8 @@ public class TileMap : MonoBehaviour {
         GenerateMapData();//run map generate
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
+
+        selectedUnit.GetComponent<BaseUnit>().isSelected = true;
     }
 
     void GenerateMapData()//make the grid and it's obsticals.
