@@ -23,10 +23,10 @@ public class EnemySpawn : MonoBehaviour {
 
     public Vector3 getSpawnNode()
     {
-        if (current == spawnNodes.Length)
-            current = 0;
-        else
+        if (current < spawnNodes.Length - 1)
             current++;
+        else
+            current = 0;
 
         return spawnNodes[current].transform.position;
     }
