@@ -84,4 +84,8 @@ public class MenuButtons : MonoBehaviour
         highScore.SetActive(false);
         credits.SetActive(false);
     }
+    public void restartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
