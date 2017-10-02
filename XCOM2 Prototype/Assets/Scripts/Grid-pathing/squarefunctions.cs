@@ -19,12 +19,12 @@ public class squarefunctions : MonoBehaviour {
 	void Update () {
             
 	}
-    private void OnMouseOver()
+    private void OnMouseOver()//need to optimise
     {
         currentColor = highlightedColor;
         rend.material.color = currentColor;
     }
-    private void OnMouseExit()
+    private void OnMouseExit()//need to optimise
     {
         currentColor = orgColor;
         rend.material.color = currentColor;

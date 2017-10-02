@@ -8,7 +8,7 @@ public class ClickebleTile : MonoBehaviour {
     public TileMap map;
     void OnMouseUp()//send info to the curent unit
     {
-        map.GeneratePathTo(tileX, tileY);
+        map.GeneratePathTo(tileX, tileY);//path to the klicked tile
     }
 
 }
