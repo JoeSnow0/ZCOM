@@ -4,13 +4,44 @@ using UnityEngine;
 
 public class CalculationManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+
+    int hitRoll;
+    int hitChance;
+
+
+    int n;
+
+
+    void HitCheck ()
+    {
+        //hitRoll;
+        hitRoll = GetComponent<RandomRange>().RollDice(1, 100);
+        if (hitRoll <= hitChance)
+        {
+            //Run damage script
+            DamageDealt();
+        }
+        else
+        {
+            //Return "Missed" Message
+        }
+
+
+
+    }
+
+
+    public int DamageDealt ()
+    {
+        //Get Weapon damage parameters
+
+        //n = GetComponent<RandomRange>().RollDice(BaseWeapon.numberOfDiceDamage, BaseWeapon.numberOfSideDamage);
+
+        //Give Damage dealt
+        return (n);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+
+
+
 }

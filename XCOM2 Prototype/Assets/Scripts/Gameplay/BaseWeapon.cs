@@ -16,11 +16,12 @@ public class BaseWeapon : MonoBehaviour
 
     //Multiple 
         //Simple display (use if only single dices are used)
-        [Tooltip("Damage", (baseDamage+1), " + ", (baseDamage + numberOfSideDamage))]
+        //[Tooltip("Damage", (baseDamage+1), " + ", (baseDamage + numberOfSideDamage))]
         //DnD display (use if multiple dices are used)          Damage 2+2D4
-        [Tooltip("Damage",baseDamage," + ",numberOfDiceDamage,"D",numberOfSideDamage)]
+        //[Tooltip("Damage",baseDamage," + ",numberOfDiceDamage,"D",numberOfSideDamage)]
         //Simplified display (use if multiple dices are used)   Damage 4-10
-        [Tooltip("Damage", (baseDamage + numberOfDiceDamage),"-",(baseDamage + (numberOfDiceDamage * numberOfSideDamage)))]
+        //[Tooltip("Damage", (baseDamage + numberOfDiceDamage),"-",(baseDamage + (numberOfDiceDamage * numberOfSideDamage)))]
+
 }
 
 
