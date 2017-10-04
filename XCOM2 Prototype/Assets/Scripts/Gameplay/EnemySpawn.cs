@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour {
-    GameObject[] spawnNodes;
+    public List<GameObject> spawnNodes;
     public GameObject spawnNode;
-    public TurnSystem turnSystem;
-    int current = 0;
+    
+    public int current;
+
+    [Header("Set max amount of spawn nodes")]
+    public int maxNodes;
+
+    TurnSystem turnSystem;
+    TileMap map;
 
 	void Start () {
-        spawnNodes = GameObject.FindGameObjectsWithTag("EnemySpawn");
-	}
+        turnSystem = GetComponent<TurnSystem>();
+        map = GetComponent<TileMap>();
+
+        spawnNodes = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemySpawn"));
+        current = -1;
+    }
 
     /*public GameObject[] randomNodes(int amountNodes) USED TO CREATE RANDOM SPAWNNODES
     {
@@ -21,13 +31,34 @@ public class EnemySpawn : MonoBehaviour {
         }
     }*/
 
-    public Vector3 getSpawnNode()
+    public Vector3 GetSpawnNode()
     {
-        if (current < spawnNodes.Length - 1)
+        if (current < spawnNodes.Count - 1)
+        {
             current++;
+            if (spawnNodes[current].GetComponent<SpawnNode>().isFree)
+            {
+                return spawnNodes[current].transform.position;
+            }
+        }
         else
-            current = 0;
+        {
+            NewRandomNode();
+            current = spawnNodes.Count - 1;
+            return spawnNodes[spawnNodes.Count - 1].transform.position;
+        }
 
         return spawnNodes[current].transform.position;
+    }
+
+    public void NewRandomNode()
+    {
+        GameObject newObject = Instantiate(spawnNode, RandomPosition(), Quaternion.identity);
+        spawnNodes.Add(newObject);
+    }
+
+    public Vector3 RandomPosition()
+    {
+        return new Vector3(Random.Range(0, 50), 0, Random.Range(0, 50));
     }
 }

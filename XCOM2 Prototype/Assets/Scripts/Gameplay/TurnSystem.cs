@@ -204,7 +204,7 @@ public class TurnSystem : MonoBehaviour {
         {
             if(i == thisTurn)
             {
-                Unit unitSpawned = Instantiate(enemyUnit, enemySpawnNodes.getSpawnNode(), Quaternion.identity).GetComponent<Unit>();
+                Unit unitSpawned = Instantiate(enemyUnit, enemySpawnNodes.GetSpawnNode(), Quaternion.identity).GetComponent<Unit>();
                 unitSpawned.turnSystem = this;
                 enemyUnits.Add(unitSpawned);
             }
