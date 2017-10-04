@@ -41,11 +41,15 @@ public class EnemySpawn : MonoBehaviour {
                 return spawnNodes[current].transform.position;
             }
         }
-        else
+        else if(current < maxNodes)
         {
             NewRandomNode();
             current = spawnNodes.Count - 1;
             return spawnNodes[spawnNodes.Count - 1].transform.position;
+        }
+        else
+        {
+            current = 0;
         }
 
         return spawnNodes[current].transform.position;
