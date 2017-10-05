@@ -7,50 +7,74 @@ public class BaseUnit : MonoBehaviour {
     public int tileX;
     public int tileY;
     public TileMap map;
+    
     public List<Node> currentPath = null;
 
     private Node previousNode;
     private Node nextNode;
 
-    int moveSpeed = 6;
+    public int moveSpeed = 6;
     [SerializeField]
     float animaitionSpeed = 0.05f;
-    bool isMoving = false;
+    public bool isMoving = false;
 
     int pathIndex = 0;
-    float pathProgress;
+    public float pathProgress;
 
+    public bool isSelected;
+
+    Unit unit;
+    TurnSystem turnSystem;
+
+    private void Start()
+    {
+        
+        map = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
+        Vector3 tileCoords = map.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);//get unit tile coord
+        tileX = (int)tileCoords.x;// set unit position on grid
+        tileY = (int)tileCoords.z;
+
+        unit = GetComponent<Unit>();
+
+        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+    }
     private void Update()
     {
-        //Debug.Log(isMoving);
-        if (isMoving == true) {
+        
+        if (isMoving == true)
+        {
+            
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
+                
                 Vector3 previousPosition = map.TileCoordToWorldCoord(currentPath[pathIndex].x, currentPath[pathIndex].y);
                 Vector3 nextPosition = map.TileCoordToWorldCoord(currentPath[pathIndex + 1].x, currentPath[pathIndex + 1].y);
-
+                
                 pathProgress += Time.deltaTime * animaitionSpeed;
                 transform.position = Vector3.Lerp(previousPosition, nextPosition, pathProgress);
 
-                if (pathProgress >= 1.0)
+                if (pathProgress >= 1.0)//if unit have reached the end of path reset pathprogress and increacss pathindex
                 {
+
                     pathProgress = 0.0f;
                     pathIndex++;
                 }
 
-                tileX = currentPath[pathIndex].x;
+                tileX = currentPath[pathIndex].x;//set unit tile postition
                 tileY = currentPath[pathIndex].y;
             }
-            else
+
+            else//when unit reach location reset spectial stats
             {
                 isMoving = false;
                 currentPath = null;
                 pathIndex = 0;
             }
         }
-        //draw line
+        //draw line need to be fixed cant be seen in the built version
         if (currentPath != null)
         {
+            
             int currNode = 0;
             while (currNode < currentPath.Count - 1)
             {
@@ -61,62 +85,88 @@ public class BaseUnit : MonoBehaviour {
             }
         }
     }
-    public void MoveNextTile()
+    public void MoveNextTile()//start to try to move unit
     {
-        int remainingMovement = moveSpeed;
-        int moveTo = currentPath.Count-1;
-        
-        
-        if (currentPath == null)
+                
+        if (currentPath == null)// if there is no path leave funktion
         {
             return;
         }
         
         else
         {
-            for (int cost = 0; cost < moveTo;cost++)
+            int remainingMovement = moveSpeed;
+            int moveTo = currentPath.Count - 1;
+            for (int cost = 1; cost < moveTo;cost++)//is the path posseble
             {
                 remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1+cost].x, currentPath[1+cost].y);
-                
-               
-                if (remainingMovement < 0)
-                    break;
+
             }
-            if (remainingMovement >= 0)
+            if (remainingMovement > 0)//can you move the unit 
             {
-                isMoving = true;
+                isMoving = true;//start moving in the update
+                unit.actions--;
+                turnSystem.totalActions--;
+                if (unit.actions <= 0)
+                {
+                    turnSystem.selectNextUnit();
+                }
+                return;
             }
-            else
+            else//is too far away do not move
             {
                 Debug.Log("out of range");
                 return;
             }
         }
-        ////int remainingMovement = moveSpeed;
-        //while(remainingMovement > 0){
-        //    if (currentPath == null)
-        //    {
-        //        return;
-        //    }
-        //    //get cost form current tile to next tile
-        //    remainingMovement -= (int)map.CostToEnterTile(currentPath[0].x, currentPath[0].y, currentPath[1].x, currentPath[1].y);
+    }
+    public void EnemyMoveNextTile()//start to try to move unit
+    {
 
-        //    // remove the old current node
-        //    currentPath.RemoveAt(0);
+        if (currentPath == null)// if there is no path leave funktion
+        {
+            Debug.Log("this is a test");
+            return;
+        }
 
-        //    //set current tile on unit
+        else
+        {
             
-        //    //move to next tile
-        //    tileX = currentPath[0].x;
-        //    tileY = currentPath[0].y;
-        //    transform.position = map.TileCoordToWorldCoord(tileX, tileY);
-        //    transform.position = new Vector3(transform.position.x,0f,transform.position.z);
-        //    if (currentPath.Count == 1)
-        //    {
-        //        //next tile = the goal
-        //        currentPath = null;
-        //    }
-            
-        //}
+            int remainingMovement = moveSpeed;
+            int moveTo = currentPath.Count - 1;
+            for (int cost = 1; cost < moveTo; cost++)//is the path posseble
+            {
+                remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
+
+                
+            }
+
+            if (remainingMovement > 0)//can you move the unit 
+            {
+                currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
+                isMoving = true;//start moving in the update
+                unit.actions--;
+                Debug.Log(unit.actions);
+                return;
+            }
+
+            else//is too far away do not move
+            {
+
+                remainingMovement = moveSpeed;
+
+                for (int i = currentPath.Count-1; i > remainingMovement; i--)
+                {
+                    currentPath.RemoveAt(i);
+                }
+                if(currentPath != null)
+                {
+                    Debug.Log(currentPath.Count - 1);
+                    isMoving = true;
+                    unit.actions--;
+                }
+                return;
+            }
+        }
     }
 }

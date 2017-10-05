@@ -5,14 +5,14 @@ using System.Linq;
 
 public class TileMap : MonoBehaviour {
 
-    public GameObject selectedUnit;
+    public BaseUnit selectedUnit;//needs to change for mulltiple units
 
-    public TileType[] tileType;
+    public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
 
     int[,] tiles;
     Node[,] graph;
 
-    //need fix for more units
+    //may need fix for more units
     List<Node> currentPath = null;
 
     int mapSizeX = 50;//map size
@@ -22,18 +22,13 @@ public class TileMap : MonoBehaviour {
 
     private void Start()
     {
-        //setup the selected units varibals
-        Vector3 tileCoords = UnitCoordToWorldCoord((int)selectedUnit.transform.position.x, (int)selectedUnit.transform.position.z);
-        selectedUnit.GetComponent<BaseUnit>().tileX = (int)tileCoords.x;
-        selectedUnit.GetComponent<BaseUnit>().tileY = (int)tileCoords.z;
-        selectedUnit.GetComponent<BaseUnit>().map = this;
         //spawn grid
-        GenerateMapData();
-        GeneratePathfindingGraph();
-        GenerateMapVisual();
+        GenerateMapData();//run map generate
+        GeneratePathfindingGraph();//run pathfinding
+        GenerateMapVisual();//make the map visuals
     }
 
-    void GenerateMapData()
+    void GenerateMapData()//make the grid and it's obsticals.
     {
         //Allocate our map tiles
         tiles = new int[mapSizeX, mapSizeY];
@@ -82,11 +77,11 @@ public class TileMap : MonoBehaviour {
 
     }
 
-    public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY)
+    public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY)// get the cost for the movement to an loction
     {
 
         TileType tt = tileType[tiles[targetX, targetY]];
-        if (tt.isWalkeble == false)
+        if (tt.isWalkeble == false)//make it so unwalkeble tiles can't be walked on
         {
             return Mathf.Infinity;
         }
@@ -96,12 +91,13 @@ public class TileMap : MonoBehaviour {
         {
             // we moveing diagonally
             cost *= 2;
+            //cost *= Mathf.Sqrt(2);
         }
         
         return cost;
     }
 
-    void GeneratePathfindingGraph()
+    void GeneratePathfindingGraph()//create a path for units to walk on
     {
         //initialize the array
         graph = new Node[mapSizeX, mapSizeY];
@@ -120,48 +116,48 @@ public class TileMap : MonoBehaviour {
         {
             for (int y = 0; y < mapSizeY; y++)
             {
-                //4-way connected map
-                //if (x > 0)
-                //    graph[x, y].neighbours.Add(graph[x - 1, y]);
-                //if(x < mapSizeX - 1)
-                //    graph[x, y].neighbours.Add(graph[x + 1, y]);
-
-                //if (y > 0)
-                //    graph[x, y].neighbours.Add(graph[x, y-1]);
-                //if (y < mapSizeY - 1)
-                //    graph[x, y].neighbours.Add(graph[x, y + 1]);
-
-                //8 way
-                //try Left
+                //4 - way connected map
                 if (x > 0)
-                {
                     graph[x, y].neighbours.Add(graph[x - 1, y]);
-                    if (y > 0)
-                        graph[x, y].neighbours.Add(graph[x-1, y-1]);
-                    if (y < mapSizeY - 1)
-                        graph[x, y].neighbours.Add(graph[x-1, y + 1]);
-                }
-                   
-                //try Right
                 if (x < mapSizeX - 1)
-                {
                     graph[x, y].neighbours.Add(graph[x + 1, y]);
-                    if (y > 0)
-                        graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
-                    if (y < mapSizeY - 1)
-                        graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
-                }
-                    
-                //try strsit up and down
+
                 if (y > 0)
                     graph[x, y].neighbours.Add(graph[x, y - 1]);
                 if (y < mapSizeY - 1)
                     graph[x, y].neighbours.Add(graph[x, y + 1]);
-            }
+
+                //8 way
+                //try Left
+                //if (x > 0)
+                //{
+                //    graph[x, y].neighbours.Add(graph[x - 1, y]);
+                //    if (y > 0)
+                //        graph[x, y].neighbours.Add(graph[x-1, y-1]);
+                //    if (y < mapSizeY - 1)
+                //        graph[x, y].neighbours.Add(graph[x-1, y + 1]);
+                //}
+
+                ////try Right
+                //if (x < mapSizeX - 1)
+                //{
+                //    graph[x, y].neighbours.Add(graph[x + 1, y]);
+                //    if (y > 0)
+                //        graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
+                //    if (y < mapSizeY - 1)
+                //        graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
+                //}
+
+                ////try strsit up and down
+                //if (y > 0)
+                //    graph[x, y].neighbours.Add(graph[x, y - 1]);
+                //if (y < mapSizeY - 1)
+                //    graph[x, y].neighbours.Add(graph[x, y + 1]);
+                }
         }
     }
 
-    void GenerateMapVisual()
+    void GenerateMapVisual()// make the grid viseble
     {
         for (int x = 0; x < mapSizeX; x++)
         {
@@ -178,23 +174,24 @@ public class TileMap : MonoBehaviour {
         }
     }
 
-    public Vector3 TileCoordToWorldCoord(int x, int y)
+    public Vector3 TileCoordToWorldCoord(int x, int y)//wold coordenets to tile coordenets
     {
         return transform.position + new Vector3(x * offset, 0, y * offset);
     }
 
-    public Vector3 UnitCoordToWorldCoord(int x,int y)
+    public Vector3 UnitCoordToWorldCoord(int x,int y)//tile to world coordenets
     {
         return transform.position + new Vector3(x / offset, 0, y / offset);
     }
-    public bool UnitCanEnterTile(int x , int y)
+    public bool UnitCanEnterTile(int x , int y)//walkeble terain on the tile?
     {
         return true;
     }
 
-    public void GeneratePathTo(int x, int y)
+    public void GeneratePathTo(int x, int y, BaseUnit unit)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit.GetComponent<BaseUnit>().currentPath = null;
+        selectedUnit = unit;
+        selectedUnit.currentPath = null;
 
         if (UnitCanEnterTile(x,y) == false)
         {
@@ -202,6 +199,7 @@ public class TileMap : MonoBehaviour {
             return;
         }
         //Dijkstra function
+        //https://sv.wikipedia.org/wiki/Dijkstras_algoritm for more information of the Dijkstra function
 
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
         Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
@@ -209,16 +207,17 @@ public class TileMap : MonoBehaviour {
         List<Node> unvisited = new List<Node>();
 
         Node source = graph[
-                            selectedUnit.GetComponent<BaseUnit>().tileX,
-                            selectedUnit.GetComponent<BaseUnit>().tileY
+                            selectedUnit.tileX,
+                            selectedUnit.tileY
                             ];
         Node target = graph[
                             x,
                             y
                             ];
+        
         dist[source] = 0;
         prev[source] = null;
-
+        
         //initialize everything to have infinity distance, since
         //we do not know how far a unit can move right now.
         foreach(Node v in graph)
@@ -253,7 +252,7 @@ public class TileMap : MonoBehaviour {
 
             foreach (Node v in u.neighbours)
             {
-                //float alt = dist[u] +u.DistanceTo(v);
+                
                 float alt = dist[u] + CostToEnterTile(u.x,u.y,v.x,v.y);
                 if (alt < dist[v]) 
                 {
@@ -262,9 +261,10 @@ public class TileMap : MonoBehaviour {
                 }
             }
         }
-
+        
         if(prev[target] == null)
         {
+
             //no route between our target and our source
             return;
         }
@@ -277,9 +277,9 @@ public class TileMap : MonoBehaviour {
             currentPath.Add(curr);
             curr = prev[curr];
         }
-
+        //current path is from goal to unit here we reverse it. to make it more normal
         currentPath.Reverse();
-
-        selectedUnit.GetComponent<BaseUnit>().currentPath = currentPath;
+        
+        selectedUnit.currentPath = currentPath;
     }
 }

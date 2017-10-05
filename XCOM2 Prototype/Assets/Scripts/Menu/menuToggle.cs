@@ -15,15 +15,6 @@ public class menuToggle : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ////Toggle menu
-            //if (!isPaused)
-            //{
-            //    isPaused = true;
-            //}
-            //else
-            //{
-            //    isPaused = false;
-            //}
             toggleMenu();
         }
     }
