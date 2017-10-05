@@ -61,6 +61,7 @@ MonoBehaviour:
   gameOverText: {fileID: 0}
   defeatColor: {r: 0.5294118, g: 0.19463669, b: 0.19463669, a: 1}
   selectedUnit: {fileID: 0}
+  hud: {fileID: 0}
   enemyUnit: {fileID: 1165749053097084, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
   enemySpawnNodes: {fileID: 114768043096840500}
   playerTurn: 1

@@ -14,6 +14,7 @@ public class TurnSystem : MonoBehaviour {
     public Color defeatColor;
 
     public Unit selectedUnit;
+    public HUD hud;
     public GameObject enemyUnit; //Enemy to spawn, can be changed to an array to randomize
 
     public EnemySpawn enemySpawnNodes;
@@ -51,6 +52,22 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
         selectUnit();
         attackUnit();
+        if (playerTurn == false)
+        {
+            bool endturn = true;
+            foreach (Unit enemy in enemyUnits)
+            {
+                if (enemy.actions > 0 || enemy.baseUnit.isMoving)
+                {  
+                    endturn = false;
+                    break;
+                }
+            }
+            if (endturn == true)
+            {
+                hud.pressEnd(true);
+            }
+        }
 
 	}
     public void displayAP(bool isPlayerTurn)

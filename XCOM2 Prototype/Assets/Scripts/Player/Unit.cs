@@ -46,7 +46,7 @@ public class Unit : MonoBehaviour {
 
     void Update()
     {
-        if (isSelected && Input.GetMouseButtonDown(1))
+        if (isSelected && Input.GetMouseButtonDown(1) && actions > 0)
         {
             baseUnit.MoveNextTile();
         }

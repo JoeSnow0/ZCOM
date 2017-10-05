@@ -106,7 +106,10 @@ public class BaseUnit : MonoBehaviour {
                 isMoving = true;//start moving in the update
                 unit.actions--;
                 turnSystem.totalActions--;
-                Debug.Log(unit.actions);
+                if (unit.actions <= 0)
+                {
+                    turnSystem.selectNextUnit();
+                }
                 return;
             }
             else//is too far away do not move
@@ -158,8 +161,8 @@ public class BaseUnit : MonoBehaviour {
                 if(currentPath != null)
                 {
                     Debug.Log(currentPath.Count - 1);
-                    unit.actions--;
                     isMoving = true;
+                    unit.actions--;
                 }
                 return;
             }

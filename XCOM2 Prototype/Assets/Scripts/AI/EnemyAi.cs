@@ -11,7 +11,7 @@ public class EnemyAi : Unit {
     void Start ()
     {
 
-        allUnits = GameObject.FindGameObjectsWithTag("Unit");
+        
         if (!isFriendly)
         {
             for (int i = 0; i <= 1; i++)
@@ -55,31 +55,18 @@ public class EnemyAi : Unit {
     public void FindClosestPlayerUnit()
     {
         
-        List<Unit> playerUnits = new List<Unit>();
-
-        for (int i = 0; i < allUnits.Length; i++)
-        {
-            if (allUnits[i].GetComponent<Unit>()!= null)
-            {
-                if (allUnits[i].GetComponent<Unit>().isFriendly)
-                {
-                    playerUnits.Add(allUnits[i].GetComponent<Unit>());
-                }
-            }
-        }
-
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
 
-        for (int i = 0; i < playerUnits.Count; i++)
+        for (int i = 0; i < turnSystem.playerUnits.Count; i++)
         {
 
-            Vector3 diff = playerUnits[i].transform.position - position;
+            Vector3 diff = turnSystem.playerUnits[i].transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
             {
                 distance = curDistance;
-                moveToUnit = playerUnits[i].gameObject;
+                moveToUnit = turnSystem.playerUnits[i].gameObject;
             }
         }
     }

@@ -10,6 +10,7 @@ public class ClickebleTile : MonoBehaviour {
     void OnMouseUp()//send info to the curent unit
     {
         turnSystem = FindObjectOfType<TurnSystem>();
+        if(!turnSystem.selectedUnit.baseUnit.isMoving)
         map.GeneratePathTo(tileX, tileY,turnSystem.selectedUnit.baseUnit);//path to the klicked tile     
     }
 
