@@ -14,10 +14,12 @@ public class TurnSystem : MonoBehaviour {
     public Color defeatColor;
 
     public Unit selectedUnit;
+    public HUD hud;
     public GameObject enemyUnit; //Enemy to spawn, can be changed to an array to randomize
 
     public EnemySpawn enemySpawnNodes;
-    bool playerTurn = true;
+    public bool playerTurn = true;
+    public bool endTurn = false;
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
@@ -27,13 +29,16 @@ public class TurnSystem : MonoBehaviour {
 
         for (int i = 0; i < allUnits.Length; i++)
         {
-            if (allUnits[i].GetComponent<Unit>().isFriendly)
+            if (allUnits[i].GetComponent<Unit>() != null)
             {
-                playerUnits.Add(allUnits[i].GetComponent<Unit>());
-            }
-            else
-            {
-                enemyUnits.Add(allUnits[i].GetComponent<Unit>());
+                if (allUnits[i].GetComponent<Unit>().isFriendly)
+                {
+                    playerUnits.Add(allUnits[i].GetComponent<Unit>());
+                }
+                else
+                {
+                    enemyUnits.Add(allUnits[i].GetComponent<Unit>());
+                }
             }
         }
 
@@ -48,8 +53,41 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
         selectUnit();
         attackUnit();
+        if (playerTurn == false)
+        {
+            bool endturn = true;
+            foreach (Unit enemy in enemyUnits)
+            {
+                if (enemy.actions > 0 || enemy.baseUnit.isMoving)
+                {  
+                    endturn = false;
+                    break;
+                }
+            }
+            if (endturn == true)
+            {
+                hud.pressEnd(true);
+            }
+        }
+        if (playerTurn)
+        {
+            bool endturn = true;
+            foreach (Unit unit in playerUnits)
+            {
+                if (unit.actions > 0 || unit.baseUnit.isMoving)
+                {
+                    endturn = false;
+                    break;
+                }
+            }
+            if (endturn == true)
+            {
+                hud.pressEnd(true);
+            }
+        }
 
-	}
+
+    }
     public void displayAP(bool isPlayerTurn)
     {
         if (isPlayerTurn)
@@ -100,7 +138,7 @@ public class TurnSystem : MonoBehaviour {
                             selectedUnit.GetComponent<BaseUnit>().isSelected = false;
                         }
                         selectedUnit = hit.collider.GetComponent<Unit>();
-                        GetComponent<TileMap>().selectedUnit = selectedUnit.gameObject;
+                        GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                         selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                         selectedUnit.GetComponent<Unit>().isSelected = true;
                     }
@@ -169,9 +207,10 @@ public class TurnSystem : MonoBehaviour {
                     selectedUnit.GetComponent<BaseUnit>().isSelected = false;
                 }
                 selectedUnit = playerUnits[i];
-                GetComponent<TileMap>().selectedUnit = selectedUnit.gameObject;
+                GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                 selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                 selectedUnit.GetComponent<Unit>().isSelected = true;
+                break;
             }
         }
     }
@@ -204,7 +243,7 @@ public class TurnSystem : MonoBehaviour {
         {
             if(i == thisTurn)
             {
-                Unit unitSpawned = Instantiate(enemyUnit, enemySpawnNodes.getSpawnNode(), Quaternion.identity).GetComponent<Unit>();
+                Unit unitSpawned = Instantiate(enemyUnit, enemySpawnNodes.GetSpawnNode(), Quaternion.identity).GetComponent<Unit>();
                 unitSpawned.turnSystem = this;
                 enemyUnits.Add(unitSpawned);
             }

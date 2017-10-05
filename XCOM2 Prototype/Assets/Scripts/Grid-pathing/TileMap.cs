@@ -5,7 +5,7 @@ using System.Linq;
 
 public class TileMap : MonoBehaviour {
 
-    public GameObject selectedUnit;//needs to change for mulltiple units
+    public BaseUnit selectedUnit;//needs to change for mulltiple units
 
     public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
 
@@ -22,17 +22,10 @@ public class TileMap : MonoBehaviour {
 
     private void Start()
     {
-        //setup the selected units varibals
-        Vector3 tileCoords = UnitCoordToWorldCoord((int)selectedUnit.transform.position.x, (int)selectedUnit.transform.position.z);//get unit tile coord
-        selectedUnit.GetComponent<BaseUnit>().tileX = (int)tileCoords.x;// set unit position on grid
-        selectedUnit.GetComponent<BaseUnit>().tileY = (int)tileCoords.z;
-        selectedUnit.GetComponent<BaseUnit>().map = this;
         //spawn grid
         GenerateMapData();//run map generate
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
-
-        selectedUnit.GetComponent<BaseUnit>().isSelected = true;
     }
 
     void GenerateMapData()//make the grid and it's obsticals.
@@ -123,44 +116,44 @@ public class TileMap : MonoBehaviour {
         {
             for (int y = 0; y < mapSizeY; y++)
             {
-                //4-way connected map
-                //if (x > 0)
-                //    graph[x, y].neighbours.Add(graph[x - 1, y]);
-                //if(x < mapSizeX - 1)
-                //    graph[x, y].neighbours.Add(graph[x + 1, y]);
-
-                //if (y > 0)
-                //    graph[x, y].neighbours.Add(graph[x, y-1]);
-                //if (y < mapSizeY - 1)
-                //    graph[x, y].neighbours.Add(graph[x, y + 1]);
-
-                //8 way
-                //try Left
+                //4 - way connected map
                 if (x > 0)
-                {
                     graph[x, y].neighbours.Add(graph[x - 1, y]);
-                    if (y > 0)
-                        graph[x, y].neighbours.Add(graph[x-1, y-1]);
-                    if (y < mapSizeY - 1)
-                        graph[x, y].neighbours.Add(graph[x-1, y + 1]);
-                }
-                   
-                //try Right
                 if (x < mapSizeX - 1)
-                {
                     graph[x, y].neighbours.Add(graph[x + 1, y]);
-                    if (y > 0)
-                        graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
-                    if (y < mapSizeY - 1)
-                        graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
-                }
-                    
-                //try strsit up and down
+
                 if (y > 0)
                     graph[x, y].neighbours.Add(graph[x, y - 1]);
                 if (y < mapSizeY - 1)
                     graph[x, y].neighbours.Add(graph[x, y + 1]);
-            }
+
+                //8 way
+                //try Left
+                //if (x > 0)
+                //{
+                //    graph[x, y].neighbours.Add(graph[x - 1, y]);
+                //    if (y > 0)
+                //        graph[x, y].neighbours.Add(graph[x-1, y-1]);
+                //    if (y < mapSizeY - 1)
+                //        graph[x, y].neighbours.Add(graph[x-1, y + 1]);
+                //}
+
+                ////try Right
+                //if (x < mapSizeX - 1)
+                //{
+                //    graph[x, y].neighbours.Add(graph[x + 1, y]);
+                //    if (y > 0)
+                //        graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
+                //    if (y < mapSizeY - 1)
+                //        graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
+                //}
+
+                ////try strsit up and down
+                //if (y > 0)
+                //    graph[x, y].neighbours.Add(graph[x, y - 1]);
+                //if (y < mapSizeY - 1)
+                //    graph[x, y].neighbours.Add(graph[x, y + 1]);
+                }
         }
     }
 
@@ -195,9 +188,10 @@ public class TileMap : MonoBehaviour {
         return true;
     }
 
-    public void GeneratePathTo(int x, int y)//set units path
+    public void GeneratePathTo(int x, int y, BaseUnit unit)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit.GetComponent<BaseUnit>().currentPath = null;
+        selectedUnit = unit;
+        selectedUnit.currentPath = null;
 
         if (UnitCanEnterTile(x,y) == false)
         {
@@ -213,16 +207,17 @@ public class TileMap : MonoBehaviour {
         List<Node> unvisited = new List<Node>();
 
         Node source = graph[
-                            selectedUnit.GetComponent<BaseUnit>().tileX,
-                            selectedUnit.GetComponent<BaseUnit>().tileY
+                            selectedUnit.tileX,
+                            selectedUnit.tileY
                             ];
         Node target = graph[
                             x,
                             y
                             ];
+        
         dist[source] = 0;
         prev[source] = null;
-
+        
         //initialize everything to have infinity distance, since
         //we do not know how far a unit can move right now.
         foreach(Node v in graph)
@@ -266,9 +261,10 @@ public class TileMap : MonoBehaviour {
                 }
             }
         }
-
+        
         if(prev[target] == null)
         {
+
             //no route between our target and our source
             return;
         }
@@ -283,7 +279,7 @@ public class TileMap : MonoBehaviour {
         }
         //current path is from goal to unit here we reverse it. to make it more normal
         currentPath.Reverse();
-
-        selectedUnit.GetComponent<BaseUnit>().currentPath = currentPath;
+        
+        selectedUnit.currentPath = currentPath;
     }
 }
