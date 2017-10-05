@@ -6807,4 +6807,4 @@ MonoBehaviour:
   enemyUnit: {fileID: 1198987242330480, guid: 2711c581ddc168546aaf260f5d19f96a, type: 2}
   enemySpawnNodes: {fileID: 2142936768}
   maxTurns: 10
-  spawnEnemyTurns: 0100000002000000030000000400000005000000
+  spawnEnemyTurns: 
