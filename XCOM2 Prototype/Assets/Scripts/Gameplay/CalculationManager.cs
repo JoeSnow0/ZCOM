@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CalculationManager : MonoBehaviour {
+public class CalculationManager : MonoBehaviour
+{
 
 
     int hitRoll;
@@ -14,6 +15,10 @@ public class CalculationManager : MonoBehaviour {
 
     void HitCheck ()
     {
+        //coverIntervenience = 0,25,50
+        //heightAdvantage = 25
+
+        //hitChance= (coverIntervenience + weaponBaseAccuracy + WeaponProficiency + heightAdvantage + Bonuses - Penalties - (distance * weapontypeRange))
         //hitRoll;
         hitRoll = GetComponent<RandomRange>().RollDice(1, 100);
         if (hitRoll <= hitChance)
@@ -35,7 +40,8 @@ public class CalculationManager : MonoBehaviour {
     {
         //Get Weapon damage parameters
 
-        //n = GetComponent<RandomRange>().RollDice(BaseWeapon.numberOfDiceDamage, BaseWeapon.numberOfSideDamage);
+
+        n = GetComponent<RandomRange>().RollDice(BaseWeapon.numberOfDiceDamage, BaseWeapon.numberOfSideDamage);
 
         //Give Damage dealt
         return (n);
