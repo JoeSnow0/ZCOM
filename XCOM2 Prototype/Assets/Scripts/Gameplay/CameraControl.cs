@@ -27,6 +27,11 @@ public class CameraControl : MonoBehaviour {
     public GameObject Camera;
     private Vector3 m_targetRotation;
 
+    Vector3 targetPosition;
+    Vector3 startPosition;
+    float moveToTargetLerp = 0;
+    bool movingCamera = false;
+
     void Update()
     {
         //
@@ -35,10 +40,12 @@ public class CameraControl : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.A) && CameraTarget.transform.position.x >= xPosMin)
             {
+                movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.D) && CameraTarget.transform.position.x <= xPosMax)
             {
+                movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             } 
         }
@@ -55,10 +62,12 @@ public class CameraControl : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.S) && CameraTarget.transform.position.z >= zPosMin)
             {
+                movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
             else if (Input.GetKey(KeyCode.W) && CameraTarget.transform.position.z <= zPosMax)
             {
+                movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
             
@@ -95,5 +104,19 @@ public class CameraControl : MonoBehaviour {
             Vector3 p = Camera.transform.position;
             Camera.transform.position = new Vector3(p.x, Mathf.Clamp(p.y, yPosMin, yPosMax), p.z);
         }
+
+        if(moveToTargetLerp < 1 && movingCamera)//Moves camera to selected unit
+        {
+            moveToTargetLerp += Time.deltaTime / 0.5f;
+            CameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));
+        }
+    }
+
+    public void MoveToTarget(Vector3 selectedPosition, float time)
+    {
+        movingCamera = true;
+        moveToTargetLerp = time;
+        startPosition = CameraTarget.transform.position;
+        targetPosition = selectedPosition;
     }
 }

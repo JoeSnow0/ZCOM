@@ -43,7 +43,7 @@ public class BaseUnit : MonoBehaviour {
         
         if (isMoving == true)
         {
-            
+            turnSystem.FollowUnit(transform.position, 1);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
                 
