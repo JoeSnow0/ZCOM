@@ -20,6 +20,7 @@ public class TurnSystem : MonoBehaviour {
     public EnemySpawn enemySpawnNodes;
     public bool playerTurn = true;
     public bool endTurn = false;
+    public CameraControl cameraControl;
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
@@ -85,8 +86,6 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
             }
         }
-
-
     }
     public void displayAP(bool isPlayerTurn)
     {
@@ -141,10 +140,21 @@ public class TurnSystem : MonoBehaviour {
                         GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                         selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                         selectedUnit.GetComponent<Unit>().isSelected = true;
+                        MoveCameraToTarget(selectedUnit.transform.position, 0);
                     }
                 }
             }
         }
+    }
+
+    public void MoveCameraToTarget(Vector3 targetPosition, float time)
+    {
+        cameraControl.MoveToTarget(targetPosition, time);
+    }
+
+    public void FollowUnit(Vector3 positionToFollow, float time)
+    {
+        MoveCameraToTarget(positionToFollow, time);
     }
 
     void attackUnit()
