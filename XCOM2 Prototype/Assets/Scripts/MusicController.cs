@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using MundoSoundUtil;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(AudioSource))]
@@ -16,10 +17,9 @@ public class MusicController : MonoBehaviour {
     static MusicController _instance = null;
 
     static List<AudioSource> playingSources = new List<AudioSource>();
-
-    float volumeMaster = 0.75f;
-    float volumeEffects = 0.75f;
-    float volumeMusic = 0.75f;
+    [SerializeField] float volumeMaster = 0.75f;
+    [SerializeField] float volumeEffects = 0.75f;
+    [SerializeField] float volumeMusic = 0.75f;
 
     [Header("A list of audioclips available to this specific audio source.")]
     [Tooltip("Each audioclip has a soundIndex equal to where it is in the list.")]
@@ -27,9 +27,11 @@ public class MusicController : MonoBehaviour {
 
     [Tooltip("Audio Source used:")]
     public AudioSource audioSource;
+   
     bool isPlaying = false;
     int gameScreen;
-    
+
+    Text volumeSliderValue;
 
     private void Awake()
     {
@@ -66,14 +68,15 @@ public class MusicController : MonoBehaviour {
             gameScreen = SceneManager.GetActiveScene().buildIndex;
 
         }
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) && !isPlaying)
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("mainMenu") && !isPlaying)
         {
+
             PlaySound(0, true);
             PlaySound(1, true);
             isPlaying = true;
 
         }
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) && !isPlaying)
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("gameSession") && !isPlaying)
         {
             PlaySound(2, true);
             PlaySound(3, true);
@@ -115,5 +118,22 @@ public class MusicController : MonoBehaviour {
             StopSound(i);
 
         }
+    }
+
+    public void AdjustVolume(float newVolume)
+    {
+        foreach (var audioSource in playingSources)
+        {
+
+            audioSource.volume = newVolume;
+        }
+        //newVolume *= 100;
+        //int temp = (int)newVolume;
+
+        //volumeSliderValue = GetComponentInChildren<Text>();
+
+
+        //volumeSliderValue.text = temp.ToString();
+        
     }
 }

@@ -12,10 +12,16 @@ public class MenuButtons : MonoBehaviour
     public GameObject mainMenu;
     public GameObject highScore;
     public GameObject credits;
+    public static int scene;
 
     private void Awake()
     {
+
         mainMenu.SetActive(true);
+        if (scene == 2)
+        {
+            OnHighScoreClick();
+        }
 
 
     }
@@ -33,21 +39,33 @@ public class MenuButtons : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
+        else if (sceneName == "mainMenu")
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else if (sceneName == "highScore")
+        {
+            scene = 2;
+            SceneManager.LoadScene("mainMenu");
+        }
 
     }
 
     public void OnMainMenuClick()
     {
+        scene = 1;
         DeactivatePanel();
         mainMenu.SetActive(true);
     }
     public void OnHighScoreClick()
     {
+        scene = 2;
         DeactivatePanel();
         highScore.SetActive(true);
     }
     public void OnCreditsClick()
     {
+        scene = 3;
         DeactivatePanel();
         credits.SetActive(true);
     }
