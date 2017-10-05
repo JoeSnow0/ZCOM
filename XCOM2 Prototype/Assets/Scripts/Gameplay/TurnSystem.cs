@@ -19,6 +19,7 @@ public class TurnSystem : MonoBehaviour {
 
     public EnemySpawn enemySpawnNodes;
     public bool playerTurn = true;
+    public bool endTurn = false;
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
@@ -68,8 +69,25 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
             }
         }
+        if (playerTurn)
+        {
+            bool endturn = true;
+            foreach (Unit unit in playerUnits)
+            {
+                if (unit.actions > 0 || unit.baseUnit.isMoving)
+                {
+                    endturn = false;
+                    break;
+                }
+            }
+            if (endturn == true)
+            {
+                hud.pressEnd(true);
+            }
+        }
 
-	}
+
+    }
     public void displayAP(bool isPlayerTurn)
     {
         if (isPlayerTurn)
@@ -192,6 +210,7 @@ public class TurnSystem : MonoBehaviour {
                 GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                 selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                 selectedUnit.GetComponent<Unit>().isSelected = true;
+                break;
             }
         }
     }

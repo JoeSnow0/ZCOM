@@ -35,7 +35,8 @@ public class BaseUnit : MonoBehaviour {
         tileY = (int)tileCoords.z;
 
         unit = GetComponent<Unit>();
-        turnSystem = unit.turnSystem;
+
+        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
     }
     private void Update()
     {

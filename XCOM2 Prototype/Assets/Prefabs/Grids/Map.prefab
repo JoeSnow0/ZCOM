@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4606675595661444}
   - component: {fileID: 114764200081771642}
-  - component: {fileID: 114768043096840500}
   - component: {fileID: 114140638950140348}
+  - component: {fileID: 114995828931628862}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -63,7 +63,7 @@ MonoBehaviour:
   selectedUnit: {fileID: 0}
   hud: {fileID: 0}
   enemyUnit: {fileID: 1165749053097084, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-  enemySpawnNodes: {fileID: 114768043096840500}
+  enemySpawnNodes: {fileID: 0}
   playerTurn: 1
   maxTurns: 10
   spawnEnemyTurns: 0100000002000000030000000400000005000000
@@ -91,7 +91,7 @@ MonoBehaviour:
     movemontCost: 0
     isWalkeble: 0
   offset: 2
---- !u!114 &114768043096840500
+--- !u!114 &114995828931628862
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -102,5 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028e7fe15257c1d46977c77bff8f4472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnNode: {fileID: 0}
-  turnSystem: {fileID: 114140638950140348}
+  spawnNodes: []
+  spawnNode: {fileID: 1435588625020456, guid: 8847849d0d1c0de46a013b25e1a3f132, type: 2}
+  current: 0
+  maxNodes: 0

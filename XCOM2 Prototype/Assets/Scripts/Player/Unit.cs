@@ -41,6 +41,7 @@ public class Unit : MonoBehaviour {
         healthMax = health;
         healthText.text = health + "/" + healthMax;
         baseUnit = GetComponent<BaseUnit>();
+        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
         
     }
 
