@@ -17,7 +17,7 @@ public class TurnSystem : MonoBehaviour {
     public GameObject enemyUnit; //Enemy to spawn, can be changed to an array to randomize
 
     public EnemySpawn enemySpawnNodes;
-    bool playerTurn = true;
+    public bool playerTurn = true;
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
@@ -27,13 +27,16 @@ public class TurnSystem : MonoBehaviour {
 
         for (int i = 0; i < allUnits.Length; i++)
         {
-            if (allUnits[i].GetComponent<Unit>().isFriendly)
+            if (allUnits[i].GetComponent<Unit>() != null)
             {
-                playerUnits.Add(allUnits[i].GetComponent<Unit>());
-            }
-            else
-            {
-                enemyUnits.Add(allUnits[i].GetComponent<Unit>());
+                if (allUnits[i].GetComponent<Unit>().isFriendly)
+                {
+                    playerUnits.Add(allUnits[i].GetComponent<Unit>());
+                }
+                else
+                {
+                    enemyUnits.Add(allUnits[i].GetComponent<Unit>());
+                }
             }
         }
 
@@ -100,7 +103,7 @@ public class TurnSystem : MonoBehaviour {
                             selectedUnit.GetComponent<BaseUnit>().isSelected = false;
                         }
                         selectedUnit = hit.collider.GetComponent<Unit>();
-                        GetComponent<TileMap>().selectedUnit = selectedUnit.gameObject;
+                        GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                         selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                         selectedUnit.GetComponent<Unit>().isSelected = true;
                     }
@@ -169,7 +172,7 @@ public class TurnSystem : MonoBehaviour {
                     selectedUnit.GetComponent<BaseUnit>().isSelected = false;
                 }
                 selectedUnit = playerUnits[i];
-                GetComponent<TileMap>().selectedUnit = selectedUnit.gameObject;
+                GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                 selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                 selectedUnit.GetComponent<Unit>().isSelected = true;
             }
