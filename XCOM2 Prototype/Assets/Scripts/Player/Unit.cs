@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour {
     public bool isFriendly;
     [SerializeField, Range(0, 100)]
     public int health;
-    int healthMax;
+    protected int healthMax;
     [SerializeField, Range(0, 100)]
     public int damage;
 
@@ -41,11 +41,13 @@ public class Unit : MonoBehaviour {
         healthMax = health;
         healthText.text = health + "/" + healthMax;
         baseUnit = GetComponent<BaseUnit>();
+        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+        
     }
 
     void Update()
     {
-        if (isSelected && Input.GetMouseButtonDown(1))
+        if (isSelected && Input.GetMouseButtonDown(1) && actions > 0)
         {
             baseUnit.MoveNextTile();
         }
