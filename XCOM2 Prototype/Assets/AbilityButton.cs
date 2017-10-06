@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class AbilityButton : MonoBehaviour {
     [SerializeField]
-    public Text abilityKeybind;
+    public Text abilityName;
+    [SerializeField]
+    public KeyCode abilityKeybind;
     [SerializeField]
     public Image abilityIcon;
     [SerializeField]

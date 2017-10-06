@@ -7,7 +7,8 @@ using UnityEngine.Events;
 [Serializable]
 public class AbilityInfo
 {
-    public string keybind;
+    public string name;
+    public KeyCode keybind;
     public Sprite icon;
     public UnityEvent callbackFunction;
 }

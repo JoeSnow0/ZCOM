@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class abilityFunctions : MonoBehaviour {
 
-    public void ShootTarget()
+    static public void ShootTarget()
     {
         Debug.Log("Pewpewpew");
     }
