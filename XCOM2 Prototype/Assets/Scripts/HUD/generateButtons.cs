@@ -10,6 +10,7 @@ public class generateButtons : MonoBehaviour {
     AbilityInfoObject characterClass;
     [SerializeField]
     AbilityButton abilityButtonPrefab;
+    
 
     private void Start()
     {
@@ -21,9 +22,12 @@ public class generateButtons : MonoBehaviour {
             newButton.abilityName.text = ability.name;
             newButton.abilityButton.GetComponent<buttonInput>().useAbility = ability.keybind;
             newButton.abilityIcon.sprite = ability.icon;
-            newButton.abilityButton.onClick = ability.callbackFunction as Button.ButtonClickedEvent;
-            newButton.abilityButton.onClick.AddListener(delegate { });
+            newButton.abilityKeybind = ability.keybind;
 
+            //newButton.abilityButton.onClick = ability.callbackFunction as Button.ButtonClickedEvent;
+            //newButton.abilityButton.onClick.AddListener(ability.callbackFunction);
+            //ability.callbackFunction
+            newButton.abilityButton.onClick.AddListener(() => { ability.callbackFunction.Invoke(); });
         }
     }
     

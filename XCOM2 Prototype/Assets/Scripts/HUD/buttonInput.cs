@@ -6,12 +6,19 @@ using UnityEngine.Events;
 
 public class buttonInput : MonoBehaviour {
     public KeyCode useAbility;
-  
+    public Button abilityButton;
+
+    private void Start()
+    {
+        abilityButton = GetComponent<Button>();
+    }
+
+
 	void Update ()
     {
        if (Input.GetKeyDown(useAbility))
         {
-            Debug.Log("IT WORKS WOW!");
+            abilityButton.onClick.Invoke();
         }
 	}
 }

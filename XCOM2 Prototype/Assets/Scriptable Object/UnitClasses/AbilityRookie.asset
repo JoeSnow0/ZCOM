@@ -13,14 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - name: 1
-    keybind: 257
+    keybind: 49
     icon: {fileID: 21300000, guid: 99bb695ee2df6874bb9c5402f7461d0e, type: 3}
+    tooltip: Fire on an enemy
     callbackFunction:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11500000, guid: c04ec2029248c5e4f9fd24cbf09f9451, type: 3}
-          m_MethodName: set_name
-          m_Mode: 5
+        - m_Target: {fileID: 114721028441311738, guid: 4dadf4d83eeac1743ac5dc364360f4ef,
+            type: 2}
+          m_MethodName: ShootTarget
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -32,58 +34,64 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   - name: 2
-    keybind: 258
+    keybind: 50
     icon: {fileID: 21300000, guid: e85a223a30ad3c846afb3a7171067071, type: 3}
+    tooltip: Take an action shot if an enemy moves in front of you.
     callbackFunction:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11500000, guid: c04ec2029248c5e4f9fd24cbf09f9451, type: 3}
-          m_MethodName: set_name
-          m_Mode: 5
+        - m_Target: {fileID: 114721028441311738, guid: 4dadf4d83eeac1743ac5dc364360f4ef,
+            type: 2}
+          m_MethodName: Overwatch
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Overwatch()
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   - name: 3
-    keybind: 259
+    keybind: 51
     icon: {fileID: 21300000, guid: 654af5c53bbf9ab4a8b3d2fbfb5ab5f9, type: 3}
+    tooltip: Reload your weapon.
     callbackFunction:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11500000, guid: c04ec2029248c5e4f9fd24cbf09f9451, type: 3}
-          m_MethodName: set_name
-          m_Mode: 5
+        - m_Target: {fileID: 114721028441311738, guid: 4dadf4d83eeac1743ac5dc364360f4ef,
+            type: 2}
+          m_MethodName: ReloadWeapon
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: ReloadWeapon()
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   - name: 4
-    keybind: 260
+    keybind: 52
     icon: {fileID: 21300000, guid: 0b11d596fcb12554e8e154724186813e, type: 3}
+    tooltip: Increase your defense.
     callbackFunction:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11500000, guid: c04ec2029248c5e4f9fd24cbf09f9451, type: 3}
-          m_MethodName: set_name
-          m_Mode: 5
+        - m_Target: {fileID: 114721028441311738, guid: 4dadf4d83eeac1743ac5dc364360f4ef,
+            type: 2}
+          m_MethodName: HunkerDown
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: HunkerDown()
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,

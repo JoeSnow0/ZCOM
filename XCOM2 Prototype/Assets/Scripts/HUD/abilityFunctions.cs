@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class abilityFunctions : MonoBehaviour {
 
-    static public void ShootTarget()
+    private void ConfirmScreen()
+    {
+
+    }
+    public void ShootTarget()
     {
         Debug.Log("Pewpewpew");
     }

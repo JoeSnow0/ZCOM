@@ -10,6 +10,7 @@ public class AbilityInfo
     public string name;
     public KeyCode keybind;
     public Sprite icon;
+    public string tooltip;
     public UnityEvent callbackFunction;
 }
 
