@@ -8,6 +8,9 @@ public class CalculationManager : MonoBehaviour
 
     int hitRoll;
     int hitChance;
+    [SerializeField] public int smallCoverIntervenience = 25;
+    [SerializeField] public int largeCoverIntervenience = 50;
+    [SerializeField] public int heightAdvantage = 25;
 
 
     int n;
@@ -15,8 +18,8 @@ public class CalculationManager : MonoBehaviour
 
     void HitCheck ()
     {
-        //coverIntervenience = 0,25,50
-        //heightAdvantage = 25
+        
+
 
         //hitChance= (coverIntervenience + weaponBaseAccuracy + WeaponProficiency + heightAdvantage + Bonuses - Penalties - (distance * weapontypeRange))
         //hitRoll;
@@ -40,8 +43,8 @@ public class CalculationManager : MonoBehaviour
     {
         //Get Weapon damage parameters
 
-
-        n = GetComponent<RandomRange>().RollDice(BaseWeapon.numberOfDiceDamage, BaseWeapon.numberOfSideDamage);
+        //int Baseweapon = GetComponent(numberOfDiceDamage);
+        //n = GetComponent<RandomRange>().RollDice(numberOfDiceDamage, BaseWeapon.numberOfSideDamage);
 
         //Give Damage dealt
         return (n);
