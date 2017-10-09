@@ -15,8 +15,8 @@ public class TileMap : MonoBehaviour {
     //may need fix for more units
     List<Node> currentPath = null;
 
-    int mapSizeX = 50;//map size
-    int mapSizeY = 50;
+    public int mapSizeX = 50;//map size
+    public int mapSizeY = 50;
 
     public float offset;
 
