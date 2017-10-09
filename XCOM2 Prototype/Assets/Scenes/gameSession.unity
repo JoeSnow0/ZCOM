@@ -1425,6 +1425,21 @@ Prefab:
       propertyPath: hud
       value: 
       objectReference: {fileID: 71232411}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: enemySpawnNodes
+      value: 
+      objectReference: {fileID: 1933787219}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: selectedUnit
+      value: 
+      objectReference: {fileID: 1621226575}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: cameraControl
+      value: 
+      objectReference: {fileID: 695161531}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0
@@ -3906,6 +3921,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1973597339924420, guid: 4c36a5c17caf7f040b8add17d5542ce4,
     type: 2}
   m_PrefabInternal: {fileID: 577016408}
+--- !u!114 &1621226575 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114990083882314416, guid: 4c36a5c17caf7f040b8add17d5542ce4,
+    type: 2}
+  m_PrefabInternal: {fileID: 577016408}
+  m_Script: {fileID: 11500000, guid: ad6b2f125d43b254b96f87b9dbe058e6, type: 3}
 --- !u!114 &1621226580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4778,6 +4799,12 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1875105751}
+--- !u!114 &1933787219 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114995828931628862, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+    type: 2}
+  m_PrefabInternal: {fileID: 747160946}
+  m_Script: {fileID: 11500000, guid: 028e7fe15257c1d46977c77bff8f4472, type: 3}
 --- !u!1 &1943015992
 GameObject:
   m_ObjectHideFlags: 0
