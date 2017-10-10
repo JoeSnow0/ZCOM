@@ -40,9 +40,4 @@ public class SoldierAnimation : MonoBehaviour {
             transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10);
         }
     }
-
-    void rotateCharacter()
-    {
-        
-    }
 }
