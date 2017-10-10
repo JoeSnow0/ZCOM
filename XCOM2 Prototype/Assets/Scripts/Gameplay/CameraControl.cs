@@ -30,7 +30,12 @@ public class CameraControl : MonoBehaviour {
     Vector3 targetPosition;
     Vector3 startPosition;
     float moveToTargetLerp = 0;
+    float rotateLerp = 1;
+    Vector3 targetRotation;
+    int yRotation = 45;
+    float currentScroll = -1;
     bool movingCamera = false;
+    private Vector3 velocity = Vector3.zero;
 
     void Update()
     {
@@ -81,31 +86,38 @@ public class CameraControl : MonoBehaviour {
 
         //
         //Rotate camera
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (m_targetRotation != CameraTarget.transform.rotation.eulerAngles)
-                CameraTarget.transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime, Space.World);
+            yRotation += 90;
+            targetRotation = new Vector3(0, yRotation, 0);
+            rotateLerp = 0;
         }
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            CameraTarget.transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime, Space.World);
+            yRotation -= 90;
+            targetRotation = new Vector3(0, yRotation, 0);
+            rotateLerp = 0;
+        }
+        if (rotateLerp < 1)
+        {
+            rotateLerp += Time.deltaTime;
+            CameraTarget.transform.rotation = Quaternion.Lerp(CameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
         }
 
         //
         //Zoom in and out
-        
-        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && currentScroll < 1)
         {
-            Camera.transform.Translate(Vector3.down * moveSpeed * Input.GetAxis("Mouse ScrollWheel"), Space.World);
+            currentScroll += Input.GetAxis("Mouse ScrollWheel");
+            Camera.transform.position += Camera.transform.forward * Input.GetAxis("Mouse ScrollWheel") * 10;
         }
-        //reset position if out of bounds
-        if (Camera.transform.position.y < yPosMin || Camera.transform.position.y > yPosMax)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && currentScroll > -1)
         {
-            Vector3 p = Camera.transform.position;
-            Camera.transform.position = new Vector3(p.x, Mathf.Clamp(p.y, yPosMin, yPosMax), p.z);
+            currentScroll += Input.GetAxis("Mouse ScrollWheel");
+            Camera.transform.position += Camera.transform.forward * Input.GetAxis("Mouse ScrollWheel") * 10;
         }
 
-        if(moveToTargetLerp < 1 && movingCamera)//Moves camera to selected unit
+        if (moveToTargetLerp <= 1 && movingCamera)//Moves camera to selected unit
         {
             moveToTargetLerp += Time.deltaTime / 0.5f;
             CameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));

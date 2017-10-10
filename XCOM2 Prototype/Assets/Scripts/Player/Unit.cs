@@ -7,14 +7,14 @@ public class Unit : MonoBehaviour {
     public TileMap tileMap;
     public Color[] color;
     public Image[] healthBar;
-    public Text healthText;
+    public Image[] actionPoints;
+    //public Text healthText;
     public Slider healthSlider;
-    public Text apText;
     public bool isFriendly;
-    [SerializeField, Range(0, 100)]
+    [SerializeField, Range(0, 10)]
     public int health;
     protected int healthMax;
-    [SerializeField, Range(0, 100)]
+    [SerializeField, Range(0, 10)]
     public int damage;
 
     public int actions = 2;
@@ -23,6 +23,8 @@ public class Unit : MonoBehaviour {
     public Animator animAP;
     public Transform dmgStartPos;
     public GameObject floatingDmg;
+    public GameObject bar;
+    public Transform barParent;
 
     public TurnSystem turnSystem;
     public bool isSelected = false;
@@ -41,28 +43,36 @@ public class Unit : MonoBehaviour {
             }
         }
         healthMax = health;
-        healthText.text = health + "/" + healthMax;
+        healthSlider.maxValue = healthMax;
+        healthSlider.value = healthMax;
         baseUnit = GetComponent<BaseUnit>();
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
         
+
+        for(int i = 0; i < healthMax; i++)
+        {
+            Instantiate(bar, barParent, false);
+        }
     }
 
     void Update()
     {
-        if (isSelected && Input.GetMouseButtonDown(1) && actions > 0)
+        if(actions < 2)
         {
-            baseUnit.MoveNextTile();
-        }
-
-        if (isSelected && actions > 0)
-        {
-            GetComponentInChildren<Renderer>().material.color = Color.green;
+            actionPoints[0].color = color[2];
+            if(actions < 1)
+            {
+                actionPoints[1].color = color[2];
+            }
+            else
+            {
+                actionPoints[1].color = color[3];
+            }
         }
         else
         {
-            GetComponentInChildren<Renderer>().material.color = Color.white;
+            actionPoints[0].color = color[3];
         }
-        apText.text = "(" + actions + ")";
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
@@ -72,7 +82,6 @@ public class Unit : MonoBehaviour {
         GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
         health -= damageAmount;
-        healthText.text = health + "/" + healthMax;
         healthSlider.value = health;
 
         if (health <= 0)

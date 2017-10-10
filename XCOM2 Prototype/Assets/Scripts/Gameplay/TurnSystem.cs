@@ -5,16 +5,24 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TurnSystem : MonoBehaviour {
+    [Header("Lists with all units")]
     public GameObject[] allUnits;
     public List<Unit> playerUnits = new List<Unit>();
     public List<Unit> enemyUnits = new List<Unit>();
+    [Header("Actions")]
     public int totalActions;
+    [Header("UI elements")]
     public GameObject gameOver;
     public Text gameOverText;
-    public Color defeatColor;
-
-    public Unit selectedUnit;
     public HUD hud;
+    [Header("Colors")]
+    public Color defeatColor;
+    public Color victoryColor;
+    public Color[] lineColors;
+    public Gradient gradient;
+    [Header("Selected Unit")]
+    public Unit selectedUnit;
+
     public GameObject enemyUnit; //Enemy to spawn, can be changed to an array to randomize
 
     public EnemySpawn enemySpawnNodes;
@@ -49,6 +57,7 @@ public class TurnSystem : MonoBehaviour {
 
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
+        selectedUnit.GetComponent<BaseUnit>().isSelected = true;
 
         displayAP(true);
     }
@@ -70,6 +79,7 @@ public class TurnSystem : MonoBehaviour {
             if (endturn == true)
             {
                 hud.pressEnd(true);
+                MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
         }
         if (playerTurn)
@@ -85,13 +95,17 @@ public class TurnSystem : MonoBehaviour {
             }
             if (endturn == true)
             {
+                selectedUnit.baseUnit.isSelected = false;
+                selectedUnit.GetComponent<Unit>().isSelected = false;
+                selectedUnit = null;
                 hud.pressEnd(true);
             }
         }
+
     }
     public void displayAP(bool isPlayerTurn)
     {
-        if (isPlayerTurn)
+        /*if (isPlayerTurn)
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
@@ -101,7 +115,8 @@ public class TurnSystem : MonoBehaviour {
             {
                 enemyUnits[i].animAP.SetBool("display", false);
             }
-        }
+        }*/
+        /*
         else
         {
             for (int i = 0; i < playerUnits.Count; i++)
@@ -113,6 +128,7 @@ public class TurnSystem : MonoBehaviour {
                 enemyUnits[i].animAP.SetBool("display", true);
             }
         }
+        */
     }
 
     public void selectUnit()
@@ -152,11 +168,6 @@ public class TurnSystem : MonoBehaviour {
     public void MoveCameraToTarget(Vector3 targetPosition, float time)
     {
         cameraControl.MoveToTarget(targetPosition, time);
-    }
-
-    public void FollowUnit(Vector3 positionToFollow, float time)
-    {
-        MoveCameraToTarget(positionToFollow, time);
     }
 
     void attackUnit()
@@ -224,6 +235,7 @@ public class TurnSystem : MonoBehaviour {
                 GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                 selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                 selectedUnit.GetComponent<Unit>().isSelected = true;
+                MoveCameraToTarget(selectedUnit.transform.position, 0);
                 break;
             }
         }
@@ -245,6 +257,12 @@ public class TurnSystem : MonoBehaviour {
 
         Destroy(unit.gameObject);
         if(enemyUnits.Count <= 0)
+        {
+            gameOver.SetActive(true);
+            gameOverText.text = "VICTORY";
+            gameOverText.color = victoryColor;
+        }
+        else if(playerUnits.Count <= 0)
         {
             gameOver.SetActive(true);
             gameOverText.text = "DEFEAT";
