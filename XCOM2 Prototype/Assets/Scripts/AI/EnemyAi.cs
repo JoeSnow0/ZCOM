@@ -20,24 +20,26 @@ public class EnemyAi : Unit {
             }
         }
         healthMax = health;
-        healthText.text = health + "/" + healthMax;
         baseUnit = GetComponent<BaseUnit>();
         tileMap = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+
+        for (int i = 0; i < healthMax; i++)
+        {
+            Instantiate(bar, barParent, false);
+        }
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        apText.text = "(" + actions + ")";
-
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
         if (!turnSystem.playerTurn && GetComponent<Unit>().actions > 0 && GetComponent<BaseUnit>().isMoving == false)
         {
             FindClosestPlayerUnit();
             BaseUnit closestUnit = moveToUnit.GetComponent<BaseUnit>();
             tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<BaseUnit>());
-            Debug.Log("count = " + baseUnit.currentPath.Count);
+            
             if (baseUnit.currentPath.Count < 3)
             {
                 closestUnit.GetComponent<Unit>().TakeDamage(damage);
