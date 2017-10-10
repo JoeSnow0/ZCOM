@@ -29,6 +29,8 @@ public class Unit : MonoBehaviour {
 
     public BaseUnit baseUnit;
 
+    public WeaponInfoObject unitWeapon;
+
     void Start () {
         //Sets color of healthbar
         if (!isFriendly)

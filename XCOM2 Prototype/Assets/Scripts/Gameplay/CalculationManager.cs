@@ -2,36 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CalculationManager : MonoBehaviour
+public static class CalculationManager// : MonoBehaviour
 {
 
 
-    int hitRoll;
-    int hitChance;
-    [SerializeField] public int smallCoverIntervenience = 25;
-    [SerializeField] public int largeCoverIntervenience = 50;
-    [SerializeField] public int heightAdvantage = 25;
+    static int hitRoll;
+    static int hitChance;
+    public static int smallCoverIntervenience = 25;
+    public static int largeCoverIntervenience = 50;
+    public static int heightAdvantage = 25;
+    public static int damage = 0;
 
-
-    int n;
-
-
-    void HitCheck ()
+    
+    
+    public static void HitCheck (WeaponInfoObject usedWeapon)
     {
-        
+
 
 
         //hitChance= (coverIntervenience + weaponBaseAccuracy + WeaponProficiency + heightAdvantage + Bonuses - Penalties - (distance * weapontypeRange))
-        //hitRoll;
-        hitRoll = GetComponent<RandomRange>().RollDice(1, 100);
+        
+        hitChance = usedWeapon.baseAccuracy;
+
+        hitRoll = RandomRange.RollDice(1, 100);
         if (hitRoll <= hitChance)
         {
             //Run damage script
-            DamageDealt();
+            DamageDealt(usedWeapon.baseDamage, usedWeapon.numberOfDiceDamage, usedWeapon.numberOfSideDamage);
         }
         else
         {
-            //Return "Missed" Message
+            //Run damage script
+            DamageDealt(0, 0, 0);
         }
 
 
@@ -39,15 +41,17 @@ public class CalculationManager : MonoBehaviour
     }
 
 
-    public int DamageDealt ()
+    public static void DamageDealt(int baseDamage, int numberOfDiceDamage, int numberOfSideDamage)
     {
+        int n = 0;
         //Get Weapon damage parameters
 
-        //int Baseweapon = GetComponent(numberOfDiceDamage);
-        //n = GetComponent<RandomRange>().RollDice(numberOfDiceDamage, BaseWeapon.numberOfSideDamage);
+
+        n = RandomRange.RollDice(numberOfDiceDamage, numberOfSideDamage);
 
         //Give Damage dealt
-        return (n);
+        damage = n + baseDamage;
+        
 	}
 
 
