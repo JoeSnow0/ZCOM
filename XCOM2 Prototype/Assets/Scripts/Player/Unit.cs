@@ -80,13 +80,25 @@ public class Unit : MonoBehaviour {
     public void TakeDamage(int damageAmount)
     {
         GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
-        dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
-        health -= damageAmount;
-        healthSlider.value = health;
-
-        if (health <= 0)
+        //Check if miss
+        if (CalculationManager.hit == false)
         {
-            turnSystem.destroyUnit(this);
+            dmg.GetComponentInChildren<Text>().text = "Missed!";
+
+            //Temporary lazy code preventing zombies from missing
+            CalculationManager.hit = true;
+        }
+
+        else
+        {
+            dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
+            health -= damageAmount;
+            healthSlider.value = health;
+
+            if (health <= 0)
+            {
+                turnSystem.destroyUnit(this);
+            }
         }
     }
 }

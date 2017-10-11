@@ -12,6 +12,7 @@ public static class CalculationManager// : MonoBehaviour
     public static int largeCoverIntervenience = 50;
     public static int heightAdvantage = 25;
     public static int damage = 0;
+    public static bool hit;
 
     
     
@@ -28,12 +29,12 @@ public static class CalculationManager// : MonoBehaviour
         if (hitRoll <= hitChance)
         {
             //Run damage script
-            DamageDealt(usedWeapon.baseDamage, usedWeapon.numberOfDiceDamage, usedWeapon.numberOfSideDamage);
+            DamageDealt(usedWeapon.baseDamage, usedWeapon.numberOfDiceDamage, usedWeapon.numberOfSideDamage, true);
         }
         else
         {
             //Run damage script
-            DamageDealt(0, 0, 0);
+            DamageDealt(0, 0, 0, false);
         }
 
 
@@ -41,7 +42,7 @@ public static class CalculationManager// : MonoBehaviour
     }
 
 
-    public static void DamageDealt(int baseDamage, int numberOfDiceDamage, int numberOfSideDamage)
+    public static void DamageDealt(int baseDamage, int numberOfDiceDamage, int numberOfSideDamage, bool contact)
     {
         int n = 0;
         //Get Weapon damage parameters
@@ -51,7 +52,7 @@ public static class CalculationManager// : MonoBehaviour
 
         //Give Damage dealt
         damage = n + baseDamage;
-        
+        hit = contact;
 	}
 
 
