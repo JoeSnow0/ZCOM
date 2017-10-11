@@ -185,10 +185,11 @@ public class TurnSystem : MonoBehaviour {
                         Unit target = hit.collider.GetComponent<Unit>();
                         if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
+                            //Uses current weapon
                             CalculationManager.HitCheck(selectedUnit.unitWeapon);
                             target.TakeDamage(CalculationManager.damage);
 
-
+                            //Consumes Actions
                             totalActions -= selectedUnit.actions;
                             selectedUnit.actions = 0;
                             selectNextUnit();
