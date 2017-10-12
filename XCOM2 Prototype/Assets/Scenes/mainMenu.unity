@@ -1238,7 +1238,7 @@ Prefab:
     - target: {fileID: 114153996642915998, guid: 6965c67fa9889534385a6941f83826b6,
         type: 2}
       propertyPath: volumeMaster
-      value: 0.75
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 114153996642915998, guid: 6965c67fa9889534385a6941f83826b6,
         type: 2}

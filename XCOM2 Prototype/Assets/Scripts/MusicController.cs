@@ -39,9 +39,10 @@ public class MusicController : MonoBehaviour {
         if (_instance != null)
         {
             Destroy(gameObject);
+            return;
         }
         _instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
             
         
         //gets Scene Build Index
@@ -124,7 +125,7 @@ public class MusicController : MonoBehaviour {
     {
         foreach (var audioSource in playingSources)
         {
-
+            //PlayerPrefs.SetFloat("volume", audioSource.volume);
             audioSource.volume = newVolume;
         }
         //newVolume *= 100;

@@ -17,7 +17,7 @@ public class MenuButtons : MonoBehaviour
     private void Awake()
     {
 
-        mainMenu.SetActive(true);
+
         if (scene == 2)
         {
             OnHighScoreClick();
