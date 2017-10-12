@@ -22,6 +22,7 @@ public class BaseUnit : MonoBehaviour {
     public float pathProgress;
 
     public bool isSelected;
+    
 
     Unit unit;
     TurnSystem turnSystem;
@@ -30,7 +31,7 @@ public class BaseUnit : MonoBehaviour {
     {
         
         map = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
-        Vector3 tileCoords = map.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);//get unit tile coord
+        Vector3 tileCoords = map.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);//get unit tile coord
         tileX = (int)tileCoords.x;// set unit position on grid
         tileY = (int)tileCoords.z;
 
@@ -125,6 +126,7 @@ public class BaseUnit : MonoBehaviour {
 
         if (currentPath == null)// if there is no path leave funktion
         {
+
             Debug.Log("this is a test");
             return;
         }
@@ -136,13 +138,13 @@ public class BaseUnit : MonoBehaviour {
             int moveTo = currentPath.Count - 1;
             for (int cost = 1; cost < moveTo; cost++)//is the path posseble
             {
-                remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
 
-                
+                remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y); 
             }
 
             if (remainingMovement > 0)//can you move the unit 
             {
+
                 currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
                 isMoving = true;//start moving in the update
                 unit.actions--;

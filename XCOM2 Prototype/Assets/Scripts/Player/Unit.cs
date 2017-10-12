@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour {
         healthText.text = health + "/" + healthMax;
         baseUnit = GetComponent<BaseUnit>();
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
-        
+    
     }
 
     void Update()
@@ -60,6 +60,7 @@ public class Unit : MonoBehaviour {
         {
             GetComponentInChildren<Renderer>().material.color = Color.white;
         }
+
         apText.text = "(" + actions + ")";
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);

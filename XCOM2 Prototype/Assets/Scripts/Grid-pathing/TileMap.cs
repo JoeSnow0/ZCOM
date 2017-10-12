@@ -8,12 +8,14 @@ public class TileMap : MonoBehaviour {
     public BaseUnit selectedUnit;//needs to change for mulltiple units
 
     public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
-
+    public Material[] gridMaterial;
+    GameObject[,] tileobjects;
     int[,] tiles;
     Node[,] graph;
 
     //may need fix for more units
     List<Node> currentPath = null;
+    List<GameObject> changedColoredGrid = null;
 
     int mapSizeX = 50;//map size
     int mapSizeY = 50;
@@ -153,19 +155,20 @@ public class TileMap : MonoBehaviour {
                 //    graph[x, y].neighbours.Add(graph[x, y - 1]);
                 //if (y < mapSizeY - 1)
                 //    graph[x, y].neighbours.Add(graph[x, y + 1]);
-                }
+            }
         }
     }
 
     void GenerateMapVisual()// make the grid viseble
     {
+        tileobjects = new GameObject[mapSizeX, mapSizeY];
         for (int x = 0; x < mapSizeX; x++)
         {
             for (int y = 0; y < mapSizeY; y++)
             {
                 TileType tt = tileType[tiles[x, y]];
                 GameObject go = Instantiate(tt.tileVisualPrefab, new Vector3(x * offset, 0, y * offset), Quaternion.identity, transform);
-
+                tileobjects[x, y] = go;
                 ClickebleTile ct = go.GetComponent<ClickebleTile>();
                 ct.tileX = x;
                 ct.tileY = y;
@@ -179,7 +182,7 @@ public class TileMap : MonoBehaviour {
         return transform.position + new Vector3(x * offset, 0, y * offset);
     }
 
-    public Vector3 UnitCoordToWorldCoord(int x,int y)//tile to world coordenets
+    public Vector3 WorldCoordToTileCoord(int x,int y)//tile to world coordenets
     {
         return transform.position + new Vector3(x / offset, 0, y / offset);
     }
@@ -229,6 +232,7 @@ public class TileMap : MonoBehaviour {
             }
             unvisited.Add(v);
         }
+        
 
         while (unvisited.Count > 0)
         {
@@ -240,6 +244,7 @@ public class TileMap : MonoBehaviour {
                 if (u == null || dist[possibleU] < dist[u])
                 {
                     u = possibleU;
+                    
                 }
             }
 
@@ -247,9 +252,9 @@ public class TileMap : MonoBehaviour {
             {
                 break;//exit while loop
             }
-
+            
             unvisited.Remove(u);
-
+            
             foreach (Node v in u.neighbours)
             {
                 
@@ -281,5 +286,51 @@ public class TileMap : MonoBehaviour {
         currentPath.Reverse();
         
         selectedUnit.currentPath = currentPath;
+    }
+    public void ChangeGridColor(int movement)
+    {
+        foreach (GameObject grid in changedColoredGrid)
+        {
+            grid.GetComponent<Renderer>().material = gridMaterial[0];
+        }
+        changedColoredGrid.Clear();//change material back to normal before this point
+        for (int x = 0; x < movement * 2; x++)
+        {
+            for (int y = movement * 2 - 1; y > 0; y--)
+            {
+                GameObject tile = tileobjects[x, y];
+                if (tile.tag == "Ground")
+                {
+                    if (x > movement || y > movement)
+                    {
+                        tile.GetComponent<Renderer>().material = gridMaterial[2];
+                    }
+                    else
+                    {
+                        tile.GetComponent<Renderer>().material = gridMaterial[1];
+                    }
+                    changedColoredGrid.Add(tile);
+                }
+            }
+        }
+        for (int x = 0; x < -movement * 2; x--)
+        {
+            for (int y = movement * 2 - 1; y > 0; y--)
+            {
+                GameObject tile = tileobjects[x, y];
+                if (tile.tag == "Ground")
+                {
+                    if (x < -movement || y > movement)
+                    {
+                        tile.GetComponent<Renderer>().material = gridMaterial[2];
+                    }
+                    else
+                    {
+                        tile.GetComponent<Renderer>().material = gridMaterial[1];
+                    }
+                    changedColoredGrid.Add(tile);
+                }
+            }
+        }
     }
 }
