@@ -16,10 +16,21 @@ public class menuToggle : MonoBehaviour {
  
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (optionsToggle == false)
         {
-            toggleMenu();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                toggleMenu();
+            }
         }
+        if (optionsToggle == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ToggleOptions();
+            }
+        }
+
 
     }
     public void toggleMenu()
