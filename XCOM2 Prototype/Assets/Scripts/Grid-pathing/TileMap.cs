@@ -17,8 +17,8 @@ public class TileMap : MonoBehaviour {
     List<Node> currentPath = null;
     List<GameObject> changedColoredGrid = null;
 
-    int mapSizeX = 50;//map size
-    int mapSizeY = 50;
+    public int mapSizeX = 50;//map size
+    public int mapSizeY = 50;
 
     public float offset;
 
