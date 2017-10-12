@@ -6,9 +6,11 @@ public class ClickebleTile : MonoBehaviour {
     public int tileX;
     public int tileY;
     public TileMap map;
-    void OnMouseUp()//send info to the curent unit
+    public TurnSystem turnSystem;
+
+    private void Start()
     {
-        map.GeneratePathTo(tileX, tileY);//path to the klicked tile
+        
     }
 
 }

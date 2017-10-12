@@ -4,40 +4,66 @@ using UnityEngine;
 
 public class cursor : MonoBehaviour {
 
-    public Material hoverCursor;
-    // Update is called once per frame
-    Camera cam;
-    public Material orgMat;
-    public Material hoverMat;
-    public Color muoseHoverColor;
+    public Color defaultColor;
+    public Color hoverColor;
+
+    ClickebleTile activeObject;
+    ClickebleTile cursorObject;
+
+    TurnSystem turnSystem;
+    TileMap map;
+
     private void Awake()
     {
-        cam = Camera.main;
-
+        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+        map = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
     }
-    void Update () {
-       
-            GetPointUnderCursor();
-        
+    void Update ()
+    {
+        GetPointUnderCursor();
     }
 
     private void GetPointUnderCursor()
     {
-        
-        Vector3 screenPosition = Input.mousePosition;
-        Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(screenPosition);
+
+        Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitPosition;
 
-        Physics.Raycast(mouseWorldPosition, cam.transform.forward, out hitPosition, 100);
+        Physics.Raycast(raycast, out hitPosition);
         if (hitPosition.collider)
         {
             if (hitPosition.collider.CompareTag("Ground"))
             {
-                
                 GameObject hit = hitPosition.collider.gameObject;
-                hit.GetComponent<squarefunctions>().currentColor = muoseHoverColor;
+                cursorObject = hit.GetComponent<ClickebleTile>();
 
+                if (activeObject != cursorObject)
+                {
+                    if(activeObject != null)
+                        activeObject.GetComponentInChildren<Renderer>().material.color = defaultColor;
+
+                    activeObject = cursorObject;
+
+                    if (turnSystem.playerTurn) {
+                        if (!turnSystem.selectedUnit.baseUnit.isMoving)
+                            map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit.baseUnit);
+                    }
+                }
+
+                if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn)
+                {
+                    if (!turnSystem.selectedUnit.baseUnit.isMoving)
+                    {
+                        //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
+                        turnSystem.selectedUnit.baseUnit.MoveNextTile();
+                    }
+                }
+                
+
+                
+                hit.GetComponentInChildren<Renderer>().material.color = hoverColor;
+                
             }
         }
     }
