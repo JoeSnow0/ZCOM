@@ -2748,6 +2748,12 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114990083882314416, guid: 4c36a5c17caf7f040b8add17d5542ce4,
+        type: 2}
+      propertyPath: unitWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
   m_IsPrefabParent: 0
@@ -5062,6 +5068,12 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114396943117730216, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+        type: 2}
+      propertyPath: unitWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
   m_IsPrefabParent: 0

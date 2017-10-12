@@ -2407,6 +2407,7 @@ MonoBehaviour:
   turnSystem: {fileID: 0}
   isSelected: 0
   baseUnit: {fileID: 0}
+  unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
 --- !u!120 &120123932883889892
 LineRenderer:
   m_ObjectHideFlags: 1

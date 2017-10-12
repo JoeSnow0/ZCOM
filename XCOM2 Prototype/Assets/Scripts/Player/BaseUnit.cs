@@ -179,7 +179,7 @@ public class BaseUnit : MonoBehaviour {
             }
             else//is too far away do not move
             {
-                Debug.Log("out of range");
+                //Debug.Log("out of range");
                 return;
             }
         }
@@ -189,7 +189,7 @@ public class BaseUnit : MonoBehaviour {
 
         if (currentPath == null)// if there is no path leave funktion
         {
-            Debug.Log("this is a test");
+            //Debug.Log("this is a test");
             return;
         }
 
