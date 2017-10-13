@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef4377ef56357c4a9c3630e845fc924, type: 3}
+  m_Name: ColorEditor
+  m_EditorClassIdentifier: 
+  normalColor: {r: 0, g: 0, b: 0, a: 1}
+  highlightColor: {r: 0.19398789, g: 0.50735295, b: 0.48141935, a: 0.627451}
+  pressedColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 0.627451}
+  disabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+  colorMultiplier: 1
+  effectColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 1}
+  effectDistanceX: 2
+  effectDistanceY: -2
+  sourceImage: {fileID: 21300000, guid: ae46420e114a6f041b626ea90f0cda18, type: 3}
+  imageColor: {r: 1, g: 1, b: 1, a: 1}
+  imageMaterial: {fileID: 0}
+  primaryFont: {fileID: 12800000, guid: a83f24470ed59a24d9fa00eeb4f2d48a, type: 3}
+  textColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 1}

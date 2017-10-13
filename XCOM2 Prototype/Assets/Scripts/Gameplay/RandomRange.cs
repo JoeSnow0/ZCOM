@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomRange : MonoBehaviour
+public static class RandomRange// : MonoBehaviour
 {
 
     //int diceRolls;
-    int n;
+    
 
-    public int RollDice(int numberOfDice, int numberOfSides)
+    public static int RollDice(int numberOfDice, int numberOfSides)
     {
+        int n = 0;
         /*
         diceRolls = 0;
         while(true)
@@ -21,9 +22,10 @@ public class RandomRange : MonoBehaviour
                 break;
             }
         }   */
+
         for (int i = 0; i < numberOfDice; i++)
         {
-            n = n + Random.Range(1, numberOfSides);
+            n = n + Random.Range(1, numberOfSides + 1);
         }
         
         return(n);

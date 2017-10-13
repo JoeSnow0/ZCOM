@@ -11,7 +11,7 @@ public class Accuracy : MonoBehaviour
     public void Hit()
     {
         //hitRoll;
-        hitRoll = GetComponent<RandomRange>().RollDice(1, 100);
+        //hitRoll = GetComponent<RandomRange>().RollDice(1, 100);
         if (hitRoll <= hitChance)
         {
             //Run damage script

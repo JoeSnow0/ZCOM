@@ -39,7 +39,7 @@ public class TurnSystem : MonoBehaviour {
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
 
-    static MusicController musicController;
+    //CalculationManager calcManager;
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -159,9 +159,13 @@ public class TurnSystem : MonoBehaviour {
                     if (hit.collider.GetComponent<Unit>()) //Checks if the unit hit an enemy
                     {
                         Unit target = hit.collider.GetComponent<Unit>();
-                        if (!target.isFriendly) //Checks if the unit hit is friendly
+                        if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
-                            target.TakeDamage(selectedUnit.damage);
+                            //Uses current weapon
+                            CalculationManager.HitCheck(selectedUnit.unitWeapon);
+                            target.TakeDamage(CalculationManager.damage);
+
+                            //Consumes Actions
                             totalActions -= selectedUnit.actions;
                             selectedUnit.actions = 0;
                             selectNextUnit();
