@@ -161,7 +161,6 @@ public class TurnSystem : MonoBehaviour {
                         Unit target = hit.collider.GetComponent<Unit>();
                         if (!target.isFriendly) //Checks if the unit hit is friendly
                         {
-                            musicController.PlaySound(4);
                             target.TakeDamage(selectedUnit.damage);
                             totalActions -= selectedUnit.actions;
                             selectedUnit.actions = 0;
