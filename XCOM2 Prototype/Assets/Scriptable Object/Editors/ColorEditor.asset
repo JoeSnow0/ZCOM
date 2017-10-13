@@ -16,7 +16,7 @@ MonoBehaviour:
   pressedColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 0.627451}
   disabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   colorMultiplier: 1
-  effectColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 1}
+  effectColor: {r: 0.21604672, g: 0.7941176, b: 0.7462774, a: 1}
   effectDistanceX: 2
   effectDistanceY: -2
   sourceImage: {fileID: 21300000, guid: ae46420e114a6f041b626ea90f0cda18, type: 3}

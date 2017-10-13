@@ -14,6 +14,7 @@ public class victoryCheck : MonoBehaviour {
         //disable win screen at start
             gameEndCanvas.SetActive(false);
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.V) && gameEndCanvas.activeInHierarchy == false)
@@ -25,6 +26,7 @@ public class victoryCheck : MonoBehaviour {
             winCheck(false);
         }
     }
+
 	public void winCheck(bool hasWon)
     {
         gameEndCanvas.SetActive(true);
@@ -33,6 +35,5 @@ public class victoryCheck : MonoBehaviour {
             gameEndText.GetComponent<Text>().text = "Defeated!";
             gameEndPanel.GetComponent<Image>().color = Color.red;
         }
-        Time.timeScale = 0;
     }
 }

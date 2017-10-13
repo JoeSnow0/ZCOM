@@ -62,6 +62,7 @@ public class Unit : MonoBehaviour {
         {
             actionPoints[1].color = color[3];
             actionPoints[0].color = color[3];
+            actionPoints[1].color = color[3];
         }
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
