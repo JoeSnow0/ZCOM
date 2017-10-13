@@ -80,7 +80,6 @@ public class Unit : MonoBehaviour {
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
         }
-
         else
         {
             dmg.GetComponentInChildren<Text>().text = damageAmount.ToString();
