@@ -2011,7 +2011,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 373725a1280d25e4ca0ef14f4a67a9f5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2184,7 +2184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.38431376, g: 0.49411768, b: 0.49803925, a: 1}
+  m_Color: {r: 0.19607845, g: 0.19215688, b: 0.18039216, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2385,7 +2385,7 @@ MonoBehaviour:
   color:
   - {r: 0.7490196, g: 0.11764707, b: 0.18823531, a: 1}
   - {r: 0.45098042, g: 0.07058824, b: 0.1137255, a: 1}
-  - {r: 0.38431376, g: 0.49411768, b: 0.49803925, a: 1}
+  - {r: 0.19607845, g: 0.19215688, b: 0.18039216, a: 1}
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   healthBar:
   - {fileID: 114648274980277984}

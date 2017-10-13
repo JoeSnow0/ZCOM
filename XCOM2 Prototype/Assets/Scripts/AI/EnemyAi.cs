@@ -10,15 +10,6 @@ public class EnemyAi : Unit {
     // Use this for initialization
     void Start ()
     {
-
-        
-        if (!isFriendly)
-        {
-            for (int i = 0; i <= 1; i++)
-            {
-                healthBar[i].color = color[i];
-            }
-        }
         healthMax = health;
         baseUnit = GetComponent<BaseUnit>();
         tileMap = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();

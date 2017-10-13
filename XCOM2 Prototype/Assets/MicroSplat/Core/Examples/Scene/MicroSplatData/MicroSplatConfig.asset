@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5760785f8c0064b44b588ae7fd6fd268, type: 3}
+  m_Name: MicroSplatConfig
+  m_EditorClassIdentifier: 
+  textureMode: 1
+  hash: 1261486759
+  diffuseArray: {fileID: 18700000, guid: 6966c6a2271704eeaa4697428c97b571, type: 2}
+  normalSAOArray: {fileID: 18700000, guid: ca49526f427194c41b515c21c5dbe465, type: 2}
+  diffuseTextureSize: 1024
+  diffuseCompression: 0
+  diffuseFilterMode: 1
+  diffuseAnisoLevel: 1
+  normalSAOTextureSize: 1024
+  normalCompression: 0
+  normalFilterMode: 2
+  normalAnisoLevel: 1
+  allTextureChannelHeight: 1
+  allTextureChannelSmoothness: 1
+  allTextureChannelAO: 1
+  sourceTextures:
+  - substance: {fileID: 0}
+    diffuse: {fileID: 2800000, guid: 1d6b5702e2d7947a6aca898081729d0f, type: 3}
+    height: {fileID: 2800000, guid: a4803915ed20f45f5a61eac0bbe3e477, type: 3}
+    heightChannel: 1
+    normal: {fileID: 2800000, guid: 294f7637e9ef54b21a1b1ea883dfea32, type: 3}
+    smoothness: {fileID: 2800000, guid: 4a3982fcc24514da1b539cfb39014206, type: 3}
+    smoothnessChannel: 1
+    isRoughness: 0
+    ao: {fileID: 2800000, guid: f32b234bd5bb84e928d73cbcc11df72b, type: 3}
+    aoChannel: 1
+  - substance: {fileID: 0}
+    diffuse: {fileID: 2800000, guid: 66fb879d08c8d4a8d9217a396637cd02, type: 3}
+    height: {fileID: 2800000, guid: 789a0a85e9c004607b33057be6bc8414, type: 3}
+    heightChannel: 1
+    normal: {fileID: 2800000, guid: 440362e15edd043ebad4321a5118e235, type: 3}
+    smoothness: {fileID: 2800000, guid: 5b0e4204820504dc0a10a227b8b6c18b, type: 3}
+    smoothnessChannel: 1
+    isRoughness: 0
+    ao: {fileID: 2800000, guid: d85f6f03bea454b92b46e99f7bec74b2, type: 3}
+    aoChannel: 1
+  - substance: {fileID: 0}
+    diffuse: {fileID: 2800000, guid: a4a9376fca9114840bb973b6693e7ff5, type: 3}
+    height: {fileID: 2800000, guid: 1a8d14e5cac49403e9e88b64d384e29a, type: 3}
+    heightChannel: 1
+    normal: {fileID: 2800000, guid: 0d626c878590d42eca75516512f93565, type: 3}
+    smoothness: {fileID: 2800000, guid: ccdddcfa22e924bb5bde6a40b8ef78df, type: 3}
+    smoothnessChannel: 1
+    isRoughness: 0
+    ao: {fileID: 2800000, guid: d171d477d7bec40a68abb6b20cde67ec, type: 3}
+    aoChannel: 1
+  - substance: {fileID: 0}
+    diffuse: {fileID: 2800000, guid: 71dd51475bff34d62869b5c4af08ae53, type: 3}
+    height: {fileID: 2800000, guid: eeacfd7345ac14d419a2deaa5a1778ae, type: 3}
+    heightChannel: 1
+    normal: {fileID: 2800000, guid: ad2644b1c4b9048e79005ee63c52e806, type: 3}
+    smoothness: {fileID: 2800000, guid: c3f655db68e2746619c46b899281c0fd, type: 3}
+    smoothnessChannel: 1
+    isRoughness: 0
+    ao: {fileID: 2800000, guid: a9db2dacd51aa4850b610149d44a5cc5, type: 3}
+    aoChannel: 1

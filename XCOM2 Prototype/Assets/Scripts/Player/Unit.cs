@@ -32,14 +32,6 @@ public class Unit : MonoBehaviour {
     public BaseUnit baseUnit;
 
     void Start () {
-        //Sets color of healthbar
-        if (!isFriendly)
-        {
-            for(int i = 0; i <= 1; i++)
-            {
-                healthBar[i].color = color[i];
-            }
-        }
         healthMax = health;
         healthSlider.maxValue = healthMax;
         healthSlider.value = healthMax;
@@ -62,13 +54,10 @@ public class Unit : MonoBehaviour {
             {
                 actionPoints[1].color = color[2];
             }
-            else
-            {
-                actionPoints[1].color = color[3];
-            }
         }
         else
         {
+            actionPoints[1].color = color[3];
             actionPoints[0].color = color[3];
         }
 

@@ -20,6 +20,12 @@ public class TurnSystem : MonoBehaviour {
     public Color victoryColor;
     public Color[] lineColors;
     public Gradient gradient;
+    [Header("Markers")]
+    public Transform cursorMarker;
+    public Transform unitMarker;
+    public Animator cursorAnimator;
+    public Animator unitMarkerAnimator;
+    public Image[] markerImage;
     [Header("Selected Unit")]
     public Unit selectedUnit;
 
@@ -32,6 +38,8 @@ public class TurnSystem : MonoBehaviour {
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
+
+    static MusicController musicController;
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
@@ -50,14 +58,14 @@ public class TurnSystem : MonoBehaviour {
                 }
             }
         }
+        cursorAnimator = cursorMarker.GetComponent<Animator>();
+        unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
         totalActions = playerUnits.Count * 2;
 
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
         selectedUnit.GetComponent<BaseUnit>().isSelected = true;
-
-        displayAP(true);
     }
 
 	void Update () {
@@ -101,33 +109,6 @@ public class TurnSystem : MonoBehaviour {
         }
 
     }
-    public void displayAP(bool isPlayerTurn)
-    {
-        /*if (isPlayerTurn)
-        {
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                playerUnits[i].animAP.SetBool("display", true);
-            }
-            for(int i = 0; i < enemyUnits.Count; i++)
-            {
-                enemyUnits[i].animAP.SetBool("display", false);
-            }
-        }*/
-        /*
-        else
-        {
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                playerUnits[i].animAP.SetBool("display", false);
-            }
-            for (int i = 0; i < enemyUnits.Count; i++)
-            {
-                enemyUnits[i].animAP.SetBool("display", true);
-            }
-        }
-        */
-    }
 
     public void selectUnit()
     {
@@ -156,16 +137,13 @@ public class TurnSystem : MonoBehaviour {
                         GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                         selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                         selectedUnit.GetComponent<Unit>().isSelected = true;
+
+                        MoveMarker(unitMarker, selectedUnit.transform.position);
                         MoveCameraToTarget(selectedUnit.transform.position, 0);
                     }
                 }
             }
         }
-    }
-
-    public void MoveCameraToTarget(Vector3 targetPosition, float time)
-    {
-        cameraControl.MoveToTarget(targetPosition, time);
     }
 
     void attackUnit()
@@ -183,7 +161,7 @@ public class TurnSystem : MonoBehaviour {
                         Unit target = hit.collider.GetComponent<Unit>();
                         if (!target.isFriendly) //Checks if the unit hit is friendly
                         {
-                            
+                            musicController.PlaySound(4);
                             target.TakeDamage(selectedUnit.damage);
                             totalActions -= selectedUnit.actions;
                             selectedUnit.actions = 0;
@@ -193,6 +171,15 @@ public class TurnSystem : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void MoveMarker(Transform m_Marker, Vector3 m_Position)
+    {
+        if (cursorAnimator.GetBool("display") == false)
+        {
+            cursorAnimator.SetBool("display", true);
+        }
+        m_Marker.position = m_Position;
     }
 
     public void resetActions(bool isPlayerTurn)
@@ -231,11 +218,13 @@ public class TurnSystem : MonoBehaviour {
                 GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
                 selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                 selectedUnit.GetComponent<Unit>().isSelected = true;
+                MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
                 break;
             }
         }
     }
+
     public int getCurrentTurn(int currentTurn)
     {
         if(currentTurn > maxTurns)
@@ -276,5 +265,10 @@ public class TurnSystem : MonoBehaviour {
                 enemyUnits.Add(unitSpawned);
             }
         }
+    }
+
+    public void MoveCameraToTarget(Vector3 targetPosition, float time)
+    {
+        cameraControl.MoveToTarget(targetPosition, time);
     }
 }

@@ -82,7 +82,14 @@ public class BaseUnit : MonoBehaviour {
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
-                if(turnSystem.playerTurn)
+
+                if (turnSystem.selectedUnit != null)
+                {
+                    turnSystem.MoveMarker(turnSystem.unitMarker, turnSystem.selectedUnit.transform.position);
+                    turnSystem.unitMarkerAnimator.SetBool("display", true);
+                }
+
+                if (turnSystem.playerTurn)
                     turnSystem.MoveCameraToTarget(turnSystem.selectedUnit.transform.position, 0);
 
                 if (unit.actions <= 0)
@@ -91,33 +98,44 @@ public class BaseUnit : MonoBehaviour {
                 }
             }
         }
-        //draw line need to be fixed cant be seen in the built version
         if (currentPath != null && unit.isFriendly && !isMoving)
         {
             
-            if (currentPath.Count < 4)
+            if (currentPath.Count < 4) //Path is 1 tile long
             {
                 turnSystem.gradient.SetKeys(
                     new GradientColorKey[] { new GradientColorKey(turnSystem.lineColors[0], 0.0f), new GradientColorKey(turnSystem.lineColors[0], 1.0f) },
                     new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1, 1.0f) }
                     );
                 line.colorGradient = turnSystem.gradient;
+                for (int i = 0; i < 2; i++)
+                {
+                    turnSystem.markerImage[i].color = turnSystem.lineColors[0];
+                }
             }
-            else if(currentPath.Count < moveSpeed + 2 && unit.actions > 1)
+            else if(currentPath.Count < moveSpeed + 2 && unit.actions > 1) //Path is 1 action long
             {
                 turnSystem.gradient.SetKeys(
                     new GradientColorKey[] { new GradientColorKey(turnSystem.lineColors[0], 0.0f), new GradientColorKey(turnSystem.lineColors[0], 1.0f) },
                     new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1f, 0.05f), new GradientAlphaKey(1, 0.95f), new GradientAlphaKey(0, 1.0f) }
                     );
                 line.colorGradient = turnSystem.gradient;
+                for (int i = 0; i < 2; i++)
+                {
+                    turnSystem.markerImage[i].color = turnSystem.lineColors[0];
+                }
             }
-            else
+            else //Dash length
             {
                 turnSystem.gradient.SetKeys(
                     new GradientColorKey[] { new GradientColorKey(turnSystem.lineColors[1], 0.0f), new GradientColorKey(turnSystem.lineColors[1], 1.0f) },
                     new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1f, 0.05f), new GradientAlphaKey(1, 0.95f), new GradientAlphaKey(0, 1.0f) }
                     );
                 line.colorGradient = turnSystem.gradient;
+                for (int i = 0; i < 2; i++)
+                {
+                    turnSystem.markerImage[i].color = turnSystem.lineColors[1];
+                }
             }
 
             int currNode = 0;
@@ -139,7 +157,13 @@ public class BaseUnit : MonoBehaviour {
                 else
                     line.SetPosition(currNode, new Vector3(start.x, 0.1f, start.z));
                 currNode++;
+
+                if (line.positionCount > 0 && turnSystem.cursorMarker.position != end)
+                {
+                    turnSystem.MoveMarker(turnSystem.cursorMarker, end);
+                }
             }
+            
         }
     }
     public void MoveNextTile()//start to try to move unit
@@ -166,6 +190,7 @@ public class BaseUnit : MonoBehaviour {
                 animaitionSpeed = 2;
                 unit.actions--;
                 turnSystem.totalActions--;
+                turnSystem.unitMarkerAnimator.SetBool("display", false);
                 return;
             }
             if (remainingMovement > 0 && unit.actions > 1)//can you move the unit 
@@ -175,11 +200,23 @@ public class BaseUnit : MonoBehaviour {
                 animaitionSpeed = 4;
                 unit.actions = 0;
                 turnSystem.totalActions--;
+                turnSystem.unitMarkerAnimator.SetBool("display", false);
                 return;
             }
             else//is too far away do not move
             {
-                Debug.Log("out of range");
+                Debug.Log(currentPath.Count);
+                if(currentPath.Count - 1 > moveSpeed * 2)
+                {
+                    currentPath.RemoveRange(moveSpeed * 2, currentPath.Count -(moveSpeed * 2));
+                }
+                isSprinting = true;
+                isMoving = true;//start moving in the update
+                animaitionSpeed = 4;
+                unit.actions = 0;
+                turnSystem.totalActions--;
+                turnSystem.unitMarkerAnimator.SetBool("display", false);
+                
                 return;
             }
         }
