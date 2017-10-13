@@ -208,7 +208,7 @@ public class BaseUnit : MonoBehaviour {
                 Debug.Log(currentPath.Count);
                 if(currentPath.Count - 1 > moveSpeed * 2)
                 {
-                    currentPath.RemoveRange(moveSpeed * 2, currentPath.Count -(moveSpeed * 2));
+                    currentPath.RemoveRange(moveSpeed * 2 +1, currentPath.Count -(moveSpeed * 2 +1));
                 }
                 isSprinting = true;
                 isMoving = true;//start moving in the update
