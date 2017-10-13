@@ -41,8 +41,7 @@ public class cursor : MonoBehaviour {
                     if (turnSystem.playerTurn) {
                         if (!turnSystem.selectedUnit.baseUnit.isMoving)
                         {
-                            map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit.baseUnit);
-                            
+                            map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit.baseUnit);   
                         }
 
                     }

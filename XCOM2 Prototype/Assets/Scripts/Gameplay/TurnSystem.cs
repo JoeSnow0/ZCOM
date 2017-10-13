@@ -164,7 +164,7 @@ public class TurnSystem : MonoBehaviour {
                             //Uses current weapon
                             CalculationManager.HitCheck(selectedUnit.unitWeapon);
                             target.TakeDamage(CalculationManager.damage);
-
+                            selectedUnit.audioSource.Play();
                             //Consumes Actions
                             totalActions -= selectedUnit.actions;
                             selectedUnit.actions = 0;

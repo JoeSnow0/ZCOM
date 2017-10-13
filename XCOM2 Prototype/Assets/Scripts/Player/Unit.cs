@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour {
     public BaseUnit baseUnit;
 
     public WeaponInfoObject unitWeapon;
+    public AudioSource audioSource;
 
     void Start () {
         healthMax = health;
@@ -39,7 +40,7 @@ public class Unit : MonoBehaviour {
         healthSlider.value = healthMax;
         baseUnit = GetComponent<BaseUnit>();
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
-        
+        audioSource = GetComponent<AudioSource>();
 
         for(int i = 0; i < healthMax; i++)
         {
@@ -72,7 +73,9 @@ public class Unit : MonoBehaviour {
         //Check if miss
         if (CalculationManager.hit == false)
         {
-            dmg.GetComponentInChildren<Text>().text = "Missed!";
+            Text[] textList = dmg.GetComponentsInChildren<Text>();
+            textList[0].text = "0";
+            textList[1].text = "Missed!";
 
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
@@ -80,7 +83,7 @@ public class Unit : MonoBehaviour {
 
         else
         {
-            dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
+            dmg.GetComponentInChildren<Text>().text = damageAmount.ToString();
             health -= damageAmount;
             healthSlider.value = health;
 
