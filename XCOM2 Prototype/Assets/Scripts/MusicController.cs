@@ -123,6 +123,7 @@ public class MusicController : MonoBehaviour {
         }
     }
 
+    //Used by volume slider in options
     public void AdjustVolume(float newVolume)
     {
         foreach (var audioSource in playingSources)
