@@ -1701,27 +1701,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f569554252006e0419b058a7edaa769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMap: {fileID: 0}
-  color:
-  - {r: 0.89705884, g: 0.118728384, b: 0.118728384, a: 1}
-  - {r: 0.64705884, g: 0.08564015, b: 0.08564015, a: 1}
-  healthBar:
-  - {fileID: 114398108771507310}
-  - {fileID: 114478769605198892}
-  healthSlider: {fileID: 114570668295593986}
-  isFriendly: 0
-  health: 3
-  damage: 1
-  actions: 2
-  animAP: {fileID: 0}
-  dmgStartPos: {fileID: 4506646421622150}
-  floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
-    type: 2}
   bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   barParent: {fileID: 224235015628029944}
+  unitWeapon: {fileID: 0}
+  unitAbilities: {fileID: 0}
+  actionPoints: {fileID: 0}
+  tileMap: {fileID: 0}
   turnSystem: {fileID: 0}
   isSelected: 0
-  baseUnit: {fileID: 114846592464966558}
+  isFriendly: 0
+  tileX: 0
+  tileY: 0
+  map: {fileID: 0}
+  moveSpeed: 6
+  animaitionSpeed: 0.05
+  isMoving: 0
+  isSprinting: 0
+  pathProgress: 0
   allUnits: []
   moveToUnit: {fileID: 0}
 --- !u!114 &114398108771507310
@@ -1877,18 +1873,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1165749053097084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ffd0fcd5cbe4044ead9164143579995, type: 3}
+  m_Script: {fileID: 11500000, guid: cf7409a53f14797419ea2a5e18237523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bar: {fileID: 0}
+  barParent: {fileID: 0}
+  unitWeapon: {fileID: 0}
+  unitAbilities: {fileID: 0}
+  actionPoints: {fileID: 0}
+  tileMap: {fileID: 0}
+  turnSystem: {fileID: 0}
+  isSelected: 0
+  isFriendly: 0
   tileX: 0
   tileY: 0
   map: {fileID: 0}
-  moveSpeed: 3
-  animaitionSpeed: 2
+  moveSpeed: 6
+  animaitionSpeed: 0.05
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
-  isSelected: 0
 --- !u!114 &114989274233590292
 MonoBehaviour:
   m_ObjectHideFlags: 1

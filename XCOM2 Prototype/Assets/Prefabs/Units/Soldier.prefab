@@ -2184,6 +2184,8 @@ MonoBehaviour:
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4445137611499376}
+  unitConfig: {fileID: 114990083882314416}
+  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
 --- !u!114 &114835739821684660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2313,7 +2315,7 @@ MonoBehaviour:
   healthBar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   healthBarParent: {fileID: 224181995891755678}
   unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
-  unitClassStats: {fileID: 0}
+  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
   actionPoints: {fileID: 114926315396523272}
   health: {fileID: 114799151252263356}
