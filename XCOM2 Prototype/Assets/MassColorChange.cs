@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
+//This code references ColorScriptableObject.cs
+
 [ExecuteInEditMode]
 public class MassColorChange : MonoBehaviour {
 
@@ -72,7 +74,7 @@ public class MassColorChange : MonoBehaviour {
         }
     }
 
-    // Add a menu item named "Do Something" to MyMenu in the menu bar.
+    //Adds an update button to ColorEditor
     [MenuItem("Update Stuff/updateButtonColor")]
     static void updateButtonColor()
     {

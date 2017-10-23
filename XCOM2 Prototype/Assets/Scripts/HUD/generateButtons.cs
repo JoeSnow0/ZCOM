@@ -23,10 +23,6 @@ public class generateButtons : MonoBehaviour {
             newButton.abilityButton.GetComponent<buttonInput>().useAbility = ability.keybind;
             newButton.abilityIcon.sprite = ability.icon;
             newButton.abilityKeybind = ability.keybind;
-
-            //newButton.abilityButton.onClick = ability.callbackFunction as Button.ButtonClickedEvent;
-            //newButton.abilityButton.onClick.AddListener(ability.callbackFunction);
-            //ability.callbackFunction
             newButton.abilityButton.onClick.AddListener(() => { ability.callbackFunction.Invoke(); });
         }
     }
