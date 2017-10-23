@@ -1,17 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEditor;
 
-public class BaseUnit : MonoBehaviour {
+public class UnitConfig : MonoBehaviour {
+    
+    //public Transform dmgStartPos;
+    //public GameObject floatingDmg;
+    public GameObject healthBar;
+    public Transform healthBarParent;
 
+    //Data from scriptable objects
+    public WeaponInfoObject unitWeapon;
+    public ClassStatsObject unitClassStats;
+    public AbilityInfoObject unitAbilities;
+    
+    //Script references, internal
+    public ActionPoints actionPoints;
+    public Health health;
+    //Script References, external
+    public TileMap tileMap;
+    public TurnSystem turnSystem;
+
+    //Unit//
+    public bool isSelected = false;
+    public bool isFriendly;
+    //Unit Position
     public int tileX;
     public int tileY;
-    public TileMap map;
-    
-    public List<Node> currentPath = null;
 
+    //grid Reference
+    public GameObject map;
+    public List<Node> currentPath = null;
     private Node previousNode;
     private Node nextNode;
+    
+    
 
     public int moveSpeed = 6;
     [SerializeField]
@@ -21,30 +46,54 @@ public class BaseUnit : MonoBehaviour {
 
     int pathIndex = 0;
     public float pathProgress;
-
-    public bool isSelected;
-
-    Unit unit;
-    TurnSystem turnSystem;
-
     LineRenderer line;
 
-    private void Start()
+    //BaseUnitCopy
+    void Start()
     {
-        
-        map = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
-        Vector3 tileCoords = map.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);//get unit tile coord
-        tileX = (int)tileCoords.x;// set unit position on grid
+        //Initiate Variables//
+        //////////////////////
+
+        //get unit tile coordinates
+        Vector3 tileCoords = tileMap.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);
+
+        //Set unit position on grid
+        tileX = (int)tileCoords.x;
         tileY = (int)tileCoords.z;
-
         line = GetComponent<LineRenderer>();
-        unit = GetComponent<Unit>();
 
+        //Make sure scriptable objects are assigned, if not, assign defaults and send message
+        if (unitWeapon == null)
+        {
+            unitWeapon = AssetDatabase.LoadAssetAtPath<WeaponInfoObject>("Assets/Scriptable Object/Pistol.asset");
+            Debug.LogWarning("Couldn't find weapon, using default weapon");
+        }
+        if (unitClassStats == null)
+        {
+            unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
+            Debug.LogWarning("Couldn't find Class, using default class");
+        }
+        if (unitWeapon == null)
+        {
+            unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
+            Debug.LogWarning("Couldn't find abilities, using default abilities");
+        }
+
+        //Add the map incase its missing
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+        tileMap = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
+
+
+        //for (int i = 0; i < unitClassStats.maxUnitHealth; i++)
+        //{
+        //    Instantiate(healthBar, healthBarParent, false);
+        //}
     }
-    private void Update()
+
+    void Update()
     {
-        if (!isSelected && unit.isFriendly)
+        //BaseUnitCopy
+        if (!isSelected && isFriendly)
         {
             currentPath = null;
             line.positionCount = 0;
@@ -55,10 +104,10 @@ public class BaseUnit : MonoBehaviour {
             turnSystem.MoveCameraToTarget(transform.position, 0);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
-                
-                Vector3 previousPosition = map.TileCoordToWorldCoord(currentPath[pathIndex].x, currentPath[pathIndex].y);
-                Vector3 nextPosition = map.TileCoordToWorldCoord(currentPath[pathIndex + 1].x, currentPath[pathIndex + 1].y);
-                
+
+                Vector3 previousPosition = tileMap.TileCoordToWorldCoord(currentPath[pathIndex].x, currentPath[pathIndex].y);
+                Vector3 nextPosition = tileMap.TileCoordToWorldCoord(currentPath[pathIndex + 1].x, currentPath[pathIndex + 1].y);
+
                 pathProgress += Time.deltaTime * animaitionSpeed;
                 transform.position = Vector3.Lerp(previousPosition, nextPosition, pathProgress);
 
@@ -75,26 +124,26 @@ public class BaseUnit : MonoBehaviour {
                 if (turnSystem.playerTurn)
                     line.positionCount = 0;
             }
-            
-            else//when unit reach location reset spectial stats
+
+            else//when unit reach location reset special stats
             {
                 isMoving = false;
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
-                if(turnSystem.playerTurn)
+                if (turnSystem.playerTurn)
                     turnSystem.MoveCameraToTarget(turnSystem.selectedUnit.transform.position, 0);
 
-                if (unit.actions <= 0)
+                if (actionPoints.actions <= 0)
                 {
                     turnSystem.selectNextUnit();
                 }
             }
         }
         //draw line need to be fixed cant be seen in the built version
-        if (currentPath != null && unit.isFriendly && !isMoving)
+        if (currentPath != null && isFriendly && !isMoving)
         {
-            
+
             if (currentPath.Count < 4)
             {
                 turnSystem.gradient.SetKeys(
@@ -103,7 +152,7 @@ public class BaseUnit : MonoBehaviour {
                     );
                 line.colorGradient = turnSystem.gradient;
             }
-            else if(currentPath.Count < moveSpeed + 2 && unit.actions > 1)
+            else if (currentPath.Count < moveSpeed + 2 && actionPoints.actions > 1)
             {
                 turnSystem.gradient.SetKeys(
                     new GradientColorKey[] { new GradientColorKey(turnSystem.lineColors[0], 0.0f), new GradientColorKey(turnSystem.lineColors[0], 1.0f) },
@@ -121,12 +170,12 @@ public class BaseUnit : MonoBehaviour {
             }
 
             int currNode = 0;
-            while (currNode < currentPath.Count - 1 && currNode < moveSpeed * unit.actions)
+            while (currNode < currentPath.Count - 1 && currNode < moveSpeed * actionPoints.actions)
             {
-                Vector3 start = map.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
-                Vector3 end = map.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
+                Vector3 start = tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
+                Vector3 end = tileMap.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
                 line.positionCount = currNode + 1;
-                if(currentPath.Count == 2)
+                if (currentPath.Count == 2)
                 {
                     line.positionCount = 2;
                     line.SetPosition(0, new Vector3(transform.position.x, 0.1f, transform.position.z));
@@ -142,44 +191,46 @@ public class BaseUnit : MonoBehaviour {
             }
         }
     }
+        
+
+    
     public void MoveNextTile()//start to try to move unit
     {
-                
+
         if (currentPath == null)// if there is no path leave funktion
         {
             return;
         }
-        
+
         else
         {
             int remainingMovement = moveSpeed * 2;
             int moveTo = currentPath.Count - 1;
-            for (int cost = 1; cost < moveTo;cost++)//is the path posseble
+            for (int cost = 1; cost < moveTo; cost++)//is the path posseble
             {
-                remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1+cost].x, currentPath[1+cost].y);
+                remainingMovement -= (int)tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
 
             }
-            if (remainingMovement > moveSpeed )//can you move the unit 
+            if (remainingMovement > moveSpeed)//can you move the unit 
             {
-                
+
                 isMoving = true;//start moving in the update
                 animaitionSpeed = 2;
-                unit.actions--;
+                actionPoints.actions--;
                 turnSystem.totalActions--;
                 return;
             }
-            if (remainingMovement > 0 && unit.actions > 1)//can you move the unit 
+            if (remainingMovement > 0 && actionPoints.actions > 1)//can you move the unit 
             {
                 isSprinting = true;
                 isMoving = true;//start moving in the update
                 animaitionSpeed = 4;
-                unit.actions = 0;
+                actionPoints.actions = 0;
                 turnSystem.totalActions--;
                 return;
             }
             else//is too far away do not move
             {
-                //Debug.Log("out of range");
                 return;
             }
         }
@@ -195,21 +246,21 @@ public class BaseUnit : MonoBehaviour {
 
         else
         {
-            
+
             int remainingMovement = moveSpeed;
             int moveTo = currentPath.Count - 1;
             for (int cost = 1; cost < moveTo; cost++)//is the path posseble
             {
-                remainingMovement -= (int)map.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
+                remainingMovement -= (int)tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
 
-                
+
             }
 
             if (remainingMovement > 0)//can you move the unit 
             {
                 currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
                 isMoving = true;//start moving in the update
-                unit.actions--;
+                actionPoints.actions --;
                 return;
             }
 
@@ -218,14 +269,14 @@ public class BaseUnit : MonoBehaviour {
 
                 remainingMovement = moveSpeed;
 
-                for (int i = currentPath.Count-1; i > remainingMovement; i--)
+                for (int i = currentPath.Count - 1; i > remainingMovement; i--)
                 {
                     currentPath.RemoveAt(i);
                 }
-                if(currentPath != null)
+                if (currentPath != null)
                 {
                     isMoving = true;
-                    unit.actions--;
+                    actionPoints.actions--;
                 }
                 return;
             }

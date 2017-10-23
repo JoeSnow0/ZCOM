@@ -2,52 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAi : Unit {
+public class EnemyAi : UnitConfig {
 
     public GameObject[] allUnits;
     public GameObject moveToUnit;
-    
+    //TurnSystem turnSystem;
+    UnitConfig unitConfig;
+    //TileMap tileMap;
+    Health Health;
+    //ActionPoints actionPoints;
+    int damage;
     // Use this for initialization
     void Start ()
     {
 
         
-        if (!isFriendly)
-        {
-            for (int i = 0; i <= 1; i++)
-            {
-                healthBar[i].color = color[i];
-            }
-        }
-        healthMax = health;
-        baseUnit = GetComponent<BaseUnit>();
-        tileMap = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
-        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+        //if (!isFriendly)
+        //{
+        //    for (int i = 0; i <= 1; i++)
+        //    {
+        //        healthBar[i].color = color[i];
+        //    }
+        //}
+        //unitConfig.unitClassStats.maxUnitHealth = health;
+        //unitConfig = GetComponent<UnitConfig>();
+        //tileMap = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
+        //turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
 
-        for (int i = 0; i < healthMax; i++)
-        {
-            Instantiate(bar, barParent, false);
-        }
+        //for (int i = 0; i < unitConfig.unitClassStats.maxUnitHealth; i++)
+        //{
+        //    Instantiate(bar, barParent, false);
+        //}
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
-        if (!turnSystem.playerTurn && GetComponent<Unit>().actions > 0 && GetComponent<BaseUnit>().isMoving == false)
+        if (!turnSystem.playerTurn && actionPoints.actions > 0 && GetComponent<UnitConfig>().isMoving == false)
         {
             FindClosestPlayerUnit();
-            BaseUnit closestUnit = moveToUnit.GetComponent<BaseUnit>();
-            tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<BaseUnit>());
+            UnitConfig closestUnit = moveToUnit.GetComponent<UnitConfig>();
+            tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<UnitConfig>());
             
-            if (baseUnit.currentPath.Count < 3)
+            if (unitConfig.currentPath.Count < 3)
             {
-                closestUnit.GetComponent<Unit>().TakeDamage(damage);
-                actions = 0;
+                closestUnit.GetComponent<Health>().TakeDamage(damage);
+                actionPoints.actions = 0;
             }
             else
             {
-                gameObject.GetComponent<BaseUnit>().EnemyMoveNextTile();
+                gameObject.GetComponent<UnitConfig>().EnemyMoveNextTile();
             }
 
             

@@ -13,7 +13,7 @@ public class cursor : MonoBehaviour {
     TurnSystem turnSystem;
     TileMap map;
 
-    private void Awake()
+    private void Start()
     {
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
         map = GameObject.FindGameObjectWithTag("Map").GetComponent<TileMap>();
@@ -25,7 +25,6 @@ public class cursor : MonoBehaviour {
 
     private void GetPointUnderCursor()
     {
-
         Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitPosition;
@@ -46,17 +45,17 @@ public class cursor : MonoBehaviour {
                     activeObject = cursorObject;
 
                     if (turnSystem.playerTurn) {
-                        if (!turnSystem.selectedUnit.baseUnit.isMoving)
-                            map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit.baseUnit);
+                        if (!turnSystem.selectedUnit.isMoving)
+                            map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit);
                     }
                 }
 
                 if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn)
                 {
-                    if (!turnSystem.selectedUnit.baseUnit.isMoving)
+                    if (!turnSystem.selectedUnit.isMoving)
                     {
                         //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
-                        turnSystem.selectedUnit.baseUnit.MoveNextTile();
+                        turnSystem.selectedUnit.MoveNextTile();
                     }
                 }
                 

@@ -5,9 +5,9 @@ using System.Linq;
 
 public class TileMap : MonoBehaviour {
 
-    public BaseUnit selectedUnit;//needs to change for mulltiple units
+    public UnitConfig selectedUnit;//needs to change for multiple units
 
-    public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
+    public TileType[] tileType;//walkable and unwalkable terrain can be found here
 
     int[,] tiles;
     Node[,] graph;
@@ -188,9 +188,9 @@ public class TileMap : MonoBehaviour {
         return true;
     }
 
-    public void GeneratePathTo(int x, int y, BaseUnit unit)//(move to X pos, move to Y pos, gameobject that will be moved)
+    public void GeneratePathTo(int x, int y, UnitConfig unitConfig)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit = unit;
+        selectedUnit = unitConfig;
         selectedUnit.currentPath = null;
 
         if (UnitCanEnterTile(x,y) == false)
