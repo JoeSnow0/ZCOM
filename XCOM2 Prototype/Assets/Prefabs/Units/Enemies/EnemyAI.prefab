@@ -1704,10 +1704,11 @@ MonoBehaviour:
   tileMap: {fileID: 0}
   color:
   - {r: 0.89705884, g: 0.118728384, b: 0.118728384, a: 1}
-  - {r: 0.64705884, g: 0.08564015, b: 0.08564015, a: 1}
+  - {r: 0.19607845, g: 0.19215688, b: 0.18039216, a: 1}
   healthBar:
   - {fileID: 114398108771507310}
   - {fileID: 114478769605198892}
+  actionPoints: []
   healthSlider: {fileID: 114570668295593986}
   isFriendly: 0
   health: 3
@@ -1736,7 +1737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
+  m_Color: {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1763,7 +1764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.38431376, g: 0.49411768, b: 0.49803925, a: 1}
+  m_Color: {r: 0.19607845, g: 0.19215688, b: 0.18039216, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

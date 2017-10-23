@@ -28,16 +28,18 @@ public class SoldierAnimation : MonoBehaviour {
         {
             soldierAnimator.SetInteger("state", 2);
         }
-        if(soldierAnimator.GetInteger("state") > 0)
+        if(soldierAnimator.GetInteger("state") > 0) // HACK: What!?
         {
             direction = transform.root.position - lastPosition;
             lastPosition = transform.root.position;
-            lookRotation = Quaternion.LookRotation(direction);
-            transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10);
+            lookRotation = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
+            transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, lookRotation, Time.deltaTime * 10);
         }
         else
         {
-            transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10);
+            Quaternion a = transform.parent.rotation;
+            Quaternion b = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
+            transform.parent.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10);
         }
     }
 }

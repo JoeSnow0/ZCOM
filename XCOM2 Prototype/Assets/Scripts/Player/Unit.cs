@@ -32,22 +32,15 @@ public class Unit : MonoBehaviour {
     public BaseUnit baseUnit;
 
     public WeaponInfoObject unitWeapon;
+    public AudioSource audioSource;
 
     void Start () {
-        //Sets color of healthbar
-        if (!isFriendly)
-        {
-            for(int i = 0; i <= 1; i++)
-            {
-                healthBar[i].color = color[i];
-            }
-        }
         healthMax = health;
         healthSlider.maxValue = healthMax;
         healthSlider.value = healthMax;
         baseUnit = GetComponent<BaseUnit>();
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
-        
+        audioSource = GetComponent<AudioSource>();
 
         for(int i = 0; i < healthMax; i++)
         {
@@ -64,14 +57,12 @@ public class Unit : MonoBehaviour {
             {
                 actionPoints[1].color = color[2];
             }
-            else
-            {
-                actionPoints[1].color = color[3];
-            }
         }
         else
         {
+            actionPoints[1].color = color[3];
             actionPoints[0].color = color[3];
+            actionPoints[1].color = color[3];
         }
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
@@ -83,15 +74,16 @@ public class Unit : MonoBehaviour {
         //Check if miss
         if (CalculationManager.hit == false)
         {
-            dmg.GetComponentInChildren<Text>().text = "Missed!";
+            Text[] textList = dmg.GetComponentsInChildren<Text>();
+            textList[0].text = "0";
+            textList[1].text = "Missed!";
 
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
         }
-
         else
         {
-            dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
+            dmg.GetComponentInChildren<Text>().text = damageAmount.ToString();
             health -= damageAmount;
             healthSlider.value = health;
 
