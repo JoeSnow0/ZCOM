@@ -13,7 +13,7 @@ public class menuToggle : MonoBehaviour {
         isPaused = false;
         optionsToggle = false;
     }
- 
+ //hide options/ingame menu depending on what's currently visible
 	void Update ()
     {
         if (optionsToggle == false)
@@ -33,12 +33,14 @@ public class menuToggle : MonoBehaviour {
 
 
     }
+    //Show/hide menu
     public void toggleMenu()
 
     {
         isPaused = !isPaused;
         ingameMenu.SetActive(isPaused);
     }
+    //Show/hide Options
     public void ToggleOptions()
     {
         ingameMenu.SetActive(!isPaused);

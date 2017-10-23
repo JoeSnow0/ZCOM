@@ -15,18 +15,15 @@ public class MenuButtons : MonoBehaviour
     public static int scene;
     static MusicController musicController;
 
+    
     private void Awake()
     {
-
-
         if (scene == 2)
         {
             OnHighScoreClick();
         }
-
-
     }
-
+    //Menu Navigation
     public void OnButtonPress(string sceneName)
     {
 
@@ -50,19 +47,21 @@ public class MenuButtons : MonoBehaviour
         }
 
     }
-
+    //Prepare the main menu, hide other panels
     public void OnMainMenuClick()
     {
         scene = 1;
         DeactivatePanel();
         mainMenu.SetActive(true);
     }
+    //Prepare the highscore, hide other panels
     public void OnHighScoreClick()
     {
         scene = 2;
         DeactivatePanel();
         highScore.SetActive(true);
     }
+    //Prepare the credits, hide other panels
     public void OnCreditsClick()
     {
         scene = 3;
@@ -70,38 +69,14 @@ public class MenuButtons : MonoBehaviour
         credits.SetActive(true);
     }
 
-
-
-    //    public void onButtonPress(int panelIndex)
-    //    {
-    //        deactivatePanel();
-
-    //        if (panelIndex == 0)
-    //        {
-    //            SceneManager.LoadScene("gameSession");
-    //        }
-    //        for (int i = 1; i < sceneStates.Count; i++)
-    //        {
-    //            if (panelIndex == i)
-    //            {
-    //                sceneStates[i].SetActive(true);
-    //            }
-    //            else
-    //            {
-    //                Application.Quit();
-    //            }
-    //        }
-
-
-
-    //    }
-
+    //Hides other panels in the main menu
     void DeactivatePanel()
     {
         mainMenu.SetActive(false);
         highScore.SetActive(false);
         credits.SetActive(false);
     }
+    //reload current scene
     public void restartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
