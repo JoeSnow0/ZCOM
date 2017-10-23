@@ -70,8 +70,7 @@ public class HUD : MonoBehaviour {
                 alienUI.SetActive(false);
             }
             //Add all functionality here, END TURN
-            turnSystem.restoreActionsToMax(isPlayerTurn);
-            //turnSystem.displayAP(isPlayerTurn);
+            turnSystem.resetActions(isPlayerTurn);
             
             
             if (isPlayerTurn)

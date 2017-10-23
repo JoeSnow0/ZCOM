@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class cursor : MonoBehaviour {
-
-    public Color defaultColor;
-    public Color hoverColor;
-
     ClickebleTile activeObject;
     ClickebleTile cursorObject;
 
@@ -39,9 +35,6 @@ public class cursor : MonoBehaviour {
 
                 if (activeObject != cursorObject)
                 {
-                    if(activeObject != null)
-                        activeObject.GetComponentInChildren<Renderer>().material.color = defaultColor;
-
                     activeObject = cursorObject;
 
                     if (turnSystem.playerTurn) {
@@ -55,13 +48,15 @@ public class cursor : MonoBehaviour {
                     if (!turnSystem.selectedUnit.isMoving)
                     {
                         //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
+                       
+                        turnSystem.cursorAnimator.SetBool("display", false);
                         turnSystem.selectedUnit.MoveNextTile();
                     }
                 }
                 
 
                 
-                hit.GetComponentInChildren<Renderer>().material.color = hoverColor;
+                //hit.GetComponentInChildren<Renderer>().material = turnSystem.hoverMaterial;
                 
             }
         }
