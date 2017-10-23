@@ -1021,7 +1021,7 @@ GameObject:
   - component: {fileID: 120123932883889892}
   m_Layer: 0
   m_Name: Soldier
-  m_TagString: Unit
+  m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

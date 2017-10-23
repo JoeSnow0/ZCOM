@@ -137,21 +137,20 @@ public class TurnSystem : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider)
+
+                if (hit.collider.CompareTag("FriendlyUnit"))
                 {
-                    if (hit.collider.GetComponent<UnitConfig>().isFriendly)
+                    if (selectedUnit != null)
                     {
-                        if (selectedUnit != null)
-                        {
-                            selectedUnit.isSelected = false;
-                        }
-                        selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                        GetComponent<TileMap>().selectedUnit = selectedUnit;
-                        selectedUnit.isSelected = true;
-                        MoveMarker(unitMarker, selectedUnit.transform.position);
-                        MoveCameraToTarget(selectedUnit.transform.position, 0);
+                        selectedUnit.isSelected = false;
                     }
+                    selectedUnit = hit.collider.GetComponent<UnitConfig>();
+                    GetComponent<TileMap>().selectedUnit = selectedUnit;
+                    selectedUnit.isSelected = true;
+                    MoveMarker(unitMarker, selectedUnit.transform.position);
+                    MoveCameraToTarget(selectedUnit.transform.position, 0);
                 }
+                
             }
         }
     }

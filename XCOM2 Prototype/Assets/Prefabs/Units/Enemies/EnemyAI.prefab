@@ -255,6 +255,8 @@ GameObject:
   - component: {fileID: 114396943117730216}
   - component: {fileID: 114846592464966558}
   - component: {fileID: 136676663913072674}
+  - component: {fileID: 114300657596204300}
+  - component: {fileID: 114972056034855142}
   m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Unit
@@ -1657,6 +1659,24 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114300657596204300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165749053097084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1efe98d0933a8b942bc51a478e002baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: []
+  healthBar: []
+  healthSlider: {fileID: 0}
+  floatingDmg: {fileID: 0}
+  dmgStartPos: {fileID: 0}
+  unitConfig: {fileID: 0}
+  unitClassStats: {fileID: 0}
 --- !u!114 &114344768348526308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1701,23 +1721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f569554252006e0419b058a7edaa769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
-  barParent: {fileID: 224235015628029944}
-  unitWeapon: {fileID: 0}
-  unitAbilities: {fileID: 0}
-  actionPoints: {fileID: 0}
-  tileMap: {fileID: 0}
-  turnSystem: {fileID: 0}
-  isSelected: 0
-  isFriendly: 0
-  tileX: 0
-  tileY: 0
-  map: {fileID: 0}
-  moveSpeed: 6
-  animaitionSpeed: 0.05
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
   allUnits: []
   moveToUnit: {fileID: 0}
 --- !u!114 &114398108771507310
@@ -1876,23 +1879,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7409a53f14797419ea2a5e18237523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bar: {fileID: 0}
-  barParent: {fileID: 0}
-  unitWeapon: {fileID: 0}
-  unitAbilities: {fileID: 0}
-  actionPoints: {fileID: 0}
+  healthBar: {fileID: 1650568526972646}
+  healthBarParent: {fileID: 4688172312480720}
+  unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
+  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
+  unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
+  actionPoints: {fileID: 114972056034855142}
+  health: {fileID: 114300657596204300}
   tileMap: {fileID: 0}
   turnSystem: {fileID: 0}
   isSelected: 0
   isFriendly: 0
   tileX: 0
   tileY: 0
-  map: {fileID: 0}
   moveSpeed: 6
   animaitionSpeed: 0.05
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
+--- !u!114 &114972056034855142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165749053097084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f8cb8cd879ee44381818577f27eeff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animAP: {fileID: 0}
+  actions: 0
+  actionPointsImage: []
+  color: []
 --- !u!114 &114989274233590292
 MonoBehaviour:
   m_ObjectHideFlags: 1

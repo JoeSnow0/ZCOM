@@ -157,7 +157,7 @@ public class TileMap : MonoBehaviour {
         }
     }
 
-    void GenerateMapVisual()// make the grid viseble
+    void GenerateMapVisual()// make the grid visible
     {
         for (int x = 0; x < mapSizeX; x++)
         {
@@ -174,16 +174,16 @@ public class TileMap : MonoBehaviour {
         }
     }
 
-    public Vector3 TileCoordToWorldCoord(int x, int y)//wold coordenets to tile coordenets
+    public Vector3 TileCoordToWorldCoord(int x, int y)//world coordinates to tile coordinates
     {
         return transform.position + new Vector3(x * offset, 0, y * offset);
     }
 
-    public Vector3 UnitCoordToWorldCoord(int x,int y)//tile to world coordenets
+    public Vector3 UnitCoordToWorldCoord(int x,int y)//tile to world coordinates
     {
         return transform.position + new Vector3(x / offset, 0, y / offset);
     }
-    public bool UnitCanEnterTile(int x , int y)//walkeble terain on the tile?
+    public bool UnitCanEnterTile(int x , int y)//walkable terrain on the tile?
     {
         return true;
     }
@@ -195,7 +195,7 @@ public class TileMap : MonoBehaviour {
 
         if (UnitCanEnterTile(x,y) == false)
         {
-            //klicked on unwalkeble tearain
+            //clicked on unwalkable terrain
             return;
         }
         //Dijkstra function
