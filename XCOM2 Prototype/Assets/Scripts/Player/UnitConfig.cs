@@ -31,8 +31,8 @@ public class UnitConfig : MonoBehaviour {
 
     //grid Reference
     public List<Node> currentPath = null;
-    private Node previousNode;
-    private Node nextNode;
+    //private Node previousNode;
+    //private Node nextNode;
     
     
 
@@ -53,6 +53,9 @@ public class UnitConfig : MonoBehaviour {
         //////////////////////
 
         //get unit tile coordinates
+        
+        //Add the map incase its missing
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);
 
         //Set unit position on grid
@@ -77,8 +80,6 @@ public class UnitConfig : MonoBehaviour {
             Debug.LogWarning("Couldn't find abilities, using default abilities");
         }
 
-        //Add the map incase its missing
-        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
     }
 
     void Update()

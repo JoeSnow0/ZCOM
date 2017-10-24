@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class ActionPoints : MonoBehaviour {
     public Animator animAP;
     public int actions;
+    private int maxActions;
     public Image[] actionPointsImage;
     public Color[] color;
-    private ClassStatsObject unitClassStats;
+    public ClassStatsObject unitClassStats;
 
     // Use this for initialization
     void Start ()
     {
-
+        InitializeActions();
     }
     private void Update()
     {
@@ -61,4 +62,8 @@ public class ActionPoints : MonoBehaviour {
     {
         actions = 0;
     }
+    private void InitializeActions()
+    {
+        actions = unitClassStats.maxUnitActionPoints;
+    } 
 }

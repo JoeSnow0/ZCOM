@@ -37,7 +37,7 @@ public class TurnSystem : MonoBehaviour {
     //Script refs
     public EnemySpawn enemySpawnNodes;
     public CameraControl cameraControl;
-    public UnitConfig unitConfig;
+    //public UnitConfig unitConfig;
 
     public bool playerTurn = true;
     public bool endTurn = false;
@@ -81,7 +81,7 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
         selectUnit();
         attackUnit();
-        if (playerTurn == false)
+        if (!playerTurn)//enemy turn
         {
             bool endturn = true;
             foreach (var enemy in enemyUnits)
