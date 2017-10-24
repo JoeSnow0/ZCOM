@@ -37,6 +37,7 @@ public class TurnSystem : MonoBehaviour {
 
     void Start () {
         allUnits = GameObject.FindGameObjectsWithTag("Unit");
+       
 
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -159,6 +160,9 @@ public class TurnSystem : MonoBehaviour {
                         selectedUnit.GetComponent<BaseUnit>().isSelected = true;
                         selectedUnit.GetComponent<Unit>().isSelected = true;
                         MoveCameraToTarget(selectedUnit.transform.position, 0);
+                        //test
+                        TileMap map = GetComponent<TileMap>();
+                        map.ChangeGridColor(selectedUnit.baseUnit.moveSpeed, selectedUnit.actions, selectedUnit.baseUnit);
                     }
                 }
             }

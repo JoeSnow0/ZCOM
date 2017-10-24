@@ -9,6 +9,7 @@ public class TileMap : MonoBehaviour {
 
     public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
     public Material[] gridMaterial;
+    
     GameObject[,] tileobjects;
     int[,] tiles;
     Node[,] graph;
@@ -28,6 +29,7 @@ public class TileMap : MonoBehaviour {
         GenerateMapData();//run map generate
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
+        changedColoredGrid = new List<GameObject>();
     }
 
     void GenerateMapData()//make the grid and it's obsticals.
@@ -76,7 +78,10 @@ public class TileMap : MonoBehaviour {
         tiles[9, 12] = 1;
         tiles[1, 1] = 1;
         tiles[9, 0] = 1;
-
+    }
+    void PlayerPositionData()
+    {
+        
     }
 
     public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY)// get the cost for the movement to an loction
@@ -89,12 +94,11 @@ public class TileMap : MonoBehaviour {
         }
 
         float cost = tt.movemontCost;
-        if (sourceX!= targetX && sourceY != targetY)
-        {
-            // we moveing diagonally
-            cost *= 2;
-            //cost *= Mathf.Sqrt(2);
-        }
+        //if (sourceX!= targetX && sourceY != targetY)//for diagonally movement
+        //{
+        //    // we moveing diagonally
+        //    cost *= 2;
+        //}
         
         return cost;
     }
@@ -175,6 +179,7 @@ public class TileMap : MonoBehaviour {
                 ct.map = this;
             }
         }
+        
     }
 
     public Vector3 TileCoordToWorldCoord(int x, int y)//wold coordenets to tile coordenets
@@ -191,9 +196,9 @@ public class TileMap : MonoBehaviour {
         return true;
     }
 
-    public void GeneratePathTo(int x, int y, BaseUnit unit)//(move to X pos, move to Y pos, gameobject that will be moved)
+    public void GeneratePathTo(int x, int y, BaseUnit targetUnit)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit = unit;
+        selectedUnit = targetUnit;
         selectedUnit.currentPath = null;
 
         if (UnitCanEnterTile(x,y) == false)
@@ -282,54 +287,154 @@ public class TileMap : MonoBehaviour {
             currentPath.Add(curr);
             curr = prev[curr];
         }
-        //current path is from goal to unit here we reverse it. to make it more normal
+        //current path is from goal to unit here we reverse it. to make it normal
         currentPath.Reverse();
         
         selectedUnit.currentPath = currentPath;
     }
-    public void ChangeGridColor(int movement)
+    public void ChangeGridColor(int movement, int actions, BaseUnit position)
     {
-        foreach (GameObject grid in changedColoredGrid)
-        {
-            grid.GetComponent<Renderer>().material = gridMaterial[0];
-        }
-        changedColoredGrid.Clear();//change material back to normal before this point
-        for (int x = 0; x < movement * 2; x++)
-        {
-            for (int y = movement * 2 - 1; y > 0; y--)
+
+        if (changedColoredGrid != null) {
+            foreach (GameObject grid in changedColoredGrid)
             {
-                GameObject tile = tileobjects[x, y];
+                grid.GetComponentInChildren<Renderer>().material = gridMaterial[0];
+            }
+            changedColoredGrid.Clear();//change material back to normal before this point
+        }
+        for (int x = 0; x <= (movement * actions); x++) //down right
+        {
+            int z = 0;
+            for (int y = (-movement * actions + x); y <= 0; y++)
+            {
+                if (x + position.tileX < 0 || x + position.tileX >= mapSizeX)
+                {
+                    z++;
+                    continue;
+                }
+
+                else if (y + position.tileY < 0 || y + position.tileY >= mapSizeY)
+                {
+                    z++;
+                    continue;
+                }
+                GameObject tile = tileobjects[x + position.tileX, y + position.tileY];
                 if (tile.tag == "Ground")
                 {
-                    if (x > movement || y > movement)
+                    if ((x + z - x) < movement)
                     {
-                        tile.GetComponent<Renderer>().material = gridMaterial[2];
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[2];
                     }
                     else
                     {
-                        tile.GetComponent<Renderer>().material = gridMaterial[1];
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[1];
                     }
                     changedColoredGrid.Add(tile);
                 }
+                z++;
             }
         }
-        for (int x = 0; x < -movement * 2; x--)
+
+        for (int x = 0; x >= (-movement * actions); x--)//down left
         {
-            for (int y = movement * 2 - 1; y > 0; y--)
+            int z = 0;
+            for (int y = (-movement * actions - x); y <= 0; y++)
             {
-                GameObject tile = tileobjects[x, y];
+                if (x + position.tileX < 0 || x + position.tileX >= mapSizeX)
+                {
+                    z++;
+                    continue;
+                }
+
+                else if (y + position.tileY < 0 || y + position.tileY >= mapSizeY)
+                {
+                    z++;
+                    continue;
+                }
+                GameObject tile = tileobjects[x + position.tileX, y + position.tileY];
                 if (tile.tag == "Ground")
                 {
-                    if (x < -movement || y > movement)
+                    if ((x + z - x) < movement)
                     {
-                        tile.GetComponent<Renderer>().material = gridMaterial[2];
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[2];
                     }
                     else
                     {
-                        tile.GetComponent<Renderer>().material = gridMaterial[1];
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[1];
                     }
                     changedColoredGrid.Add(tile);
+                    
                 }
+                z++;
+            }
+        }
+        
+        for (int x = 0; x < (movement * actions); x++) //Top right
+        {
+            int z = 0;
+            for (int y = (movement * actions - x); y > 0; y--)
+            {
+                if (x + position.tileX < 0 || x + position.tileX >= mapSizeX)
+                {
+                    z++;
+                    continue;
+                }
+
+                else if (y + position.tileY < 0 || y + position.tileY >= mapSizeY)
+                {
+                    z++;
+                    continue;
+                }
+                GameObject tile = tileobjects[x + position.tileX, y + position.tileY];
+                if (tile.tag == "Ground")
+                {
+                    if ((x + z - x) < movement)
+                    {
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[2];
+                    }
+                    else
+                    {
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[1];
+                    }
+                    changedColoredGrid.Add(tile);
+                   
+                }
+                z++;
+            }
+        }
+
+        for (int x = 0; x > (-movement * actions); x--)//Top left
+        {
+            int z = 0;
+            for (int y = (movement * actions + x); y > 0; y--)
+            {
+                if (x + position.tileX < 0 || x + position.tileX >= mapSizeX)
+                {
+                    z++;
+                    continue;
+                }
+
+                else if (y + position.tileY < 0 || y + position.tileY >= mapSizeY)
+                {
+                    z++;
+                    continue;
+                }
+
+                GameObject tile = tileobjects[x + position.tileX, y + position.tileY];
+                if (tile.tag == "Ground")
+                {
+                    if ((x + z - x) < movement)
+                    {
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[2];
+                    }
+                    else
+                    {
+                        tile.GetComponentInChildren<Renderer>().material = gridMaterial[1];
+                    }
+                    changedColoredGrid.Add(tile);
+                    
+                }
+                z++;
             }
         }
     }
