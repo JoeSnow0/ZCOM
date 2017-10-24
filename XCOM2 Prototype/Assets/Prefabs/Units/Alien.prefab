@@ -507,9 +507,8 @@ MonoBehaviour:
   healthBar:
   - {fileID: 114378654142260294}
   - {fileID: 114826744526961674}
-  healthText: {fileID: 114634438254690232}
+  actionPoints: []
   healthSlider: {fileID: 114945009010758562}
-  apText: {fileID: 114761382499127604}
   isFriendly: 0
   health: 100
   damage: 10
@@ -518,8 +517,12 @@ MonoBehaviour:
   dmgStartPos: {fileID: 4890055409769240}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
+  bar: {fileID: 0}
+  barParent: {fileID: 0}
   turnSystem: {fileID: 0}
   isSelected: 0
+  baseUnit: {fileID: 0}
+  unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
 --- !u!114 &114945009010758562
 MonoBehaviour:
   m_ObjectHideFlags: 1

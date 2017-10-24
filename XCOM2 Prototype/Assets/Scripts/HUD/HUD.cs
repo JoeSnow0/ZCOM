@@ -71,7 +71,6 @@ public class HUD : MonoBehaviour {
             }
             //Add all functionality here, END TURN
             turnSystem.resetActions(isPlayerTurn);
-            turnSystem.displayAP(isPlayerTurn);
             
             
             if (isPlayerTurn)
