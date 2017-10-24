@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: StatsRookie
   m_EditorClassIdentifier: 
   unitClassName: Rookie
-  maxUnitHealth: 5
+  maxUnitHealth: 2
+  unitDefense: 3
   maxUnitActionPoints: 2
   maxUnitMovePoints: 4
