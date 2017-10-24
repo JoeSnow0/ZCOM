@@ -23,25 +23,38 @@ public class MassColorChange : MonoBehaviour {
         }
         trackedObjects.Add(this);
     }
-    
+    void Awake()
+    {
+        //Add ColorEditor to ScriptableColorObject
+        if (ScriptableColorObject == null)
+        {
+            ScriptableColorObject = AssetDatabase.LoadAssetAtPath<ColorScriptableObject>("Assets/Scriptable Object/ColorEditor.asset");
+        }
+        trackedObjects.Add(this);
+    }
+
     private void OnDestroy()
     {
         trackedObjects.Remove(this);
     }
 
-    void ApplyColorChange()
+    public void ApplyColorChange(ColorScriptableObject cso = null)
     {
+        ColorScriptableObject colorObject = ScriptableColorObject;
+        if (cso != null)
+            colorObject = cso;
+
         //Update button Components
         Button b = GetComponent<Button>();
         if (b)
         {
 
             ColorBlock block = b.colors;
-            block.normalColor = ScriptableColorObject.normalColor;
-            block.highlightedColor = ScriptableColorObject.highlightColor;
-            block.pressedColor = ScriptableColorObject.pressedColor;
-            block.disabledColor = ScriptableColorObject.disabledColor;
-            block.colorMultiplier = ScriptableColorObject.colorMultiplier;
+            block.normalColor = colorObject.normalColor;
+            block.highlightedColor = colorObject.highlightColor;
+            block.pressedColor = colorObject.pressedColor;
+            block.disabledColor = colorObject.disabledColor;
+            block.colorMultiplier = colorObject.colorMultiplier;
             b.colors = block;
 
             //return;
@@ -52,36 +65,34 @@ public class MassColorChange : MonoBehaviour {
         if (o)
         {
             Vector2 shadow = o.effectDistance;
-            o.effectColor = ScriptableColorObject.effectColor;
-            shadow.x = ScriptableColorObject.effectDistanceX;
-            shadow.y = ScriptableColorObject.effectDistanceY;
+            o.effectColor = colorObject.effectColor;
+            shadow.x = colorObject.effectDistanceX;
+            shadow.y = colorObject.effectDistanceY;
 
         }
         //Update image Components
         Image i = GetComponent<Image>();
         if (i)
         {
-            i.sprite = ScriptableColorObject.sourceImage;
-            i.color = ScriptableColorObject.imageColor;
-            i.material = ScriptableColorObject.imageMaterial;
+            i.sprite = colorObject.sourceImage;
+            i.color = colorObject.imageColor;
+            i.material = colorObject.imageMaterial;
         }
         //Update text Components
         Text t = GetComponent<Text>();
         if (t)
         {
-            t.font = ScriptableColorObject.primaryFont;
-            t.color = ScriptableColorObject.textColor;
+            t.font = colorObject.primaryFont;
+            t.color = colorObject.textColor;
         }
     }
 
-    //Adds an update button to ColorEditor
-    [MenuItem("Update Stuff/updateButtonColor")]
-    static void updateButtonColor()
+    //Update the list of objects with the Mass Color Change
+    static public void updateButtonColor(ColorScriptableObject cso = null)
     {
         foreach (MassColorChange itemsToChange in trackedObjects)
         {
-            print("Hello");
-            itemsToChange.ApplyColorChange();
+            itemsToChange.ApplyColorChange(cso);
         }
            
     }

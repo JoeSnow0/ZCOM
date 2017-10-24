@@ -13,6 +13,7 @@ public class MenuButtons : MonoBehaviour
     public GameObject highScore;
     public GameObject credits;
     public static int scene;
+    static MusicController musicController;
 
     private void Awake()
     {
@@ -28,7 +29,6 @@ public class MenuButtons : MonoBehaviour
 
     public void OnButtonPress(string sceneName)
     {
-
 
 
         if (sceneName == "Exit")
