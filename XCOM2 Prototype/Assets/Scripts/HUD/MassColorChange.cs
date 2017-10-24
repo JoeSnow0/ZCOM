@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
+//This code references ColorScriptableObject.cs
+
 [ExecuteInEditMode]
 public class MassColorChange : MonoBehaviour {
 

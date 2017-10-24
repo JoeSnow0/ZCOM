@@ -31,7 +31,6 @@ public class CameraControl : MonoBehaviour {
     [Header("Camera Target")]
     public GameObject CameraTarget;
     public GameObject Camera;
-    private Vector3 m_targetRotation;
 
     [Header("Camera Keybindings")]
     [SerializeField]    string cameraZoom;
@@ -54,7 +53,7 @@ public class CameraControl : MonoBehaviour {
 
     void Update()
     {
-        //
+        
         //Move left and right with A & D
         if (CameraTarget.transform.position.x >= xPosMin && CameraTarget.transform.position.x <= xPosMax)
         {
@@ -76,7 +75,7 @@ public class CameraControl : MonoBehaviour {
             CameraTarget.transform.position = new Vector3(Mathf.Clamp(p.x, xPosMin, xPosMax), p.y, p.z);
         }
 
-        //
+        
         //Move forwards and backwards with W & S
         if (CameraTarget.transform.position.z >= zPosMin && CameraTarget.transform.position.z <= zPosMax)
         {
@@ -99,7 +98,7 @@ public class CameraControl : MonoBehaviour {
             CameraTarget.transform.position = new Vector3(p.x, p.y, Mathf.Clamp(p.z, zPosMin, zPosMax));
         }
 
-        //
+        
         //Rotate camera
         if (Input.GetKeyDown(cameraRotateLeft))
         {
@@ -119,7 +118,7 @@ public class CameraControl : MonoBehaviour {
             CameraTarget.transform.rotation = Quaternion.Lerp(CameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
         }
 
-        //
+        
         //Zoom in and out
         if (Input.GetAxis(cameraZoom) > 0 && currentScroll < 1)
         {
@@ -132,7 +131,8 @@ public class CameraControl : MonoBehaviour {
             Camera.transform.position += Camera.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
         }
 
-        if (moveToTargetLerp <= 1 && movingCamera)//Moves camera to selected unit
+        //Moves camera to selected unit
+        if (moveToTargetLerp <= 1 && movingCamera)
         {
             moveToTargetLerp += Time.deltaTime / 0.5f;
             CameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));

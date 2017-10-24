@@ -19,6 +19,7 @@ public class Health : MonoBehaviour {
 
     void Start()
     {
+        unitConfig = GetComponent<UnitConfig>();
         InitiateUnitHealth();
     }
 

@@ -7,6 +7,7 @@ public class Node
     public List<Node> neighbours;
     public int x;
     public int y;
+    
     public Node()
     {
         neighbours = new List<Node>();
@@ -18,4 +19,3 @@ public class Node
             new Vector2(n.x, n.y));
     }
 }
-

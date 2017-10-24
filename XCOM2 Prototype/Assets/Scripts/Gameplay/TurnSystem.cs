@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class TurnSystem : MonoBehaviour {
     [Header("Lists with all units")]
-    public UnitConfig[] allUnits;
-    public List<UnitConfig> playerUnits = new List<UnitConfig>();
-    public List<UnitConfig> enemyUnits = new List<UnitConfig>();
+    [HideInInspector]public UnitConfig[] allUnits;
+    [HideInInspector]public List<UnitConfig> playerUnits = new List<UnitConfig>();
+    [HideInInspector]public List<UnitConfig> enemyUnits = new List<UnitConfig>();
 
     //[Header("Actions")]
     [HideInInspector]
@@ -149,6 +149,8 @@ public class TurnSystem : MonoBehaviour {
                     selectedUnit.isSelected = true;
                     MoveMarker(unitMarker, selectedUnit.transform.position);
                     MoveCameraToTarget(selectedUnit.transform.position, 0);
+                    TileMap map = GetComponent<TileMap>();
+                    //map.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
                 }
                 
             }

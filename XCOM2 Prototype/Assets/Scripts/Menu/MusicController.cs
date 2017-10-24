@@ -18,8 +18,8 @@ public class MusicController : MonoBehaviour {
 
     static List<AudioSource> playingSources = new List<AudioSource>();
     [SerializeField] float volumeMaster = 0.75f;
-    [SerializeField] float volumeEffects = 0.75f;
-    [SerializeField] float volumeMusic = 0.75f;
+    [SerializeField] float volumeEffects = 0.75f; // <-- NOT IN USE
+    [SerializeField] float volumeMusic = 0.75f; // <-- NOT IN USE
 
     [Header("A list of audioclips available to this specific audio source.")]
     [Tooltip("Each audioclip has a soundIndex equal to where it is in the list.")]
@@ -31,7 +31,7 @@ public class MusicController : MonoBehaviour {
     bool isPlaying = false;
     int gameScreen;
 
-    Text volumeSliderValue;
+    //Text volumeSliderValue;// <-- NOT IN USE
 
     private void Awake()
     {
@@ -62,13 +62,14 @@ public class MusicController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
+        //Stops music between sceens
         if (gameScreen != SceneManager.GetActiveScene().buildIndex)
         {
             StopAllSound();
             gameScreen = SceneManager.GetActiveScene().buildIndex;
 
         }
+        //Plays MainMenu music
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("mainMenu") && !isPlaying)
         {
 
@@ -77,6 +78,7 @@ public class MusicController : MonoBehaviour {
             isPlaying = true;
 
         }
+        //Plays GameSession music
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("gameSession") && !isPlaying)
         {
             PlaySound(2, true);
@@ -121,20 +123,14 @@ public class MusicController : MonoBehaviour {
         }
     }
 
+    //Used by volume slider in options
     public void AdjustVolume(float newVolume)
     {
         foreach (var audioSource in playingSources)
         {
-            //PlayerPrefs.SetFloat("volume", audioSource.volume);
             audioSource.volume = newVolume;
         }
-        //newVolume *= 100;
-        //int temp = (int)newVolume;
 
-        //volumeSliderValue = GetComponentInChildren<Text>();
-
-
-        //volumeSliderValue.text = temp.ToString();
         
     }
 }

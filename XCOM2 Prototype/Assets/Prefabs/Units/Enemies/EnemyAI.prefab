@@ -253,10 +253,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4794373189345062}
   - component: {fileID: 114396943117730216}
-  - component: {fileID: 114846592464966558}
   - component: {fileID: 136676663913072674}
   - component: {fileID: 114300657596204300}
   - component: {fileID: 114972056034855142}
+  - component: {fileID: 114840236989742042}
   m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Unit
@@ -1682,7 +1682,7 @@ MonoBehaviour:
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
-  unitConfig: {fileID: 114846592464966558}
+  unitConfig: {fileID: 0}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
 --- !u!114 &114344768348526308
 MonoBehaviour:
@@ -1730,7 +1730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allUnits: []
   moveToUnit: {fileID: 0}
-  unitConfig: {fileID: 114846592464966558}
+  unitConfig: {fileID: 114840236989742042}
   mapConfig: {fileID: 0}
 --- !u!114 &114398108771507310
 MonoBehaviour:
@@ -1877,7 +1877,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114846592464966558
+--- !u!114 &114840236989742042
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1885,7 +1885,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1165749053097084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7409a53f14797419ea2a5e18237523, type: 3}
+  m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1650568526972646}
@@ -1901,7 +1901,7 @@ MonoBehaviour:
   tileX: 0
   tileY: 0
   moveSpeed: 6
-  animaitionSpeed: 1
+  animaitionSpeed: 0.05
   isMoving: 0
   isSprinting: 0
   pathProgress: 0

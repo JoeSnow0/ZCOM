@@ -10,8 +10,11 @@ public class EnemyAi : MonoBehaviour {
     public MapConfig mapConfig;
     
     int damage;
-    
-	void Update ()
+    private void Start()
+    {
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+    }
+    void Update ()
     {
         //HACK: AI Movement?
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
