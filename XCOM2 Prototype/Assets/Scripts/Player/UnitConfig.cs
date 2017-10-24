@@ -1,11 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public class UnitConfig : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
-public class UnitConfig : MonoBehaviour {
-    
+public class UnitConfig : MonoBehaviour
+{
+
     //public Transform dmgStartPos;
     //public GameObject floatingDmg;
     public GameObject healthBar;
@@ -15,7 +32,7 @@ public class UnitConfig : MonoBehaviour {
     public WeaponInfoObject unitWeapon;
     public ClassStatsObject unitClassStats;
     public AbilityInfoObject unitAbilities;
-    
+
     //Script references, internal
     public ActionPoints actionPoints;
     public Health health;
@@ -33,8 +50,8 @@ public class UnitConfig : MonoBehaviour {
     public List<Node> currentPath = null;
     //private Node previousNode;
     //private Node nextNode;
-    
-    
+
+
 
     public int moveSpeed = 6;
     [SerializeField]
@@ -53,7 +70,7 @@ public class UnitConfig : MonoBehaviour {
         //////////////////////
 
         //get unit tile coordinates
-        
+
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);
@@ -87,7 +104,7 @@ public class UnitConfig : MonoBehaviour {
         if (!isSelected && isFriendly)
         {
             currentPath = null;
-           line.positionCount = 0;
+            line.positionCount = 0;
         }
 
         if (isMoving == true)
@@ -166,7 +183,7 @@ public class UnitConfig : MonoBehaviour {
                     new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1f, 0.05f), new GradientAlphaKey(1, 0.95f), new GradientAlphaKey(0, 1.0f) }
                     );
                 line.colorGradient = mapConfig.turnSystem.gradient;
-                for(int i = 0; i < 2; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     mapConfig.turnSystem.markerImage[i].color = mapConfig.turnSystem.lineColors[1];
                 }
@@ -192,16 +209,16 @@ public class UnitConfig : MonoBehaviour {
                     line.SetPosition(currNode, new Vector3(start.x, 0.1f, start.z));
                 currNode++;
 
-                if(line.positionCount > 0 && mapConfig.turnSystem.cursorMarker.position != end)
+                if (line.positionCount > 0 && mapConfig.turnSystem.cursorMarker.position != end)
                 {
                     mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.cursorMarker, end);
                 }
             }
         }
     }
-        
 
-    
+
+
     public void MoveNextTile()//start to try to move unit
     {
         if (currentPath == null)// if there is no path leave funktion
