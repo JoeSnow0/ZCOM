@@ -17,7 +17,7 @@ public class generateButtons : MonoBehaviour {
 
         foreach(AbilityInfo ability in characterClass.abilities)
         {
-            // Create gameobject with info from ability/Class
+            //Create gameobject with veriables from Class/Abilities
             AbilityButton newButton = GameObject.Instantiate(abilityButtonPrefab, transform);
             newButton.abilityName.text = ability.name;
             newButton.abilityButton.GetComponent<buttonInput>().useAbility = ability.keybind;

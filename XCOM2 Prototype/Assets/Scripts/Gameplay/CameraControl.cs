@@ -18,14 +18,29 @@ public class CameraControl : MonoBehaviour {
     [Header("Speed")]
     [Tooltip("Speed for camera rotation")]
     [SerializeField]
-    float moveSpeed = 50.0f;
+    [RangeAttribute(0f,100f)]
+    float moveSpeed;
     [Tooltip("Speed for camera movement")]
     [SerializeField]
-    float rotSpeed  = 45.0f;
+    [RangeAttribute(0f, 100f)]
+    float rotSpeed;
+    [Tooltip("Speed for camera zoom")]
+    [SerializeField]
+    [RangeAttribute(0, 100)]
+    int zoomSpeed;
     [Header("Camera Target")]
     public GameObject CameraTarget;
     public GameObject Camera;
 
+    [Header("Camera Keybindings")]
+    [SerializeField]    string cameraZoom;
+
+    [SerializeField]    KeyCode cameraLeft;
+    [SerializeField]    KeyCode cameraRight;
+    [SerializeField]    KeyCode cameraForward;
+    [SerializeField]    KeyCode cameraBackward;
+    [SerializeField]    KeyCode cameraRotateLeft;
+    [SerializeField]    KeyCode cameraRotateRight;
     Vector3 targetPosition;
     Vector3 startPosition;
     float moveToTargetLerp = 0;
@@ -42,12 +57,12 @@ public class CameraControl : MonoBehaviour {
         //Move left and right with A & D
         if (CameraTarget.transform.position.x >= xPosMin && CameraTarget.transform.position.x <= xPosMax)
         {
-            if (Input.GetKey(KeyCode.A) && CameraTarget.transform.position.x >= xPosMin)
+            if (Input.GetKey(cameraLeft) && CameraTarget.transform.position.x >= xPosMin)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.D) && CameraTarget.transform.position.x <= xPosMax)
+            if (Input.GetKey(cameraRight) && CameraTarget.transform.position.x <= xPosMax)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
@@ -64,12 +79,12 @@ public class CameraControl : MonoBehaviour {
         //Move forwards and backwards with W & S
         if (CameraTarget.transform.position.z >= zPosMin && CameraTarget.transform.position.z <= zPosMax)
         {
-            if (Input.GetKey(KeyCode.S) && CameraTarget.transform.position.z >= zPosMin)
+            if (Input.GetKey(cameraBackward) && CameraTarget.transform.position.z >= zPosMin)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
-            else if (Input.GetKey(KeyCode.W) && CameraTarget.transform.position.z <= zPosMax)
+            else if (Input.GetKey(cameraForward) && CameraTarget.transform.position.z <= zPosMax)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
@@ -85,13 +100,13 @@ public class CameraControl : MonoBehaviour {
 
         
         //Rotate camera
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(cameraRotateLeft))
         {
             yRotation += 90;
             targetRotation = new Vector3(0, yRotation, 0);
             rotateLerp = 0;
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(cameraRotateRight))
         {
             yRotation -= 90;
             targetRotation = new Vector3(0, yRotation, 0);
@@ -105,15 +120,15 @@ public class CameraControl : MonoBehaviour {
 
         
         //Zoom in and out
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && currentScroll < 1)
+        if (Input.GetAxis(cameraZoom) > 0 && currentScroll < 1)
         {
-            currentScroll += Input.GetAxis("Mouse ScrollWheel");
-            Camera.transform.position += Camera.transform.forward * Input.GetAxis("Mouse ScrollWheel") * 10;
+            currentScroll += Input.GetAxis(cameraZoom);
+            Camera.transform.position += Camera.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && currentScroll > -1)
+        else if (Input.GetAxis(cameraZoom) < 0 && currentScroll > -1)
         {
-            currentScroll += Input.GetAxis("Mouse ScrollWheel");
-            Camera.transform.position += Camera.transform.forward * Input.GetAxis("Mouse ScrollWheel") * 10;
+            currentScroll += Input.GetAxis(cameraZoom);
+            Camera.transform.position += Camera.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
         }
 
         //Moves camera to selected unit
@@ -123,7 +138,7 @@ public class CameraControl : MonoBehaviour {
             CameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));
         }
     }
-
+    //Move the camera to a specific position within the selected time
     public void MoveToTarget(Vector3 selectedPosition, float time)
     {
         movingCamera = true;
