@@ -23,13 +23,13 @@ public static class CalculationManager// : MonoBehaviour
 
         //hitChance= (coverIntervenience + weaponBaseAccuracy + WeaponProficiency + heightAdvantage + Bonuses - Penalties - (distance * weapontypeRange))
         
-        hitChance = usedWeapon.baseAccuracy;
+        hitChance = usedWeapon.baseAim;
 
         hitRoll = RandomRange.RollDice(1, 100);
         if (hitRoll <= hitChance)
         {
             //Run damage script
-            DamageDealt(usedWeapon.baseDamage, usedWeapon.numberOfDiceDamage, usedWeapon.numberOfSideDamage, true);
+            DamageDealt(usedWeapon.baseDamage, usedWeapon.numberOfDiceDamage, usedWeapon.numberOfSidesDamage, true);
         }
         else
         {

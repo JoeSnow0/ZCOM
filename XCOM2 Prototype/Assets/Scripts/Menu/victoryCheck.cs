@@ -15,6 +15,7 @@ public class victoryCheck : MonoBehaviour {
             gameEndCanvas.SetActive(false);
     }
 
+    //For testing the win/lose screen
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.V) && gameEndCanvas.activeInHierarchy == false)
@@ -26,7 +27,7 @@ public class victoryCheck : MonoBehaviour {
             winCheck(false);
         }
     }
-
+    //Call if win/lose conditions have been met
 	public void winCheck(bool hasWon)
     {
         gameEndCanvas.SetActive(true);

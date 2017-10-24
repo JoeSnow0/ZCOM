@@ -5,7 +5,7 @@ using System.Linq;
 
 public class TileMap : MonoBehaviour {
 
-    public BaseUnit selectedUnit;//needs to change for mulltiple units
+    public UnitConfig selectedUnit;//needs to change for multiple units
 
     public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
     public Material[] gridMaterial;
@@ -163,7 +163,7 @@ public class TileMap : MonoBehaviour {
         }
     }
 
-    void GenerateMapVisual()// make the grid viseble
+    void GenerateMapVisual()// make the grid visible
     {
         tileobjects = new GameObject[mapSizeX, mapSizeY];
         for (int x = 0; x < mapSizeX; x++)
@@ -182,7 +182,7 @@ public class TileMap : MonoBehaviour {
         
     }
 
-    public Vector3 TileCoordToWorldCoord(int x, int y)//wold coordenets to tile coordenets
+    public Vector3 TileCoordToWorldCoord(int x, int y)//world coordinates to tile coordinates
     {
         return transform.position + new Vector3(x * offset, 0, y * offset);
     }
@@ -191,19 +191,19 @@ public class TileMap : MonoBehaviour {
     {
         return transform.position + new Vector3(x / offset, 0, y / offset);
     }
-    public bool UnitCanEnterTile(int x , int y)//walkeble terain on the tile?
+    public bool UnitCanEnterTile(int x , int y)//walkable terrain on the tile?
     {
         return true;
     }
 
-    public void GeneratePathTo(int x, int y, BaseUnit targetUnit)//(move to X pos, move to Y pos, gameobject that will be moved)
+    public void GeneratePathTo(int x, int y, UnitConfig targetUnit)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
         selectedUnit = targetUnit;
         selectedUnit.currentPath = null;
 
         if (UnitCanEnterTile(x,y) == false)
         {
-            //klicked on unwalkeble tearain
+            //clicked on unwalkable terrain
             return;
         }
         //Dijkstra function
