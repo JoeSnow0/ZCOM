@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class TurnSystem : MonoBehaviour {
     [Header("Lists with all units")]
-    public GameObject[] allUnits;
-    public List<Unit> playerUnits = new List<Unit>();
-    public List<Unit> enemyUnits = new List<Unit>();
-    [Header("Actions")]
+    public UnitConfig[] allUnits;
+    public List<UnitConfig> playerUnits = new List<UnitConfig>();
+    public List<UnitConfig> enemyUnits = new List<UnitConfig>();
+
+    //[Header("Actions")]
+    [HideInInspector]
     public int totalActions;
     [Header("UI elements")]
     public GameObject gameOver;
@@ -27,56 +29,64 @@ public class TurnSystem : MonoBehaviour {
     public Animator unitMarkerAnimator;
     public Image[] markerImage;
     [Header("Selected Unit")]
-    public Unit selectedUnit;
+    public UnitConfig selectedUnit;
 
-    public GameObject enemyUnit; //Enemy to spawn, can be changed to an array to randomize
+    //Enemy to spawn, can be changed to an array to randomize
+    public GameObject EnemyUnitSpawnType; 
 
+    //Script refs
     public EnemySpawn enemySpawnNodes;
+    public CameraControl cameraControl;
+    //public UnitConfig unitConfig;
+
     public bool playerTurn = true;
     public bool endTurn = false;
-    public CameraControl cameraControl;
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
+    
 
-    //CalculationManager calcManager;
-
-    void Start () {
-        allUnits = GameObject.FindGameObjectsWithTag("Unit");
-
+    void Start ()
+    {
+        allUnits = GameObject.FindObjectsOfType<UnitConfig>();
+        //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
-            if (allUnits[i].GetComponent<Unit>() != null)
+            if (allUnits[i] != null)
             {
-                if (allUnits[i].GetComponent<Unit>().isFriendly)
+                if (allUnits[i].isFriendly)
                 {
-                    playerUnits.Add(allUnits[i].GetComponent<Unit>());
+                    playerUnits.Add(allUnits[i]);
                 }
                 else
                 {
-                    enemyUnits.Add(allUnits[i].GetComponent<Unit>());
+                    enemyUnits.Add(allUnits[i]);
                 }
             }
+        }
+        //Calculate total amount of action points
+        for (int i = 0; i < playerUnits.Count; i++)
+        {   
+            totalActions += playerUnits[i].actionPoints.actions;
         }
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
+        //HACK: What if a unit has more than 2 actions?
         totalActions = playerUnits.Count * 2;
-
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
-        selectedUnit.GetComponent<BaseUnit>().isSelected = true;
     }
 
 	void Update () {
         selectUnit();
         attackUnit();
-        if (playerTurn == false)
+        if (!playerTurn)//enemy turn
         {
             bool endturn = true;
-            foreach (Unit enemy in enemyUnits)
+            foreach (var enemy in enemyUnits)
             {
-                if (enemy.actions > 0 || enemy.baseUnit.isMoving)
+                if (enemy.actionPoints.actions > 0 || enemy.GetComponent<UnitConfig>().isMoving)
                 {  
                     endturn = false;
                     break;
@@ -91,9 +101,9 @@ public class TurnSystem : MonoBehaviour {
         if (playerTurn)
         {
             bool endturn = true;
-            foreach (Unit unit in playerUnits)
+            foreach (UnitConfig unit in playerUnits)
             {
-                if (unit.actions > 0 || unit.baseUnit.isMoving)
+                if (unit.actionPoints.actions > 0 || unit.isMoving)
                 {
                     endturn = false;
                     break;
@@ -101,8 +111,11 @@ public class TurnSystem : MonoBehaviour {
             }
             if (endturn == true)
             {
-                selectedUnit.baseUnit.isSelected = false;
-                selectedUnit.GetComponent<Unit>().isSelected = false;
+                if (selectedUnit != null)
+                {
+                    selectedUnit.isSelected = false;
+                }
+                
                 selectedUnit = null;
                 hud.pressEnd(true);
             }
@@ -124,24 +137,20 @@ public class TurnSystem : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.GetComponent<Unit>())
-                {
-                    if (hit.collider.GetComponent<Unit>().isFriendly)
-                    {
-                        if (selectedUnit != null)
-                        {
-                            selectedUnit.GetComponent<Unit>().isSelected = false;
-                            selectedUnit.GetComponent<BaseUnit>().isSelected = false;
-                        }
-                        selectedUnit = hit.collider.GetComponent<Unit>();
-                        GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
-                        selectedUnit.GetComponent<BaseUnit>().isSelected = true;
-                        selectedUnit.GetComponent<Unit>().isSelected = true;
 
-                        MoveMarker(unitMarker, selectedUnit.transform.position);
-                        MoveCameraToTarget(selectedUnit.transform.position, 0);
+                if (hit.collider.CompareTag("FriendlyUnit"))
+                {
+                    if (selectedUnit != null)
+                    {
+                        selectedUnit.isSelected = false;
                     }
+                    selectedUnit = hit.collider.GetComponent<UnitConfig>();
+                    GetComponent<TileMap>().selectedUnit = selectedUnit;
+                    selectedUnit.isSelected = true;
+                    MoveMarker(unitMarker, selectedUnit.transform.position);
+                    MoveCameraToTarget(selectedUnit.transform.position, 0);
                 }
+                
             }
         }
     }
@@ -150,24 +159,24 @@ public class TurnSystem : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            if (selectedUnit.actions >= 1) //Checks if the unit has enough action points
+            if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.collider.GetComponent<Unit>()) //Checks if the unit hit an enemy
+                    if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
                     {
-                        Unit target = hit.collider.GetComponent<Unit>();
+                        UnitConfig target = hit.collider.GetComponent<UnitConfig>();
                         if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
                             //Uses current weapon
                             CalculationManager.HitCheck(selectedUnit.unitWeapon);
-                            target.TakeDamage(CalculationManager.damage);
-                            selectedUnit.audioSource.Play();
-                            //Consumes Actions
-                            totalActions -= selectedUnit.actions;
-                            selectedUnit.actions = 0;
+                            target.health.TakeDamage(CalculationManager.damage);
+
+                            //Spend Actions
+                            //totalActions -= selectedUnit;
+                            selectedUnit.actionPoints.SubtractAllActions();
                             selectNextUnit();
                         }
                     }
@@ -189,10 +198,11 @@ public class TurnSystem : MonoBehaviour {
     {
         if (isPlayerTurn)
         {
+            //HACK: NOT adaptable
             totalActions = playerUnits.Count * 2;
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].actions = 2;
+                playerUnits[i].GetComponent<ActionPoints>().actions = 2;
             }
         }
         else
@@ -200,7 +210,7 @@ public class TurnSystem : MonoBehaviour {
             totalActions = enemyUnits.Count * 2;
             for (int i = 0; i < enemyUnits.Count; i++)
             {
-                enemyUnits[i].actions = 2;
+                enemyUnits[i].GetComponent<ActionPoints>().actions = 2;
             }
         }
         playerTurn = isPlayerTurn;
@@ -210,17 +220,15 @@ public class TurnSystem : MonoBehaviour {
     {
         for(int i = 0; i < playerUnits.Count; i++)
         {
-            if(playerUnits[i].actions > 0)
+            if(playerUnits[i].actionPoints.actions > 0)
             {
                 if (selectedUnit != null)
                 {
-                    selectedUnit.GetComponent<Unit>().isSelected = false;
-                    selectedUnit.GetComponent<BaseUnit>().isSelected = false;
+                    selectedUnit.isSelected = false;
                 }
                 selectedUnit = playerUnits[i];
-                GetComponent<TileMap>().selectedUnit = selectedUnit.baseUnit;
-                selectedUnit.GetComponent<BaseUnit>().isSelected = true;
-                selectedUnit.GetComponent<Unit>().isSelected = true;
+                //GetComponent<TileMap>().selectedUnit = selectedUnit.;
+                selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
                 break;
@@ -236,21 +244,21 @@ public class TurnSystem : MonoBehaviour {
         return maxTurns;
     }
 
-    public void destroyUnit(Unit unit)
+    public void destroyUnit(UnitConfig unit)
     {
         if (unit.isFriendly)
             playerUnits.Remove(unit);
         else
             enemyUnits.Remove(unit);
 
-        Destroy(unit.gameObject);
-        if(enemyUnits.Count <= 0)
-        {
-            gameOver.SetActive(true);
-            gameOverText.text = "VICTORY";
-            gameOverText.color = victoryColor;
-        }
-        else if(playerUnits.Count <= 0)
+        //Destroy(unit.gameObject);
+        //if(enemyUnits.Count <= 0)
+        //{
+        //    gameOver.SetActive(true);
+        //    gameOverText.text = "VICTORY";
+        //    gameOverText.color = victoryColor;
+        //}
+        if(playerUnits.Count <= 0)
         {
             gameOver.SetActive(true);
             gameOverText.text = "DEFEAT";
@@ -263,9 +271,9 @@ public class TurnSystem : MonoBehaviour {
         {
             if(i == thisTurn)
             {
-                Unit unitSpawned = Instantiate(enemyUnit, enemySpawnNodes.GetSpawnNode(), Quaternion.identity).GetComponent<Unit>();
-                unitSpawned.turnSystem = this;
-                enemyUnits.Add(unitSpawned);
+                //GameObject newEnemyUnitSpawned = Instantiate(EnemyUnitSpawnType, enemySpawnNodes.GetSpawnNode(), Quaternion.identity).GetComponent<GameObject>();
+                //newEnemyUnitSpawned.turnSystem = this;
+                //enemyUnits.Add(gameObject.newEnemyUnitSpawned);
             }
         }
     }

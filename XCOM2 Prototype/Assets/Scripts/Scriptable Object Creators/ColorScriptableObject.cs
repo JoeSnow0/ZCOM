@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEditor;
 
 [Serializable]
+//Use this to add more preset settings for UI buttons and then assign them in the color editor scriptable object.
+//Creates a scriptable object with the parameters below
 [CreateAssetMenu(fileName = "ColorEditor", menuName = "Class/CreateColorEditor", order = 2)]
 public class ColorScriptableObject : ScriptableObject
 {
@@ -29,6 +31,7 @@ public class ColorScriptableObject : ScriptableObject
     public Font primaryFont;
     public Color textColor;
 }
+//This adds an update button to the inspector so that you can see the changes
 [CustomEditor(typeof(ColorScriptableObject))]
 public class UpdateColorEditor : Editor
 {

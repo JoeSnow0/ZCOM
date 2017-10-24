@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class SoldierAnimation : MonoBehaviour {
     Animator soldierAnimator;
-    BaseUnit baseUnit;
+    UnitConfig Unit;
     Vector3 lastPosition;
     Vector3 direction;
     Quaternion lookRotation;
 
 	void Start () {
         soldierAnimator = GetComponent<Animator>();
-        baseUnit = GetComponentInParent<BaseUnit>();
+        Unit = GetComponentInParent<UnitConfig>();
 
 	}
 	
 	void Update () {
-        if (!baseUnit.isMoving)
+        if (!Unit.isMoving)
         {
             soldierAnimator.SetInteger("state", 0);
         }
-        if (baseUnit.isMoving)
+        if (Unit.isMoving)
         {
             soldierAnimator.SetInteger("state", 1);
         }
-        if (baseUnit.isSprinting)
+        if (Unit.isSprinting)
         {
             soldierAnimator.SetInteger("state", 2);
         }
