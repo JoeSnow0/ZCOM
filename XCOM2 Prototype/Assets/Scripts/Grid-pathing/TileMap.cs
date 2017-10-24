@@ -292,7 +292,7 @@ public class TileMap : MonoBehaviour {
         
         selectedUnit.currentPath = currentPath;
     }
-    public void ChangeGridColor(int movement, int actions, BaseUnit position)
+    public void ChangeGridColor(int movement, int actions, UnitConfig position)
     {
 
         if (changedColoredGrid != null) {

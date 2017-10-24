@@ -1,19 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class UnitConfig : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-}
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,7 +58,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        Vector3 tileCoords = mapConfig.tileMap.UnitCoordToWorldCoord((int)transform.position.x, (int)transform.position.z);
+        Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
 
         //Set unit position on grid
         tileX = (int)tileCoords.x;

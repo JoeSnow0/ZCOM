@@ -150,7 +150,7 @@ public class TurnSystem : MonoBehaviour {
                     MoveMarker(unitMarker, selectedUnit.transform.position);
                     MoveCameraToTarget(selectedUnit.transform.position, 0);
                     TileMap map = GetComponent<TileMap>();
-                    map.ChangeGridColor(selectedUnit.baseUnit.moveSpeed, selectedUnit.actions, selectedUnit.baseUnit);
+                    map.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
                 }
                 
             }
