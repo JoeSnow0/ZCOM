@@ -13,7 +13,7 @@ public class Health : MonoBehaviour {
     private int maxUnitHealth;
     public GameObject floatingDmg;
     public Transform dmgStartPos;
-    public UnitConfig unitConfig;
+    [HideInInspector]public UnitConfig unitConfig;
     public ClassStatsObject unitClassStats;
 
 

@@ -35,10 +35,10 @@ public class CameraControl : MonoBehaviour {
     [Header("Camera Keybindings")]
     [SerializeField]    string cameraZoom;
 
-    [SerializeField]    KeyCode cameraLeft;
-    [SerializeField]    KeyCode cameraRight;
-    [SerializeField]    KeyCode cameraForward;
-    [SerializeField]    KeyCode cameraBackward;
+    [SerializeField]    KeyCode cameraMoveLeft;
+    [SerializeField]    KeyCode cameraMoveRight;
+    [SerializeField]    KeyCode cameraMoveForward;
+    [SerializeField]    KeyCode cameraMoveBackward;
     [SerializeField]    KeyCode cameraRotateLeft;
     [SerializeField]    KeyCode cameraRotateRight;
     Vector3 targetPosition;
@@ -53,38 +53,40 @@ public class CameraControl : MonoBehaviour {
 
     void Update()
     {
-        
-        //Move left and right with A & D
+        //Move left and right
         if (CameraTarget.transform.position.x >= xPosMin && CameraTarget.transform.position.x <= xPosMax)
         {
-            if (Input.GetKey(cameraLeft) && CameraTarget.transform.position.x >= xPosMin)
+            if (Input.GetKey(cameraMoveLeft) && CameraTarget.transform.position.x >= xPosMin)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
-            if (Input.GetKey(cameraRight) && CameraTarget.transform.position.x <= xPosMax)
+            if (Input.GetKey(cameraMoveRight) && CameraTarget.transform.position.x <= xPosMax)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             } 
         }
+
+
+
         //reset movement within boundries
-        if (CameraTarget.transform.position.x < xPosMin || CameraTarget.transform.position.x > xPosMax)
+        if (CameraTarget.transform.position.x > xPosMax && CameraTarget.transform.position.x < xPosMin)
         {
             Vector3 p = CameraTarget.transform.position;
             CameraTarget.transform.position = new Vector3(Mathf.Clamp(p.x, xPosMin, xPosMax), p.y, p.z);
         }
-
         
-        //Move forwards and backwards with W & S
+
+        //Move forwards and backwards
         if (CameraTarget.transform.position.z >= zPosMin && CameraTarget.transform.position.z <= zPosMax)
         {
-            if (Input.GetKey(cameraBackward) && CameraTarget.transform.position.z >= zPosMin)
+            if (Input.GetKey(cameraMoveBackward) && CameraTarget.transform.position.z >= zPosMin)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
-            else if (Input.GetKey(cameraForward) && CameraTarget.transform.position.z <= zPosMax)
+            else if (Input.GetKey(cameraMoveForward) && CameraTarget.transform.position.z <= zPosMax)
             {
                 movingCamera = false;
                 CameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
@@ -92,13 +94,13 @@ public class CameraControl : MonoBehaviour {
             
         }
         //reset movement within boundries
-        if (CameraTarget.transform.position.z < zPosMin || CameraTarget.transform.position.z > zPosMax)
+        if (CameraTarget.transform.position.z > zPosMax && CameraTarget.transform.position.z < zPosMin)
         {
             Vector3 p = CameraTarget.transform.position;
             CameraTarget.transform.position = new Vector3(p.x, p.y, Mathf.Clamp(p.z, zPosMin, zPosMax));
         }
 
-        
+
         //Rotate camera
         if (Input.GetKeyDown(cameraRotateLeft))
         {
