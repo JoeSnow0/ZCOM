@@ -23,4 +23,4 @@ MonoBehaviour:
   imageColor: {r: 1, g: 1, b: 1, a: 1}
   imageMaterial: {fileID: 0}
   primaryFont: {fileID: 12800000, guid: a83f24470ed59a24d9fa00eeb4f2d48a, type: 3}
-  textColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 1}
+  textColor: {r: 0.34775084, g: 0.7058823, b: 0.6762439, a: 1}

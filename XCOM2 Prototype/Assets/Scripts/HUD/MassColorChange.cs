@@ -48,7 +48,6 @@ public class MassColorChange : MonoBehaviour {
         Button b = GetComponent<Button>();
         if (b)
         {
-
             ColorBlock block = b.colors;
             block.normalColor = colorObject.normalColor;
             block.highlightedColor = colorObject.highlightColor;
