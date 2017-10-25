@@ -5,15 +5,13 @@ using UnityEngine.UI;
 using UnityEditor;
 
 //This code references ColorScriptableObject.cs
-
 [ExecuteInEditMode]
 public class MassColorChange : MonoBehaviour {
 
     static List<MassColorChange> trackedObjects = new List<MassColorChange>();
 
     static ColorScriptableObject ScriptableColorObject;
-
-    // Use this for initialization
+    
     void Start()
     {
         //Add ColorEditor to ScriptableColorObject
@@ -48,6 +46,7 @@ public class MassColorChange : MonoBehaviour {
         Button b = GetComponent<Button>();
         if (b)
         {
+
             ColorBlock block = b.colors;
             block.normalColor = colorObject.normalColor;
             block.highlightedColor = colorObject.highlightColor;
@@ -56,7 +55,16 @@ public class MassColorChange : MonoBehaviour {
             block.colorMultiplier = colorObject.colorMultiplier;
             b.colors = block;
 
-            //return;
+            //ButtonSettings button0 = colorObject.ButtonPresets[0];
+            //ColorBlock block = b.colors;
+            //block.normalColor = button0.normalColor;
+            //block.highlightedColor = button0.highlightColor;
+            //block.pressedColor = button0.pressedColor;
+            //block.disabledColor = button0.disabledColor;
+            //block.colorMultiplier = button0.colorMultiplier;
+            //b.colors = block;
+
+            return;
         }
 
         //Update outline Components
@@ -87,11 +95,14 @@ public class MassColorChange : MonoBehaviour {
     }
 
     //Update the list of objects with the Mass Color Change
-    static public void updateButtonColor(ColorScriptableObject cso = null)
+    static public void UpdateButtonColor(ColorScriptableObject cso = null)
     {
-        foreach (MassColorChange itemsToChange in trackedObjects)
+        foreach (MassColorChange itemToChange in trackedObjects)
         {
-            itemsToChange.ApplyColorChange(cso);
+            if (itemToChange == null)
+                continue;
+
+            itemToChange.ApplyColorChange(cso);
         }
            
     }
