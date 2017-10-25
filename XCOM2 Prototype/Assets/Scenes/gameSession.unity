@@ -3315,10 +3315,10 @@ MonoBehaviour:
   CameraTarget: {fileID: 1191944474}
   Camera: {fileID: 1691881912}
   cameraZoom: Mouse ScrollWheel
-  cameraLeft: 0
-  cameraRight: 0
-  cameraForward: 0
-  cameraBackward: 0
+  cameraMoveLeft: 0
+  cameraMoveRight: 0
+  cameraMoveForward: 0
+  cameraMoveBackward: 0
   cameraRotateLeft: 0
   cameraRotateRight: 0
 --- !u!1 &696643238
@@ -5808,6 +5808,11 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1269860487}
+--- !u!1 &1274265830 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1402832461053760, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+    type: 2}
+  m_PrefabInternal: {fileID: 747160946}
 --- !u!1 &1299765580
 GameObject:
   m_ObjectHideFlags: 0
@@ -7854,6 +7859,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileX: 0
+  tileY: 0
+  isMoving: 0
+  isSprinting: 0
+  pathProgress: 0
 --- !u!114 &1571729531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7987,7 +7997,6 @@ MonoBehaviour:
   isFriendly: 1
   tileX: 0
   tileY: 0
-  moveSpeed: 6
   animaitionSpeed: 0.05
   isMoving: 0
   isSprinting: 0
@@ -8903,6 +8912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f233077599af80a47a7786f42c6ec905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 1274265830}
   gameEndCanvas: {fileID: 1517397347}
   gameEndText: {fileID: 728251153}
   gameEndPanel: {fileID: 1738134077}
@@ -10078,6 +10088,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileX: 0
+  tileY: 0
+  isMoving: 0
+  isSprinting: 0
+  pathProgress: 0
 --- !u!114 &1991838178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10195,7 +10210,6 @@ MonoBehaviour:
   isFriendly: 1
   tileX: 0
   tileY: 0
-  moveSpeed: 6
   animaitionSpeed: 0.05
   isMoving: 0
   isSprinting: 0
@@ -10843,6 +10857,21 @@ Prefab:
     - target: {fileID: 1922343718545594, guid: 779cf735e3cf5b44181d66a22f69334e, type: 2}
       propertyPath: m_Name
       value: exitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725647816716156, guid: 779cf735e3cf5b44181d66a22f69334e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1766845895}
+    - target: {fileID: 114725647816716156, guid: 779cf735e3cf5b44181d66a22f69334e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnButtonPress
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725647816716156, guid: 779cf735e3cf5b44181d66a22f69334e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 779cf735e3cf5b44181d66a22f69334e, type: 2}
