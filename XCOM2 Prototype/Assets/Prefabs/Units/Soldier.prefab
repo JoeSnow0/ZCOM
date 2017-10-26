@@ -2181,6 +2181,7 @@ MonoBehaviour:
   isFriendly: 1
   tileX: 0
   tileY: 0
+  movePoints: 6
   animaitionSpeed: 0.05
   isMoving: 0
   isSprinting: 0
@@ -2353,11 +2354,11 @@ MonoBehaviour:
   animAP: {fileID: 0}
   actions: 0
   actionPointsImage:
-  - {fileID: 114259217274066578}
   - {fileID: 114674957500034420}
+  - {fileID: 114259217274066578}
   color:
-  - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
+  - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
 --- !u!120 &120123932883889892
 LineRenderer:

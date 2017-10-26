@@ -1213,12 +1213,12 @@ Prefab:
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
@@ -1229,6 +1229,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 391957939}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!224 &478054718 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224235015628029944, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1483060350}
 --- !u!1 &535196706
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,7 +3515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 8, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1320691701
@@ -3671,7 +3676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 8, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1352873701
@@ -4785,6 +4790,17 @@ Prefab:
       propertyPath: animaitionSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114300657596204300, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+        type: 2}
+      propertyPath: barParent
+      value: 
+      objectReference: {fileID: 478054718}
+    - target: {fileID: 114300657596204300, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+        type: 2}
+      propertyPath: barPrefab
+      value: 
+      objectReference: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
   m_IsPrefabParent: 0
