@@ -1678,7 +1678,8 @@ MonoBehaviour:
   healthBar:
   - {fileID: 0}
   - {fileID: 0}
-  healthSlider: {fileID: 0}
+  barParent: {fileID: 224235015628029944}
+  barPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
@@ -1900,8 +1901,7 @@ MonoBehaviour:
   isFriendly: 0
   tileX: 0
   tileY: 0
-  moveSpeed: 6
-  animaitionSpeed: 0.05
+  animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
   pathProgress: 0

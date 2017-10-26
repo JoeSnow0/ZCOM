@@ -1019,6 +1019,7 @@ GameObject:
   - component: {fileID: 114926315396523272}
   - component: {fileID: 114710749034637548}
   - component: {fileID: 114139811261921410}
+  - component: {fileID: 114738440785497454}
   - component: {fileID: 120123932883889892}
   m_Layer: 0
   m_Name: Soldier
@@ -2184,6 +2185,17 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
+--- !u!114 &114738440785497454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973597339924420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114794772884591812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2224,11 +2236,12 @@ MonoBehaviour:
   healthBar:
   - {fileID: 114648274980277984}
   - {fileID: 114835739821684660}
-  healthSlider: {fileID: 114870263291696410}
+  barParent: {fileID: 224202275442013872}
+  barPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4445137611499376}
-  unitConfig: {fileID: 0}
+  unitConfig: {fileID: 114738440785497454}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
 --- !u!114 &114835739821684660
 MonoBehaviour:

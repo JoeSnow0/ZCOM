@@ -8,19 +8,24 @@ public class Health : MonoBehaviour {
     // Use this for initialization
     public Color[] color;
     public Image[] healthBar;
-    public Slider healthSlider;
+    public Transform barParent;
+    public GameObject barPrefab;
+    Slider healthSlider;
     private int currentUnitHealth;
     private int maxUnitHealth;
     public GameObject floatingDmg;
     public Transform dmgStartPos;
     [HideInInspector]public UnitConfig unitConfig;
     public ClassStatsObject unitClassStats;
-
+    TurnSystem turnSystem;
 
     void Start()
     {
         unitConfig = GetComponent<UnitConfig>();
+        healthSlider = GetComponentInChildren<Slider>();
+        turnSystem = GameObject.FindWithTag("Map").GetComponent<TurnSystem>();
         InitiateUnitHealth();
+        
     }
 
     private void Update()
@@ -52,40 +57,53 @@ public class Health : MonoBehaviour {
             //Set set health bar color for enemy
             healthBar[1].color = color[0];
         }
+
+        for (int i = 0; i < currentUnitHealth; i++)
+        {
+            Instantiate(barPrefab, barParent);
+        }
+
         UpdateUnitHealth();
     }
 
     public void TakeDamage(int damageAmount)
     {
         GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
+        Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
         if (CalculationManager.hit == false)
         {
-            dmg.GetComponentInChildren<Text>().text = "Missed!";
-
+            dmgText[0].text = "Missed!";
+            dmgText[1].text = "0";
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
         }
-
         else
         {
-            dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
+            dmgText[1].text = damageAmount.ToString();
             currentUnitHealth -= damageAmount;
             healthSlider.value = currentUnitHealth;
             UpdateUnitHealth();
+
             if (currentUnitHealth <= 0)
             {
+                if (unitConfig.isFriendly)
+                    turnSystem.playerUnits.Remove(unitConfig);
+                else
+                    turnSystem.enemyUnits.Remove(unitConfig);
+                Destroy(this.gameObject);
+
                 //Remove gameobject from playerUnits List in TurnSystem
                 //GameObject   unitConfig.map.GetComponent<TurnSystem>().playerUnits.Remove();
                 //Destroy(gameObject);
             }
-
         }
     }
     
 // Update the current health value of a unit
 void UpdateUnitHealth()
     {
+        
         //Sets color of healthbar based on health remaining
         //????????????????????????????????????????????????????????????
             
