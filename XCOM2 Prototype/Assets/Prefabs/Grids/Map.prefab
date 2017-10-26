@@ -155,8 +155,8 @@ MonoBehaviour:
     isWalkeble: 0
   gridMaterials:
     normalMaterial: {fileID: 2100000, guid: bce1c97ffcc6ad347bf7f53552cc88ea, type: 2}
-    walkMaterial: {fileID: 2100000, guid: 7313c34d12f5b8c41886242c36f1b340, type: 2}
-    dashMaterial: {fileID: 2100000, guid: e8393e53c55be8440b59d98a3cef1bf8, type: 2}
+    walkMaterial: {fileID: 2100000, guid: e42e954b83e6c944a939cddfe901ff0a, type: 2}
+    dashMaterial: {fileID: 2100000, guid: 7032af8183b88ba4cbb793deada1af77, type: 2}
   mapSizeX: 30
   mapSizeY: 30
   offset: 2

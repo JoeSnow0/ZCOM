@@ -78,6 +78,11 @@ public class TurnSystem : MonoBehaviour {
         totalActions = playerUnits.Count * 2;
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
+        foreach (var unit in allUnits)
+        {
+            mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
+        }
+        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
     }
 
 	void Update () {
@@ -116,6 +121,7 @@ public class TurnSystem : MonoBehaviour {
                 if (selectedUnit != null)
                 {
                     selectedUnit.isSelected = false;
+                    mapConfig.tileMap.ResetColorGrid();
                 }
                 
                 selectedUnit = null;

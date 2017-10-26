@@ -1604,6 +1604,12 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 620651271}
+--- !u!114 &648201551 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
+    type: 2}
+  m_PrefabInternal: {fileID: 1688644074}
+  m_Script: {fileID: 11500000, guid: 3a13c21d2f426d64db1d1273fde02044, type: 3}
 --- !u!1 &692608387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,16 +1821,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: enemyUnits.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: playerUnits.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4606675595661444, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1916,7 +1912,7 @@ Prefab:
         type: 2}
       propertyPath: cameraControl
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 648201551}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0
@@ -5591,12 +5587,12 @@ Prefab:
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}

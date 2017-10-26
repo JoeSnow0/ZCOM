@@ -17,15 +17,15 @@ public class TileMap : MonoBehaviour {
         public Material dashMaterial;
     }
 
-    GameObject[,] tileobjects;
+    ClickebleTile[,] tileobjects;
     int[,] tiles;
     Node[,] graph;
 
     int[,] currentGrid;
     //may need fix for more units
     List<Node> currentPath = null;
-    List<GameObject> changedColoredGrid = null;
-    List<GameObject> currentneighbour;
+    List<ClickebleTile> changedColoredGrid = null;
+    List<ClickebleTile> currentneighbour;
 
     public GridMaterials gridMaterials;
     private UnitConfig playerGridColorChange;
@@ -33,15 +33,18 @@ public class TileMap : MonoBehaviour {
     public int mapSizeY = 50;
 
     public float offset;
-
+    private void Awake()
+    {
+        tiles = new int[mapSizeX, mapSizeY];
+    }
     private void Start()
     {
         //spawn grid
         GenerateMapData();//run map generate
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
-        changedColoredGrid = new List<GameObject>();
-        currentneighbour = new List<GameObject>();
+        changedColoredGrid = new List<ClickebleTile>();
+        currentneighbour = new List<ClickebleTile>();
     }
 
     void GenerateMapData()//make the grid and it's obsticals.
@@ -91,9 +94,13 @@ public class TileMap : MonoBehaviour {
         tiles[1, 1] = 1;
         tiles[9, 0] = 1;
     }
-    void PlayerPositionData()
+    public void UnitMapData(int tileX,int tileY)//when a unit gets or change tile run funktion
     {
-        
+        tiles[tileX, tileY] = 1;//Unit pos is unwalkeble
+    }
+    public void removeUnitMapData(int tileX, int tileY)
+    {
+        tiles[tileX, tileY] = 0;//Unit can walk on tile
     }
 
     public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY)// get the cost for the movement to an loction
@@ -177,15 +184,15 @@ public class TileMap : MonoBehaviour {
 
     void GenerateMapVisual()// make the grid visible
     {
-        tileobjects = new GameObject[mapSizeX, mapSizeY];
+        tileobjects = new ClickebleTile[mapSizeX, mapSizeY];
         for (int x = 0; x < mapSizeX; x++)
         {
             for (int y = 0; y < mapSizeY; y++)
             {
                 TileType tt = tileType[tiles[x, y]];
                 GameObject go = Instantiate(tt.tileVisualPrefab, new Vector3(x * offset, 0, y * offset), Quaternion.identity, transform);
-                tileobjects[x, y] = go;
                 ClickebleTile ct = go.GetComponent<ClickebleTile>();
+                tileobjects[x, y] = ct;
                 ct.tileX = x;
                 ct.tileY = y;
                 ct.map = this;
@@ -208,12 +215,12 @@ public class TileMap : MonoBehaviour {
         return true;
     }
 
-    public void GeneratePathTo(int x, int y, UnitConfig targetUnit)//(move to X pos, move to Y pos, gameobject that will be moved)
+    public void GeneratePathTo(int tileX, int tileY, UnitConfig selected)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit = targetUnit;
+        selectedUnit = selected;
         selectedUnit.currentPath = null;
 
-        if (UnitCanEnterTile(x,y) == false)
+        if (UnitCanEnterTile(tileX,tileY) == false)
         {
             //clicked on unwalkable terrain
             return;
@@ -231,8 +238,8 @@ public class TileMap : MonoBehaviour {
                             selectedUnit.tileY
                             ];
         Node target = graph[
-                            x,
-                            y
+                            tileX,
+                            tileY
                             ];
         
         dist[source] = 0;
@@ -286,7 +293,6 @@ public class TileMap : MonoBehaviour {
         
         if(prev[target] == null)
         {
-
             //no route between our target and our source
             return;
         }
@@ -304,6 +310,8 @@ public class TileMap : MonoBehaviour {
         
         selectedUnit.currentPath = currentPath;
     }
+
+
     public void ChangeGridColor(int movement, int actions, UnitConfig position)
     {
         currentGrid = new int[mapSizeX, mapSizeY];
@@ -325,7 +333,7 @@ public class TileMap : MonoBehaviour {
     {
         if (changedColoredGrid != null)
         {
-            foreach (GameObject grid in changedColoredGrid)//reset all changed colored tiles
+            foreach (ClickebleTile grid in changedColoredGrid)//reset all changed colored tiles
             {
                 grid.GetComponentInChildren<Renderer>().material = gridMaterials.normalMaterial;
             }
@@ -336,22 +344,21 @@ public class TileMap : MonoBehaviour {
     public void GetPlayerNeibours(int movement, int actions)
     {
         int currentRun = 0;//how many times has the loop run
-        changedColoredGrid.Add(tileobjects[playerGridColorChange.tileX, playerGridColorChange.tileY]);//start of color change
+        changedColoredGrid.Add(tileobjects[playerGridColorChange.tileX, playerGridColorChange.tileY].GetComponent<ClickebleTile>());//start of color change
 
         while (currentRun < (movement * actions))
         {
             currentneighbour.Clear();
             foreach (var neighbour in changedColoredGrid)
             {
-                if (neighbour.GetComponent<ClickebleTile>() == null)//if neighbour does not have a ClickebleTile skip to next neighbour
+                if (neighbour == null)//if neighbour does not have a ClickebleTile skip to next neighbour
                     continue;
-                ClickebleTile neighbourConfig = neighbour.GetComponent<ClickebleTile>();
-                GetNeibours(neighbourConfig, currentRun);
+                GetNeibours(neighbour, currentRun);
             }
 
             foreach (var neighbour in currentneighbour)//if the neighbour is walkeble or not
             {
-                if (!neighbour.GetComponent<ClickebleTile>().clickeble)
+                if (!neighbour.clickeble)
                     continue;
 
                 changedColoredGrid.Add(neighbour);//if tile is walkeble add so that we can check it's neighbours next
@@ -416,13 +423,13 @@ public class TileMap : MonoBehaviour {
                     continue;
                 if (tiles[x, y] == 1)
                     continue;
-                GameObject tile = tileobjects[x, y];
+                ClickebleTile tile = tileobjects[x, y];
                 if (currentGrid[x, y] < movement && actions != 1)
                 {
                     tile.GetComponentInChildren<Renderer>().material = gridMaterials.walkMaterial;// walk color
 
                 }
-                else if (currentGrid[x, y] >= movement /*|| (currentGrid[x, y] <= movement && actions == 1)*/)//dash if more then movment or if unit only have one action
+                else if (currentGrid[x, y] >= movement || (currentGrid[x, y] <= movement && actions == 1))//dash if more then movment or if unit only have one action
                 {
                     tile.GetComponentInChildren<Renderer>().material = gridMaterials.dashMaterial;//dash color
 
