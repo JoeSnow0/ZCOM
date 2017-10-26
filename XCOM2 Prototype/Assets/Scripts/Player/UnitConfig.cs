@@ -37,7 +37,7 @@ public class UnitConfig : MonoBehaviour
     //private Node nextNode;
 
 
-    public int moveSpeed = 6;
+    public int movePoints = 6;
     [SerializeField]
     float animaitionSpeed = 0.05f;
     public bool isMoving = false;

@@ -151,7 +151,7 @@ public class TurnSystem : MonoBehaviour {
                     selectedUnit.isSelected = true;
                     MoveMarker(unitMarker, selectedUnit.transform.position);
                     MoveCameraToTarget(selectedUnit.transform.position, 0);
-                    mapConfig.tileMap.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
+                    mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 }
                 
             }
@@ -234,7 +234,7 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
-                mapConfig.tileMap.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
+                mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 break;
             }
         }
