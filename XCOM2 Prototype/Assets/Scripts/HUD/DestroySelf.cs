@@ -8,7 +8,7 @@ public class DestroySelf : MonoBehaviour {
     private float countdown;
     private void Start()
     {
-        DestroyObject(this, countdown);
+        DestroyObject(gameObject, countdown);
     }
     private void Update()
     {

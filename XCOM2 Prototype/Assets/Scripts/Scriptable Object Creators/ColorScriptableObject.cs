@@ -2,7 +2,20 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEditor.SceneManagement;
+
+[Serializable]
+public class ButtonSettings
+{
+    public Color normalColor;
+    public Color highlightColor;
+    public Color pressedColor;
+    public Color disabledColor;
+    [RangeAttribute(1, 5)]
+    public int colorMultiplier;
+}
 
 [Serializable]
 //Use this to add more preset settings for UI buttons and then assign them in the color editor scriptable object.
@@ -10,28 +23,30 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "ColorEditor", menuName = "Class/CreateColorEditor", order = 2)]
 public class ColorScriptableObject : ScriptableObject
 {
-    [Header("Button Settings")]
-    public Color normalColor;
-    public Color highlightColor;
-    public Color pressedColor;
-    public Color disabledColor;
+    //[Header("Button Settings")]
+    //public List<ButtonSettings> ButtonPresets;
+    [Header("Button Type 1 Settings")]
+    public Color    normalColor;
+    public Color    highlightColor;
+    public Color    pressedColor;
+    public Color    disabledColor;
     [RangeAttribute(1, 5)]
-    public int colorMultiplier;
+    public int      colorMultiplier;
 
-    [Header("Outline Settings")]
-    public Color effectColor;
-    public int effectDistanceX, effectDistanceY;
+    [Header("Button Outline")]
+    public Color    effectColor;
+    public int      effectDistanceX, effectDistanceY;
 
-    [Header("Image Settings")]
-    public Sprite sourceImage;
-    public Color imageColor;
+    [Header("Button Image")]
+    public Sprite   sourceImage;
+    public Color    imageColor;
     public Material imageMaterial;
 
-    [Header("Text Settings")]
-    public Font primaryFont;
-    public Color textColor;
+    [Header("Button Text")]
+    public Font     primaryFont;
+    public Color    textColor;
 }
-//This adds an update button to the inspector so that you can see the changes
+//This adds an update button to the inspector so that you can update your changes
 [CustomEditor(typeof(ColorScriptableObject))]
 public class UpdateColorEditor : Editor
 {
@@ -41,11 +56,19 @@ public class UpdateColorEditor : Editor
         
     ColorScriptableObject myScript = (ColorScriptableObject)target;
         GUILayout.Label("After you press Update, you need to interact with another \n setting to see the changes.");
-        if (GUILayout.Button("Update Changes"))
+        if (GUILayout.Button("Update All"))
         {
-            MassColorChange.updateButtonColor(myScript);
-
+            MassColorChange.UpdateButtonColor(myScript);
             Repaint();
+            AssetDatabase.SaveAssets();
+            EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+            
+
+        }
+        if (GUILayout.Button("Reload Scene"))
+        {
+            Scene current = EditorSceneManager.GetActiveScene();
+            EditorSceneManager.OpenScene(current.path);
         }
     }
 }

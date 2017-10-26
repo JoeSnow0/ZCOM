@@ -9,6 +9,8 @@ TagManager:
   - EnemySpawn
   - Map
   - FriendlyUnit
+  - Button_Type_1
+  - Panel_Type_1
   layers:
   - Default
   - TransparentFX

@@ -22,7 +22,7 @@ public class UnitConfig : MonoBehaviour
     public ActionPoints actionPoints;
     public Health health;
     //Script References, external
-    public MapConfig mapConfig;
+    [HideInInspector]public MapConfig mapConfig;
 
     //Unit//
     public bool isSelected = false;
@@ -52,7 +52,8 @@ public class UnitConfig : MonoBehaviour
     {
         //Initiate Variables//
         //////////////////////
-
+        //Get Unit movement points
+        movePoints = unitClassStats.maxUnitMovePoints;
         //get unit tile coordinates
 
         //Add the map incase its missing
@@ -148,7 +149,7 @@ public class UnitConfig : MonoBehaviour
                     mapConfig.turnSystem.markerImage[i].color = mapConfig.turnSystem.lineColors[0];
                 }
             }
-            else if (currentPath.Count < moveSpeed + 2 && actionPoints.actions > 1)//full length path
+            else if (currentPath.Count < movePoints + 2 && actionPoints.actions > 1)//full length path
             {
                 mapConfig.turnSystem.gradient.SetKeys(
                     new GradientColorKey[] { new GradientColorKey(mapConfig.turnSystem.lineColors[0], 0.0f), new GradientColorKey(mapConfig.turnSystem.lineColors[0], 1.0f) },
@@ -174,7 +175,7 @@ public class UnitConfig : MonoBehaviour
             }
 
             int currNode = 0;
-            while (currNode < currentPath.Count - 1 && currNode < moveSpeed * actionPoints.actions)
+            while (currNode < currentPath.Count - 1 && currNode < movePoints * actionPoints.actions)
             {
                 Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
                 Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
@@ -212,13 +213,13 @@ public class UnitConfig : MonoBehaviour
 
         else
         {
-            int remainingMovement = moveSpeed * 2;
+            int remainingMovement = movePoints * 2;
             int moveTo = currentPath.Count - 1;
             for (int cost = 1; cost < moveTo; cost++)//is the path possible
             {
                 remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
             }
-            if (remainingMovement > moveSpeed)//can you move the unit 
+            if (remainingMovement > movePoints)//can you move the unit 
             {
                 isMoving = true;//start moving in the update
                 animaitionSpeed = 2;
@@ -254,7 +255,7 @@ public class UnitConfig : MonoBehaviour
         else
         {
 
-            int remainingMovement = moveSpeed;
+            int remainingMovement = movePoints;
             int moveTo = currentPath.Count - 1;
             for (int cost = 1; cost < moveTo; cost++)//is the path posseble
             {
@@ -274,7 +275,7 @@ public class UnitConfig : MonoBehaviour
             else//is too far away do not move
             {
 
-                remainingMovement = moveSpeed;
+                remainingMovement = movePoints;
 
                 for (int i = currentPath.Count - 1; i > remainingMovement; i--)
                 {
