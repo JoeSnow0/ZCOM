@@ -10080,6 +10080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f233077599af80a47a7786f42c6ec905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 0}
   gameEndCanvas: {fileID: 1517397347}
   gameEndText: {fileID: 728251153}
   gameEndPanel: {fileID: 1738134077}
@@ -12168,6 +12169,21 @@ Prefab:
     - target: {fileID: 1922343718545594, guid: 779cf735e3cf5b44181d66a22f69334e, type: 2}
       propertyPath: m_TagString
       value: Button_Type_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725647816716156, guid: 779cf735e3cf5b44181d66a22f69334e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1766845895}
+    - target: {fileID: 114725647816716156, guid: 779cf735e3cf5b44181d66a22f69334e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnButtonPress
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725647816716156, guid: 779cf735e3cf5b44181d66a22f69334e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 779cf735e3cf5b44181d66a22f69334e, type: 2}
