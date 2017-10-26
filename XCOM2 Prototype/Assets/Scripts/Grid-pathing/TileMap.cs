@@ -16,6 +16,7 @@ public class TileMap : MonoBehaviour {
         public Material walkMaterial;
         public Material dashMaterial;
     }
+
     GameObject[,] tileobjects;
     int[,] tiles;
     Node[,] graph;
@@ -25,7 +26,7 @@ public class TileMap : MonoBehaviour {
     List<Node> currentPath = null;
     List<GameObject> changedColoredGrid = null;
     List<GameObject> currentneighbour;
-    
+
     public GridMaterials gridMaterials;
     private UnitConfig playerGridColorChange;
     public int mapSizeX = 50;//map size
@@ -41,7 +42,6 @@ public class TileMap : MonoBehaviour {
         GenerateMapVisual();//make the map visuals
         changedColoredGrid = new List<GameObject>();
         currentneighbour = new List<GameObject>();
-
     }
 
     void GenerateMapData()//make the grid and it's obsticals.
@@ -318,7 +318,7 @@ public class TileMap : MonoBehaviour {
         }
         ResetColorGrid();
         GetPlayerNeibours(movement, actions);
-        
+
     }
 
     public void ResetColorGrid()
@@ -346,40 +346,9 @@ public class TileMap : MonoBehaviour {
                 if (neighbour.GetComponent<ClickebleTile>() == null)//if neighbour does not have a ClickebleTile skip to next neighbour
                     continue;
                 ClickebleTile neighbourConfig = neighbour.GetComponent<ClickebleTile>();
-
-                if (neighbourConfig.tileX > 0)//get neighbour to the left
-                {
-                    if (currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-                    {
-                        currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
-                        currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-                    }
-                }
-                if (neighbourConfig.tileX < mapSizeX - 1)//get neighbour to the right
-                {
-                    if (currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-                    {
-                        currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
-                        currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-                    }
-                }
-                if (neighbourConfig.tileY > 0)//get neighbour to the down
-                {
-                    if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] > currentRun)//check if has position has been filed
-                    {
-                        currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
-                        currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
-                    }
-                }
-                if (neighbourConfig.tileY < mapSizeY - 1)//get neighbour to the up
-                {
-                    if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] > currentRun)//check if has position has been filed
-                    {
-                        currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
-                        currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
-                    }
-                }
+                GetNeibours(neighbourConfig, currentRun);
             }
+
             foreach (var neighbour in currentneighbour)//if the neighbour is walkeble or not
             {
                 if (!neighbour.GetComponent<ClickebleTile>().clickeble)
@@ -392,6 +361,42 @@ public class TileMap : MonoBehaviour {
         ChangeColorGrid(movement, actions);
     }
 
+    private void GetNeibours(ClickebleTile neighbourConfig, int currentRun)
+    {
+        if (neighbourConfig.tileX > 0)//get neighbour to the left
+        {
+            if (currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
+            {
+                currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
+                currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+            }
+        }
+        if (neighbourConfig.tileX < mapSizeX - 1)//get neighbour to the right
+        {
+            if (currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
+            {
+                currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
+                currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+            }
+        }
+        if (neighbourConfig.tileY > 0)//get neighbour to the down
+        {
+            if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] > currentRun)//check if has position has been filed
+            {
+                currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
+                currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
+            }
+        }
+        if (neighbourConfig.tileY < mapSizeY - 1)//get neighbour to the up
+        {
+            if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] > currentRun)//check if has position has been filed
+            {
+                currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
+                currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
+            }
+        }
+    }
+
     public void ChangeColorGrid(int movement, int actions)
     {
         for (int x = (playerGridColorChange.tileX - (movement * actions)); x <= (playerGridColorChange.tileX + (movement * actions)); x++)
@@ -401,11 +406,11 @@ public class TileMap : MonoBehaviour {
 
                 if (y < 0)
                     continue;
-                if (y > mapSizeY -1)
+                if (y > mapSizeY - 1)
                     continue;
                 if (x < 0)
                     continue;
-                if (x > mapSizeX-1)
+                if (x > mapSizeX - 1)
                     continue;
                 if (currentGrid[x, y] == 99)
                     continue;
