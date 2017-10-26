@@ -30,6 +30,7 @@ public class TurnSystem : MonoBehaviour {
     public Image[] markerImage;
     [Header("Selected Unit")]
     public UnitConfig selectedUnit;
+    public MapConfig mapConfig;
 
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType; 
@@ -49,6 +50,7 @@ public class TurnSystem : MonoBehaviour {
     void Start ()
     {
         allUnits = GameObject.FindObjectsOfType<UnitConfig>();
+        mapConfig = FindObjectOfType<MapConfig>();
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -145,12 +147,11 @@ public class TurnSystem : MonoBehaviour {
                         selectedUnit.isSelected = false;
                     }
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    GetComponent<TileMap>().selectedUnit = selectedUnit;
+                    mapConfig.tileMap.selectedUnit = selectedUnit;
                     selectedUnit.isSelected = true;
                     MoveMarker(unitMarker, selectedUnit.transform.position);
                     MoveCameraToTarget(selectedUnit.transform.position, 0);
-                    TileMap map = GetComponent<TileMap>();
-                    //map.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
+                    mapConfig.tileMap.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
                 }
                 
             }
@@ -233,6 +234,7 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
+                mapConfig.tileMap.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
                 break;
             }
         }

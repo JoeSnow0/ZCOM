@@ -7,7 +7,7 @@ public class ClickebleTile : MonoBehaviour {
     public int tileY;
     public TileMap map;
     public TurnSystem turnSystem;
-
+    public bool clickeble = false;
     private void Start()
     {
         

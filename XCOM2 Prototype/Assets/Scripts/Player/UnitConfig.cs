@@ -37,7 +37,6 @@ public class UnitConfig : MonoBehaviour
     //private Node nextNode;
 
 
-
     public int moveSpeed = 6;
     [SerializeField]
     float animaitionSpeed = 0.05f;
@@ -231,6 +230,7 @@ public class UnitConfig : MonoBehaviour
             {
                 isSprinting = true;
                 isMoving = true;//start moving in the update
+                mapConfig.tileMap.ResetColorGrid();
                 animaitionSpeed = 4;
                 actionPoints.actions = 0;
                 mapConfig.turnSystem.totalActions--;
