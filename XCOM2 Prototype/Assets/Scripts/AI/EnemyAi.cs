@@ -5,29 +5,27 @@ using UnityEngine;
 public class EnemyAi : MonoBehaviour {
 
     public GameObject[] allUnits;
-    public GameObject moveToUnit;
+    [HideInInspector]public GameObject moveToUnit;
     public UnitConfig unitConfig;
-    public MapConfig mapConfig;
-    
-    int damage;
+
     private void Start()
     {
-        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
     }
     void Update ()
     {
         //HACK: AI Movement?
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
-        if (!mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
+        if (!unitConfig.mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
         {
             FindClosestPlayerUnit();
             UnitConfig closestUnit = moveToUnit.GetComponent<UnitConfig>();
-            mapConfig.tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<UnitConfig>());
-            //HACK: zombie attack?
+            unitConfig.mapConfig.tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<UnitConfig>());
+            //attack if within 2 tiles (includes the one you're standing on)
             if (unitConfig.currentPath.Count < 3)
             {
-                closestUnit.health.TakeDamage(damage);
-                unitConfig.actionPoints.actions = 0;
+                //closestUnit.health.TakeDamage(unitConfig.unitWeapon);
+                //Remove remaining actions
+                unitConfig.actionPoints.SubtractAllActions();
             }
             //HACK: move?
             else
@@ -43,15 +41,15 @@ public class EnemyAi : MonoBehaviour {
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
 
-        for (int i = 0; i < mapConfig.turnSystem.playerUnits.Count; i++)
+        for (int i = 0; i < unitConfig.mapConfig.turnSystem.playerUnits.Count; i++)
         {
 
-            Vector3 diff = mapConfig.turnSystem.playerUnits[i].transform.position - position;
+            Vector3 diff = unitConfig.mapConfig.turnSystem.playerUnits[i].transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
             {
                 distance = curDistance;
-                moveToUnit = mapConfig.turnSystem.playerUnits[i].gameObject;
+                moveToUnit = unitConfig.mapConfig.turnSystem.playerUnits[i].gameObject;
             }
         }
     }

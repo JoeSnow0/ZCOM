@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour {
+public class Health : MonoBehaviour
+{
 
     // Use this for initialization
     public Color[] color;
