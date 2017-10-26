@@ -253,10 +253,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4794373189345062}
   - component: {fileID: 114396943117730216}
+  - component: {fileID: 114840236989742042}
   - component: {fileID: 136676663913072674}
   - component: {fileID: 114300657596204300}
   - component: {fileID: 114972056034855142}
-  - component: {fileID: 114840236989742042}
   m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Unit
@@ -1900,8 +1900,8 @@ MonoBehaviour:
   isFriendly: 0
   tileX: 0
   tileY: 0
-  moveSpeed: 6
-  animaitionSpeed: 0.05
+  movePoints: 6
+  animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
