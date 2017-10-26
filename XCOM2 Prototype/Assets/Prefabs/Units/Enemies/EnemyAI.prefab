@@ -253,10 +253,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4794373189345062}
   - component: {fileID: 114396943117730216}
+  - component: {fileID: 114840236989742042}
   - component: {fileID: 136676663913072674}
   - component: {fileID: 114300657596204300}
   - component: {fileID: 114972056034855142}
-  - component: {fileID: 114840236989742042}
   m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Unit
@@ -1678,8 +1678,7 @@ MonoBehaviour:
   healthBar:
   - {fileID: 0}
   - {fileID: 0}
-  barParent: {fileID: 224235015628029944}
-  barPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
+  healthSlider: {fileID: 0}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
@@ -1901,6 +1900,7 @@ MonoBehaviour:
   isFriendly: 0
   tileX: 0
   tileY: 0
+  movePoints: 6
   animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
