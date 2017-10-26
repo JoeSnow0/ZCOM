@@ -248,8 +248,14 @@ public class TurnSystem : MonoBehaviour {
 
     public int getCurrentTurn(int currentTurn)
     {
-        if(currentTurn > maxTurns)
+        if (currentTurn > maxTurns)
+        {
+            gameObject.SetActive(false);//deactivates the map
             gameOver.SetActive(true);
+        }
+
+
+            
         thisTurn = currentTurn;
         return maxTurns;
     }
@@ -270,6 +276,7 @@ public class TurnSystem : MonoBehaviour {
         //}
         if(playerUnits.Count <= 0)
         {
+            gameObject.SetActive(false);//deactivates the map
             gameOver.SetActive(true);
             gameOverText.text = "DEFEAT";
             gameOverText.color = defeatColor;
