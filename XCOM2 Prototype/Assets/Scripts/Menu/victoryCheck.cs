@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class victoryCheck : MonoBehaviour {
 
+    public GameObject map;
     public GameObject gameEndCanvas;
     public GameObject gameEndText;
     public GameObject gameEndPanel;
-
+    
     void Start()
     {
         //disable win screen at start
@@ -30,6 +31,7 @@ public class victoryCheck : MonoBehaviour {
     //Call if win/lose conditions have been met
 	public void winCheck(bool hasWon)
     {
+        map.SetActive(false);
         gameEndCanvas.SetActive(true);
         if (hasWon == false)
         {

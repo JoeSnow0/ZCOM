@@ -139,6 +139,8 @@ MonoBehaviour:
   tileY: 0
   map: {fileID: 0}
   turnSystem: {fileID: 0}
+  moveDistanse: 0
+  clickeble: 1
 --- !u!114 &114762923954324166
 MonoBehaviour:
   m_ObjectHideFlags: 1
