@@ -124,6 +124,7 @@ public class UnitConfig : MonoBehaviour
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
+                mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
                 if (mapConfig.turnSystem.playerTurn)
                     mapConfig.turnSystem.MoveCameraToTarget(mapConfig.turnSystem.selectedUnit.transform.position, 0);
 

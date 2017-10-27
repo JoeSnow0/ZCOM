@@ -104,6 +104,8 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
+            cursorAnimator.SetBool("display", false);
+            unitMarkerAnimator.SetBool("display", false);
         }
         if (playerTurn)
         {
@@ -139,7 +141,7 @@ public class TurnSystem : MonoBehaviour {
             selectedUnit = null;
         }
 
-        if (Input.GetMouseButtonDown(0) && playerTurn)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -199,6 +201,7 @@ public class TurnSystem : MonoBehaviour {
         if (cursorAnimator.GetBool("display") == false)
         {
             cursorAnimator.SetBool("display", true);
+            unitMarkerAnimator.SetBool("display", true);
         }
         m_Marker.position = m_Position;
     }
