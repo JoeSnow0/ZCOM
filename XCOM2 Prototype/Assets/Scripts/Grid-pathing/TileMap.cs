@@ -30,8 +30,8 @@ public class TileMap : MonoBehaviour {
 
     public GridMaterials gridMaterials;
     private UnitConfig playerGridColorChange;
-    public int mapSizeX = 50;//map size
-    public int mapSizeY = 50;
+    public int mapSizeX;//map size
+    public int mapSizeY;
 
     public float offset;
     private void Awake()

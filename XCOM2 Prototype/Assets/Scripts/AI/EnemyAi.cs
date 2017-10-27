@@ -5,16 +5,17 @@ using UnityEngine;
 public class EnemyAi : MonoBehaviour {
 
     public GameObject[] allUnits;
-    public GameObject moveToUnit;
+    public UnitConfig moveToUnit;
     public UnitConfig unitConfig;
     public MapConfig mapConfig;
     int damage;
-
-    private List<UnitConfig> playerUnits;
-
+    
+    int posLeftOrRight;
+    int posUPOrDown;
     private void Start()
     {
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        unitConfig = gameObject.GetComponent<UnitConfig>();
     }
     void Update ()
     {
@@ -23,12 +24,11 @@ public class EnemyAi : MonoBehaviour {
         if (!mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
         {
             FindClosestPlayerUnit();
-            UnitConfig closestUnit = moveToUnit.GetComponent<UnitConfig>();
-            mapConfig.tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<UnitConfig>());
+            mapConfig.tileMap.GeneratePathTo(moveToUnit.tileX + posLeftOrRight, moveToUnit.tileY + posUPOrDown, unitConfig);
             //HACK: zombie attack?
             if (unitConfig.currentPath.Count < 3)
             {
-                closestUnit.health.TakeDamage(damage);
+                moveToUnit.health.TakeDamage(damage);
                 unitConfig.actionPoints.actions = 0;
             }
             //HACK: move?
@@ -41,21 +41,49 @@ public class EnemyAi : MonoBehaviour {
 
     public void FindClosestPlayerUnit()
     {
-        List<UnitConfig> listOfPlayers = new List<UnitConfig>();
-        int[] listOfPlayersNumber = new int[mapConfig.turnSystem.playerUnits.Count];//an array with lenght of have many players currently exist
         float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
-        
-        for (int i = 0; i < mapConfig.turnSystem.playerUnits.Count; i++)
+        foreach (var unit in mapConfig.turnSystem.playerUnits)
         {
-
-            Vector3 diff = mapConfig.turnSystem.playerUnits[i].transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
+            
+            mapConfig.tileMap.GeneratePathTo(unit.tileX + 1, unit.tileY, unit);
+            if (distance < unit.currentPath.Count && unit.currentPath != null)
             {
-                distance = curDistance;
-                moveToUnit = mapConfig.turnSystem.playerUnits[i].gameObject;
+                //right
+                posLeftOrRight = -1;
+                posUPOrDown = 0;
+                distance = unit.currentPath.Count;
+                moveToUnit = unit;
             }
+
+            mapConfig.tileMap.GeneratePathTo(unit.tileX - 1, unit.tileY, unit);
+            if (distance < unit.currentPath.Count && unit.currentPath != null)
+            {
+                //left
+                posLeftOrRight = -1;
+                posUPOrDown = 0;
+                distance = unit.currentPath.Count;
+                moveToUnit = unit;
+            }
+
+            mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY + 1, unit);
+            if (distance < unit.currentPath.Count && unit.currentPath != null)
+            {
+                //up
+                posLeftOrRight = 0;
+                posUPOrDown = 1;
+                distance = unit.currentPath.Count;
+                moveToUnit = unit;
+            }
+
+            mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY - 1, unit);
+            if (distance < unit.currentPath.Count && unit.currentPath != null)
+            {
+                posLeftOrRight = 0;
+                posUPOrDown = -1;
+                distance = unit.currentPath.Count;
+                moveToUnit = unit;
+            }
+            
         }
     }
 }
