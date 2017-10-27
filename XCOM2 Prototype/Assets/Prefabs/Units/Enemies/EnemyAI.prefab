@@ -427,6 +427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4396586016175306}
   - component: {fileID: 95553894188928714}
+  - component: {fileID: 114466158342273738}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -1587,7 +1588,7 @@ Animator:
   m_GameObject: {fileID: 1482728476037554}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: dd05ebf64ae7b274e8f7a5083748deb4, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 759fedb8f6db01348b9a29b3d1065d5f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1759,6 +1760,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114466158342273738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1482728476037554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a46834decce6fd408f466a511945f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114478769605198892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1901,7 +1913,7 @@ MonoBehaviour:
   tileX: 0
   tileY: 0
   moveSpeed: 6
-  animaitionSpeed: 0.05
+  animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
