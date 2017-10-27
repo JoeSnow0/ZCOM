@@ -226,6 +226,10 @@ public class TileMap : MonoBehaviour {
             //clicked on unwalkable terrain
             return;
         }
+        if (tileX < 0 || tileX >= mapSizeX)
+            return;
+        if (tileY < 0 || tileY >= mapSizeY)
+            return;
         //Dijkstra function
         //https://sv.wikipedia.org/wiki/Dijkstras_algoritm for more information of the Dijkstra function
 
@@ -374,34 +378,39 @@ public class TileMap : MonoBehaviour {
         if (neighbourConfig.tileX > 0)//get neighbour to the left
         {
             if (currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
-                currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-            }
+                if (tiles[neighbourConfig.tileX - 1, neighbourConfig.tileY] != 1)//is tile walkeble?
+                {
+                
+                    currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
+                    currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+                }
         }
         if (neighbourConfig.tileX < mapSizeX - 1)//get neighbour to the right
         {
             if (currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
-                currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-            }
+                if (tiles[neighbourConfig.tileX + 1, neighbourConfig.tileY] != 1)//is tile walkeble?
+                {
+                    currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
+                    currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+                }
         }
         if (neighbourConfig.tileY > 0)//get neighbour to the down
         {
             if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
-                currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
-            }
+                if (tiles[neighbourConfig.tileX, neighbourConfig.tileY - 1] != 1)//is tile walkeble?
+                {
+                    currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
+                    currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
+                }
         }
         if (neighbourConfig.tileY < mapSizeY - 1)//get neighbour to the up
         {
             if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
-                currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
-            }
+                if (tiles[neighbourConfig.tileX, neighbourConfig.tileY + 1] != 1)//is tile walkeble?
+                {
+                    currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
+                    currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
+                }
         }
     }
 

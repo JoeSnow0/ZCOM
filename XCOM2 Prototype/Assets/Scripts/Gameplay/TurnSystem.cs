@@ -223,6 +223,7 @@ public class TurnSystem : MonoBehaviour {
             for (int i = 0; i < enemyUnits.Count; i++)
             {
                 enemyUnits[i].GetComponent<ActionPoints>().actions = 2;
+                enemyUnits[i].GetComponent<EnemyAi>().isBusy = false;
             }
         }
         playerTurn = isPlayerTurn;
