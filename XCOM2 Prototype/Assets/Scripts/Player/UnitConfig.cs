@@ -21,6 +21,7 @@ public class UnitConfig : MonoBehaviour
     //Script references, internal
     public ActionPoints actionPoints;
     public Health health;
+    public UnitMovement movement;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
@@ -103,7 +104,7 @@ public class UnitConfig : MonoBehaviour
 
                 pathProgress += Time.deltaTime * animaitionSpeed;
                 transform.position = Vector3.Lerp(previousPosition, nextPosition, pathProgress);
-                //if unit have reached the end of path reset pathprogress and increacss pathindex
+                //if unit have reached the end of path reset pathprogress and increase pathindex
                 if (pathProgress >= 1.0)
                 {
 
@@ -133,6 +134,7 @@ public class UnitConfig : MonoBehaviour
                 }
             }
         }
+        //HACK: but it can?!
         //draw line need to be fixed cant be seen in the built version
         if (currentPath != null && isFriendly && !isMoving)//1 long path
         {

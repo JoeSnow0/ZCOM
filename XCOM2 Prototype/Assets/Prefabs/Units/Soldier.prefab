@@ -2000,6 +2000,7 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
+  unitClassStats: {fileID: 0}
 --- !u!114 &114236354458066612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2175,6 +2176,7 @@ MonoBehaviour:
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
   actionPoints: {fileID: 114926315396523272}
   health: {fileID: 114799151252263356}
+  movement: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -2213,23 +2215,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1973597339924420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1efe98d0933a8b942bc51a478e002baf, type: 3}
+  m_Script: {fileID: 11500000, guid: da8c5a616b3a253498109618aa552bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   color:
-  - {r: 0.7490196, g: 0.11764707, b: 0.18823531, a: 1}
-  - {r: 0.17647058, g: 0.14143598, b: 0.14540897, a: 1}
-  - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
-  - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
-  healthBar:
-  - {fileID: 114648274980277984}
-  - {fileID: 114835739821684660}
-  healthSlider: {fileID: 114870263291696410}
-  floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
-    type: 2}
-  dmgStartPos: {fileID: 4445137611499376}
-  unitConfig: {fileID: 0}
-  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  healthBar: []
+  healthSlider: {fileID: 0}
+  unitClassStats: {fileID: 0}
+  floatingDmg: {fileID: 0}
+  dmgStartPos: {fileID: 0}
 --- !u!114 &114835739821684660
 MonoBehaviour:
   m_ObjectHideFlags: 1

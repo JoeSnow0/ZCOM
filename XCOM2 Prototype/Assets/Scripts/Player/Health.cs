@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEditor;
 public class Health : MonoBehaviour
 {
-
-    // Use this for initialization
-    public Color[] color;
-    public Image[] healthBar;
-    public Slider healthSlider;
+    [SerializeField]private Color[] color;
+    [SerializeField]private Image[] healthBar;
+    [SerializeField]private Slider healthSlider;
+    [SerializeField] private ClassStatsObject unitClassStats;
     private int currentUnitHealth;
     private int maxUnitHealth;
     public GameObject floatingDmg;
     public Transform dmgStartPos;
-    [HideInInspector]public UnitConfig unitConfig;
-    public ClassStatsObject unitClassStats;
+    private UnitConfig unitConfig;
+    
 
 
     void Start()
     {
         unitConfig = GetComponent<UnitConfig>();
+        if (unitClassStats == null)
+        {
+            unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
+            Debug.LogWarning("Couldn't find Class, using default class");
+        }
         InitiateUnitHealth();
     }
 
@@ -35,6 +39,7 @@ public class Health : MonoBehaviour
         //Set health based on class
         currentUnitHealth = unitClassStats.maxUnitHealth;
         maxUnitHealth = unitClassStats.maxUnitHealth;
+
         //Update health slider
         healthSlider.maxValue = maxUnitHealth;
         healthSlider.value = currentUnitHealth;
@@ -53,7 +58,6 @@ public class Health : MonoBehaviour
             //Set set health bar color for enemy
             healthBar[1].color = color[0];
         }
-        UpdateUnitHealth();
     }
 
     public void TakeDamage(int damageAmount)
@@ -72,25 +76,26 @@ public class Health : MonoBehaviour
         {
             dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
             currentUnitHealth -= damageAmount;
-            healthSlider.value = currentUnitHealth;
-            UpdateUnitHealth();
+            
             if (currentUnitHealth <= 0)
             {
-                //Remove gameobject from playerUnits List in TurnSystem
-                //GameObject   unitConfig.map.GetComponent<TurnSystem>().playerUnits.Remove();
-                //Destroy(gameObject);
+                KillUnit();
             }
+            UpdateUnitHealth();
 
         }
     }
-    
-// Update the current health value of a unit
-void UpdateUnitHealth()
+
+    // Update the current health value of a unit
+    void UpdateUnitHealth()
     {
-        //Sets color of healthbar based on health remaining
-        //????????????????????????????????????????????????????????????
-            
-        
-        
+        healthSlider.value = currentUnitHealth;
+    }
+
+    void KillUnit()
+    {
+        //Remove gameobject from playerUnits List in TurnSystem
+        unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
+        DestroyObject(this, 1);
     }
 }

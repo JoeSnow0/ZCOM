@@ -20,6 +20,7 @@ public class UnitMovement : MonoBehaviour {
     private int     pathIndex = 0;
     public float    pathProgress;
     LineRenderer    line;
+    public ClassStatsObject unitClassStats;
 
     UnitConfig unitConfig;
 

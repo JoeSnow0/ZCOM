@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ActionPoints : MonoBehaviour {
     public Animator animAP;
-    public int actions;
+    [HideInInspector]public int actions;
     private int maxActions;
     public Image[] actionPointsImage;
     public Color[] color;
