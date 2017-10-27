@@ -26,6 +26,7 @@ public class Health : MonoBehaviour
             Debug.LogWarning("Couldn't find Class, using default class");
         }
         InitiateUnitHealth();
+        
     }
 
     private void Update()
@@ -58,23 +59,30 @@ public class Health : MonoBehaviour
             //Set set health bar color for enemy
             healthBar[1].color = color[0];
         }
+
+        for (int i = 0; i < currentUnitHealth; i++)
+        {
+            Instantiate(barPrefab, barParent);
+        }
+
+        UpdateUnitHealth();
     }
 
     public void TakeDamage(int damageAmount)
     {
         GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
+        Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
         if (CalculationManager.hit == false)
         {
-            dmg.GetComponentInChildren<Text>().text = "Missed!";
-
+            dmgText[0].text = "Missed!";
+            dmgText[1].text = "0";
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
         }
-
         else
         {
-            dmg.GetComponentInChildren<Text>().text = "-" + damageAmount;
+            dmgText[1].text = damageAmount.ToString();
             currentUnitHealth -= damageAmount;
             
             if (currentUnitHealth <= 0)

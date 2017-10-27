@@ -34,8 +34,6 @@ public class UnitConfig : MonoBehaviour
 
     //grid Reference
     public List<Node> currentPath = null;
-    //private Node previousNode;
-    //private Node nextNode;
 
 
 
@@ -64,6 +62,7 @@ public class UnitConfig : MonoBehaviour
         //Set unit position on grid
         tileX = (int)tileCoords.x;
         tileY = (int)tileCoords.z;
+        
         line = GetComponent<LineRenderer>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
@@ -122,9 +121,11 @@ public class UnitConfig : MonoBehaviour
             else//when unit reach location reset special stats
             {
                 isMoving = false;
+                mapConfig.tileMap.UnitMapData(tileX, tileY);
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
+                mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
                 if (mapConfig.turnSystem.playerTurn)
                     mapConfig.turnSystem.MoveCameraToTarget(mapConfig.turnSystem.selectedUnit.transform.position, 0);
 
@@ -132,9 +133,12 @@ public class UnitConfig : MonoBehaviour
                 {
                     mapConfig.turnSystem.selectNextUnit();
                 }
+                else if(actionPoints.actions > 0 && isFriendly)
+                {
+                    mapConfig.tileMap.ChangeGridColor(movePoints, actionPoints.actions, this);
+                }
             }
         }
-        //HACK: but it can?!
         //draw line need to be fixed cant be seen in the built version
         if (currentPath != null && isFriendly && !isMoving)//1 long path
         {
@@ -245,36 +249,38 @@ public class UnitConfig : MonoBehaviour
             return;
         }
 
-        else
+        
+        mapConfig.tileMap.removeUnitMapData(tileX, tileY);
+        mapConfig.tileMap.ResetColorGrid();
+        int remainingMovement = movePoints * 2;
+        int moveTo = currentPath.Count - 1;
+        for (int cost = 1; cost < moveTo; cost++)//is the path possible
         {
-            int remainingMovement = movePoints * 2;
-            int moveTo = currentPath.Count - 1;
-            for (int cost = 1; cost < moveTo; cost++)//is the path possible
-            {
-                remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
-            }
-            if (remainingMovement > movePoints)//can you move the unit 
-            {
-                isMoving = true;//start moving in the update
-                animaitionSpeed = 2;
-                actionPoints.actions--;
-                mapConfig.turnSystem.totalActions--;
-                return;
-            }
-            if (remainingMovement > 0 && actionPoints.actions > 1)//can you move the unit 
-            {
-                isSprinting = true;
-                isMoving = true;//start moving in the update
-                animaitionSpeed = 4;
-                actionPoints.actions = 0;
-                mapConfig.turnSystem.totalActions--;
-                return;
-            }
-            else//is too far away do not move
-            {
-                return;
-            }
+            remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
         }
+        if (remainingMovement > movePoints)//can you move the unit 
+        {
+            isMoving = true;//start moving in the update
+            animaitionSpeed = 2;
+            actionPoints.actions--;
+            mapConfig.turnSystem.totalActions--;
+            return;
+        }
+        if (remainingMovement > 0 && actionPoints.actions > 1)//can you move the unit 
+        {
+            isSprinting = true;
+            isMoving = true;//start moving in the update
+            mapConfig.tileMap.removeUnitMapData(tileX, tileY);
+            animaitionSpeed = 4;
+            actionPoints.actions = 0;
+            mapConfig.turnSystem.totalActions--;
+            return;
+        }
+        else//is too far away do not move
+        {
+            return;
+        }
+        
     }
     public void EnemyMoveNextTile()//start to try to move unit
     {
@@ -284,43 +290,38 @@ public class UnitConfig : MonoBehaviour
             //Debug.Log("this is a test");
             return;
         }
+        mapConfig.tileMap.removeUnitMapData(tileX, tileY);
+        int remainingMovement = movePoints;
+        int moveTo = currentPath.Count - 1;
+        for (int cost = 1; cost < moveTo; cost++)//is the path posseble
+        {
+            remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
+        }
 
-        else
+        if (remainingMovement > 0)//can you move the unit 
+        {
+            currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
+            isMoving = true;//start moving in the update
+            actionPoints.SubtractActions(1);
+            return;
+        }
+
+        else//is too far away do not move
         {
 
-            int remainingMovement = movePoints;
-            int moveTo = currentPath.Count - 1;
-            for (int cost = 1; cost < moveTo; cost++)//is the path posseble
+            remainingMovement = movePoints;
+
+            for (int i = currentPath.Count - 1; i > remainingMovement; i--)
             {
-                remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
-
-
+                currentPath.RemoveAt(i);
             }
-
-            if (remainingMovement > 0)//can you move the unit 
+            if (currentPath != null)
             {
-                currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
-                isMoving = true;//start moving in the update
+                isMoving = true;
                 actionPoints.SubtractActions(1);
-                return;
             }
-
-            else//is too far away do not move
-            {
-
-                remainingMovement = movePoints;
-
-                for (int i = currentPath.Count - 1; i > remainingMovement; i--)
-                {
-                    currentPath.RemoveAt(i);
-                }
-                if (currentPath != null)
-                {
-                    isMoving = true;
-                    actionPoints.SubtractActions(1);
-                }
-                return;
-            }
+            return;
         }
+        
     }
 }

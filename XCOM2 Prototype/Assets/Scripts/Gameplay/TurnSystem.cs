@@ -30,6 +30,7 @@ public class TurnSystem : MonoBehaviour {
     public Image[] markerImage;
     [Header("Selected Unit")]
     public UnitConfig selectedUnit;
+    public MapConfig mapConfig;
 
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType; 
@@ -49,6 +50,7 @@ public class TurnSystem : MonoBehaviour {
     void Start ()
     {
         allUnits = GameObject.FindObjectsOfType<UnitConfig>();
+        mapConfig = FindObjectOfType<MapConfig>();
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -76,6 +78,11 @@ public class TurnSystem : MonoBehaviour {
         totalActions = playerUnits.Count * 2;
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
+        foreach (var unit in allUnits)
+        {
+            mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
+        }
+        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
     }
 
 	void Update () {
@@ -97,6 +104,8 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
+            cursorAnimator.SetBool("display", false);
+            unitMarkerAnimator.SetBool("display", false);
         }
         if (playerTurn)
         {
@@ -114,6 +123,7 @@ public class TurnSystem : MonoBehaviour {
                 if (selectedUnit != null)
                 {
                     selectedUnit.isSelected = false;
+                    mapConfig.tileMap.ResetColorGrid();
                 }
                 
                 selectedUnit = null;
@@ -131,7 +141,7 @@ public class TurnSystem : MonoBehaviour {
             selectedUnit = null;
         }
 
-        if (Input.GetMouseButtonDown(0) && playerTurn)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -145,11 +155,11 @@ public class TurnSystem : MonoBehaviour {
                         selectedUnit.isSelected = false;
                     }
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    GetComponent<TileMap>().selectedUnit = selectedUnit;
+                    mapConfig.tileMap.selectedUnit = selectedUnit;
                     selectedUnit.isSelected = true;
                     MoveMarker(unitMarker, selectedUnit.transform.position);
                     MoveCameraToTarget(selectedUnit.transform.position, 0);
-                    //map.ChangeGridColor(selectedUnit.moveSpeed, selectedUnit.actionPoints.actions, selectedUnit);
+                    mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 }
                 
             }
@@ -191,6 +201,7 @@ public class TurnSystem : MonoBehaviour {
         if (cursorAnimator.GetBool("display") == false)
         {
             cursorAnimator.SetBool("display", true);
+            unitMarkerAnimator.SetBool("display", true);
         }
         m_Marker.position = m_Position;
     }
@@ -232,6 +243,7 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
+                mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 break;
             }
         }
@@ -239,8 +251,14 @@ public class TurnSystem : MonoBehaviour {
 
     public int getCurrentTurn(int currentTurn)
     {
-        if(currentTurn > maxTurns)
+        if (currentTurn > maxTurns)
+        {
+            gameObject.SetActive(false);//deactivates the map
             gameOver.SetActive(true);
+        }
+
+
+            
         thisTurn = currentTurn;
         return maxTurns;
     }
@@ -261,6 +279,7 @@ public class TurnSystem : MonoBehaviour {
         //}
         if(playerUnits.Count <= 0)
         {
+            gameObject.SetActive(false);//deactivates the map
             gameOver.SetActive(true);
             gameOverText.text = "DEFEAT";
             gameOverText.color = defeatColor;
