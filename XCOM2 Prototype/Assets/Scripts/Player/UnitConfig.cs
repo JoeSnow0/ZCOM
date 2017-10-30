@@ -128,6 +128,8 @@ public class UnitConfig : MonoBehaviour
             {
                 isMoving = false;
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
+                if (!isFriendly)
+                    GetComponent<EnemyAi>().isBusy = false;
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
@@ -257,7 +259,7 @@ public class UnitConfig : MonoBehaviour
 
         
         mapConfig.tileMap.removeUnitMapData(tileX, tileY);
-        mapConfig.tileMap.ResetColorGrid();
+        
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
         for (int cost = 1; cost < moveTo; cost++)//is the path possible
@@ -267,6 +269,7 @@ public class UnitConfig : MonoBehaviour
         if (remainingMovement > movePoints)//can you move the unit 
         {
             isMoving = true;//start moving in the update
+            mapConfig.tileMap.ResetColorGrid();
             animaitionSpeed = 2;
             actionPoints.actions--;
             mapConfig.turnSystem.totalActions--;
@@ -276,6 +279,7 @@ public class UnitConfig : MonoBehaviour
         {
             isSprinting = true;
             isMoving = true;//start moving in the update
+            mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 4;
             actionPoints.actions = 0;
@@ -293,20 +297,18 @@ public class UnitConfig : MonoBehaviour
 
         if (currentPath == null)// if there is no path leave funktion
         {
-            //Debug.Log("this is a test");
             return;
         }
         mapConfig.tileMap.removeUnitMapData(tileX, tileY);
         int remainingMovement = movePoints;
         int moveTo = currentPath.Count - 1;
-        for (int cost = 1; cost < moveTo; cost++)//is the path posseble
+        for (int cost = 0; cost < moveTo; cost++)//is the path posseble
         {
             remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
         }
 
         if (remainingMovement > 0)//can you move the unit 
         {
-            currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
             isMoving = true;//start moving in the update
             actionPoints.SubtractActions(1);
             return;
@@ -315,7 +317,7 @@ public class UnitConfig : MonoBehaviour
         else//is too far away do not move
         {
 
-            remainingMovement = movePoints;
+            remainingMovement = movePoints * 2;
 
             for (int i = currentPath.Count - 1; i > remainingMovement; i--)
             {
@@ -324,7 +326,7 @@ public class UnitConfig : MonoBehaviour
             if (currentPath != null)
             {
                 isMoving = true;
-                actionPoints.SubtractActions(1);
+                actionPoints.SubtractActions(2);
             }
             return;
         }

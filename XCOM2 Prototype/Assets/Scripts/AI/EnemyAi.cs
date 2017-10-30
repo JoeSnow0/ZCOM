@@ -5,14 +5,18 @@ using UnityEngine;
 public class EnemyAi : MonoBehaviour {
 
     public GameObject[] allUnits;
-    [HideInInspector]public GameObject moveToUnit;
+    public UnitConfig moveToUnit;
     public UnitConfig unitConfig;
+    public bool isBusy;
     int damage;
+    
+    int posLeftOrRight;
+    int posUPOrDown;
 
-    private List<UnitConfig> playerUnits;
-
+    int distance = int.MaxValue;
     private void Start()
     {
+        unitConfig = gameObject.GetComponent<UnitConfig>();
     }
     void Update ()
     {
@@ -20,38 +24,118 @@ public class EnemyAi : MonoBehaviour {
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
         if (!unitConfig.mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
         {
-            FindClosestPlayerUnit();
-            UnitConfig closestUnit = moveToUnit.GetComponent<UnitConfig>();
-            unitConfig.mapConfig.tileMap.GeneratePathTo(closestUnit.tileX, closestUnit.tileY, gameObject.GetComponent<UnitConfig>());
-            //attack if within 2 tiles (includes the one you're standing on)
-            if (unitConfig.currentPath.Count < 3)
+            foreach (UnitConfig unit in mapConfig.turnSystem.playerUnits)
             {
-                //closestUnit.health.TakeDamage(unitConfig.unitWeapon);
-                //Remove remaining actions
-                unitConfig.actionPoints.SubtractAllActions();
+                IsPlayerNextToMe(unit.tileX, unit.tileY);
+                
             }
+            if (unitConfig.actionPoints.actions < 1)
+                return;
+            if (!isBusy)
+                FindClosestPlayerUnit();
+
+            //HACK: zombie attack?
+            if (unitConfig.currentPath == null)
+                return;
+            
             //HACK: move?
-            else
-            {
-                unitConfig.EnemyMoveNextTile();
-            }
+            
+            
+            unitConfig.EnemyMoveNextTile();
+            
         }
     }
 
     public void FindClosestPlayerUnit()
     {
-        float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
-        
-        for (int i = 0; i < unitConfig.mapConfig.turnSystem.playerUnits.Count; i++)
-        {
+        isBusy = true;
+        distance = int.MaxValue;
+        foreach (var unit in mapConfig.turnSystem.playerUnits)
+        {            
+            FindClosestPlayerLocation(unit);
+        }
+        mapConfig.tileMap.GeneratePathTo(moveToUnit.tileX + posLeftOrRight, moveToUnit.tileY + posUPOrDown, unitConfig);//make path to the closest position
+    }
 
-            Vector3 diff = unitConfig.mapConfig.turnSystem.playerUnits[i].transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
+    private void FindClosestPlayerLocation(UnitConfig unit)
+    {
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
             {
-                distance = curDistance;
-                moveToUnit = unitConfig.mapConfig.turnSystem.playerUnits[i].gameObject;
+                if (x != 0 && y != 0)//if it is looking for a diagonal pos skip to next
+                    continue;
+
+                mapConfig.tileMap.GeneratePathTo(unit.tileX + x, unit.tileY + y, unitConfig);
+                if (unitConfig.currentPath != null)
+                    if (distance > unitConfig.currentPath.Count)
+                    {
+                        posLeftOrRight = x;
+                        posUPOrDown = y;
+                        distance = unitConfig.currentPath.Count;
+                        moveToUnit = unit;
+                    }
+            }
+        }
+
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX + 1, unit.tileY, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //right
+        //        posLeftOrRight = 1;
+        //        posUPOrDown = 0;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
+
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX - 1, unit.tileY, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //left
+        //        posLeftOrRight = -1;
+        //        posUPOrDown = 0;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
+
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY + 1, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //up
+        //        posLeftOrRight = 0;
+        //        posUPOrDown = 1;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
+
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY - 1, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //down
+        //        posLeftOrRight = 0;
+        //        posUPOrDown = -1;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
+    }
+    public void IsPlayerNextToMe(int tileX,int tileY)
+    {
+        
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if(x == 0 || y == 0)
+                    if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))
+                    {
+                        moveToUnit.health.TakeDamage(damage);
+                        unitConfig.actionPoints.SubtractActions(2);
+                        isBusy = true;
+                    }
             }
         }
     }

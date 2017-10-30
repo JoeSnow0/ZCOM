@@ -2340,8 +2340,8 @@ MonoBehaviour:
   animAP: {fileID: 95437274474760678}
   actions: 0
   actionPointsImage:
-  - {fileID: 114674957500034420}
-  - {fileID: 114259217274066578}
+    actionPointFirst: {fileID: 114259217274066578}
+    actionpointSecond: {fileID: 114674957500034420}
   color:
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
