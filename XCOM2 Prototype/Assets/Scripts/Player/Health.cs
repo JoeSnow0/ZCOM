@@ -104,8 +104,13 @@ public class Health : MonoBehaviour
     void KillUnit()
     {
         //Remove gameobject from playerUnits List in TurnSystem
+        unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
+        if(unitConfig.isFriendly)
         unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
-        //HACK: Play death animation here and THEN destroy object.
-        DestroyObject(gameObject, 0);
+        else
+        {
+            unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
+        }
+        DestroyObject(gameObject, 1);
     }
 }
