@@ -65,11 +65,12 @@ public class EnemyAi : MonoBehaviour {
         {
             for (int y = -1; y <= 1; y++)
             {
-                if (x != 0 && y != 0)//if it is looking for a diagonal pos skip to next
+                if ((x != 0 && y != 0) || (x == 0 && y == 0))//if it is looking for a diagonal pos skip to next
                     continue;
 
                 mapConfig.tileMap.GeneratePathTo(unit.tileX + x, unit.tileY + y, unitConfig);
                 if (unitConfig.currentPath != null)
+                {
                     if (distance > unitConfig.currentPath.Count)
                     {
                         posLeftOrRight = x;
@@ -77,6 +78,7 @@ public class EnemyAi : MonoBehaviour {
                         distance = unitConfig.currentPath.Count;
                         moveToUnit = unit;
                     }
+                }
             }
         }
 
@@ -131,13 +133,15 @@ public class EnemyAi : MonoBehaviour {
         {
             for (int y = -1; y <= 1; y++)
             {
-                if(x == 0 || y == 0)
+                if (x == 0 || y == 0)
+                {
                     if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))
                     {
                         moveToUnit.health.TakeDamage(damage);
                         unitConfig.actionPoints.SubtractActions(2);
                         isBusy = true;
                     }
+                }
             }
         }
     }
