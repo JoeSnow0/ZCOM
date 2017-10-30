@@ -93,7 +93,7 @@ public class TurnSystem : MonoBehaviour {
             bool endturn = true;
             foreach (var enemy in enemyUnits)
             {
-                if (enemy.actionPoints.actions > 0 || enemy.GetComponent<UnitConfig>().isMoving)
+                if (enemy.actionPoints.actions > 0 || enemy.isMoving)
                 {  
                     endturn = false;
                     break;

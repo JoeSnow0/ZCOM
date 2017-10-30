@@ -7,7 +7,6 @@ public class EnemyAi : MonoBehaviour {
     public GameObject[] allUnits;
     [HideInInspector]public GameObject moveToUnit;
     public UnitConfig unitConfig;
-    public MapConfig mapConfig;
     int damage;
 
     private List<UnitConfig> playerUnits;
@@ -41,12 +40,10 @@ public class EnemyAi : MonoBehaviour {
 
     public void FindClosestPlayerUnit()
     {
-        List<UnitConfig> listOfPlayers = new List<UnitConfig>();
-        int[] listOfPlayersNumber = new int[mapConfig.turnSystem.playerUnits.Count];//an array with lenght of have many players currently exist
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
         
-        for (int i = 0; i < mapConfig.turnSystem.playerUnits.Count; i++)
+        for (int i = 0; i < unitConfig.mapConfig.turnSystem.playerUnits.Count; i++)
         {
 
             Vector3 diff = unitConfig.mapConfig.turnSystem.playerUnits[i].transform.position - position;

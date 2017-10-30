@@ -159,7 +159,7 @@ public class UnitMovement : MonoBehaviour {
 
         else
         {
-            int remainingMovement = movePoints * 2;
+            int remainingMovement = movePoints * unitConfig.actionPoints.actions;
             int moveTo = currentPath.Count - 1;
             for (int cost = 1; cost < moveTo; cost++)//is the path possible
             {
@@ -169,7 +169,8 @@ public class UnitMovement : MonoBehaviour {
             {
                 isMoving = true;//start moving in the update
                 animaitionSpeed = 2;
-                unitConfig.actionPoints.actions--;
+                //HACK:Subtracts actions, needs to be a variable in stats
+                unitConfig.actionPoints.SubtractActions(1);
                 unitConfig.mapConfig.turnSystem.totalActions--;
                 return;
             }
@@ -178,7 +179,7 @@ public class UnitMovement : MonoBehaviour {
                 isSprinting = true;
                 isMoving = true;//start moving in the update
                 animaitionSpeed = 4;
-                unitConfig.actionPoints.actions = 0;
+                unitConfig.actionPoints.SubtractAllActions();
                 unitConfig.mapConfig.turnSystem.totalActions--;
                 return;
             }

@@ -5,9 +5,13 @@ using UnityEngine.UI;
 using UnityEditor;
 public class Health : MonoBehaviour
 {
-    [SerializeField]private Color[] color;
-    [SerializeField]private Image[] healthBar;
-    [SerializeField]private Slider healthSlider;
+    [SerializeField] private Color healthColor;
+    [SerializeField] private Color HealthColorBackground;
+    [SerializeField] private Color healthColorEnemy;
+    [SerializeField] private Color HealthColorBackgroundEnemy;
+    public Image healthBar;
+    public Image healthBarBackground;
+    [SerializeField] private Slider healthSlider;
     [SerializeField] private ClassStatsObject unitClassStats;
     private int currentUnitHealth;
     private int maxUnitHealth;
@@ -48,21 +52,21 @@ public class Health : MonoBehaviour
         if (unitConfig.isFriendly)
         {
             //Set health bar Background Color for player
-            healthBar[0].color = color[3];
+            healthBar.color = healthColor;
             //Set set health bar color for player
-            healthBar[1].color = color[2];
+            healthBarBackground.color = HealthColorBackground;
         }
         else
         {
             //Set health bar Background Color for enemy
-            healthBar[0].color = color[1];
+            healthBar.color = healthColorEnemy;
             //Set set health bar color for enemy
-            healthBar[1].color = color[0];
+            healthBarBackground.color = HealthColorBackgroundEnemy;
         }
 
         for (int i = 0; i < currentUnitHealth; i++)
         {
-            Instantiate(barPrefab, barParent);
+            Instantiate(unitConfig.healthBar, unitConfig.healthBarParent);
         }
 
         UpdateUnitHealth();

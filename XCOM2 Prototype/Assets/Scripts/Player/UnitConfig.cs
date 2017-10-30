@@ -37,7 +37,7 @@ public class UnitConfig : MonoBehaviour
 
 
 
-    private int movePoints;
+    public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
     public bool isMoving = false;
     public bool isSprinting = false;
@@ -86,6 +86,12 @@ public class UnitConfig : MonoBehaviour
 
     void Update()
     {
+        //Create the buttons...once
+        //if (isSelected)
+        //{
+        //    uiConfig.abilityPanel.GenerateCurrentButtons(characterClass)
+        //}
+        
         if (!isSelected && isFriendly)
         {
             currentPath = null;
