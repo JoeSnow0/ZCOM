@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[RequireComponent(typeof(MapConfig))]
 
 public class EnemySpawn : MonoBehaviour {
     public List<GameObject> spawnNodes;
@@ -11,58 +12,32 @@ public class EnemySpawn : MonoBehaviour {
     [Header("Set max amount of spawn nodes")]
     public int maxNodes;
 
-    TurnSystem turnSystem;
-    TileMap map;
+    MapConfig mapConfig;
 
 	void Start () {
-        turnSystem = GetComponent<TurnSystem>();
-        map = GetComponent<TileMap>();
+        
+        mapConfig = GetComponent<MapConfig>();
 
         spawnNodes = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemySpawn"));
         current = -1;
     }
 
-    /*public GameObject[] randomNodes(int amountNodes) USED TO CREATE RANDOM SPAWNNODES
+    public void SpawnEnemy(UnitConfig enemyPrefab)
     {
-        GameObject[] nodeArray;
-        for(int i = 0; i < amountNodes; i++)
-        {
-            Instantiate(spawnNode, )
-        }
-    }*/
-
-    public Vector3 GetSpawnNode()
-    {
-        if (current < spawnNodes.Count - 1)
-        {
-            current++;
-            if (spawnNodes[current].GetComponent<SpawnNode>().isFree)
-            {
-                return spawnNodes[current].transform.position;
-            }
-        }
-        else if(current < maxNodes)
-        {
-            NewRandomNode();
-            current = spawnNodes.Count - 1;
-            return spawnNodes[spawnNodes.Count - 1].transform.position;
-        }
-        else
-        {
-            current = 0;
-        }
-
-        return spawnNodes[current].transform.position;
-    }
-
-    public void NewRandomNode()
-    {
-        GameObject newObject = Instantiate(spawnNode, RandomPosition(), Quaternion.identity);
-        spawnNodes.Add(newObject);
+        Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
     }
 
     public Vector3 RandomPosition()
     {
-        return new Vector3(Random.Range(0, 50), 0, Random.Range(0, 50));
+        int x;
+        int y;
+        x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1));
+        y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1));
+        while (mapConfig.tileMap.tiles[x/ Mathf.RoundToInt(mapConfig.tileMap.offset), y/ Mathf.RoundToInt(mapConfig.tileMap.offset)] != 0)
+        {
+            x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1) * Mathf.RoundToInt(mapConfig.tileMap.offset));
+            y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1) * Mathf.RoundToInt(mapConfig.tileMap.offset));
+        }
+        return new Vector3(x * (mapConfig.tileMap.offset), 0, y * (mapConfig.tileMap.offset));
     }
 }
