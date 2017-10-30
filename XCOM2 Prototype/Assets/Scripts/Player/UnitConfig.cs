@@ -86,12 +86,6 @@ public class UnitConfig : MonoBehaviour
 
     void Update()
     {
-        //Create the buttons...once
-        //if (isSelected)
-        //{
-        //    uiConfig.abilityPanel.GenerateCurrentButtons(characterClass)
-        //}
-        
         if (!isSelected && isFriendly)
         {
             currentPath = null;
@@ -120,7 +114,7 @@ public class UnitConfig : MonoBehaviour
                 tileX = currentPath[pathIndex].x;
                 tileY = currentPath[pathIndex].y;
 
-                if (mapConfig.turnSystem.playerTurn)
+                if (mapConfig.turnSystem.playerTurn && isFriendly)
                     line.positionCount = 0;
             }
 

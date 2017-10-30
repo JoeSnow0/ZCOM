@@ -1746,6 +1746,7 @@ MonoBehaviour:
   allUnits: []
   moveToUnit: {fileID: 0}
   unitConfig: {fileID: 114840236989742042}
+  isBusy: 0
 --- !u!114 &114398108771507310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1934,12 +1935,13 @@ MonoBehaviour:
   animAP: {fileID: 0}
   actions: 0
   actionPointsImage:
-  - {fileID: 0}
-  - {fileID: 0}
+    actionPointFirst: {fileID: 0}
+    actionpointSecond: {fileID: 0}
   color:
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
+  unitConfig: {fileID: 0}
 --- !u!114 &114989274233590292
 MonoBehaviour:
   m_ObjectHideFlags: 1

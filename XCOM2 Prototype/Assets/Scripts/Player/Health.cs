@@ -108,6 +108,6 @@ public class Health : MonoBehaviour
     {
         //Remove gameobject from playerUnits List in TurnSystem
         unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
-        DestroyObject(this, 1);
+        DestroyObject(gameObject, 1);
     }
 }

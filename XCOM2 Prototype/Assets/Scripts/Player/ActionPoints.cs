@@ -16,32 +16,36 @@ public class ActionPoints : MonoBehaviour {
     public ActionImage actionPointsImage;
     public Color[] color;
     public ClassStatsObject unitClassStats;
+    public UnitConfig unitConfig;
 
     // Use this for initialization
     void Start ()
     {
+        unitConfig = GetComponent<UnitConfig>();
         InitializeActions();
     }
     private void Update()
     {
-        if (actions < 2)
+        //Draw action points on friendly unit UI
+        if(unitConfig.isFriendly)
         {
-            actionPointsImage.actionPointFirst.color = color[0];
-            if (actions < 1)
+            if (actions < 2)
             {
-                actionPointsImage.actionpointSecond.color = color[0];
+                actionPointsImage.actionPointFirst.color = color[0];
+                if (actions < 1)
+                {
+                    actionPointsImage.actionpointSecond.color = color[0];
+                }
+                else
+                {
+                    actionPointsImage.actionpointSecond.color = color[1];
+                }
             }
             else
             {
                 actionPointsImage.actionpointSecond.color = color[1];
             }
         }
-        else
-        {
-            actionPointsImage.actionPointFirst.color = color[1];
-            actionPointsImage.actionpointSecond.color = color[1];
-        }
-
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
 
