@@ -28,6 +28,7 @@ public class ClassStatsObject : ScriptableObject
     [Tooltip("The amount of tiles a unit can move in a single action")]
     [RangeAttribute(1, 10)]
     public int maxUnitMovePoints;
-   
-
+    [Header("Movement Cost")]
+    [Tooltip("How much many actions movement costs to use")]
+    public int moveCost;
 }

@@ -21,11 +21,12 @@ public class UnitConfig : MonoBehaviour
     //Script references, internal
     public ActionPoints actionPoints;
     public Health health;
+    public UnitMovement movement;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
     //Unit//
-    public bool isSelected = false;
+    [HideInInspector] public bool isSelected = false;
     public bool isFriendly;
     //Unit Position
     public int tileX;
@@ -35,9 +36,9 @@ public class UnitConfig : MonoBehaviour
     public List<Node> currentPath = null;
 
 
-    public int movePoints = 6;
-    [SerializeField]
-    float animaitionSpeed = 0.05f;
+
+    public int movePoints;
+    [SerializeField]float animaitionSpeed = 0.05f;
     public bool isMoving = false;
     public bool isSprinting = false;
 
@@ -102,7 +103,7 @@ public class UnitConfig : MonoBehaviour
 
                 pathProgress += Time.deltaTime * animaitionSpeed;
                 transform.position = Vector3.Lerp(previousPosition, nextPosition, pathProgress);
-                //if unit have reached the end of path reset pathprogress and increacss pathindex
+                //if unit have reached the end of path reset pathprogress and increase pathindex
                 if (pathProgress >= 1.0)
                 {
 
@@ -113,7 +114,7 @@ public class UnitConfig : MonoBehaviour
                 tileX = currentPath[pathIndex].x;
                 tileY = currentPath[pathIndex].y;
 
-                if (mapConfig.turnSystem.playerTurn)
+                if (mapConfig.turnSystem.playerTurn && isFriendly)
                     line.positionCount = 0;
             }
 
@@ -208,8 +209,40 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
+    //HACK: Finish this code block when abilities work!
+    public void attackUnit(UnitConfig target)
+    {
+        //Checks if it is the players turn
+        if (mapConfig.turnSystem.playerTurn) 
+        {
+            //Checks if the unit has enough action points
+            if (actionPoints.actions >= 1) 
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    //Checks if the unit hit an enemy
+                    if (hit.collider.GetComponent<UnitConfig>()) 
+                    {
+                        target = hit.collider.GetComponent<UnitConfig>();
+                        //Checks if the unit hit is not friendly
+                        if (!target.isFriendly) 
+                        {
+                            //Uses current weapon
+                            CalculationManager.HitCheck(unitWeapon);
+                            target.health.TakeDamage(CalculationManager.damage);
 
-
+                            //Spend Actions
+                            actionPoints.SubtractAllActions();
+                            //Move camera to next unit
+                            mapConfig.turnSystem.selectNextUnit();
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void MoveNextTile()//start to try to move unit
     {
