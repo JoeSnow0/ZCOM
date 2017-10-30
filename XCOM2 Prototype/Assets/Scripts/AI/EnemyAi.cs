@@ -61,56 +61,75 @@ public class EnemyAi : MonoBehaviour {
 
     private void FindClosestPlayerLocation(UnitConfig unit)
     {
-        mapConfig.tileMap.GeneratePathTo(unit.tileX + 1, unit.tileY, unitConfig);
-        if (unitConfig.currentPath != null)
-            if (distance > unitConfig.currentPath.Count)
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
             {
-                //right
-                posLeftOrRight = 1;
-                posUPOrDown = 0;
-                distance = unitConfig.currentPath.Count;
-                moveToUnit = unit;
-            }
+                if (x != 0 && y != 0)//if it is looking for a diagonal pos skip to next
+                    continue;
 
-        mapConfig.tileMap.GeneratePathTo(unit.tileX - 1, unit.tileY, unitConfig);
-        if (unitConfig.currentPath != null)
-            if (distance > unitConfig.currentPath.Count)
-            {
-                //left
-                posLeftOrRight = -1;
-                posUPOrDown = 0;
-                distance = unitConfig.currentPath.Count;
-                moveToUnit = unit;
+                mapConfig.tileMap.GeneratePathTo(unit.tileX + x, unit.tileY + y, unitConfig);
+                if (unitConfig.currentPath != null)
+                    if (distance > unitConfig.currentPath.Count)
+                    {
+                        posLeftOrRight = x;
+                        posUPOrDown = y;
+                        distance = unitConfig.currentPath.Count;
+                        moveToUnit = unit;
+                    }
             }
+        }
 
-        mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY + 1, unitConfig);
-        if (unitConfig.currentPath != null)
-            if (distance > unitConfig.currentPath.Count)
-            {
-                //up
-                posLeftOrRight = 0;
-                posUPOrDown = 1;
-                distance = unitConfig.currentPath.Count;
-                moveToUnit = unit;
-            }
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX + 1, unit.tileY, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //right
+        //        posLeftOrRight = 1;
+        //        posUPOrDown = 0;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
 
-        mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY - 1, unitConfig);
-        if (unitConfig.currentPath != null)
-            if (distance > unitConfig.currentPath.Count)
-            {
-                //down
-                posLeftOrRight = 0;
-                posUPOrDown = -1;
-                distance = unitConfig.currentPath.Count;
-                moveToUnit = unit;
-            }
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX - 1, unit.tileY, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //left
+        //        posLeftOrRight = -1;
+        //        posUPOrDown = 0;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
+
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY + 1, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //up
+        //        posLeftOrRight = 0;
+        //        posUPOrDown = 1;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
+
+        //mapConfig.tileMap.GeneratePathTo(unit.tileX, unit.tileY - 1, unitConfig);
+        //if (unitConfig.currentPath != null)
+        //    if (distance > unitConfig.currentPath.Count)
+        //    {
+        //        //down
+        //        posLeftOrRight = 0;
+        //        posUPOrDown = -1;
+        //        distance = unitConfig.currentPath.Count;
+        //        moveToUnit = unit;
+        //    }
     }
     public void IsPlayerNextToMe(int tileX,int tileY)
     {
         
-        for (int x = -1; x < 2; x++)
+        for (int x = -1; x <= 1; x++)
         {
-            for (int y = -1; y < 2; y++)
+            for (int y = -1; y <= 1; y++)
             {
                 if(x == 0 || y == 0)
                     if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(EnemySpawn))]
 public class TurnSystem : MonoBehaviour {
     [Header("Lists with all units")]
     [HideInInspector]public UnitConfig[] allUnits;
@@ -13,6 +14,7 @@ public class TurnSystem : MonoBehaviour {
     //[Header("Actions")]
     [HideInInspector]
     public int totalActions;
+    public UnitConfig[] enemyPrefab;
     [Header("UI elements")]
     public GameObject gameOver;
     public Text gameOverText;
@@ -31,12 +33,11 @@ public class TurnSystem : MonoBehaviour {
     [Header("Selected Unit")]
     public UnitConfig selectedUnit;
     public MapConfig mapConfig;
-
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType; 
 
     //Script refs
-    public EnemySpawn enemySpawnNodes;
+    public EnemySpawn enemySpawn;
     public CameraControl cameraControl;
     //public UnitConfig unitConfig;
 
@@ -49,6 +50,7 @@ public class TurnSystem : MonoBehaviour {
 
     void Start ()
     {
+        enemySpawn = GetComponent<EnemySpawn>();
         allUnits = GameObject.FindObjectsOfType<UnitConfig>();
         mapConfig = FindObjectOfType<MapConfig>();
         //add units to array
@@ -292,9 +294,7 @@ public class TurnSystem : MonoBehaviour {
         {
             if(i == thisTurn)
             {
-                //GameObject newEnemyUnitSpawned = Instantiate(EnemyUnitSpawnType, enemySpawnNodes.GetSpawnNode(), Quaternion.identity).GetComponent<GameObject>();
-                //newEnemyUnitSpawned.turnSystem = this;
-                //enemyUnits.Add(gameObject.newEnemyUnitSpawned);
+                enemySpawn.SpawnEnemy(enemyPrefab[0]);
             }
         }
     }

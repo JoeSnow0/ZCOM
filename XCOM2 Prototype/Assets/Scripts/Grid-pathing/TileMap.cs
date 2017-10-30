@@ -19,7 +19,8 @@ public class TileMap : MonoBehaviour {
 
 
     ClickebleTile[,] tileobjects;
-    int[,] tiles;
+    [HideInInspector]
+    public int[,] tiles;
     Node[,] graph;
 
     int[,] currentGrid;
