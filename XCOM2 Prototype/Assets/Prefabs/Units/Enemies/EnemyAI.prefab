@@ -1673,8 +1673,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthColor: {r: 0, g: 0.8235294, b: 0.8235294, a: 0}
   HealthColorBackground: {r: 0, g: 0, b: 0, a: 0}
-  healthColorEnemy: {r: 1, g: 0, b: 0, a: 0}
-  HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 0}
+  healthColorEnemy: {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
+  HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 1}
   healthBar: {fileID: 114398108771507310}
   healthBarBackground: {fileID: 114478769605198892}
   healthSlider: {fileID: 114570668295593986}
@@ -1682,6 +1682,7 @@ MonoBehaviour:
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
+  barParent: {fileID: 224235015628029944}
 --- !u!114 &114344768348526308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1903,8 +1904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1650568526972646}
-  healthBarParent: {fileID: 4688172312480720}
+  healthBar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
+  healthBarParent: {fileID: 224235015628029944}
   unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}

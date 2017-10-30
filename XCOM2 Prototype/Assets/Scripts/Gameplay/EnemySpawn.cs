@@ -24,7 +24,8 @@ public class EnemySpawn : MonoBehaviour {
 
     public void SpawnEnemy(UnitConfig enemyPrefab)
     {
-        Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
+        UnitConfig enemy = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
+        mapConfig.turnSystem.enemyUnits.Add(enemy);
     }
 
     public Vector3 RandomPosition()
@@ -33,10 +34,10 @@ public class EnemySpawn : MonoBehaviour {
         int y;
         x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1));
         y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1));
-        while (mapConfig.tileMap.tiles[x/ Mathf.RoundToInt(mapConfig.tileMap.offset), y/ Mathf.RoundToInt(mapConfig.tileMap.offset)] != 0)
+        while (mapConfig.tileMap.tiles[x, y] != 0)
         {
-            x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1) * Mathf.RoundToInt(mapConfig.tileMap.offset));
-            y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1) * Mathf.RoundToInt(mapConfig.tileMap.offset));
+            x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1));
+            y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1));
         }
         return new Vector3(x * (mapConfig.tileMap.offset), 0, y * (mapConfig.tileMap.offset));
     }
