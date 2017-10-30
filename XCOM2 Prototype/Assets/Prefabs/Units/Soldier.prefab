@@ -735,7 +735,7 @@ GameObject:
   - component: {fileID: 224202275442013872}
   - component: {fileID: 114236354458066612}
   m_Layer: 0
-  m_Name: Bars
+  m_Name: HealthBarParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2177,6 +2177,7 @@ MonoBehaviour:
   actionPoints: {fileID: 114926315396523272}
   health: {fileID: 114799151252263356}
   movement: {fileID: 114139811261921410}
+  enemyAI: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -2220,10 +2221,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthColor: {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
-  HealthColorBackground: {r: 0, g: 0, b: 0, a: 0}
-  healthColorEnemy: {r: 0.97794116, g: 0.050335195, b: 0.050335195, a: 0}
-  HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 0}
-  healthBar: {fileID: 114835739821684660}
+  HealthColorBackground: {r: 0, g: 0, b: 0, a: 1}
+  healthColorEnemy: {r: 0.97794116, g: 0.050335195, b: 0.050335195, a: 1}
+  HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 1}
+  healthBarPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546,
+    type: 2}
+  healthBarParent: {fileID: 1636769956196128}
   healthBarBackground: {fileID: 114648274980277984}
   healthSlider: {fileID: 114870263291696410}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}

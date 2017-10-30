@@ -22,6 +22,7 @@ public class UnitConfig : MonoBehaviour
     public ActionPoints actionPoints;
     public Health health;
     public UnitMovement movement;
+    public EnemyAi enemyAI;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 

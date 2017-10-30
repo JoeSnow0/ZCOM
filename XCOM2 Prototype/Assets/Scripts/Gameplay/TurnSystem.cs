@@ -212,25 +212,25 @@ public class TurnSystem : MonoBehaviour {
     {
         if (isPlayerTurn)
         {
-            //HACK: NOT adaptable
-            totalActions = playerUnits.Count * 2;
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].GetComponent<ActionPoints>().actions = 2;
+                playerUnits[i].actionPoints.ReplenishAllActions();
+                totalActions += playerUnits[i].actionPoints.actions;
+
             }
         }
         else
         {
-            totalActions = enemyUnits.Count * 2;
             for (int i = 0; i < enemyUnits.Count; i++)
             {
-                enemyUnits[i].GetComponent<ActionPoints>().actions = 2;
-                enemyUnits[i].GetComponent<EnemyAi>().isBusy = false;
+                enemyUnits[i].actionPoints.ReplenishAllActions();
+                //enemyUnits[i].enemyAI.isBusy = false;
+                totalActions += enemyUnits[i].actionPoints.actions;
             }
         }
         playerTurn = isPlayerTurn;
-        
     }
+
     public void selectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
@@ -242,7 +242,6 @@ public class TurnSystem : MonoBehaviour {
                     selectedUnit.isSelected = false;
                 }
                 selectedUnit = playerUnits[i];
-                //GetComponent<TileMap>().selectedUnit = selectedUnit.;
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
@@ -256,7 +255,8 @@ public class TurnSystem : MonoBehaviour {
     {
         if (currentTurn > maxTurns)
         {
-            gameObject.SetActive(false);//deactivates the map
+            //deactivates the map
+            gameObject.SetActive(false);
             gameOver.SetActive(true);
         }
 

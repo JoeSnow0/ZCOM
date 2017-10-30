@@ -58,10 +58,6 @@ public class WeaponInfoObject : ScriptableObject
     [Tooltip("This is added on to the base damage")]
     public int numberOfDiceDamage;
     public int numberOfSidesDamage;
-    
-    //HACK: Can I do a calculation in a scriptable object?
-    //int minDamage = baseDamage + (numberOfDiceDamage * 1);
-    //int maxDamage = baseDamage + (numberOfDiceDamage * numberOfSidesDamage);
 }
 
 

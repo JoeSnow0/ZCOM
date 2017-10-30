@@ -9,7 +9,8 @@ public class Health : MonoBehaviour
     [SerializeField] private Color HealthColorBackground;
     [SerializeField] private Color healthColorEnemy;
     [SerializeField] private Color HealthColorBackgroundEnemy;
-    public Image healthBar;
+    [SerializeField] private GameObject healthBarPrefab;
+    [SerializeField] private GameObject healthBarParent;
     public Image healthBarBackground;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private ClassStatsObject unitClassStats;
@@ -30,7 +31,6 @@ public class Health : MonoBehaviour
             Debug.LogWarning("Couldn't find Class, using default class");
         }
         InitiateUnitHealth();
-        
     }
 
     private void Update()
@@ -52,23 +52,19 @@ public class Health : MonoBehaviour
         if (unitConfig.isFriendly)
         {
             //Set health bar Background Color for player
-            healthBar.color = healthColor;
             //Set set health bar color for player
-            healthBarBackground.color = HealthColorBackground;
+            healthBarBackground.color = healthColor;
         }
         else
         {
             //Set health bar Background Color for enemy
-            healthBar.color = healthColorEnemy;
             //Set set health bar color for enemy
-            healthBarBackground.color = HealthColorBackgroundEnemy;
+            healthBarBackground.color = healthColorEnemy;
         }
-
         for (int i = 0; i < currentUnitHealth; i++)
         {
-            Instantiate(unitConfig.healthBar, unitConfig.healthBarParent);
+            Instantiate(healthBarPrefab, healthBarParent.transform);
         }
-
         UpdateUnitHealth();
     }
 
@@ -102,12 +98,14 @@ public class Health : MonoBehaviour
     void UpdateUnitHealth()
     {
         healthSlider.value = currentUnitHealth;
+        
     }
 
     void KillUnit()
     {
         //Remove gameobject from playerUnits List in TurnSystem
         unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
-        DestroyObject(gameObject, 1);
+        //HACK: Play death animation here and THEN destroy object.
+        DestroyObject(gameObject, 0);
     }
 }

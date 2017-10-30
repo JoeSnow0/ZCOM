@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Pistol
   icon: {fileID: 0}
-  Value: 7
+  value: 0
   baseAim: 75
   rangeModShort: 20
   rangeModMedium: 0
@@ -21,5 +21,5 @@ MonoBehaviour:
   rangeModFar: -100
   weaponRange: 0
   baseDamage: 1
-  numberOfDiceDamage: 2
-  numberOfSideDamage: 2
+  numberOfDiceDamage: 1
+  numberOfSidesDamage: 1
