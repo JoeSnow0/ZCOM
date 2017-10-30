@@ -58,6 +58,14 @@ public class WeaponInfoObject : ScriptableObject
     [Tooltip("This is added on to the base damage")]
     public int numberOfDiceDamage;
     public int numberOfSidesDamage;
+
+    [Header("Customization")]
+    [Tooltip("Projectile particle system used when the weapon is shooting")]
+    public GameObject weaponProjectile;
+    [Tooltip("Random color between the chosen")]
+    public Color[] particleColor;
+    public AudioClip weaponSoundShoot;
+    public AudioClip weaponSoundReload;
     
     //HACK: Can I do a calculation in a scriptable object?
     //int minDamage = baseDamage + (numberOfDiceDamage * 1);

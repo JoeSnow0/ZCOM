@@ -40,6 +40,8 @@ public class UnitConfig : MonoBehaviour
     float animaitionSpeed = 0.05f;
     public bool isMoving = false;
     public bool isSprinting = false;
+    public bool isShooting = false;
+    SoldierAnimation animator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -63,6 +65,8 @@ public class UnitConfig : MonoBehaviour
         tileY = (int)tileCoords.z;
         
         line = GetComponent<LineRenderer>();
+
+        animator = GetComponentInChildren<SoldierAnimation>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         if (unitWeapon == null)
@@ -89,6 +93,10 @@ public class UnitConfig : MonoBehaviour
         {
             currentPath = null;
             line.positionCount = 0;
+        }
+        if (isShooting)
+        {
+            //Vector3.RotateTowards(rotation, )
         }
 
         if (isMoving == true)
@@ -207,7 +215,11 @@ public class UnitConfig : MonoBehaviour
         }
     }
 
-
+    public void ShootTarget(UnitConfig target)
+    {
+        isShooting = true;
+        animator.target = target;
+    }
 
     public void MoveNextTile()//start to try to move unit
     {
