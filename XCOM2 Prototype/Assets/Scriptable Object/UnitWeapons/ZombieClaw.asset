@@ -14,9 +14,12 @@ MonoBehaviour:
   name: Zombie Claw
   icon: {fileID: 0}
   value: 0
-  baseAccuracy: 100
-  rangeFalloff: 0
+  baseAim: 0
+  rangeModShort: 0
+  rangeModMedium: 0
+  rangeModLong: 0
+  rangeModFar: 0
   weaponRange: 0
   baseDamage: 1
   numberOfDiceDamage: 1
-  numberOfSideDamage: 1
+  numberOfSidesDamage: 0

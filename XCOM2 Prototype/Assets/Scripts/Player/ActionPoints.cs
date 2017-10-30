@@ -4,38 +4,48 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionPoints : MonoBehaviour {
+    [System.Serializable]
+    public class ActionImage
+    {
+        public Image actionPointFirst;
+        public Image actionpointSecond;
+    }
     public Animator animAP;
-    public int actions;
+    [HideInInspector]public int actions;
     private int maxActions;
-    public Image[] actionPointsImage;
+    public ActionImage actionPointsImage;
     public Color[] color;
     public ClassStatsObject unitClassStats;
+    public UnitConfig unitConfig;
 
     // Use this for initialization
     void Start ()
     {
+        unitConfig = GetComponent<UnitConfig>();
         InitializeActions();
     }
     private void Update()
     {
-        if (actions < 2)
+        //Draw action points on friendly unit UI
+        if(unitConfig.isFriendly)
         {
-            actionPointsImage[0].color = color[0];
-            if (actions < 1)
+            if (actions < 2)
             {
-                actionPointsImage[1].color = color[0];
+                actionPointsImage.actionPointFirst.color = color[0];
+                if (actions < 1)
+                {
+                    actionPointsImage.actionpointSecond.color = color[0];
+                }
+                else
+                {
+                    actionPointsImage.actionpointSecond.color = color[1];
+                }
             }
             else
             {
-                actionPointsImage[1].color = color[1];
+                actionPointsImage.actionpointSecond.color = color[1];
             }
         }
-        else
-        {
-            actionPointsImage[0].color = color[1];
-            actionPointsImage[1].color = color[1];
-        }
-
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
 

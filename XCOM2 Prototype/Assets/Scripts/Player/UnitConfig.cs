@@ -21,11 +21,12 @@ public class UnitConfig : MonoBehaviour
     //Script references, internal
     public ActionPoints actionPoints;
     public Health health;
+    public UnitMovement movement;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
     //Unit//
-    public bool isSelected = false;
+    [HideInInspector] public bool isSelected = false;
     public bool isFriendly;
     //Unit Position
     public int tileX;
@@ -35,9 +36,9 @@ public class UnitConfig : MonoBehaviour
     public List<Node> currentPath = null;
 
 
-    public int movePoints = 6;
-    [SerializeField]
-    float animaitionSpeed = 0.05f;
+
+    public int movePoints;
+    [SerializeField]float animaitionSpeed = 0.05f;
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isShooting = false;
@@ -110,7 +111,7 @@ public class UnitConfig : MonoBehaviour
 
                 pathProgress += Time.deltaTime * animaitionSpeed;
                 transform.position = Vector3.Lerp(previousPosition, nextPosition, pathProgress);
-                //if unit have reached the end of path reset pathprogress and increacss pathindex
+                //if unit have reached the end of path reset pathprogress and increase pathindex
                 if (pathProgress >= 1.0)
                 {
 
@@ -121,7 +122,7 @@ public class UnitConfig : MonoBehaviour
                 tileX = currentPath[pathIndex].x;
                 tileY = currentPath[pathIndex].y;
 
-                if (mapConfig.turnSystem.playerTurn)
+                if (mapConfig.turnSystem.playerTurn && isFriendly)
                     line.positionCount = 0;
             }
 
@@ -129,6 +130,8 @@ public class UnitConfig : MonoBehaviour
             {
                 isMoving = false;
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
+                if (!isFriendly)
+                    GetComponent<EnemyAi>().isBusy = false;
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
@@ -214,6 +217,40 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
+    //HACK: Finish this code block when abilities work!
+    public void attackUnit(UnitConfig target)
+    {
+        //Checks if it is the players turn
+        if (mapConfig.turnSystem.playerTurn) 
+        {
+            //Checks if the unit has enough action points
+            if (actionPoints.actions >= 1) 
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    //Checks if the unit hit an enemy
+                    if (hit.collider.GetComponent<UnitConfig>()) 
+                    {
+                        target = hit.collider.GetComponent<UnitConfig>();
+                        //Checks if the unit hit is not friendly
+                        if (!target.isFriendly) 
+                        {
+                            //Uses current weapon
+                            CalculationManager.HitCheck(unitWeapon);
+                            target.health.TakeDamage(CalculationManager.damage);
+
+                            //Spend Actions
+                            actionPoints.SubtractAllActions();
+                            //Move camera to next unit
+                            mapConfig.turnSystem.selectNextUnit();
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void ShootTarget(UnitConfig target)
     {
@@ -230,7 +267,7 @@ public class UnitConfig : MonoBehaviour
 
         
         mapConfig.tileMap.removeUnitMapData(tileX, tileY);
-        mapConfig.tileMap.ResetColorGrid();
+        
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
         for (int cost = 1; cost < moveTo; cost++)//is the path possible
@@ -240,6 +277,7 @@ public class UnitConfig : MonoBehaviour
         if (remainingMovement > movePoints)//can you move the unit 
         {
             isMoving = true;//start moving in the update
+            mapConfig.tileMap.ResetColorGrid();
             animaitionSpeed = 2;
             actionPoints.actions--;
             mapConfig.turnSystem.totalActions--;
@@ -249,6 +287,7 @@ public class UnitConfig : MonoBehaviour
         {
             isSprinting = true;
             isMoving = true;//start moving in the update
+            mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 4;
             actionPoints.actions = 0;
@@ -266,20 +305,18 @@ public class UnitConfig : MonoBehaviour
 
         if (currentPath == null)// if there is no path leave funktion
         {
-            //Debug.Log("this is a test");
             return;
         }
         mapConfig.tileMap.removeUnitMapData(tileX, tileY);
         int remainingMovement = movePoints;
         int moveTo = currentPath.Count - 1;
-        for (int cost = 1; cost < moveTo; cost++)//is the path posseble
+        for (int cost = 0; cost < moveTo; cost++)//is the path posseble
         {
             remainingMovement -= (int)mapConfig.tileMap.CostToEnterTile(currentPath[cost].x, currentPath[cost].y, currentPath[1 + cost].x, currentPath[1 + cost].y);
         }
 
         if (remainingMovement > 0)//can you move the unit 
         {
-            currentPath.RemoveAt(currentPath.Count - 1);//move unit next to player
             isMoving = true;//start moving in the update
             actionPoints.SubtractActions(1);
             return;
@@ -288,7 +325,7 @@ public class UnitConfig : MonoBehaviour
         else//is too far away do not move
         {
 
-            remainingMovement = movePoints;
+            remainingMovement = movePoints * 2;
 
             for (int i = currentPath.Count - 1; i > remainingMovement; i--)
             {
@@ -297,7 +334,7 @@ public class UnitConfig : MonoBehaviour
             if (currentPath != null)
             {
                 isMoving = true;
-                actionPoints.SubtractActions(1);
+                actionPoints.SubtractActions(2);
             }
             return;
         }
