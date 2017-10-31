@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour {
     [Header("X Position")]
     [Tooltip("Min and Max values for the cameras X Position")]
     public float xPosMin;
-    public float xPosMax;
+    float xPosMax;
     [Header("Y Position")]
     [Tooltip("Min and Max values for the cameras y Position")]
     public float yPosMin;
@@ -14,7 +14,7 @@ public class CameraControl : MonoBehaviour {
     [Header("Z Position")]
     [Tooltip("Min and Max values for the cameras z Position")]
     public float zPosMin;
-    public float zPosMax;
+    float zPosMax;
     [Header("Speed")]
     [Tooltip("Speed for camera rotation")]
     [SerializeField]
@@ -29,8 +29,8 @@ public class CameraControl : MonoBehaviour {
     [RangeAttribute(0, 100)]
     int zoomSpeed;
     [Header("Camera Target")]
-    public GameObject CameraTarget;
-    public GameObject Camera;
+    public GameObject cameraTarget;
+    public GameObject cameraHolder;
 
     [Header("Camera Keybindings")]
     [SerializeField]    string cameraZoom;
@@ -47,57 +47,65 @@ public class CameraControl : MonoBehaviour {
     float rotateLerp = 1;
     Vector3 targetRotation;
     int yRotation = 45;
-    float currentScroll = -1;
     bool movingCamera = false;
     private Vector3 velocity = Vector3.zero;
+
+    MapConfig mapConfig;
+
+
+    private void Start()
+    {
+        //Add the map incase its missing
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        xPosMax = mapConfig.tileMap.mapSizeX * mapConfig.tileMap.offset;
+        zPosMax = mapConfig.tileMap.mapSizeY * mapConfig.tileMap.offset;
+    }
 
     void Update()
     {
         //Move left and right
-        if (CameraTarget.transform.position.x >= xPosMin && CameraTarget.transform.position.x <= xPosMax)
+        if (cameraTarget.transform.position.x >= xPosMin && cameraTarget.transform.position.x <= xPosMax)
         {
-            if (Input.GetKey(cameraMoveLeft) && CameraTarget.transform.position.x >= xPosMin)
+            if (Input.GetKey(cameraMoveLeft) && cameraTarget.transform.position.x >= xPosMin)
             {
                 movingCamera = false;
-                CameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                cameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
-            if (Input.GetKey(cameraMoveRight) && CameraTarget.transform.position.x <= xPosMax)
+            if (Input.GetKey(cameraMoveRight) && cameraTarget.transform.position.x <= xPosMax)
             {
                 movingCamera = false;
-                CameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+                cameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             } 
         }
 
-
-
         //reset movement within boundries
-        if (CameraTarget.transform.position.x > xPosMax && CameraTarget.transform.position.x < xPosMin)
+        if (cameraTarget.transform.position.x >= xPosMax || cameraTarget.transform.position.x <= xPosMin)
         {
-            Vector3 p = CameraTarget.transform.position;
-            CameraTarget.transform.position = new Vector3(Mathf.Clamp(p.x, xPosMin, xPosMax), p.y, p.z);
+            Vector3 p = cameraTarget.transform.position;
+            cameraTarget.transform.position = new Vector3(Mathf.Clamp(p.x, xPosMin, xPosMax), p.y, p.z);
         }
         
 
         //Move forwards and backwards
-        if (CameraTarget.transform.position.z >= zPosMin && CameraTarget.transform.position.z <= zPosMax)
+        if (cameraTarget.transform.position.z >= zPosMin && cameraTarget.transform.position.z <= zPosMax)
         {
-            if (Input.GetKey(cameraMoveBackward) && CameraTarget.transform.position.z >= zPosMin)
+            if (Input.GetKey(cameraMoveBackward) && cameraTarget.transform.position.z >= zPosMin)
             {
                 movingCamera = false;
-                CameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+                cameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
-            else if (Input.GetKey(cameraMoveForward) && CameraTarget.transform.position.z <= zPosMax)
+            else if (Input.GetKey(cameraMoveForward) && cameraTarget.transform.position.z <= zPosMax)
             {
                 movingCamera = false;
-                CameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                cameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
-            
         }
+
         //reset movement within boundries
-        if (CameraTarget.transform.position.z > zPosMax && CameraTarget.transform.position.z < zPosMin)
+        if (cameraTarget.transform.position.z >= zPosMax || cameraTarget.transform.position.z <= zPosMin)
         {
-            Vector3 p = CameraTarget.transform.position;
-            CameraTarget.transform.position = new Vector3(p.x, p.y, Mathf.Clamp(p.z, zPosMin, zPosMax));
+            Vector3 p = cameraTarget.transform.position;
+            cameraTarget.transform.position = new Vector3(p.x, p.y, Mathf.Clamp(p.z, zPosMin, zPosMax));
         }
 
 
@@ -117,27 +125,29 @@ public class CameraControl : MonoBehaviour {
         if (rotateLerp < 1)
         {
             rotateLerp += Time.deltaTime;
-            CameraTarget.transform.rotation = Quaternion.Lerp(CameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
+            cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
         }
 
-        
+        //HACK: Needs a better way of restricting movement of the zoom
         //Zoom in and out
-        if (Input.GetAxis(cameraZoom) > 0 && currentScroll < 1)
+        if (Input.GetAxis(cameraZoom) != 0)
         {
-            currentScroll += Input.GetAxis(cameraZoom);
-            Camera.transform.position += Camera.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
+            cameraHolder.transform.localPosition += cameraHolder.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
+            Vector3 p = cameraHolder.transform.localPosition;
+            cameraHolder.transform.localPosition = new Vector3(0, Mathf.Clamp(p.y, yPosMin, yPosMax), 0);
         }
-        else if (Input.GetAxis(cameraZoom) < 0 && currentScroll > -1)
-        {
-            currentScroll += Input.GetAxis(cameraZoom);
-            Camera.transform.position += Camera.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
-        }
+        ////reset within bounds
+        //if (cameraHolder.transform.localPosition.y >= yPosMax || cameraHolder.transform.localPosition.y <= yPosMin)
+        //{
+            
+            
+        //}
 
         //Moves camera to selected unit
         if (moveToTargetLerp <= 1 && movingCamera)
         {
             moveToTargetLerp += Time.deltaTime / 0.5f;
-            CameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));
+            cameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));
         }
     }
     //Move the camera to a specific position within the selected time
@@ -145,7 +155,7 @@ public class CameraControl : MonoBehaviour {
     {
         movingCamera = true;
         moveToTargetLerp = time;
-        startPosition = CameraTarget.transform.position;
+        startPosition = cameraTarget.transform.position;
         targetPosition = selectedPosition;
     }
 }

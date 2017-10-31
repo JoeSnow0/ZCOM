@@ -132,6 +132,8 @@ MonoBehaviour:
   endTurn: 0
   maxTurns: 10
   spawnEnemyTurns: 0100000002000000030000000400000005000000
+  nextTarget: 9
+  previousTarget: 304
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1

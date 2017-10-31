@@ -24,8 +24,8 @@ public class EnemySpawn : MonoBehaviour {
 
     public void SpawnEnemy(UnitConfig enemyPrefab)
     {
-        UnitConfig enemy = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
-        mapConfig.turnSystem.enemyUnits.Add(enemy);
+        UnitConfig newEnemy =  Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
+        mapConfig.turnSystem.enemyUnits.Add(newEnemy);
     }
 
     public Vector3 RandomPosition()
