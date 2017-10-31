@@ -72,7 +72,7 @@ public class ActionPoints : MonoBehaviour {
             for(int i = 0; i < actionPointParent.transform.childCount; i++)
             {
                 Destroy(actionPointParent.transform.GetChild(i).gameObject);
-                Debug.Log("DEST");
+                
             }
             Debug.LogError("Remove action point(s) from action point parent in " + this.name);
         }
