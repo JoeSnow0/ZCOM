@@ -1020,7 +1020,6 @@ GameObject:
   - component: {fileID: 114926315396523272}
   - component: {fileID: 114710749034637548}
   - component: {fileID: 114139811261921410}
-  - component: {fileID: 114738440785497454}
   - component: {fileID: 120123932883889892}
   m_Layer: 0
   m_Name: Soldier
@@ -2260,7 +2259,9 @@ MonoBehaviour:
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
   actionPoints: {fileID: 114926315396523272}
   health: {fileID: 114799151252263356}
-  movement: {fileID: 0}
+  movement: {fileID: 114139811261921410}
+  enemyAI: {fileID: 0}
+  generateButtons: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -2272,17 +2273,6 @@ MonoBehaviour:
   isSprinting: 0
   isShooting: 0
   pathProgress: 0
---- !u!114 &114738440785497454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1973597339924420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114794772884591812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2317,9 +2307,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthColor: {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   HealthColorBackground: {r: 0, g: 0, b: 0, a: 1}
-  healthColorEnemy: {r: 0, g: 0, b: 0, a: 0}
+  healthColorEnemy: {r: 0.9485294, g: 0, b: 0, a: 0}
   HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 0}
-  healthBar: {fileID: 114835739821684660}
+  healthBarPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546,
+    type: 2}
+  healthBarParent: {fileID: 1636769956196128}
   healthBarBackground: {fileID: 114648274980277984}
   healthSlider: {fileID: 114870263291696410}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}

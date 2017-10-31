@@ -23,6 +23,7 @@ public class UnitConfig : MonoBehaviour
     public Health health;
     public UnitMovement movement;
     public EnemyAi enemyAI;
+    public generateButtons generateButtons;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
@@ -218,6 +219,11 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
+    public void targetEnemyUnit()
+    {
+
+    }
+
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
     {
@@ -225,13 +231,13 @@ public class UnitConfig : MonoBehaviour
         if (mapConfig.turnSystem.playerTurn) 
         {
             //Checks if the unit has enough action points
-            if (actionPoints.actions >= 1) 
+            if (actionPoints.actions > 0) 
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    //Checks if the unit hit an enemy
+                    //Checks if the unit clicked on an enemy
                     if (hit.collider.GetComponent<UnitConfig>()) 
                     {
                         target = hit.collider.GetComponent<UnitConfig>();
@@ -243,6 +249,7 @@ public class UnitConfig : MonoBehaviour
                             target.health.TakeDamage(CalculationManager.damage);
 
                             //Spend Actions
+                            mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.selectNextUnit();
