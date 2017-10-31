@@ -41,6 +41,10 @@ public class ZombieAnimation : MonoBehaviour {
             // Set the altered rotation back
             transform.parent.rotation = Quaternion.Euler(eulerAngles);
         }
+        if (unitConfig.isDead)
+        {
+            zombieAnimation.SetInteger("state", 4);
+        }
         if (zombieAnimation.GetInteger("state") > 0) // HACK: What!?
         {
             direction = transform.root.position - lastPosition;

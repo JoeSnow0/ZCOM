@@ -349,9 +349,17 @@ public class TurnSystem : MonoBehaviour {
     public void destroyUnit(UnitConfig unit)
     {
         if (unit.isFriendly)
+        {
+            unit.Die();//Animate death
             playerUnits.Remove(unit);
+        }
+            
         else
+        {
+            unit.Die();//Animate death
             enemyUnits.Remove(unit);
+        }
+            
 
         //Destroy(unit.gameObject);
         //if(enemyUnits.Count <= 0)

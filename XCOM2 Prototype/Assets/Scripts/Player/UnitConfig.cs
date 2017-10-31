@@ -44,6 +44,7 @@ public class UnitConfig : MonoBehaviour
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isShooting = false;
+    public bool isDead = false;
     SoldierAnimation animator;
 
     int pathIndex = 0;
@@ -348,4 +349,9 @@ public class UnitConfig : MonoBehaviour
         }
         
     }
+    public void Die()//
+    {
+        isDead = true;
+    }
+
 }
