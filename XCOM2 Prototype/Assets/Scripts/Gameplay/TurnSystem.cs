@@ -95,7 +95,7 @@ public class TurnSystem : MonoBehaviour {
             bool endturn = true;
             foreach (var enemy in enemyUnits)
             {
-                if (enemy.actionPoints.actions > 0 || enemy.GetComponent<UnitConfig>().isMoving)
+                if (enemy.actionPoints.actions > 0 || enemy.isMoving)
                 {  
                     endturn = false;
                     break;
@@ -185,12 +185,13 @@ public class TurnSystem : MonoBehaviour {
                         {
                             //Uses current weapon
                             CalculationManager.HitCheck(selectedUnit.unitWeapon);
-                            target.health.TakeDamage(CalculationManager.damage);
+                            selectedUnit.ShootTarget(target);
+                            
 
                             //Spend Actions
                             //totalActions -= selectedUnit;
-                            selectedUnit.actionPoints.SubtractAllActions();
-                            selectNextUnit();
+                            //selectedUnit.actionPoints.SubtractAllActions();
+                            //selectNextUnit();
                         }
                     }
                 }

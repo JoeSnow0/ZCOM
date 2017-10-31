@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class generateButtons : MonoBehaviour {
 
-    [SerializeField]
     AbilityInfoObject characterClass;
     [SerializeField]
     AbilityButton abilityButtonPrefab;
     
 
-    private void Start()
+    private void GenerateCurrentButtons(AbilityInfoObject characterClass)
     {
 
         foreach(AbilityInfo ability in characterClass.abilities)

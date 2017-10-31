@@ -18,15 +18,9 @@ public static class CalculationManager// : MonoBehaviour
     
     public static void HitCheck (WeaponInfoObject usedWeapon)
     {
-
-
-
         //hitChance= (coverIntervenience + weaponBaseAccuracy + WeaponProficiency + heightAdvantage + Bonuses - Penalties - (distance * weapontypeRange))
-        
-        hitChance = usedWeapon.baseAim;
-
         hitRoll = RandomRange.RollDice(1, 100);
-        if (hitRoll <= hitChance)
+        if (hitRoll <= usedWeapon.baseAim)
         {
             //Run damage script
             DamageDealt(usedWeapon.baseDamage, usedWeapon.numberOfDiceDamage, usedWeapon.numberOfSidesDamage, true);
@@ -36,26 +30,16 @@ public static class CalculationManager// : MonoBehaviour
             //Run damage script
             DamageDealt(0, 0, 0, false);
         }
-
-
-
     }
-
-
+    
     public static void DamageDealt(int baseDamage, int numberOfDiceDamage, int numberOfSideDamage, bool contact)
     {
         int n = 0;
         //Get Weapon damage parameters
-
-
         n = RandomRange.RollDice(numberOfDiceDamage, numberOfSideDamage);
 
         //Give Damage dealt
         damage = n + baseDamage;
         hit = contact;
 	}
-
-
-
-
 }

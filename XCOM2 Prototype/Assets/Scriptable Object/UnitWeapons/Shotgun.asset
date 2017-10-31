@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfab02793bef3b3459199b302d007a4e, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  name: Shotgun
+  icon: {fileID: 0}
+  value: 0
+  baseAim: 0
+  rangeModShort: 0
+  rangeModMedium: 0
+  rangeModLong: 0
+  rangeModFar: 0
+  weaponRange: 0
+  baseDamage: 0
+  numberOfDiceDamage: 0
+  numberOfSidesDamage: 0
+  weaponProjectile: {fileID: 1471206656654884, guid: e1cec01248b96c04187a39e4f1fb9efd,
+    type: 2}
+  particleColor:
+  - {r: 1, g: 0.8157201, b: 0.41911763, a: 1}
+  - {r: 1, g: 0.67626774, b: 0.38235295, a: 1}
+  weaponSoundShoot: {fileID: 8300000, guid: a4aae31f82ee89c49a9095527960bdba, type: 3}
+  weaponSoundReload: {fileID: 0}
