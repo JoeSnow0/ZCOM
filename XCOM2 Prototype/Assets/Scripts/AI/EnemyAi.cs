@@ -30,7 +30,7 @@ public class EnemyAi : MonoBehaviour {
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
 
         //HACK: AI Movement?
-        if (!unitConfig.mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
+        if (isMyTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
         {
             
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)

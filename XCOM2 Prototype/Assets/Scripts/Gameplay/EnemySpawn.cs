@@ -30,6 +30,7 @@ public class EnemySpawn : MonoBehaviour {
             mapConfig.turnSystem.enemyUnits.Add(enemy);
             enemy.InitializeEnemy();
         }
+        mapConfig.turnSystem.StartNextEnemy();
     }
 
     public Vector3 RandomPosition()

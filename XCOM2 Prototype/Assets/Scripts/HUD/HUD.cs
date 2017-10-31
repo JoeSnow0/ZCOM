@@ -65,7 +65,7 @@ public class HUD : MonoBehaviour {
                 alienAnim.Play("AlienActivityOn");
                 turnSystem.enemyIndex = 0;
                 turnSystem.spawnEnemy();
-                turnSystem.StartNextEnemy();
+                
             }
             else
             {

@@ -1733,7 +1733,7 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
-  unitClassStats: {fileID: 0}
+  unitClassStats: {fileID: 11400000, guid: 0748c71494070e741bc61356489eecd7, type: 2}
 --- !u!114 &114396943117730216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1749,7 +1749,7 @@ MonoBehaviour:
   moveToUnit: {fileID: 114710749034637548, guid: 4c36a5c17caf7f040b8add17d5542ce4,
     type: 2}
   unitConfig: {fileID: 114840236989742042}
-  isBusy: 0
+  isAttacking: 0
   isMyTurn: 0
 --- !u!114 &114398108771507310
 MonoBehaviour:
@@ -1915,14 +1915,14 @@ MonoBehaviour:
   actionPoints: {fileID: 114972056034855142}
   health: {fileID: 114300657596204300}
   movement: {fileID: 0}
-  enemyAI: {fileID: 0}
+  generateButtons: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 0
   tileX: 0
   tileY: 0
   movePoints: 6
-  animaitionSpeed: 1
+  animaitionSpeed: 3
   isMoving: 0
   isSprinting: 0
   isShooting: 0

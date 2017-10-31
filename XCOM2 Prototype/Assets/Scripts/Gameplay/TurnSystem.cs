@@ -112,6 +112,7 @@ public class TurnSystem : MonoBehaviour {
     }
 	void Update () {
 
+        attackUnit();
         if (Input.GetKeyDown(nextTarget) && playerTurn)
         {
 
@@ -266,36 +267,36 @@ public class TurnSystem : MonoBehaviour {
     }
 
     //Moved attack to unitConfig script
-    //void attackUnit()
-    //{
-    //    if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
-    //    {
-    //        if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
-    //        {
-    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //            RaycastHit hit;
-    //            if (Physics.Raycast(ray, out hit))
-    //            {
-    //                if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
-    //                {
-    //                    UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-    //                    if (!target.isFriendly) //Checks if the unit hit is not friendly
-    //                    {
-    //                        //Uses current weapon
-    //                        CalculationManager.HitCheck(selectedUnit.unitWeapon);
-    //                        selectedUnit.ShootTarget(target);
-                            
+    void attackUnit()
+    {
+        if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
+        {
+            if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
+                    {
+                        UnitConfig target = hit.collider.GetComponent<UnitConfig>();
+                        if (!target.isFriendly) //Checks if the unit hit is not friendly
+                        {
+                            //Uses current weapon
+                            CalculationManager.HitCheck(selectedUnit.unitWeapon);
+                            selectedUnit.ShootTarget(target);
 
-    //                        //Spend Actions
-    //                        //totalActions -= selectedUnit;
-    //                        //selectedUnit.actionPoints.SubtractAllActions();
-    //                        //selectNextUnit();
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+
+                            //Spend Actions
+                            //totalActions -= selectedUnit;
+                            //selectedUnit.actionPoints.SubtractAllActions();
+                            //selectNextUnit();
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void MoveMarker(Transform m_Marker, Vector3 m_Position)
     {

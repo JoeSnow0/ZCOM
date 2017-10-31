@@ -22,7 +22,6 @@ public class UnitConfig : MonoBehaviour
     public ActionPoints actionPoints;
     public Health health;
     public UnitMovement movement;
-    public EnemyAi enemyAI;
     public generateButtons generateButtons;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
@@ -224,7 +223,12 @@ public class UnitConfig : MonoBehaviour
     }
     public void InitializeEnemy()
     {
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
+        tileX = (int)tileCoords.x;
+        tileY = (int)tileCoords.z;
+        mapConfig.tileMap.UnitMapData(tileX, tileY);
     }
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
