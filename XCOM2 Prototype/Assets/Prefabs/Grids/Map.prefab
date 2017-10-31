@@ -75,6 +75,8 @@ MonoBehaviour:
   playerUnits: []
   enemyUnits: []
   totalActions: 4
+  enemyPrefab:
+  - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
   gameOver: {fileID: 0}
   gameOverText: {fileID: 0}
   hud: {fileID: 0}
@@ -124,12 +126,14 @@ MonoBehaviour:
   selectedUnit: {fileID: 0}
   mapConfig: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
-  enemySpawnNodes: {fileID: 114995828931628862}
+  enemySpawn: {fileID: 0}
   cameraControl: {fileID: 0}
   playerTurn: 1
   endTurn: 0
   maxTurns: 10
   spawnEnemyTurns: 0100000002000000030000000400000005000000
+  nextTarget: 9
+  previousTarget: 304
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -252,11 +252,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4794373189345062}
+  - component: {fileID: 114300657596204300}
+  - component: {fileID: 114972056034855142}
+  - component: {fileID: 114346069449372304}
   - component: {fileID: 114396943117730216}
   - component: {fileID: 114840236989742042}
   - component: {fileID: 136676663913072674}
-  - component: {fileID: 114300657596204300}
-  - component: {fileID: 114972056034855142}
   m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Unit
@@ -1667,23 +1668,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1165749053097084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1efe98d0933a8b942bc51a478e002baf, type: 3}
+  m_Script: {fileID: 11500000, guid: da8c5a616b3a253498109618aa552bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color:
-  - {r: 0.7490196, g: 0.11764707, b: 0.18823531, a: 1}
-  - {r: 0.17647058, g: 0.14143598, b: 0.14540897, a: 1}
-  - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
-  - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
-  healthBar:
-  - {fileID: 0}
-  - {fileID: 0}
-  healthSlider: {fileID: 0}
+  healthColor: {r: 0, g: 0.8235294, b: 0.8235294, a: 0}
+  HealthColorBackground: {r: 0, g: 0, b: 0, a: 0}
+  healthColorEnemy: {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
+  HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 1}
+  healthBarPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546,
+    type: 2}
+  healthBarParent: {fileID: 1777837903641914}
+  healthBarBackground: {fileID: 114478769605198892}
+  healthSlider: {fileID: 114570668295593986}
+  unitClassStats: {fileID: 11400000, guid: 0748c71494070e741bc61356489eecd7, type: 2}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
-  unitConfig: {fileID: 0}
-  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
 --- !u!114 &114344768348526308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1717,6 +1717,23 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 100/100
+--- !u!114 &114346069449372304
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165749053097084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileX: 0
+  tileY: 0
+  isMoving: 0
+  isSprinting: 0
+  pathProgress: 0
+  unitClassStats: {fileID: 0}
 --- !u!114 &114396943117730216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1731,7 +1748,7 @@ MonoBehaviour:
   allUnits: []
   moveToUnit: {fileID: 0}
   unitConfig: {fileID: 114840236989742042}
-  mapConfig: {fileID: 0}
+  isBusy: 0
 --- !u!114 &114398108771507310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1888,13 +1905,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1650568526972646}
-  healthBarParent: {fileID: 4688172312480720}
+  healthBar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
+  healthBarParent: {fileID: 224235015628029944}
   unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
   actionPoints: {fileID: 114972056034855142}
   health: {fileID: 114300657596204300}
+  movement: {fileID: 0}
+  enemyAI: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 0
@@ -1904,6 +1923,7 @@ MonoBehaviour:
   animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
+  isShooting: 0
   pathProgress: 0
 --- !u!114 &114972056034855142
 MonoBehaviour:
@@ -1919,12 +1939,13 @@ MonoBehaviour:
   animAP: {fileID: 0}
   actions: 0
   actionPointsImage:
-  - {fileID: 0}
-  - {fileID: 0}
+    actionPointFirst: {fileID: 0}
+    actionpointSecond: {fileID: 0}
   color:
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
+  unitConfig: {fileID: 0}
 --- !u!114 &114989274233590292
 MonoBehaviour:
   m_ObjectHideFlags: 1

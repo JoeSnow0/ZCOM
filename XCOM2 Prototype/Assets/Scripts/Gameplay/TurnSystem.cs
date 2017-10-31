@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(EnemySpawn))]
 public class TurnSystem : MonoBehaviour {
     [Header("Lists with all units")]
     [HideInInspector]public UnitConfig[] allUnits;
@@ -13,6 +14,7 @@ public class TurnSystem : MonoBehaviour {
     //[Header("Actions")]
     [HideInInspector]
     public int totalActions;
+    public UnitConfig[] enemyPrefab;
     [Header("UI elements")]
     public GameObject gameOver;
     public Text gameOverText;
@@ -31,12 +33,12 @@ public class TurnSystem : MonoBehaviour {
     [Header("Selected Unit")]
     public UnitConfig selectedUnit;
     public MapConfig mapConfig;
-
+    public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType; 
 
     //Script refs
-    public EnemySpawn enemySpawnNodes;
+    public EnemySpawn enemySpawn;
     public CameraControl cameraControl;
     //public UnitConfig unitConfig;
 
@@ -45,10 +47,18 @@ public class TurnSystem : MonoBehaviour {
     public int maxTurns;
     int thisTurn = 1;
     public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
-    
+
+
+    //Input
+    public KeyCode nextTarget;
+    public KeyCode previousTarget;
+
+
 
     void Start ()
     {
+        generateButtons = FindObjectOfType<generateButtons>();
+        enemySpawn = GetComponent<EnemySpawn>();
         allUnits = GameObject.FindObjectsOfType<UnitConfig>();
         mapConfig = FindObjectOfType<MapConfig>();
         //add units to array
@@ -86,14 +96,54 @@ public class TurnSystem : MonoBehaviour {
     }
 
 	void Update () {
-        selectUnit();
-        attackUnit();
+
+        if (Input.GetKeyDown(nextTarget) && playerTurn)
+        {
+
+            SwitchFocusTarget(true);
+        }
+        if (Input.GetKeyDown(previousTarget) && playerTurn)
+        {
+            SwitchFocusTarget(false);
+        }
+
+        //Mouse select
+        
+            if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
+            {
+                selectedUnit.isSelected = false;
+                selectedUnit = null;
+            }
+
+            if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+
+                    if (hit.collider.CompareTag("FriendlyUnit"))
+                    {
+                        if (selectedUnit != null)
+                        {
+                            selectedUnit.isSelected = false;
+                        }
+
+                    selectedUnit = hit.collider.GetComponent<UnitConfig>();
+                    selectUnit();
+                    }
+
+                }
+            }
+        
+        //
+
         if (!playerTurn)//enemy turn
         {
             bool endturn = true;
             foreach (var enemy in enemyUnits)
             {
-                if (enemy.actionPoints.actions > 0 || enemy.GetComponent<UnitConfig>().isMoving)
+                if (enemy.actionPoints.actions > 0 || enemy.isMoving)
                 {  
                     endturn = false;
                     break;
@@ -104,6 +154,8 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
+            cursorAnimator.SetBool("display", false);
+            unitMarkerAnimator.SetBool("display", false);
         }
         if (playerTurn)
         {
@@ -130,75 +182,108 @@ public class TurnSystem : MonoBehaviour {
         }
 
     }
-
+    
     public void selectUnit()
     {
-        if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
-        {
-            selectedUnit.isSelected = false;
-            selectedUnit = null;
-        }
+        mapConfig.tileMap.selectedUnit = selectedUnit;
 
-        if (Input.GetMouseButtonDown(0) && playerTurn)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-
-                if (hit.collider.CompareTag("FriendlyUnit"))
-                {
-                    if (selectedUnit != null)
-                    {
-                        selectedUnit.isSelected = false;
-                    }
-                    selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    mapConfig.tileMap.selectedUnit = selectedUnit;
-                    selectedUnit.isSelected = true;
-                    MoveMarker(unitMarker, selectedUnit.transform.position);
-                    MoveCameraToTarget(selectedUnit.transform.position, 0);
-                    mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
-                }
+        selectedUnit.isSelected = true;
+        //Move the marker to selected unit
+        MoveMarker(unitMarker, selectedUnit.transform.position);
+        //Move the camera to selected Unit
+        MoveCameraToTarget(selectedUnit.transform.position, 0);
+        //Update grid colors
+        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+        //Clear old abilities
+        generateButtons.ClearCurrentButtons();
+        //Generate new abilities buttons
+        generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
                 
-            }
-        }
+        
     }
-
-    void attackUnit()
+    public void SwitchFocusTarget(bool nextTarget)
     {
-        if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
+        int currentUnitIndex;
+        //get turnsystem player list
+        //check if list is empty
+        if (playerUnits != null)
         {
-            if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
+            if (selectedUnit != null)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
-                    {
-                        UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-                        if (!target.isFriendly) //Checks if the unit hit is not friendly
-                        {
-                            //Uses current weapon
-                            CalculationManager.HitCheck(selectedUnit.unitWeapon);
-                            target.health.TakeDamage(CalculationManager.damage);
+                currentUnitIndex = playerUnits.FindIndex(a => a == selectedUnit);
+            }
+            else
+            {
+                selectedUnit = playerUnits[0];
+                currentUnitIndex = playerUnits.FindIndex(a => a == selectedUnit);
+            }
 
-                            //Spend Actions
-                            //totalActions -= selectedUnit;
-                            selectedUnit.actionPoints.SubtractAllActions();
-                            selectNextUnit();
-                        }
-                    }
+             
+            //move to next unit in list if true
+            if (nextTarget)
+            {
+                //loops around to the beginning of the list
+                currentUnitIndex += 1;
+                if (currentUnitIndex > playerUnits.Count)
+                {
+                    currentUnitIndex = 0;
                 }
             }
+
+            //move to previous unit in list if false
+            if (!nextTarget)
+            {
+                //loops around to the end of the list
+                currentUnitIndex -= 1;
+                if (currentUnitIndex < 0)
+                {
+                    currentUnitIndex = playerUnits.Count - 1;
+                }
+            }
+            //Select the next/previous unit
+            selectedUnit = playerUnits[currentUnitIndex % playerUnits.Count];
+            selectUnit();
         }
     }
+
+    //Moved attack to unitConfig script
+    //void attackUnit()
+    //{
+    //    if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
+    //    {
+    //        if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
+    //        {
+    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //            RaycastHit hit;
+    //            if (Physics.Raycast(ray, out hit))
+    //            {
+    //                if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
+    //                {
+    //                    UnitConfig target = hit.collider.GetComponent<UnitConfig>();
+    //                    if (!target.isFriendly) //Checks if the unit hit is not friendly
+    //                    {
+    //                        //Uses current weapon
+    //                        CalculationManager.HitCheck(selectedUnit.unitWeapon);
+    //                        selectedUnit.ShootTarget(target);
+                            
+
+    //                        //Spend Actions
+    //                        //totalActions -= selectedUnit;
+    //                        //selectedUnit.actionPoints.SubtractAllActions();
+    //                        //selectNextUnit();
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     public void MoveMarker(Transform m_Marker, Vector3 m_Position)
     {
         if (cursorAnimator.GetBool("display") == false)
         {
             cursorAnimator.SetBool("display", true);
+            unitMarkerAnimator.SetBool("display", true);
         }
         m_Marker.position = m_Position;
     }
@@ -207,24 +292,25 @@ public class TurnSystem : MonoBehaviour {
     {
         if (isPlayerTurn)
         {
-            //HACK: NOT adaptable
-            totalActions = playerUnits.Count * 2;
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].GetComponent<ActionPoints>().actions = 2;
+                playerUnits[i].actionPoints.ReplenishAllActions();
+                totalActions += playerUnits[i].actionPoints.actions;
+
             }
         }
         else
         {
-            totalActions = enemyUnits.Count * 2;
             for (int i = 0; i < enemyUnits.Count; i++)
             {
-                enemyUnits[i].GetComponent<ActionPoints>().actions = 2;
+                enemyUnits[i].actionPoints.ReplenishAllActions();
+                //enemyUnits[i].enemyAI.isBusy = false;
+                totalActions += enemyUnits[i].actionPoints.actions;
             }
         }
         playerTurn = isPlayerTurn;
-        
     }
+
     public void selectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
@@ -236,7 +322,6 @@ public class TurnSystem : MonoBehaviour {
                     selectedUnit.isSelected = false;
                 }
                 selectedUnit = playerUnits[i];
-                //GetComponent<TileMap>().selectedUnit = selectedUnit.;
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
@@ -250,7 +335,8 @@ public class TurnSystem : MonoBehaviour {
     {
         if (currentTurn > maxTurns)
         {
-            gameObject.SetActive(false);//deactivates the map
+            //deactivates the map
+            gameObject.SetActive(false);
             gameOver.SetActive(true);
         }
 
@@ -288,9 +374,7 @@ public class TurnSystem : MonoBehaviour {
         {
             if(i == thisTurn)
             {
-                //GameObject newEnemyUnitSpawned = Instantiate(EnemyUnitSpawnType, enemySpawnNodes.GetSpawnNode(), Quaternion.identity).GetComponent<GameObject>();
-                //newEnemyUnitSpawned.turnSystem = this;
-                //enemyUnits.Add(gameObject.newEnemyUnitSpawned);
+                enemySpawn.SpawnEnemy(enemyPrefab[0]);
             }
         }
     }

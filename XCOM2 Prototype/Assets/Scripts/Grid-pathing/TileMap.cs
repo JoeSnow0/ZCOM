@@ -19,7 +19,8 @@ public class TileMap : MonoBehaviour {
 
 
     ClickebleTile[,] tileobjects;
-    int[,] tiles;
+    [HideInInspector]
+    public int[,] tiles;
     Node[,] graph;
 
     int[,] currentGrid;
@@ -30,8 +31,8 @@ public class TileMap : MonoBehaviour {
 
     public GridMaterials gridMaterials;
     private UnitConfig playerGridColorChange;
-    public int mapSizeX = 50;//map size
-    public int mapSizeY = 50;
+    public int mapSizeX;//map size
+    public int mapSizeY;
 
     public float offset;
     private void Awake()
@@ -45,7 +46,6 @@ public class TileMap : MonoBehaviour {
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
         changedColoredGrid = new List<ClickebleTile>();
-        currentneighbour = new List<ClickebleTile>();
     }
 
     void GenerateMapData()//make the grid and it's obsticals.
@@ -226,6 +226,10 @@ public class TileMap : MonoBehaviour {
             //clicked on unwalkable terrain
             return;
         }
+        if (tileX < 0 || tileX >= mapSizeX)
+            return;
+        if (tileY < 0 || tileY >= mapSizeY)
+            return;
         //Dijkstra function
         //https://sv.wikipedia.org/wiki/Dijkstras_algoritm for more information of the Dijkstra function
 
@@ -344,6 +348,7 @@ public class TileMap : MonoBehaviour {
 
     public void GetPlayerNeibours(int movement, int actions)
     {
+        currentneighbour = new List<ClickebleTile>();
         int currentRun = 0;//how many times has the loop run
         changedColoredGrid.Add(tileobjects[playerGridColorChange.tileX, playerGridColorChange.tileY].GetComponent<ClickebleTile>());//start of color change
 
@@ -354,6 +359,7 @@ public class TileMap : MonoBehaviour {
             {
                 if (neighbour == null)//if neighbour does not have a ClickebleTile skip to next neighbour
                     continue;
+
                 GetNeibours(neighbour, currentRun);
             }
 
@@ -371,38 +377,62 @@ public class TileMap : MonoBehaviour {
 
     private void GetNeibours(ClickebleTile neighbourConfig, int currentRun)
     {
-        if (neighbourConfig.tileX > 0)//get neighbour to the left
+        for (int x = -1; x <= 1; x++)
         {
-            if (currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
+            for (int y = -1; y <= 1; y++)
             {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
-                currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+                if (neighbourConfig.tileX + x < 0 || neighbourConfig.tileY + y < 0)
+                    continue;
+                if (neighbourConfig.tileX + x > mapSizeX - 1 || neighbourConfig.tileY + y > mapSizeY - 1)
+                    continue;
+                if ((x != 0 && y != 0) || (x == 0 && y == 0))//if it is looking for a diagonal pos skip to next
+                    continue;
+
+                if (currentGrid[neighbourConfig.tileX + x, neighbourConfig.tileY + y] > currentRun)//check if has position has been filed
+                    if (tiles[neighbourConfig.tileX + x, neighbourConfig.tileY + y] == 0)//is tile walkeble?
+                    {
+                        currentneighbour.Add(tileobjects[neighbourConfig.tileX + x, neighbourConfig.tileY + y]);
+                        currentGrid[neighbourConfig.tileX + x, neighbourConfig.tileY + y] = currentRun;//if the filed position is lower then the former run replace value
+                    }
             }
         }
-        if (neighbourConfig.tileX < mapSizeX - 1)//get neighbour to the right
-        {
-            if (currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
-                currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-            }
-        }
-        if (neighbourConfig.tileY > 0)//get neighbour to the down
-        {
-            if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
-                currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
-            }
-        }
-        if (neighbourConfig.tileY < mapSizeY - 1)//get neighbour to the up
-        {
-            if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] > currentRun)//check if has position has been filed
-            {
-                currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
-                currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
-            }
-        }
+        //if (neighbourConfig.tileX > 0)//get neighbour to the left
+        //{
+        //    if (currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
+        //        if (tiles[neighbourConfig.tileX - 1, neighbourConfig.tileY] != 1)//is tile walkeble?
+        //        {
+                
+        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
+        //            currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+        //        }
+        //}
+        //if (neighbourConfig.tileX < mapSizeX - 1)//get neighbour to the right
+        //{
+        //    if (currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
+        //        if (tiles[neighbourConfig.tileX + 1, neighbourConfig.tileY] != 1)//is tile walkeble?
+        //        {
+        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
+        //            currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
+        //        }
+        //}
+        //if (neighbourConfig.tileY > 0)//get neighbour to the down
+        //{
+        //    if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] > currentRun)//check if has position has been filed
+        //        if (tiles[neighbourConfig.tileX, neighbourConfig.tileY - 1] != 1)//is tile walkeble?
+        //        {
+        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
+        //            currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
+        //        }
+        //}
+        //if (neighbourConfig.tileY < mapSizeY - 1)//get neighbour to the up
+        //{
+        //    if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] > currentRun)//check if has position has been filed
+        //        if (tiles[neighbourConfig.tileX, neighbourConfig.tileY + 1] != 1)//is tile walkeble?
+        //        {
+        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
+        //            currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
+        //        }
+        //}
     }
 
     public void ChangeColorGrid(int movement, int actions)
