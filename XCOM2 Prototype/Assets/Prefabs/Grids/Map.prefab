@@ -131,7 +131,20 @@ MonoBehaviour:
   playerTurn: 1
   endTurn: 0
   maxTurns: 10
-  spawnEnemyTurns: 0100000002000000030000000400000005000000
+  enemyIndex: 0
+  spawnSetup:
+  - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+      type: 2}
+    spawnNumberOfEnemys: 0
+    activatTurn: 0
+  - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+      type: 2}
+    spawnNumberOfEnemys: 2
+    activatTurn: 0
+  - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
+      type: 2}
+    spawnNumberOfEnemys: 5
+    activatTurn: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1

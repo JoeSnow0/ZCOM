@@ -31,7 +31,6 @@ public class Health : MonoBehaviour
             Debug.LogWarning("Couldn't find Class, using default class");
         }
         InitiateUnitHealth();
-        
     }
 
     private void Update()
@@ -57,7 +56,6 @@ public class Health : MonoBehaviour
         {
             Instantiate(bar, barParent);
         }
-
         UpdateUnitHealth();
     }
 
@@ -91,6 +89,7 @@ public class Health : MonoBehaviour
     void UpdateUnitHealth()
     {
         healthSlider.value = currentUnitHealth;
+        
     }
 
     void KillUnit()

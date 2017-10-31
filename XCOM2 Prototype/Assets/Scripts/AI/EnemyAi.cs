@@ -7,9 +7,13 @@ public class EnemyAi : MonoBehaviour {
     public GameObject[] allUnits;
     public UnitConfig moveToUnit;
     public UnitConfig unitConfig;
-    public bool isBusy;
+
+    public bool isAttacking;
+    public bool isMyTurn;
+    bool canMove = false;
+
     int damage;
-    
+    MapConfig mapConfig;
     int posLeftOrRight;
     int posUPOrDown;
 
@@ -17,42 +21,57 @@ public class EnemyAi : MonoBehaviour {
     private void Start()
     {
         unitConfig = gameObject.GetComponent<UnitConfig>();
+        mapConfig = FindObjectOfType<MapConfig>();
+        isMyTurn = false;
     }
     void Update ()
     {
-        //HACK: AI Movement?
+        //Rotate health UI to camera rotation
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
-        if (!unitConfig.mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
+
+        //HACK: AI Movement?
+        if (isMyTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
         {
+            
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
             {
                 IsPlayerNextToMe(unit.tileX, unit.tileY);
-                
             }
-            if (unitConfig.actionPoints.actions < 1)
-                return;
-            if (!isBusy)
+            
+            if (!isAttacking)
                 FindClosestPlayerUnit();
-
-            //HACK: zombie attack?
-            if (unitConfig.currentPath == null)
-                return;
-            
-            //HACK: move?
-            
             
             unitConfig.EnemyMoveNextTile();
-            
+            if (!canMove)
+            {
+               unitConfig.actionPoints.SubtractAllActions();
+               
+            }
+        }
+        if (isMyTurn && unitConfig.actionPoints.actions < 1 && !unitConfig.isMoving)
+        {
+            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex)
+            {
+                
+                isAttacking = false;
+                isMyTurn = false;
+                //mapConfig.turnSystem.enemyIndex += 1;
+                mapConfig.turnSystem.StartNextEnemy();
+            }
         }
     }
 
     public void FindClosestPlayerUnit()
     {
-        isBusy = true;
         distance = int.MaxValue;
+        canMove = false;
         foreach (var unit in unitConfig.mapConfig.turnSystem.playerUnits)
         {            
             FindClosestPlayerLocation(unit);
+        }
+        if (!canMove)
+        {
+            return;
         }
         unitConfig.mapConfig.tileMap.GeneratePathTo(moveToUnit.tileX + posLeftOrRight, moveToUnit.tileY + posUPOrDown, unitConfig);//make path to the closest position
     }
@@ -75,6 +94,7 @@ public class EnemyAi : MonoBehaviour {
                         posUPOrDown = y;
                         distance = unitConfig.currentPath.Count;
                         moveToUnit = unit;
+                        canMove = true;
                     }
                 }
             }
@@ -82,7 +102,6 @@ public class EnemyAi : MonoBehaviour {
     }
     public void IsPlayerNextToMe(int tileX,int tileY)
     {
-        
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -93,7 +112,7 @@ public class EnemyAi : MonoBehaviour {
                     {
                         moveToUnit.health.TakeDamage(damage);
                         unitConfig.actionPoints.SubtractActions(2);
-                        isBusy = true;
+                        isAttacking = true;
                     }
                 }
             }

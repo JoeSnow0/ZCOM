@@ -20,6 +20,7 @@ public class UnitConfig : MonoBehaviour
     public ActionPoints actionPoints;
     public Health health;
     public UnitMovement movement;
+    public generateButtons generateButtons;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
@@ -40,11 +41,13 @@ public class UnitConfig : MonoBehaviour
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isShooting = false;
+    public bool isDead = false;
     SoldierAnimation animator;
 
     int pathIndex = 0;
     public float pathProgress;
     LineRenderer line;
+    public EnemyAi enemyAi;
 
     //BaseUnitCopy
     void Start()
@@ -57,6 +60,9 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        if(enemyAi == null)
+            InitializeEnemy();
+
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
 
         //Set unit position on grid
@@ -128,8 +134,7 @@ public class UnitConfig : MonoBehaviour
             {
                 isMoving = false;
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
-                if (!isFriendly)
-                    GetComponent<EnemyAi>().isBusy = false;
+             
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
@@ -215,6 +220,15 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
+    public void InitializeEnemy()
+    {
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
+        enemyAi = GetComponent<EnemyAi>();
+        tileX = (int)tileCoords.x;
+        tileY = (int)tileCoords.z;
+        mapConfig.tileMap.UnitMapData(tileX, tileY);
+    }
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
     {
@@ -222,13 +236,13 @@ public class UnitConfig : MonoBehaviour
         if (mapConfig.turnSystem.playerTurn) 
         {
             //Checks if the unit has enough action points
-            if (actionPoints.actions >= 1) 
+            if (actionPoints.actions > 0) 
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    //Checks if the unit hit an enemy
+                    //Checks if the unit clicked on an enemy
                     if (hit.collider.GetComponent<UnitConfig>()) 
                     {
                         target = hit.collider.GetComponent<UnitConfig>();
@@ -240,6 +254,7 @@ public class UnitConfig : MonoBehaviour
                             target.health.TakeDamage(CalculationManager.damage);
 
                             //Spend Actions
+                            mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.selectNextUnit();
@@ -264,7 +279,7 @@ public class UnitConfig : MonoBehaviour
         }
 
         
-        mapConfig.tileMap.removeUnitMapData(tileX, tileY);
+        
         
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
@@ -276,6 +291,7 @@ public class UnitConfig : MonoBehaviour
         {
             isMoving = true;//start moving in the update
             mapConfig.tileMap.ResetColorGrid();
+            mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 2;
             actionPoints.actions--;
             mapConfig.turnSystem.totalActions--;
@@ -338,4 +354,9 @@ public class UnitConfig : MonoBehaviour
         }
         
     }
+    public void Die()//
+    {
+        isDead = true;
+    }
+
 }
