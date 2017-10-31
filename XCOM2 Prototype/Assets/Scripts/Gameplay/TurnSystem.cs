@@ -10,7 +10,14 @@ public class TurnSystem : MonoBehaviour {
     [HideInInspector]public UnitConfig[] allUnits;
     [HideInInspector]public List<UnitConfig> playerUnits = new List<UnitConfig>();
     [HideInInspector]public List<UnitConfig> enemyUnits = new List<UnitConfig>();
-
+    [System.Serializable]
+    public class SpawnSetup
+    {
+        public UnitConfig enemyPrefab;
+        public int spawnNumberOfEnemys;
+        [HideInInspector]
+        public int activatTurn;
+    }
     //[Header("Actions")]
     [HideInInspector]
     public int totalActions;
@@ -46,8 +53,10 @@ public class TurnSystem : MonoBehaviour {
     public bool endTurn = false;
     public int maxTurns;
     int thisTurn = 1;
-    public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
-
+    public int enemyIndex = 0;
+    //public int[] spawnEnemyTurns; old
+    public SpawnSetup[] spawnSetup;
+    
 
     //Input
     public KeyCode nextTarget;
@@ -59,8 +68,9 @@ public class TurnSystem : MonoBehaviour {
     {
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
-        allUnits = GameObject.FindObjectsOfType<UnitConfig>();
+        allUnits = FindObjectsOfType<UnitConfig>();
         mapConfig = FindObjectOfType<MapConfig>();
+        
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -93,10 +103,16 @@ public class TurnSystem : MonoBehaviour {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
         mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
+        int loopnumber = 0;
+        foreach (SpawnSetup setup in spawnSetup)
+        {
+            setup.activatTurn = loopnumber;
+            loopnumber++;
+        }
     }
-
 	void Update () {
 
+        attackUnit();
         if (Input.GetKeyDown(nextTarget) && playerTurn)
         {
 
@@ -151,6 +167,11 @@ public class TurnSystem : MonoBehaviour {
             }
             if (endturn == true)
             {
+                foreach (UnitConfig enemy in enemyUnits)
+                {
+                    enemy.enemyAi.isMyTurn = false;
+                    enemy.currentPath = null;
+                }
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
@@ -174,13 +195,12 @@ public class TurnSystem : MonoBehaviour {
                 {
                     selectedUnit.isSelected = false;
                     mapConfig.tileMap.ResetColorGrid();
-                }
-                
+                }                
                 selectedUnit = null;
                 hud.pressEnd(true);
             }
         }
-
+        
     }
     
     public void selectUnit()
@@ -247,36 +267,36 @@ public class TurnSystem : MonoBehaviour {
     }
 
     //Moved attack to unitConfig script
-    //void attackUnit()
-    //{
-    //    if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
-    //    {
-    //        if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
-    //        {
-    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //            RaycastHit hit;
-    //            if (Physics.Raycast(ray, out hit))
-    //            {
-    //                if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
-    //                {
-    //                    UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-    //                    if (!target.isFriendly) //Checks if the unit hit is not friendly
-    //                    {
-    //                        //Uses current weapon
-    //                        CalculationManager.HitCheck(selectedUnit.unitWeapon);
-    //                        selectedUnit.ShootTarget(target);
-                            
+    void attackUnit()
+    {
+        if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
+        {
+            if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
+                    {
+                        UnitConfig target = hit.collider.GetComponent<UnitConfig>();
+                        if (!target.isFriendly) //Checks if the unit hit is not friendly
+                        {
+                            //Uses current weapon
+                            CalculationManager.HitCheck(selectedUnit.unitWeapon);
+                            selectedUnit.ShootTarget(target);
 
-    //                        //Spend Actions
-    //                        //totalActions -= selectedUnit;
-    //                        //selectedUnit.actionPoints.SubtractAllActions();
-    //                        //selectNextUnit();
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+
+                            //Spend Actions
+                            //totalActions -= selectedUnit;
+                            //selectedUnit.actionPoints.SubtractAllActions();
+                            //selectNextUnit();
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void MoveMarker(Transform m_Marker, Vector3 m_Position)
     {
@@ -330,7 +350,18 @@ public class TurnSystem : MonoBehaviour {
             }
         }
     }
+    public void StartNextEnemy()
+    {
+        if (enemyUnits == null ||
+            enemyUnits[enemyIndex] == null ||
+            enemyUnits[enemyIndex].enemyAi == null)
+        {
+            Debug.Break();
+        }
 
+        enemyUnits[enemyIndex].enemyAi.isMyTurn = true;
+        enemyIndex++;
+    }
     public int getCurrentTurn(int currentTurn)
     {
         if (currentTurn > maxTurns)
@@ -338,10 +369,7 @@ public class TurnSystem : MonoBehaviour {
             //deactivates the map
             gameObject.SetActive(false);
             gameOver.SetActive(true);
-        }
-
-
-            
+        }        
         thisTurn = currentTurn;
         return maxTurns;
     }
@@ -378,11 +406,19 @@ public class TurnSystem : MonoBehaviour {
     }
     public void spawnEnemy()
     {
-        foreach (int i in spawnEnemyTurns) // Checks if current turn should spawn an enemy
+        
+        foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
         {
-            if(i == thisTurn)
+            if(i.activatTurn == thisTurn)
             {
-                enemySpawn.SpawnEnemy(enemyPrefab[0]);
+                enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
+                break;
+            }
+            else if (spawnSetup.Length < thisTurn)
+            {
+                int newI = Random.Range(0, spawnSetup.Length);
+                enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
+                break;
             }
         }
     }
