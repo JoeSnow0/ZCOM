@@ -1675,7 +1675,9 @@ MonoBehaviour:
   HealthColorBackground: {r: 0, g: 0, b: 0, a: 0}
   healthColorEnemy: {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
   HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 1}
-  healthBar: {fileID: 114398108771507310}
+  healthBarPrefab: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546,
+    type: 2}
+  healthBarParent: {fileID: 1777837903641914}
   healthBarBackground: {fileID: 114478769605198892}
   healthSlider: {fileID: 114570668295593986}
   unitClassStats: {fileID: 11400000, guid: 0748c71494070e741bc61356489eecd7, type: 2}
@@ -1913,6 +1915,7 @@ MonoBehaviour:
   actionPoints: {fileID: 114972056034855142}
   health: {fileID: 114300657596204300}
   movement: {fileID: 0}
+  enemyAI: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 0
@@ -1922,6 +1925,7 @@ MonoBehaviour:
   animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
+  isShooting: 0
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!114 &114972056034855142

@@ -11,6 +11,7 @@ TagManager:
   - FriendlyUnit
   - Button_Type_1
   - Panel_Type_1
+  - UI Elements
   layers:
   - Default
   - TransparentFX

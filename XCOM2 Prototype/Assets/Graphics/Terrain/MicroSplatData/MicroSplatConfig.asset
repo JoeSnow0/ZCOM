@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: MicroSplatConfig
   m_EditorClassIdentifier: 
   textureMode: 1
-  hash: 1261486759
+  hash: 1236173841
   diffuseArray: {fileID: 18700000, guid: 29b0465a6d480bd48a0df764c52a85df, type: 2}
   normalSAOArray: {fileID: 18700000, guid: c7838ab07123ac743b2a1936f9d0d22e, type: 2}
   diffuseTextureSize: 1024

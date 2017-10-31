@@ -22,6 +22,8 @@ public class UnitConfig : MonoBehaviour
     public ActionPoints actionPoints;
     public Health health;
     public UnitMovement movement;
+    public EnemyAi enemyAI;
+    public generateButtons generateButtons;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
@@ -41,6 +43,8 @@ public class UnitConfig : MonoBehaviour
     [SerializeField]float animaitionSpeed = 0.05f;
     public bool isMoving = false;
     public bool isSprinting = false;
+    public bool isShooting = false;
+    SoldierAnimation animator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -69,6 +73,8 @@ public class UnitConfig : MonoBehaviour
         
         line = GetComponent<LineRenderer>();
 
+        animator = GetComponentInChildren<SoldierAnimation>();
+
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         if (unitWeapon == null)
         {
@@ -94,6 +100,10 @@ public class UnitConfig : MonoBehaviour
         {
             currentPath = null;
             line.positionCount = 0;
+        }
+        if (isShooting)
+        {
+            //Vector3.RotateTowards(rotation, )
         }
 
         if (isMoving == true)
@@ -223,13 +233,13 @@ public class UnitConfig : MonoBehaviour
         if (mapConfig.turnSystem.playerTurn) 
         {
             //Checks if the unit has enough action points
-            if (actionPoints.actions >= 1) 
+            if (actionPoints.actions > 0) 
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    //Checks if the unit hit an enemy
+                    //Checks if the unit clicked on an enemy
                     if (hit.collider.GetComponent<UnitConfig>()) 
                     {
                         target = hit.collider.GetComponent<UnitConfig>();
@@ -241,6 +251,7 @@ public class UnitConfig : MonoBehaviour
                             target.health.TakeDamage(CalculationManager.damage);
 
                             //Spend Actions
+                            mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.selectNextUnit();
@@ -249,6 +260,12 @@ public class UnitConfig : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ShootTarget(UnitConfig target)
+    {
+        isShooting = true;
+        animator.target = target;
     }
 
     public void MoveNextTile()//start to try to move unit

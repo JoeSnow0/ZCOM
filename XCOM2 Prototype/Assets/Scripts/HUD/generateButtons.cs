@@ -9,9 +9,8 @@ public class generateButtons : MonoBehaviour {
     AbilityInfoObject characterClass;
     [SerializeField]
     AbilityButton abilityButtonPrefab;
-    
 
-    private void GenerateCurrentButtons(AbilityInfoObject characterClass)
+    public void GenerateCurrentButtons(AbilityInfoObject characterClass)
     {
 
         foreach(AbilityInfo ability in characterClass.abilities)
@@ -23,6 +22,13 @@ public class generateButtons : MonoBehaviour {
             newButton.abilityIcon.sprite = ability.icon;
             newButton.abilityKeybind = ability.keybind;
             newButton.abilityButton.onClick.AddListener(() => { ability.callbackFunction.Invoke(); });
+        }
+    }
+    public void ClearCurrentButtons()
+    {
+        foreach (Transform child in gameObject.transform)
+        {
+            GameObject.Destroy(child.gameObject);
         }
     }
     
