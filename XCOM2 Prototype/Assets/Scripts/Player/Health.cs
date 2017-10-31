@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using UnityEditor;
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Color healthColor;
-    [SerializeField] private Color HealthColorBackground;
-    [SerializeField] private Color healthColorEnemy;
-    [SerializeField] private Color HealthColorBackgroundEnemy;
+    //[SerializeField] private Color healthColor;
+    //[SerializeField] private Color HealthColorBackground;
+    //[SerializeField] private Color healthColorEnemy;
+    //[SerializeField] private Color HealthColorBackgroundEnemy;
     public Image healthBar;
     public Image healthBarBackground;
     [SerializeField] private Slider healthSlider;
@@ -18,7 +18,8 @@ public class Health : MonoBehaviour
     public GameObject floatingDmg;
     public Transform dmgStartPos;
     private UnitConfig unitConfig;
-    
+    public GameObject bar;
+    public Transform barParent;
 
 
     void Start()
@@ -49,24 +50,12 @@ public class Health : MonoBehaviour
         healthSlider.maxValue = maxUnitHealth;
         healthSlider.value = currentUnitHealth;
 
-        if (unitConfig.isFriendly)
-        {
-            //Set health bar Background Color for player
-            healthBar.color = healthColor;
-            //Set set health bar color for player
-            healthBarBackground.color = HealthColorBackground;
-        }
-        else
-        {
-            //Set health bar Background Color for enemy
-            healthBar.color = healthColorEnemy;
-            //Set set health bar color for enemy
-            healthBarBackground.color = HealthColorBackgroundEnemy;
-        }
+        healthBar.color = unitConfig.unitColor[0];
+        healthBarBackground.color = unitConfig.unitColor[1];
 
         for (int i = 0; i < currentUnitHealth; i++)
         {
-            Instantiate(unitConfig.healthBar, unitConfig.healthBarParent);
+            Instantiate(bar, barParent);
         }
 
         UpdateUnitHealth();

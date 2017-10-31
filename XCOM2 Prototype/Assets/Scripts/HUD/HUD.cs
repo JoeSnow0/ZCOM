@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour {
     public GameObject alienUI;
     public GameObject playerUI;
+    public GameObject endButton;
     Animator alienAnim;
     public Text turnCounter;
     public Text warningText;
@@ -63,11 +64,13 @@ public class HUD : MonoBehaviour {
                 alienUI.SetActive(true);
                 alienAnim.Play("AlienActivityOn");
                 turnSystem.spawnEnemy();
+                endButton.SetActive(false);
             }
             else
             {
                 playerUI.SetActive(true);
                 alienUI.SetActive(false);
+                endButton.SetActive(true);
             }
             //Add all functionality here, END TURN
             turnSystem.resetActions(isPlayerTurn);

@@ -14,13 +14,13 @@ MonoBehaviour:
   name: Sniper
   icon: {fileID: 0}
   value: 0
-  baseAim: 0
+  baseAim: 50
   rangeModShort: 0
   rangeModMedium: 0
   rangeModLong: 0
   rangeModFar: 0
   weaponRange: 0
-  baseDamage: 0
+  baseDamage: 2
   numberOfDiceDamage: 0
   numberOfSidesDamage: 0
   weaponProjectile: {fileID: 1826731011401932, guid: 691d4f89e2149e74e9608e6a59e45034,

@@ -7,11 +7,9 @@ using UnityEditor;
 
 public class UnitConfig : MonoBehaviour
 {
-
+    public Color[] unitColor;
     //public Transform dmgStartPos;
     //public GameObject floatingDmg;
-    public GameObject healthBar;
-    public Transform healthBarParent;
 
     //Data from scriptable objects
     public WeaponInfoObject unitWeapon;

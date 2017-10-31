@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 224235015628029944}
   - component: {fileID: 114711837300248358}
   m_Layer: 0
-  m_Name: Bars
+  m_Name: BarParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1671,10 +1671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8c5a616b3a253498109618aa552bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthColor: {r: 0, g: 0.8235294, b: 0.8235294, a: 0}
-  HealthColorBackground: {r: 0, g: 0, b: 0, a: 0}
-  healthColorEnemy: {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
-  HealthColorBackgroundEnemy: {r: 0, g: 0, b: 0, a: 1}
   healthBar: {fileID: 114398108771507310}
   healthBarBackground: {fileID: 114478769605198892}
   healthSlider: {fileID: 114570668295593986}
@@ -1682,6 +1678,7 @@ MonoBehaviour:
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
+  bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   barParent: {fileID: 224235015628029944}
 --- !u!114 &114344768348526308
 MonoBehaviour:
@@ -1904,8 +1901,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
-  healthBarParent: {fileID: 224235015628029944}
+  unitColor:
+  - {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
+  - {r: 0.19607845, g: 0.19215688, b: 0.18039216, a: 1}
   unitWeapon: {fileID: 11400000, guid: e6978ff043ee2dc44a19f807854672d2, type: 2}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
@@ -1921,6 +1919,7 @@ MonoBehaviour:
   animaitionSpeed: 1
   isMoving: 0
   isSprinting: 0
+  isShooting: 0
   pathProgress: 0
 --- !u!114 &114972056034855142
 MonoBehaviour:
@@ -1935,14 +1934,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animAP: {fileID: 0}
   actions: 0
-  actionPointsImage:
-    actionPointFirst: {fileID: 0}
-    actionpointSecond: {fileID: 0}
-  color:
-  - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
-  - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
   unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
   unitConfig: {fileID: 0}
+  actionPointParent: {fileID: 0}
+  actionPoint: {fileID: 0}
 --- !u!114 &114989274233590292
 MonoBehaviour:
   m_ObjectHideFlags: 1
