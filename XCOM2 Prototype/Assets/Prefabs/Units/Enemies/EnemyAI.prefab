@@ -1682,7 +1682,6 @@ MonoBehaviour:
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
   dmgStartPos: {fileID: 4506646421622150}
-  barParent: {fileID: 224235015628029944}
 --- !u!114 &114344768348526308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1745,9 +1744,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allUnits: []
-  moveToUnit: {fileID: 0}
+  moveToUnit: {fileID: 114710749034637548, guid: 4c36a5c17caf7f040b8add17d5542ce4,
+    type: 2}
   unitConfig: {fileID: 114840236989742042}
   isBusy: 0
+  isMyTurn: 0
 --- !u!114 &114398108771507310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1922,6 +1923,7 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   pathProgress: 0
+  enemyAi: {fileID: 0}
 --- !u!114 &114972056034855142
 MonoBehaviour:
   m_ObjectHideFlags: 1

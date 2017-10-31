@@ -45,6 +45,7 @@ public class UnitConfig : MonoBehaviour
     int pathIndex = 0;
     public float pathProgress;
     LineRenderer line;
+    public EnemyAi enemyAi;
 
     //BaseUnitCopy
     void Start()
@@ -57,6 +58,9 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        if(enemyAi == null)
+            InitializeEnemy();
+
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
 
         //Set unit position on grid
@@ -122,8 +126,7 @@ public class UnitConfig : MonoBehaviour
             {
                 isMoving = false;
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
-                if (!isFriendly)
-                    GetComponent<EnemyAi>().isBusy = false;
+             
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
@@ -209,6 +212,10 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
+    public void InitializeEnemy()
+    {
+        enemyAi = GetComponent<EnemyAi>();
+    }
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
     {
@@ -252,7 +259,7 @@ public class UnitConfig : MonoBehaviour
         }
 
         
-        mapConfig.tileMap.removeUnitMapData(tileX, tileY);
+        
         
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
@@ -264,6 +271,7 @@ public class UnitConfig : MonoBehaviour
         {
             isMoving = true;//start moving in the update
             mapConfig.tileMap.ResetColorGrid();
+            mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 2;
             actionPoints.actions--;
             mapConfig.turnSystem.totalActions--;
