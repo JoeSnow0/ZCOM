@@ -125,6 +125,7 @@ MonoBehaviour:
   - {fileID: 0}
   selectedUnit: {fileID: 0}
   mapConfig: {fileID: 0}
+  generateButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
   enemySpawn: {fileID: 0}
   cameraControl: {fileID: 0}
@@ -145,6 +146,8 @@ MonoBehaviour:
       type: 2}
     spawnNumberOfEnemys: 5
     activatTurn: 0
+  nextTarget: 0
+  previousTarget: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
