@@ -359,4 +359,9 @@ public class UnitConfig : MonoBehaviour
         isDead = true;
     }
 
+    public void Attack()//
+    {
+        isShooting = true;
+    }
+
 }
