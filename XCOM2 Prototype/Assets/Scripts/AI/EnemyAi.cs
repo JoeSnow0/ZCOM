@@ -9,7 +9,7 @@ public class EnemyAi : MonoBehaviour {
     public UnitConfig unitConfig;
 
     public bool isAttacking;
-    public bool isMyTurn;
+    public bool isMyTurn = false;
     bool canMove = false;
 
     int damage;
@@ -22,7 +22,6 @@ public class EnemyAi : MonoBehaviour {
     {
         unitConfig = gameObject.GetComponent<UnitConfig>();
         mapConfig = FindObjectOfType<MapConfig>();
-        isMyTurn = false;
     }
     void Update ()
     {
@@ -30,22 +29,25 @@ public class EnemyAi : MonoBehaviour {
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
 
         //HACK: AI Movement?
-        if (isMyTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
+        if (isMyTurn && !mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
         {
             
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
             {
                 IsPlayerNextToMe(unit.tileX, unit.tileY);
+                if(unitConfig.actionPoints.actions < 1)
+                {
+                    break;
+                }
             }
             
             if (!isAttacking)
                 FindClosestPlayerUnit();
             
             unitConfig.EnemyMoveNextTile();
-            if (!canMove)
+            if (unitConfig.actionPoints.actions == 2)
             {
-               unitConfig.actionPoints.SubtractAllActions();
-               
+                unitConfig.actionPoints.SubtractAllActions();
             }
         }
         if (isMyTurn && unitConfig.actionPoints.actions < 1 && !unitConfig.isMoving)
