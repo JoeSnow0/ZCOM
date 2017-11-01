@@ -96,12 +96,11 @@ public class TurnSystem : MonoBehaviour {
 
         //HACK: What if a unit has more than 2 actions?
         totalActions = playerUnits.Count * 2;
-        selectedUnit = playerUnits[0];
-        selectedUnit.isSelected = true;
         foreach (var unit in allUnits)
         {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
+        SelectNextUnit();
         mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
         int loopnumber = 0;
         foreach (SpawnSetup setup in spawnSetup)
@@ -109,6 +108,7 @@ public class TurnSystem : MonoBehaviour {
             setup.activatTurn = loopnumber;
             loopnumber++;
         }
+        
     }
 	void Update () {
 
