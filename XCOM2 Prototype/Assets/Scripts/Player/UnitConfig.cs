@@ -36,7 +36,7 @@ public class UnitConfig : MonoBehaviour
 
     //grid Reference
     public List<Node> currentPath = null;
-
+    public Image TargetMarker;
 
 
     public int movePoints;
@@ -87,11 +87,21 @@ public class UnitConfig : MonoBehaviour
             unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
             Debug.LogWarning("Couldn't find abilities, using default abilities");
         }
+        //hide target marker
+        TargetMarker.gameObject.SetActive(false);
 
     }
 
     void Update()
     {
+        if (isSelected)
+        {
+            TargetMarker.gameObject.SetActive(true);
+        }
+        else if (!isSelected)
+        {
+            TargetMarker.gameObject.SetActive(false);
+        }
         if (!isSelected && isFriendly)
         {
             currentPath = null;
@@ -219,10 +229,10 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
-    public void targetEnemyUnit()
-    {
+    //public void targetEnemyUnit()
+    //{
 
-    }
+    //}
 
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
