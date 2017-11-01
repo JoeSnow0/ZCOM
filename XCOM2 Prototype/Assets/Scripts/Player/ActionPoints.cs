@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionPoints : MonoBehaviour {
-    [HideInInspector]public int actions;
+    public int actions;
 
 
     List <Image> actionPoints = new List<Image>();

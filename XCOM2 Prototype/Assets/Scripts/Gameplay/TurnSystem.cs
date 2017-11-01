@@ -398,39 +398,42 @@ public class TurnSystem : MonoBehaviour {
                 {
                     //loops around to the beginning of the list
                     currentUnitIndex += 1;
-                    if (currentUnitIndex > playerUnits.Count)
+                    if (currentUnitIndex > playerUnits.Count - 1)
                     {
                         currentUnitIndex = 0;
                     }
 
-                    selectedUnit = playerUnits[currentUnitIndex % playerUnits.Count];
+                    selectedUnit = playerUnits[currentUnitIndex];
                     if (selectedUnit.actionPoints.actions > 0)
                     {
+                        
                         break;
                     }
                 }
             }
 
             //move to previous unit in list if false
-            else
+            else if (!nextTarget)
             {
                 for (int i = 0; i < playerUnits.Count; i++)
                 {
-
                     //loops around to the end of the list
                     currentUnitIndex -= 1;
                     if (currentUnitIndex < 0)
                     {
                         currentUnitIndex = playerUnits.Count - 1;
                     }
-                    selectedUnit = playerUnits[currentUnitIndex % playerUnits.Count];
+
+                    selectedUnit = playerUnits[currentUnitIndex];
                     if (selectedUnit.actionPoints.actions > 0)
                     {
+
                         break;
                     }
                 }
             }
             //Select the next/previous unit
+            print(currentUnitIndex);
             selectUnit();
         }
         
@@ -460,7 +463,6 @@ public class TurnSystem : MonoBehaviour {
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
                             selectedUnit.actionPoints.SubtractAllActions();
-                            //selectNextUnit();
                         }
                     }
                 }
@@ -495,7 +497,6 @@ public class TurnSystem : MonoBehaviour {
             for (int i = 0; i < enemyUnits.Count; i++)
             {
                 enemyUnits[i].actionPoints.ReplenishAllActions();
-                //enemyUnits[i].enemyAI.isBusy = false;
                 totalActions += enemyUnits[i].actionPoints.actions;
             }
         }

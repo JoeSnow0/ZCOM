@@ -146,8 +146,9 @@ MonoBehaviour:
       type: 2}
     spawnNumberOfEnemys: 5
     activatTurn: 0
-  nextTarget: 0
-  previousTarget: 0
+  nextTarget: 9
+  previousTarget: 304
+  EnemyTargeting: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
