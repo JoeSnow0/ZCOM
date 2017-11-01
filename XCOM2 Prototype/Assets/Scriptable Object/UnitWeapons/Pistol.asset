@@ -20,9 +20,9 @@ MonoBehaviour:
   rangeModLong: -40
   rangeModFar: -100
   weaponRange: 0
-  baseDamage: 1
-  numberOfDiceDamage: 2
-  numberOfSidesDamage: 0
+  baseDamage: 0
+  numberOfDiceDamage: 1
+  numberOfSidesDamage: 3
   weaponProjectile: {fileID: 1955339187017188, guid: 2a438949cafdad1458af1394627a2684,
     type: 2}
   particleColor:

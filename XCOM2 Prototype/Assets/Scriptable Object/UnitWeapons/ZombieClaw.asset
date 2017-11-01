@@ -22,4 +22,8 @@ MonoBehaviour:
   weaponRange: 0
   baseDamage: 1
   numberOfDiceDamage: 1
-  numberOfSidesDamage: 0
+  numberOfSidesDamage: 1
+  weaponProjectile: {fileID: 0}
+  particleColor: []
+  weaponSoundShoot: {fileID: 0}
+  weaponSoundReload: {fileID: 0}
