@@ -35,16 +35,19 @@ public class EnemyAi : MonoBehaviour {
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
             {
                 IsPlayerNextToMe(unit.tileX, unit.tileY);
+                if(unitConfig.actionPoints.actions < 1)
+                {
+                    break;
+                }
             }
             
             if (!isAttacking)
                 FindClosestPlayerUnit();
             
             unitConfig.EnemyMoveNextTile();
-            if (!canMove)
+            if (unitConfig.actionPoints.actions == 2)
             {
-               unitConfig.actionPoints.SubtractAllActions();
-               
+                unitConfig.actionPoints.SubtractAllActions();
             }
         }
         if (isMyTurn && unitConfig.actionPoints.actions < 1 && !unitConfig.isMoving)

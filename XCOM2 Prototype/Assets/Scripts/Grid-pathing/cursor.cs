@@ -50,18 +50,13 @@ public class cursor : MonoBehaviour {
                 {
                     if (!turnSystem.selectedUnit.isMoving)
                     {
-                        //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
+                        
                        
                         turnSystem.cursorAnimator.SetBool("display", false);
                         turnSystem.unitMarkerAnimator.SetBool("display", false);
                         turnSystem.selectedUnit.MoveNextTile();
                     }
                 }
-                
-
-                
-                //hit.GetComponentInChildren<Renderer>().material = turnSystem.hoverMaterial;
-                
             }
         }
     }
