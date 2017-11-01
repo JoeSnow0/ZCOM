@@ -17,9 +17,9 @@ public class UnitConfig : MonoBehaviour
     public AbilityInfoObject unitAbilities;
 
     //Script references, internal
-    public ActionPoints actionPoints;
-    public Health health;
-    public UnitMovement movement;
+    [HideInInspector]public ActionPoints actionPoints;
+    [HideInInspector]public Health health;
+    [HideInInspector]public UnitMovement movement;
     public generateButtons generateButtons;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
@@ -89,7 +89,9 @@ public class UnitConfig : MonoBehaviour
             unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
             Debug.LogWarning("Couldn't find abilities, using default abilities");
         }
-
+        actionPoints = GetComponent<ActionPoints>();
+        health = GetComponent<Health>();
+        movement = GetComponent<UnitMovement>();
     }
 
     void Update()
@@ -144,7 +146,7 @@ public class UnitConfig : MonoBehaviour
 
                 if (actionPoints.actions <= 0)
                 {
-                    mapConfig.turnSystem.selectNextUnit();
+                    mapConfig.turnSystem.SelectNextUnit();
                 }
                 else if(actionPoints.actions > 0 && isFriendly)
                 {
@@ -228,6 +230,7 @@ public class UnitConfig : MonoBehaviour
         tileX = (int)tileCoords.x;
         tileY = (int)tileCoords.z;
         mapConfig.tileMap.UnitMapData(tileX, tileY);
+        actionPoints.unitConfig = this;
     }
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
@@ -257,7 +260,7 @@ public class UnitConfig : MonoBehaviour
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
-                            mapConfig.turnSystem.selectNextUnit();
+                            mapConfig.turnSystem.SelectNextUnit();
                         }
                     }
                 }

@@ -4,25 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionPoints : MonoBehaviour {
-    public Animator animAP;
     [HideInInspector]public int actions;
-    private int maxActions;
-    //public Color[] color;
-    public ClassStatsObject unitClassStats;
-    public UnitConfig unitConfig;
+
+
     List <Image> actionPoints = new List<Image>();
+
     public GameObject actionPointParent;
     public GameObject actionPoint;
 
-    // Use this for initialization
+    [HideInInspector]public UnitConfig unitConfig;
+    
     void Start ()
     {
-        unitConfig = GetComponent<UnitConfig>();
         InitializeActions();
     }
     private void Update()
     {
-        if (actionPoints != null)
+        if (actionPoints != null && unitConfig.isFriendly)
         {
             for (int i = 0; i < actionPoints.Count; i++)
             {
@@ -42,15 +40,15 @@ public class ActionPoints : MonoBehaviour {
 
     public void ReplenishAllActions()
     {
-        actions = unitClassStats.maxUnitActionPoints;
+        actions = unitConfig.unitClassStats.maxUnitActionPoints;
     }
 
     public void AddActions(int addition)
     {
         actions += addition;
-        if (actions > unitClassStats.maxUnitActionPoints)
+        if (actions > unitConfig.unitClassStats.maxUnitActionPoints)
         {
-            actions = unitClassStats.maxUnitActionPoints;
+            actions = unitConfig.unitClassStats.maxUnitActionPoints;
         }
     }
 
@@ -65,7 +63,7 @@ public class ActionPoints : MonoBehaviour {
     }
     private void InitializeActions()
     {
-        actions = unitClassStats.maxUnitActionPoints;
+        actions = unitConfig.unitClassStats.maxUnitActionPoints;
 
         if (actionPointParent != null && actionPointParent.transform.childCount > 0 && unitConfig.isFriendly)//Removes any gameobjects in action point parent and sends an error message
         {

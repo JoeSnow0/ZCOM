@@ -81,7 +81,7 @@ public class SoldierAnimation : MonoBehaviour {
     public void ProjectileHit()
     {
         target.health.TakeDamage(CalculationManager.damage);
-        turnSystem.selectNextUnit();
+        turnSystem.SelectNextUnit();
         unit.isShooting = false;
         unit.actionPoints.SubtractAllActions();
     }

@@ -113,6 +113,7 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
 
         attackUnit();
+
         if (Input.GetKeyDown(nextTarget) && playerTurn)
         {
 
@@ -125,32 +126,32 @@ public class TurnSystem : MonoBehaviour {
 
         //Mouse select
         
-            if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
-            {
-                selectedUnit.isSelected = false;
-                selectedUnit = null;
-            }
+        if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
+        {
+            selectedUnit.isSelected = false;
+            selectedUnit = null;
+        }
 
-            if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+
+                if (hit.collider.CompareTag("FriendlyUnit"))
                 {
-
-                    if (hit.collider.CompareTag("FriendlyUnit"))
+                    if (selectedUnit != null)
                     {
-                        if (selectedUnit != null)
-                        {
-                            selectedUnit.isSelected = false;
-                        }
-
-                    selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    selectUnit();
+                        selectedUnit.isSelected = false;
                     }
 
+                selectedUnit = hit.collider.GetComponent<UnitConfig>();
+                SelectUnit();
                 }
+
             }
+        }
         
         //
 
@@ -175,8 +176,6 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
-            cursorAnimator.SetBool("display", false);
-            unitMarkerAnimator.SetBool("display", false);
         }
         if (playerTurn)
         {
@@ -203,7 +202,7 @@ public class TurnSystem : MonoBehaviour {
         
     }
     
-    public void selectUnit()
+    public void SelectUnit()
     {
         mapConfig.tileMap.selectedUnit = selectedUnit;
 
@@ -262,7 +261,7 @@ public class TurnSystem : MonoBehaviour {
             }
             //Select the next/previous unit
             selectedUnit = playerUnits[currentUnitIndex % playerUnits.Count];
-            selectUnit();
+            SelectUnit();
         }
     }
 
@@ -298,18 +297,19 @@ public class TurnSystem : MonoBehaviour {
         }
     }
 
-    public void MoveMarker(Transform m_Marker, Vector3 m_Position)
+    public void MoveMarker(Transform marker, Vector3 newPosition)
     {
-        if (cursorAnimator.GetBool("display") == false)
-        {
-            cursorAnimator.SetBool("display", true);
-            unitMarkerAnimator.SetBool("display", true);
-        }
-        m_Marker.position = m_Position;
+        marker.position = newPosition;
+    }
+    public void ToggleMarkers(bool display)
+    {
+        cursorAnimator.SetBool("display", display);
+        unitMarkerAnimator.SetBool("display", display);
     }
 
-    public void resetActions(bool isPlayerTurn)
+    public void ResetActions(bool isPlayerTurn)
     {
+        totalActions = 0;
         if (isPlayerTurn)
         {
             for (int i = 0; i < playerUnits.Count; i++)
@@ -331,11 +331,11 @@ public class TurnSystem : MonoBehaviour {
         playerTurn = isPlayerTurn;
     }
 
-    public void selectNextUnit()
+    public void SelectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
         {
-            if(playerUnits[i].actionPoints.actions > 0)
+            if(playerUnits[i].actionPoints.actions > 0 && selectedUnit != playerUnits[i])
             {
                 if (selectedUnit != null)
                 {
