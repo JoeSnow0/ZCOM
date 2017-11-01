@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour {
     public GameObject alienUI;
     public GameObject playerUI;
+    public GameObject endButton;
     Animator alienAnim;
     public Text turnCounter;
     public Text warningText;
@@ -23,11 +24,12 @@ public class HUD : MonoBehaviour {
     public bool isPlayerTurn;
 
     public TurnSystem turnSystem;
+    public MapConfig mapConfig;
 
     void Start () {
+        mapConfig = FindObjectOfType<MapConfig>();
         amountTurns = 1;
         isPlayerTurn = true;
-        
         maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
         turnCounter.text = amountTurns + "/" + maxTurns;
         alienAnim = alienUI.GetComponent<Animator>();
@@ -62,12 +64,15 @@ public class HUD : MonoBehaviour {
                 playerUI.SetActive(false);
                 alienUI.SetActive(true);
                 alienAnim.Play("AlienActivityOn");
+                turnSystem.enemyIndex = 0;
                 turnSystem.spawnEnemy();
+                endButton.SetActive(false);
             }
             else
             {
                 playerUI.SetActive(true);
                 alienUI.SetActive(false);
+                endButton.SetActive(true);
             }
             //Add all functionality here, END TURN
             turnSystem.resetActions(isPlayerTurn);

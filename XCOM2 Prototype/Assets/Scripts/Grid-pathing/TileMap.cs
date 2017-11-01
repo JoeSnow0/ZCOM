@@ -23,7 +23,7 @@ public class TileMap : MonoBehaviour {
     public int[,] tiles;
     Node[,] graph;
 
-    int[,] currentGrid;
+    public int[,] currentGrid;
     //may need fix for more units
     List<Node> currentPath = null;
     List<ClickebleTile> changedColoredGrid = null;

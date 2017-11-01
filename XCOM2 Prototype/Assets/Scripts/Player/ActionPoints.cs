@@ -4,19 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionPoints : MonoBehaviour {
-    [System.Serializable]
-    public class ActionImage
-    {
-        public Image actionPointFirst;
-        public Image actionpointSecond;
-    }
     public Animator animAP;
     [HideInInspector]public int actions;
     private int maxActions;
-    public ActionImage actionPointsImage;
-    public Color[] color;
+    //public Color[] color;
     public ClassStatsObject unitClassStats;
     public UnitConfig unitConfig;
+    List <Image> actionPoints = new List<Image>();
+    public GameObject actionPointParent;
+    public GameObject actionPoint;
 
     // Use this for initialization
     void Start ()
@@ -26,26 +22,21 @@ public class ActionPoints : MonoBehaviour {
     }
     private void Update()
     {
-        //Draw action points on friendly unit UI
-        if(unitConfig.isFriendly)
+        if (actionPoints != null)
         {
-            if (actions < 2)
+            for (int i = 0; i < actionPoints.Count; i++)
             {
-                actionPointsImage.actionPointFirst.color = color[0];
-                if (actions < 1)
+                if (i > actions - 1 && actionPoints[i].color != unitConfig.unitColor[1])
                 {
-                    actionPointsImage.actionpointSecond.color = color[0];
+                    actionPoints[i].color = unitConfig.unitColor[1];
                 }
-                else
+                else if(i < actions && actionPoints[i].color != unitConfig.unitColor[0])
                 {
-                    actionPointsImage.actionpointSecond.color = color[1];
+                    actionPoints[i].color = unitConfig.unitColor[0];
                 }
-            }
-            else
-            {
-                actionPointsImage.actionpointSecond.color = color[1];
             }
         }
+
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
 
@@ -75,5 +66,27 @@ public class ActionPoints : MonoBehaviour {
     private void InitializeActions()
     {
         actions = unitClassStats.maxUnitActionPoints;
-    } 
+
+        if (actionPointParent != null && actionPointParent.transform.childCount > 0 && unitConfig.isFriendly)//Removes any gameobjects in action point parent and sends an error message
+        {
+            for(int i = 0; i < actionPointParent.transform.childCount; i++)
+            {
+                Destroy(actionPointParent.transform.GetChild(i).gameObject);
+                
+            }
+            Debug.LogError("Remove action point(s) from action point parent in " + this.name);
+        }
+        else if (actionPointParent == null && unitConfig.isFriendly)
+        {
+            Debug.LogError("Action points parent needed in " + this.name);
+        }
+
+        if (actionPointParent != null)
+        {
+            for (int i = 0; i < actions; i++)
+            {
+                actionPoints.Add(Instantiate(actionPoint, actionPointParent.transform).GetComponent<Image>());
+            }
+        }
+    }
 }

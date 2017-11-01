@@ -22,10 +22,19 @@ public class EnemySpawn : MonoBehaviour {
         current = -1;
     }
 
-    public void SpawnEnemy(UnitConfig enemyPrefab)
+    public void SpawnEnemy(UnitConfig enemyPrefab, int numberOfUnits)
     {
-        UnitConfig newEnemy =  Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
-        mapConfig.turnSystem.enemyUnits.Add(newEnemy);
+        for (int i = 0; i < numberOfUnits; i++)
+        {
+            UnitConfig enemy = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
+            enemy.InitializeEnemy();
+            if(mapConfig.turnSystem.enemyUnits.Count == 0)
+            {
+                enemy.enemyAi.isMyTurn = true;
+            }
+            mapConfig.turnSystem.enemyUnits.Add(enemy);
+        }
+        mapConfig.turnSystem.StartNextEnemy();
     }
 
     public Vector3 RandomPosition()
