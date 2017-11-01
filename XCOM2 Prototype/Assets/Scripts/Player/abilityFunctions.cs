@@ -5,34 +5,34 @@ using UnityEngine;
 public class abilityFunctions : MonoBehaviour {
 
     public MapConfig mapConfig;
-    bool confirmAbility = false;
+    public TextMesh infoText;
+    //bool confirmAbility = false;
     int previousAbility = -1;
 
-    private void Start()
+    private void Awake()
     {
         //Add the map
-        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        
+        //Get UI Element for ability text
     }
-
+    
     public bool ConfirmAbilityCheck(int abilityIndex)
     {
-        //mapConfig.turnSystem.ConfirmAbilityUse = false;
-        if (previousAbility == abilityIndex)
+        if (infoText == null || mapConfig == null)
         {
-            // Do ability
-            
-            //use ability on target
-            confirmAbility = false;
             previousAbility = -1;
-
-            return true;
+            infoText = GameObject.FindGameObjectWithTag("UI_Elements").GetComponentInChildren<TextMesh>();
+            mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         }
+        infoText.text = "Confirm Ability Use";
+        //make it possible to target dudes
+        mapConfig.turnSystem.EnemyTargeting = true;
+        print("You can target stuff now");
+
         if (previousAbility == abilityIndex)
         {
             print("Doing ability-stuff()");
-            //Wait for confirmation
-            //make it possible to target dudes
-            print("You can target stuff now");
+            return true;
         }
         previousAbility = abilityIndex;
         return false;
@@ -40,13 +40,18 @@ public class abilityFunctions : MonoBehaviour {
 
     public void ShootTarget()
     {
-        if (ConfirmAbilityCheck(0) == true)
+        //if ability has been confirmed by player
+        if (ConfirmAbilityCheck(0))
         {
-                Debug.Log("Pewpewpew");
             //ability happens
+            print("Pewpewpew");
+            //stop targeting mode
+            mapConfig.turnSystem.DeselectAllUnits();
+            return;
         }
         //Ability does not happen
-        
+        print("no pewpew");
+        mapConfig.turnSystem.EnemyTargeting = false;
     }
     public void Overwatch()
     {
