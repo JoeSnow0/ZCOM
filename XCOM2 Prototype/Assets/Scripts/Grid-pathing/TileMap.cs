@@ -62,38 +62,164 @@ public class TileMap : MonoBehaviour {
             }
         }
 
-        //spawn a gruppe of unwalkeble terrain
-        for (int x = 10; x < 15; x++)
-        {
-            for (int y = 10; y < 18; y++)
+        {//unwalkeble terain
+            //botton left aricraft and stone
             {
-                tiles[x, y] = 1;
+                for (int x = 0; x < 4; x++)
+                {
+                    for (int y = 3; y < 8; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                tiles[4, 4] = 1;
+
+                tiles[1, 8] = 1;
+                tiles[1, 9] = 1;
+                tiles[2, 8] = 1;
+                tiles[2, 9] = 1;
+            }
+            //mid botton
+            {
+                for (int x = 9; x < 17; x++)
+                {
+                    tiles[x, 4] = 1;
+                }
+                tiles[10, 3] = 1;
+                tiles[13, 3] = 1;
+                tiles[16, 3] = 1;
+
+                for (int x = 18; x < 22; x++)
+                {
+                    for (int y = 3; y < 5; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                tiles[19, 5] = 1;
+                tiles[20, 5] = 1;
+            }
+            //botton right
+            {
+                tiles[24, 4] = 1;
+                tiles[25, 4] = 1;
+                tiles[26, 4] = 1;
+                tiles[27, 4] = 1;
+                tiles[27, 5] = 1;
+                tiles[27, 6] = 1;
+                tiles[27, 7] = 1;
+                for (int x = 25; x < 28; x++)
+                {
+                    for (int y = 8; y < 11; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                tiles[24, 10] = 1;
+                for (int x = 19; x < 24; x++)
+                {
+                    for (int y = 9; y < 12; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                tiles[21, 8] = 1;
+                tiles[22, 8] = 1;
+                tiles[21, 12] = 1;
+                tiles[22, 12] = 1;
+            }
+            //center left
+            {
+                tiles[4, 15] = 1;
+                tiles[4, 16] = 1;
+                tiles[4, 17] = 1;
+                for (int x = 3; x < 5; x++)
+                {
+                    for (int y = 18; y < 22; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+            }
+            //big building to the left
+            {
+                for (int x = 8; x < 13; x++)
+                {
+                    for (int y = 9; y < 18; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                tiles[7, 9] = 1; 
+                tiles[6, 10] = 1;
+                tiles[7, 10] = 1;
+                tiles[6, 11] = 1;
+                tiles[7, 11] = 1;
+                tiles[7, 12] = 1;
+                tiles[15, 8] = 1;
+                tiles[15, 7] = 1;
+                tiles[14, 12] = 1;
+                tiles[15, 12] = 1;
+                tiles[16, 12] = 1;
+            }
+            //top left conor
+            {
+                tiles[4, 24] = 1;
+                tiles[4, 25] = 1;
+                tiles[4, 26] = 1;
+                for (int x = 4; x < 15; x++)
+                {
+                    tiles[x, 27] = 1;
+                }
+                tiles[8, 23] = 1;
+                tiles[11, 24] = 1;
+                tiles[10, 21] = 1;
+            }
+            //center of map
+            {
+                for (int x = 14; x < 17; x++)
+                {
+                    for (int y = 19; y < 23; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                for (int x = 19; x < 24; x++)
+                {
+                    for (int y = 14; y < 19; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+
+            }
+            //top right
+            {
+                tiles[25, 12] = 1;
+                tiles[25, 13] = 1;
+                tiles[26, 13] = 1;
+                tiles[25, 14] = 1;
+                tiles[26, 14] = 1;
+                tiles[27, 14] = 1;
+                tiles[26, 15] = 1;
+                tiles[27, 15] = 1;
+                for (int x = 16; x < 26; x++)
+                {
+                    tiles[x, 28] = 1;
+                }
+                for (int x = 21; x < 25; x++)
+                {
+                    for (int y = 22; y < 26; y++)
+                    {
+                        tiles[x, y] = 1;
+                    }
+                }
+                for (int y = 17; y < 27; y++)
+                {
+                    tiles[26, y] = 1;
+                }
             }
         }
-        //obstrical
-        tiles[4, 4] = 1;
-        tiles[6, 4] = 1;
-        tiles[5, 4] = 1;
-        tiles[5, 5] = 1;
-        tiles[5, 6] = 1;
-        tiles[5, 7] = 1;
-        tiles[6, 7] = 1;
-        tiles[9, 8] = 1;
-        tiles[10, 8] = 1;
-        tiles[0, 9] = 1;
-        tiles[1, 5] = 1;
-        tiles[8, 1] = 1;
-        tiles[7, 2] = 1;
-        tiles[6, 7] = 1;
-        tiles[1, 7] = 1;
-        tiles[8, 9] = 1;
-        tiles[9, 10] = 1;
-        tiles[3, 8] = 1;
-        tiles[8, 6] = 1;
-        tiles[9, 4] = 1;
-        tiles[9, 12] = 1;
-        tiles[1, 1] = 1;
-        tiles[9, 0] = 1;
     }
     public void UnitMapData(int tileX,int tileY)//when a unit gets or change tile run funktion
     {
