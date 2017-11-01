@@ -27,8 +27,12 @@ public class EnemySpawn : MonoBehaviour {
         for (int i = 0; i < numberOfUnits; i++)
         {
             UnitConfig enemy = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
-            mapConfig.turnSystem.enemyUnits.Add(enemy);
             enemy.InitializeEnemy();
+            if(mapConfig.turnSystem.enemyUnits.Count == 0)
+            {
+                enemy.enemyAi.isMyTurn = true;
+            }
+            mapConfig.turnSystem.enemyUnits.Add(enemy);
         }
         mapConfig.turnSystem.StartNextEnemy();
     }

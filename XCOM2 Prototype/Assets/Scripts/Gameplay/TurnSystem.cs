@@ -109,6 +109,7 @@ public class TurnSystem : MonoBehaviour {
             setup.activatTurn = loopnumber;
             loopnumber++;
         }
+        spawnEnemy();
     }
 	void Update () {
 
