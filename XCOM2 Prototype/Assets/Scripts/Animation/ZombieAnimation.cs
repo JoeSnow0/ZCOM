@@ -4,31 +4,48 @@ using UnityEngine;
 
 public class ZombieAnimation : MonoBehaviour {
     Animator zombieAnimation;
-    UnitConfig Unit;
+    UnitConfig unitConfig;
     Vector3 lastPosition;
     Vector3 direction;
     Quaternion lookRotation;
+    public UnitConfig target;
 
-	void Start () {
+    void Start () {
         zombieAnimation = GetComponent<Animator>();
-        Unit = GetComponentInParent<UnitConfig>();
+        unitConfig = GetComponentInParent<UnitConfig>();
 
 	}
 	
 	void Update () {
-        if (!Unit.isMoving)
+        if (!unitConfig.isMoving)
         {
             zombieAnimation.SetInteger("state", 0);
         }
-        if (Unit.isMoving)
+        if (unitConfig.isMoving)
         {
             zombieAnimation.SetInteger("state", 1);
         }
-        if (Unit.isSprinting)
+        if (unitConfig.isSprinting)
         {
             zombieAnimation.SetInteger("state", 2);
         }
-        if(zombieAnimation.GetInteger("state") > 0) // HACK: What!?
+        if (unitConfig.isShooting)
+        {
+            zombieAnimation.SetInteger("state", 3);
+
+            transform.parent.LookAt(target.transform.position);
+            Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
+            eulerAngles.x = 0;
+            eulerAngles.z = 0;
+
+            // Set the altered rotation back
+            transform.parent.rotation = Quaternion.Euler(eulerAngles);
+        }
+        if (unitConfig.isDead)
+        {
+            zombieAnimation.SetInteger("state", 4);
+        }
+        if (zombieAnimation.GetInteger("state") > 0) // HACK: What!?
         {
             direction = transform.root.position - lastPosition;
             lastPosition = transform.root.position;
@@ -43,3 +60,4 @@ public class ZombieAnimation : MonoBehaviour {
         }
     }
 }
+
