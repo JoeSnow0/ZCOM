@@ -9,25 +9,27 @@ public class Health : MonoBehaviour
     //[SerializeField] private Color HealthColorBackground;
     //[SerializeField] private Color healthColorEnemy;
     //[SerializeField] private Color HealthColorBackgroundEnemy;
-    public Image healthBar;
-    public Image healthBarBackground;
+    //private Image healthBarBackground;
+    [Tooltip("First image: Fill. Second image: Background.")]
+    private Image[] healthBar;
     [SerializeField] private Slider healthSlider;
-    [SerializeField] private ClassStatsObject unitClassStats;
-    private int currentUnitHealth;
-    private int maxUnitHealth;
-    public GameObject floatingDmg;
-    public Transform dmgStartPos;
-    private UnitConfig unitConfig;
     public GameObject bar;
+    public GameObject floatingDmg;
+    public Transform damagePosition;
     public Transform barParent;
 
+    private int currentUnitHealth;
+    private int maxUnitHealth;
+    public UnitConfig unitConfig;
 
     void Start()
     {
+        
+
         unitConfig = GetComponent<UnitConfig>();
-        if (unitClassStats == null)
+        if (unitConfig.unitClassStats == null)
         {
-            unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
+            unitConfig.unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
             Debug.LogWarning("Couldn't find Class, using default class");
         }
         InitiateUnitHealth();
@@ -41,16 +43,21 @@ public class Health : MonoBehaviour
     //set health values
     void InitiateUnitHealth()
     {
+        healthBar = new Image[2];
+        healthBar[1] = healthSlider.transform.GetChild(0).GetComponent<Image>();
+        healthBar[0] = healthSlider.transform.GetChild(1).GetComponentInChildren<Image>();
         //Set health based on class
-        currentUnitHealth = unitClassStats.maxUnitHealth;
-        maxUnitHealth = unitClassStats.maxUnitHealth;
+        currentUnitHealth = unitConfig.unitClassStats.maxUnitHealth;
+        maxUnitHealth = unitConfig.unitClassStats.maxUnitHealth;
 
         //Update health slider
         healthSlider.maxValue = maxUnitHealth;
         healthSlider.value = currentUnitHealth;
 
-        healthBar.color = unitConfig.unitColor[0];
-        healthBarBackground.color = unitConfig.unitColor[1];
+        for(int i = 0; i < healthBar.Length; i++)
+        {
+            healthBar[i].color = unitConfig.unitColor[i];
+        }
 
         for (int i = 0; i < currentUnitHealth; i++)
         {
@@ -59,11 +66,12 @@ public class Health : MonoBehaviour
         UpdateUnitHealth();
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount, WeaponInfoObject weapon)
     {
-        GameObject dmg = Instantiate(floatingDmg, dmgStartPos.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
+        GameObject dmg = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
+        CalculationManager.HitCheck(weapon);
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";
@@ -81,7 +89,6 @@ public class Health : MonoBehaviour
                 KillUnit();
             }
             UpdateUnitHealth();
-
         }
     }
 
@@ -89,19 +96,18 @@ public class Health : MonoBehaviour
     void UpdateUnitHealth()
     {
         healthSlider.value = currentUnitHealth;
-        
     }
 
     void KillUnit()
     {
         //Remove gameobject from playerUnits List in TurnSystem
-        unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
-        if(unitConfig.isFriendly)
-        unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
+        //unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
+        /*if(unitConfig.isFriendly)
+            unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
         else
         {
             unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
         }
-        DestroyObject(gameObject, 1);
+        DestroyObject(gameObject, 1);*/
     }
 }

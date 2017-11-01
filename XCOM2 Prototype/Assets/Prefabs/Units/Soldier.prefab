@@ -767,7 +767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4445137611499376}
   m_Layer: 0
-  m_Name: DMGStartPos
+  m_Name: DamagePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2257,15 +2257,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8c5a616b3a253498109618aa552bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 114835739821684660}
-  healthBarBackground: {fileID: 114648274980277984}
   healthSlider: {fileID: 114870263291696410}
-  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
+  bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
     type: 2}
-  dmgStartPos: {fileID: 4445137611499376}
-  bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
+  damagePosition: {fileID: 4445137611499376}
   barParent: {fileID: 224202275442013872}
+  unitConfig: {fileID: 114710749034637548}
 --- !u!114 &114835739821684660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2373,13 +2371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f8cb8cd879ee44381818577f27eeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animAP: {fileID: 0}
   actions: 0
-  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
-  unitConfig: {fileID: 0}
   actionPointParent: {fileID: 1690719409434392}
   actionPoint: {fileID: 1071586568103138, guid: ab07bd63ad91aec4090ef1d9e189e281,
     type: 2}
+  unitConfig: {fileID: 114710749034637548}
 --- !u!120 &120123932883889892
 LineRenderer:
   m_ObjectHideFlags: 1

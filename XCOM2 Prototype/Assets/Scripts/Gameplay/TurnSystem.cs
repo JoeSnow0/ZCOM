@@ -91,23 +91,20 @@ public class TurnSystem : MonoBehaviour {
             }
         }
         //Calculate total amount of action points
-        //for (int i = 0; i < playerUnits.Count; i++)
-        //{   
-        //    totalActions += playerUnits[i].actionPoints.actions;
-        //}
-        resetActions(playerTurn);
+        for (int i = 0; i < playerUnits.Count; i++)
+        {   
+            totalActions += playerUnits[i].actionPoints.actions;
+        }
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
         //HACK: What if a unit has more than 2 actions?
-        //totalActions = playerUnits.Count * 2;
-        selectedUnit = playerUnits[0];
-        selectedUnit.isSelected = true;
-        selectUnit();
+        totalActions = playerUnits.Count * 2;
         foreach (var unit in allUnits)
         {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
+        SelectNextUnit();
         mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
         int loopnumber = 0;
         foreach (SpawnSetup setup in spawnSetup)
@@ -118,7 +115,6 @@ public class TurnSystem : MonoBehaviour {
         spawnEnemy();
     }
 	void Update () {
-
         attackUnit();
         if (!playerTurn && selectedUnit != null)
         {
@@ -171,19 +167,19 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit = null;
             }
 
-            if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
 
-                    if (hit.collider.CompareTag("FriendlyUnit"))
+                if (hit.collider.CompareTag("FriendlyUnit"))
+                {
+                    if (selectedUnit != null)
                     {
-                        if (selectedUnit != null)
-                        {
-                            selectedUnit.isSelected = false;
-                        }
+                        selectedUnit.isSelected = false;
+                    }
 
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
                     //prevents you from targeting units without actions
@@ -220,8 +216,6 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
-            cursorAnimator.SetBool("display", false);
-            unitMarkerAnimator.SetBool("display", false);
         }
         if (playerTurn)
         {
@@ -474,18 +468,19 @@ public class TurnSystem : MonoBehaviour {
         }
     }
 
-    public void MoveMarker(Transform m_Marker, Vector3 m_Position)
+    public void MoveMarker(Transform marker, Vector3 newPosition)
     {
-        if (cursorAnimator.GetBool("display") == false)
-        {
-            cursorAnimator.SetBool("display", true);
-            unitMarkerAnimator.SetBool("display", true);
-        }
-        m_Marker.position = m_Position;
+        marker.position = newPosition;
+    }
+    public void ToggleMarkers(bool display)
+    {
+        cursorAnimator.SetBool("display", display);
+        unitMarkerAnimator.SetBool("display", display);
     }
 
-    public void resetActions(bool isPlayerTurn)
+    public void ResetActions(bool isPlayerTurn)
     {
+        totalActions = 0;
         if (isPlayerTurn)
         {
             for (int i = 0; i < playerUnits.Count; i++)
@@ -507,11 +502,11 @@ public class TurnSystem : MonoBehaviour {
         playerTurn = isPlayerTurn;
     }
 
-    public void selectNextUnit()
+    public void SelectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
         {
-            if(playerUnits[i].actionPoints.actions > 0)
+            if(playerUnits[i].actionPoints.actions > 0 && selectedUnit != playerUnits[i])
             {
                 if (selectedUnit != null)
                 {

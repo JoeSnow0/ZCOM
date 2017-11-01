@@ -112,8 +112,8 @@ public class EnemyAi : MonoBehaviour {
                 {
                     if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))
                     {
-                        moveToUnit.health.TakeDamage(damage);
-                        unitConfig.actionPoints.SubtractActions(2);
+                        moveToUnit.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+                        unitConfig.actionPoints.SubtractAllActions();
                         isAttacking = true;
                     }
                 }

@@ -57,8 +57,8 @@ public class HUD : MonoBehaviour {
         if (totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
         {
             isPlayerTurn = !isPlayerTurn;
+            turnSystem.ToggleMarkers(isPlayerTurn);
 
-            
             if (!isPlayerTurn)
             {
                 playerUI.SetActive(false);
@@ -75,12 +75,12 @@ public class HUD : MonoBehaviour {
                 endButton.SetActive(true);
             }
             //Add all functionality here, END TURN
-            turnSystem.resetActions(isPlayerTurn);
+            turnSystem.ResetActions(isPlayerTurn);
             
             
             if (isPlayerTurn)
             {
-                turnSystem.selectNextUnit();
+                turnSystem.SelectNextUnit();
             }
 
             if (isPlayerTurn)
