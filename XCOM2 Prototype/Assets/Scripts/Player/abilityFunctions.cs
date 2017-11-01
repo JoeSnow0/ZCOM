@@ -33,7 +33,6 @@ public class abilityFunctions : MonoBehaviour {
             //Wait for confirmation
             //make it possible to target dudes
             print("You can target stuff now");
-            mapConfig.turnSystem.ConfirmAbilityUse = true;
         }
         previousAbility = abilityIndex;
         return false;
