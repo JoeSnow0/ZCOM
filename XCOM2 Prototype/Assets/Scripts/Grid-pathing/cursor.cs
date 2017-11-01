@@ -39,7 +39,10 @@ public class cursor : MonoBehaviour {
 
                     if (turnSystem.playerTurn) {
                         if (!turnSystem.selectedUnit.isMoving)
-                            map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit);
+                        {
+                            if(map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
+                                map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit);
+                        }
                     }
                 }
 

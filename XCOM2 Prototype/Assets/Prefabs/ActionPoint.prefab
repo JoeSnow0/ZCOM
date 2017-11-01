@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222475373524162590}
   - component: {fileID: 114564791305057168}
   m_Layer: 0
-  m_Name: ActionPoint (2)
+  m_Name: ActionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

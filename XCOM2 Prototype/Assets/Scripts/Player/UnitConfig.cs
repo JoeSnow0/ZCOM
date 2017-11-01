@@ -7,11 +7,9 @@ using UnityEditor;
 
 public class UnitConfig : MonoBehaviour
 {
-
+    public Color[] unitColor;
     //public Transform dmgStartPos;
     //public GameObject floatingDmg;
-    public GameObject healthBar;
-    public Transform healthBarParent;
 
     //Data from scriptable objects
     public WeaponInfoObject unitWeapon;
@@ -22,7 +20,6 @@ public class UnitConfig : MonoBehaviour
     public ActionPoints actionPoints;
     public Health health;
     public UnitMovement movement;
-    public EnemyAi enemyAI;
     public generateButtons generateButtons;
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
@@ -36,7 +33,7 @@ public class UnitConfig : MonoBehaviour
 
     //grid Reference
     public List<Node> currentPath = null;
-    public Image TargetMarker;
+
 
 
     public int movePoints;
@@ -44,11 +41,13 @@ public class UnitConfig : MonoBehaviour
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isShooting = false;
+    public bool isDead = false;
     SoldierAnimation animator;
 
     int pathIndex = 0;
     public float pathProgress;
     LineRenderer line;
+    public EnemyAi enemyAi;
 
     //BaseUnitCopy
     void Start()
@@ -61,6 +60,9 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        if(enemyAi == null)
+            InitializeEnemy();
+
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
 
         //Set unit position on grid
@@ -87,21 +89,11 @@ public class UnitConfig : MonoBehaviour
             unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
             Debug.LogWarning("Couldn't find abilities, using default abilities");
         }
-        //hide target marker
-        TargetMarker.gameObject.SetActive(false);
 
     }
 
     void Update()
     {
-        if (isSelected)
-        {
-            TargetMarker.gameObject.SetActive(true);
-        }
-        else if (!isSelected)
-        {
-            TargetMarker.gameObject.SetActive(false);
-        }
         if (!isSelected && isFriendly)
         {
             currentPath = null;
@@ -142,8 +134,7 @@ public class UnitConfig : MonoBehaviour
             {
                 isMoving = false;
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
-                if (!isFriendly)
-                    GetComponent<EnemyAi>().isBusy = false;
+             
                 isSprinting = false;
                 currentPath = null;
                 pathIndex = 0;
@@ -229,11 +220,15 @@ public class UnitConfig : MonoBehaviour
             }
         }
     }
-    //public void targetEnemyUnit()
-    //{
-
-    //}
-
+    public void InitializeEnemy()
+    {
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
+        enemyAi = GetComponent<EnemyAi>();
+        tileX = (int)tileCoords.x;
+        tileY = (int)tileCoords.z;
+        mapConfig.tileMap.UnitMapData(tileX, tileY);
+    }
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
     {
@@ -284,7 +279,7 @@ public class UnitConfig : MonoBehaviour
         }
 
         
-        mapConfig.tileMap.removeUnitMapData(tileX, tileY);
+        
         
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
@@ -296,6 +291,7 @@ public class UnitConfig : MonoBehaviour
         {
             isMoving = true;//start moving in the update
             mapConfig.tileMap.ResetColorGrid();
+            mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 2;
             actionPoints.actions--;
             mapConfig.turnSystem.totalActions--;
@@ -358,4 +354,9 @@ public class UnitConfig : MonoBehaviour
         }
         
     }
+    public void Die()//
+    {
+        isDead = true;
+    }
+
 }

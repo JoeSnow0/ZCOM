@@ -7,10 +7,17 @@ using UnityEngine.UI;
 [RequireComponent(typeof(EnemySpawn))]
 public class TurnSystem : MonoBehaviour {
     [Header("Lists with all units")]
-    [HideInInspector] public UnitConfig[] allUnits;
-    [HideInInspector] public List<UnitConfig> playerUnits = new List<UnitConfig>();
-    [HideInInspector] public List<UnitConfig> enemyUnits = new List<UnitConfig>();
-
+    [HideInInspector]public UnitConfig[] allUnits;
+    [HideInInspector]public List<UnitConfig> playerUnits = new List<UnitConfig>();
+    [HideInInspector]public List<UnitConfig> enemyUnits = new List<UnitConfig>();
+    [System.Serializable]
+    public class SpawnSetup
+    {
+        public UnitConfig enemyPrefab;
+        public int spawnNumberOfEnemys;
+        [HideInInspector]
+        public int activatTurn;
+    }
     //[Header("Actions")]
     [HideInInspector]
     public int totalActions;
@@ -35,7 +42,7 @@ public class TurnSystem : MonoBehaviour {
     public MapConfig mapConfig;
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
-    public GameObject EnemyUnitSpawnType;
+    public GameObject EnemyUnitSpawnType; 
 
     //Script refs
     public EnemySpawn enemySpawn;
@@ -46,8 +53,10 @@ public class TurnSystem : MonoBehaviour {
     public bool endTurn = false;
     public int maxTurns;
     int thisTurn = 1;
-    public int[] spawnEnemyTurns; //Which turns that should spawn enemy units
-    public bool ConfirmAbilityUse = false;
+    public int enemyIndex = 0;
+    //public int[] spawnEnemyTurns; old
+    public SpawnSetup[] spawnSetup;
+    
 
     //Input
     public KeyCode nextTarget;
@@ -55,12 +64,13 @@ public class TurnSystem : MonoBehaviour {
 
 
 
-    void Start()
+    void Start ()
     {
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
-        allUnits = GameObject.FindObjectsOfType<UnitConfig>();
+        allUnits = FindObjectsOfType<UnitConfig>();
         mapConfig = FindObjectOfType<MapConfig>();
+        
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -78,7 +88,7 @@ public class TurnSystem : MonoBehaviour {
         }
         //Calculate total amount of action points
         for (int i = 0; i < playerUnits.Count; i++)
-        {
+        {   
             totalActions += playerUnits[i].actionPoints.actions;
         }
         cursorAnimator = cursorMarker.GetComponent<Animator>();
@@ -92,73 +102,58 @@ public class TurnSystem : MonoBehaviour {
         {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
-        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
-    }
-
-    void Update() {
-        //Check for mouse click attack
-        attackUnit();
-        //Check for input from targeting inputs
-        if (Input.GetKeyDown(nextTarget))
+        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
+        int loopnumber = 0;
+        foreach (SpawnSetup setup in spawnSetup)
         {
-            if (playerTurn)
-            {
-                switch (ConfirmAbilityUse)
-                {
-                    case true:
-                        SwitchAttackTarget(true);
-                        break;
-                    case false:
-                        SwitchFocusTarget(true);
-                        break;
-                }
-            }
-
+            setup.activatTurn = loopnumber;
+            loopnumber++;
         }
-        if (Input.GetKeyDown(previousTarget))
+        spawnEnemy();
+    }
+	void Update () {
+
+        attackUnit();
+        if (Input.GetKeyDown(nextTarget) && playerTurn)
         {
-            switch (ConfirmAbilityUse)
-            {
-                case true:
-                    SwitchAttackTarget(false);
-                    break;
-                case false:
-                    SwitchFocusTarget(false);
-                    break;
-            }
+
+            SwitchFocusTarget(true);
+        }
+        if (Input.GetKeyDown(previousTarget) && playerTurn)
+        {
+            SwitchFocusTarget(false);
         }
 
         //Mouse select
-
-        if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
-        {
-            selectedUnit.isSelected = false;
-            selectedUnit = null;
-        }
-
-        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+        
+            if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
             {
+                selectedUnit.isSelected = false;
+                selectedUnit = null;
+            }
 
-                if (hit.collider.CompareTag("FriendlyUnit"))
+            if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if (selectedUnit != null)
+
+                    if (hit.collider.CompareTag("FriendlyUnit"))
                     {
-                        selectedUnit.isSelected = false;
-                    }
+                        if (selectedUnit != null)
+                        {
+                            selectedUnit.isSelected = false;
+                        }
 
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
                     selectUnit();
+                    }
+
                 }
-
             }
-        }
-
-        //
         
+        //
 
         if (!playerTurn)//enemy turn
         {
@@ -166,13 +161,18 @@ public class TurnSystem : MonoBehaviour {
             foreach (var enemy in enemyUnits)
             {
                 if (enemy.actionPoints.actions > 0 || enemy.isMoving)
-                {
+                {  
                     endturn = false;
                     break;
                 }
             }
             if (endturn == true)
             {
+                foreach (UnitConfig enemy in enemyUnits)
+                {
+                    enemy.enemyAi.isMyTurn = false;
+                    enemy.currentPath = null;
+                }
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
@@ -194,36 +194,20 @@ public class TurnSystem : MonoBehaviour {
             {
                 if (selectedUnit != null)
                 {
-                    DeselectThisUnit(selectedUnit);
+                    selectedUnit.isSelected = false;
                     mapConfig.tileMap.ResetColorGrid();
-                }
-
+                }                
                 selectedUnit = null;
                 hud.pressEnd(true);
             }
         }
-
+        
     }
-    public void DeselectThisUnit(UnitConfig unitConfig)
-    {
-        unitConfig.isSelected = false;
-    }
-    public void DeselectAllUnits()
-    {
-        foreach (UnitConfig unitConfig in playerUnits)
-        {
-            unitConfig.isSelected = false;
-        }
-        foreach (UnitConfig unitConfig in enemyUnits)
-        {
-            unitConfig.isSelected = false;
-        }
-    }
+    
     public void selectUnit()
     {
         mapConfig.tileMap.selectedUnit = selectedUnit;
-        //CLear unit selection
-        DeselectAllUnits();
+
         selectedUnit.isSelected = true;
         //Move the marker to selected unit
         MoveMarker(unitMarker, selectedUnit.transform.position);
@@ -235,55 +219,9 @@ public class TurnSystem : MonoBehaviour {
         generateButtons.ClearCurrentButtons();
         //Generate new abilities buttons
         generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
-
-
+                
+        
     }
-    //switch between enemy targets in attack mode
-    public void SwitchAttackTarget(bool nextTarget)
-    {
-        int currentUnitIndex;
-        //get turnsystem player list
-        //check if list is empty
-        if (enemyUnits != null)
-        {
-            if (selectedUnit != null)
-            {
-                currentUnitIndex = enemyUnits.FindIndex(a => a == selectedUnit);
-            }
-            else
-            {
-                selectedUnit = enemyUnits[0];
-                currentUnitIndex = enemyUnits.FindIndex(a => a == selectedUnit);
-            }
-
-
-            //move to next unit in list if true
-            if (nextTarget)
-            {
-                //loops around to the beginning of the list
-                currentUnitIndex += 1;
-                if (currentUnitIndex > enemyUnits.Count)
-                {
-                    currentUnitIndex = 0;
-                }
-            }
-
-            //move to previous unit in list if false
-            if (!nextTarget)
-            {
-                //loops around to the end of the list
-                currentUnitIndex -= 1;
-                if (currentUnitIndex < 0)
-                {
-                    currentUnitIndex = enemyUnits.Count - 1;
-                }
-            }
-            //Select the next/previous unit
-            selectedUnit = enemyUnits[currentUnitIndex % playerUnits.Count];
-            selectUnit();
-        }
-    }
-    //switch between allied targets outside of attack mode
     public void SwitchFocusTarget(bool nextTarget)
     {
         int currentUnitIndex;
@@ -351,9 +289,9 @@ public class TurnSystem : MonoBehaviour {
 
 
                             //Spend Actions
-                            totalActions -= selectedUnit.actionPoints.actions;
-                            selectedUnit.actionPoints.SubtractAllActions();
-                            selectNextUnit();
+                            //totalActions -= selectedUnit;
+                            //selectedUnit.actionPoints.SubtractAllActions();
+                            //selectNextUnit();
                         }
                     }
                 }
@@ -413,7 +351,18 @@ public class TurnSystem : MonoBehaviour {
             }
         }
     }
+    public void StartNextEnemy()
+    {
+        if (enemyUnits == null ||
+            enemyUnits[enemyIndex] == null ||
+            enemyUnits[enemyIndex].enemyAi == null)
+        {
+            Debug.Break();
+        }
 
+        enemyUnits[enemyIndex].enemyAi.isMyTurn = true;
+        enemyIndex++;
+    }
     public int getCurrentTurn(int currentTurn)
     {
         if (currentTurn > maxTurns)
@@ -421,10 +370,7 @@ public class TurnSystem : MonoBehaviour {
             //deactivates the map
             gameObject.SetActive(false);
             gameOver.SetActive(true);
-        }
-
-
-            
+        }        
         thisTurn = currentTurn;
         return maxTurns;
     }
@@ -432,9 +378,17 @@ public class TurnSystem : MonoBehaviour {
     public void destroyUnit(UnitConfig unit)
     {
         if (unit.isFriendly)
+        {
+            unit.Die();//Animate death
             playerUnits.Remove(unit);
+        }
+            
         else
+        {
+            unit.Die();//Animate death
             enemyUnits.Remove(unit);
+        }
+            
 
         //Destroy(unit.gameObject);
         //if(enemyUnits.Count <= 0)
@@ -453,11 +407,19 @@ public class TurnSystem : MonoBehaviour {
     }
     public void spawnEnemy()
     {
-        foreach (int i in spawnEnemyTurns) // Checks if current turn should spawn an enemy
+        
+        foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
         {
-            if(i == thisTurn)
+            if(i.activatTurn == thisTurn)
             {
-                enemySpawn.SpawnEnemy(enemyPrefab[0]);
+                enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
+                break;
+            }
+            else if (spawnSetup.Length < thisTurn)
+            {
+                int newI = Random.Range(0, spawnSetup.Length);
+                enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
+                break;
             }
         }
     }
