@@ -111,7 +111,6 @@ public class TurnSystem : MonoBehaviour {
         spawnEnemy();
     }
 	void Update () {
-
         attackUnit();
 
         if (Input.GetKeyDown(nextTarget) && playerTurn)

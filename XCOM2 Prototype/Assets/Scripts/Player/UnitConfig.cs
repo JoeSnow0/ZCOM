@@ -254,7 +254,7 @@ public class UnitConfig : MonoBehaviour
                         {
                             //Uses current weapon
                             CalculationManager.HitCheck(unitWeapon);
-                            target.health.TakeDamage(CalculationManager.damage);
+                            target.health.TakeDamage(CalculationManager.damage, unitWeapon);
 
                             //Spend Actions
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;

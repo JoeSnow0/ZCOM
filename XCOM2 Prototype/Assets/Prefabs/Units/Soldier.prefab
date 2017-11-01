@@ -2263,6 +2263,7 @@ MonoBehaviour:
     type: 2}
   damagePosition: {fileID: 4445137611499376}
   barParent: {fileID: 224202275442013872}
+  unitConfig: {fileID: 114710749034637548}
 --- !u!114 &114835739821684660
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
 
     private int currentUnitHealth;
     private int maxUnitHealth;
-    private UnitConfig unitConfig;
+    public UnitConfig unitConfig;
 
     void Start()
     {
@@ -66,11 +66,12 @@ public class Health : MonoBehaviour
         UpdateUnitHealth();
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount, WeaponInfoObject weapon)
     {
         GameObject dmg = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
+        CalculationManager.HitCheck(weapon);
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";
@@ -100,13 +101,13 @@ public class Health : MonoBehaviour
     void KillUnit()
     {
         //Remove gameobject from playerUnits List in TurnSystem
-        unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
-        if(unitConfig.isFriendly)
-        unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
+        //unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
+        /*if(unitConfig.isFriendly)
+            unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
         else
         {
             unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
         }
-        DestroyObject(gameObject, 1);
+        DestroyObject(gameObject, 1);*/
     }
 }
