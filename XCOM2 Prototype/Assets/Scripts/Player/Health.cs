@@ -86,7 +86,10 @@ public class Health : MonoBehaviour
             
             if (currentUnitHealth <= 0)
             {
-                KillUnit();
+                if (!unitConfig.isFriendly)
+                    unitConfig.isDead = true;
+                else
+                    KillUnit();
             }
             UpdateUnitHealth();
         }
@@ -98,7 +101,7 @@ public class Health : MonoBehaviour
         healthSlider.value = currentUnitHealth;
     }
 
-    void KillUnit()
+    public void KillUnit()
     {
         //Remove gameobject from playerUnits List in TurnSystem
         if (unitConfig.mapConfig == null)

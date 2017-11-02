@@ -47,6 +47,7 @@ public class ZombieAnimation : MonoBehaviour {
         {
             zombieAnimation.SetInteger("state", 4);
         }
+
         if (zombieAnimation.GetInteger("state") > 0) // HACK: What!?
         {
             direction = transform.root.position - lastPosition;
@@ -69,6 +70,10 @@ public class ZombieAnimation : MonoBehaviour {
     public void End()
     {
         unitConfig.isShooting = false;
+    }
+    public void Death()
+    {
+        unitConfig.health.KillUnit();
     }
 }
 
