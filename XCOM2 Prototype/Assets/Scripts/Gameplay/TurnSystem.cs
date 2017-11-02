@@ -62,6 +62,10 @@ public class TurnSystem : MonoBehaviour {
     public KeyCode nextTarget;
     public KeyCode previousTarget;
 
+    public bool EnemyTargeting;
+    
+
+
 
 
     void Start ()
@@ -96,12 +100,11 @@ public class TurnSystem : MonoBehaviour {
 
         //HACK: What if a unit has more than 2 actions?
         totalActions = playerUnits.Count * 2;
-        selectedUnit = playerUnits[0];
-        selectedUnit.isSelected = true;
         foreach (var unit in allUnits)
         {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
+        SelectNextUnit();
         mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
         int loopnumber = 0;
         foreach (SpawnSetup setup in spawnSetup)
@@ -112,42 +115,79 @@ public class TurnSystem : MonoBehaviour {
         spawnEnemy();
     }
 	void Update () {
-
         attackUnit();
-        if (Input.GetKeyDown(nextTarget) && playerTurn)
+        if (!playerTurn && selectedUnit != null)
         {
+            DeselectAllUnits();
+        }
+        if (playerTurn)
+        {
+            if (Input.GetKeyDown(nextTarget))
+            {
+                SwitchFocusTarget(true);
+            }
+            if (Input.GetKeyDown(previousTarget))
+            {
+                SwitchFocusTarget(false);
+            }
+        }
+        //if (playerTurn)
+        //{
+        //    if (Input.GetKeyDown(nextTarget))
+        //    {
+        //        if(EnemyTargeting)
+        //        {
+        //            SwitchAttackTarget(true);
+        //        }
+        //        else
+        //        {
+        //            SwitchFocusTarget(true);
+        //        }
 
-            SwitchFocusTarget(true);
-        }
-        if (Input.GetKeyDown(previousTarget) && playerTurn)
-        {
-            SwitchFocusTarget(false);
-        }
+        //    }
+        //    if (Input.GetKeyDown(previousTarget))
+        //    {
+        //        if (EnemyTargeting)
+        //        {
+        //            SwitchAttackTarget(false);
+        //        }
+        //        else
+        //        {
+        //            SwitchFocusTarget(false);
+        //        }
+        //    }
+        //}
+
 
         //Mouse select
-        
-            if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
+
+        if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
             {
                 selectedUnit.isSelected = false;
                 selectedUnit = null;
             }
 
-            if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
 
-                    if (hit.collider.CompareTag("FriendlyUnit"))
+                if (hit.collider.CompareTag("FriendlyUnit"))
+                {
+                    if (selectedUnit != null)
                     {
-                        if (selectedUnit != null)
-                        {
-                            selectedUnit.isSelected = false;
-                        }
+                        selectedUnit.isSelected = false;
+                    }
 
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    selectUnit();
+                    //prevents you from targeting units without actions
+                        if (selectedUnit.actionPoints.actions != 0)
+                        {
+                            selectUnit();
+                        }
+                    
                     }
 
                 }
@@ -176,8 +216,6 @@ public class TurnSystem : MonoBehaviour {
                 hud.pressEnd(true);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
-            cursorAnimator.SetBool("display", false);
-            unitMarkerAnimator.SetBool("display", false);
         }
         if (playerTurn)
         {
@@ -203,7 +241,24 @@ public class TurnSystem : MonoBehaviour {
         }
         
     }
-    
+    public void DeselectUnit(UnitConfig unit)
+    {
+        unit.isSelected = false;
+    }
+    public void DeselectAllUnits()
+    {
+        selectedUnit = null;
+        for (int i = 0; i < playerUnits.Count; i++)
+        {
+            playerUnits[i].isSelected = false;
+        }
+        for (int i = 0; i < enemyUnits.Count; i++)
+        {
+            enemyUnits[i].isSelected = false;
+        }
+
+    }
+
     public void selectUnit()
     {
         mapConfig.tileMap.selectedUnit = selectedUnit;
@@ -215,17 +270,98 @@ public class TurnSystem : MonoBehaviour {
         MoveCameraToTarget(selectedUnit.transform.position, 0);
         //Update grid colors
         mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
-        //Clear old abilities
-        generateButtons.ClearCurrentButtons();
-        //Generate new abilities buttons
-        generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
+        //HACK: Buttons are broken uncomment when fixed
+        ////Clear old abilities
+        //generateButtons.ClearCurrentButtons();
+        //if (selectedUnit.isFriendly == true)
+        //{
+        //    //Generate new abilities buttons if its a player unit
+        //    generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
+        //}
                 
         
     }
+    //public void SwitchAttackTarget(bool nextTarget)
+    //{
+    //    int currentUnitIndex;
+
+    //    //check if list is empty
+    //    if (enemyUnits != null)
+    //    {
+    //        if (selectedUnit != null)
+    //        {
+    //            currentUnitIndex = enemyUnits.FindIndex(a => a == selectedUnit);
+    //        }
+    //        //If its empty, pick the first friendly unit in list
+    //        else
+    //        {
+    //            selectedUnit = enemyUnits[0];
+    //            currentUnitIndex = enemyUnits.FindIndex(a => a == selectedUnit);
+    //        }
+
+    //        //Check if any units have actions left
+    //        bool UnitHasActionsLeft = false;
+    //        foreach (UnitConfig unit in enemyUnits)
+    //        {
+    //            if (unit.actionPoints.actions > 0)
+    //            {
+    //                UnitHasActionsLeft = true;
+    //                break;
+    //            }
+    //        }
+    //        if (UnitHasActionsLeft == false)
+    //        {
+    //            return;
+    //        }
+
+    //        //move to next unit in list if true
+    //        if (nextTarget)
+    //        {
+    //            for (int i = 0; i < enemyUnits.Count; i++)
+    //            {
+    //                //loops around to the beginning of the list
+    //                currentUnitIndex += 1;
+    //                if (currentUnitIndex > enemyUnits.Count)
+    //                {
+    //                    currentUnitIndex = 0;
+    //                }
+
+    //                selectedUnit = enemyUnits[currentUnitIndex % enemyUnits.Count];
+    //                if (selectedUnit.actionPoints.actions > 0)
+    //                {
+    //                    break;
+    //                }
+    //            }
+    //        }
+
+    //        else
+    //        {
+    //            //move to previous unit in list if false
+    //            for (int i = 0; i < enemyUnits.Count; i++)
+    //            {
+
+    //                //loops around to the end of the list
+    //                currentUnitIndex -= 1;
+    //                if (currentUnitIndex < 0)
+    //                {
+    //                    currentUnitIndex = enemyUnits.Count - 1;
+    //                }
+    //                selectedUnit = enemyUnits[currentUnitIndex % enemyUnits.Count];
+    //                if (selectedUnit.actionPoints.actions > 0)
+    //                {
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //        //Select the next/previous unit
+    //        selectUnit();
+    //    }
+    //}
+
     public void SwitchFocusTarget(bool nextTarget)
     {
         int currentUnitIndex;
-        //get turnsystem player list
+
         //check if list is empty
         if (playerUnits != null)
         {
@@ -233,38 +369,74 @@ public class TurnSystem : MonoBehaviour {
             {
                 currentUnitIndex = playerUnits.FindIndex(a => a == selectedUnit);
             }
+            //If its empty, pick the first friendly unit in list
             else
             {
                 selectedUnit = playerUnits[0];
                 currentUnitIndex = playerUnits.FindIndex(a => a == selectedUnit);
             }
 
-             
+            //Check if any units have actions left
+            bool UnitHasActionsLeft = false;
+            foreach (UnitConfig unit in playerUnits)
+            {
+                if (unit.actionPoints.actions > 0)
+                {
+                    UnitHasActionsLeft = true;
+                    break;
+                }
+            }
+            if (UnitHasActionsLeft == false)
+            {
+                return;
+            }
+
             //move to next unit in list if true
             if (nextTarget)
             {
-                //loops around to the beginning of the list
-                currentUnitIndex += 1;
-                if (currentUnitIndex > playerUnits.Count)
+                for (int i = 0; i < playerUnits.Count; i++)
                 {
-                    currentUnitIndex = 0;
+                    //loops around to the beginning of the list
+                    currentUnitIndex += 1;
+                    if (currentUnitIndex > playerUnits.Count - 1)
+                    {
+                        currentUnitIndex = 0;
+                    }
+
+                    selectedUnit = playerUnits[currentUnitIndex];
+                    if (selectedUnit.actionPoints.actions > 0)
+                    {
+                        
+                        break;
+                    }
                 }
             }
 
             //move to previous unit in list if false
-            if (!nextTarget)
+            else if (!nextTarget)
             {
-                //loops around to the end of the list
-                currentUnitIndex -= 1;
-                if (currentUnitIndex < 0)
+                for (int i = 0; i < playerUnits.Count; i++)
                 {
-                    currentUnitIndex = playerUnits.Count - 1;
+                    //loops around to the end of the list
+                    currentUnitIndex -= 1;
+                    if (currentUnitIndex < 0)
+                    {
+                        currentUnitIndex = playerUnits.Count - 1;
+                    }
+
+                    selectedUnit = playerUnits[currentUnitIndex];
+                    if (selectedUnit.actionPoints.actions > 0)
+                    {
+
+                        break;
+                    }
                 }
             }
             //Select the next/previous unit
-            selectedUnit = playerUnits[currentUnitIndex % playerUnits.Count];
+            print(currentUnitIndex);
             selectUnit();
         }
+        
     }
 
     //Moved attack to unitConfig script
@@ -289,9 +461,8 @@ public class TurnSystem : MonoBehaviour {
 
 
                             //Spend Actions
-                            //totalActions -= selectedUnit;
-                            //selectedUnit.actionPoints.SubtractAllActions();
-                            //selectNextUnit();
+                            totalActions -= selectedUnit.actionPoints.actions;
+                            selectedUnit.actionPoints.SubtractAllActions();
                         }
                     }
                 }
@@ -299,18 +470,19 @@ public class TurnSystem : MonoBehaviour {
         }
     }
 
-    public void MoveMarker(Transform m_Marker, Vector3 m_Position)
+    public void MoveMarker(Transform marker, Vector3 newPosition)
     {
-        if (cursorAnimator.GetBool("display") == false)
-        {
-            cursorAnimator.SetBool("display", true);
-            unitMarkerAnimator.SetBool("display", true);
-        }
-        m_Marker.position = m_Position;
+        marker.position = newPosition;
+    }
+    public void ToggleMarkers(bool display)
+    {
+        cursorAnimator.SetBool("display", display);
+        unitMarkerAnimator.SetBool("display", display);
     }
 
-    public void resetActions(bool isPlayerTurn)
+    public void ResetActions(bool isPlayerTurn)
     {
+        totalActions = 0;
         if (isPlayerTurn)
         {
             for (int i = 0; i < playerUnits.Count; i++)
@@ -325,18 +497,17 @@ public class TurnSystem : MonoBehaviour {
             for (int i = 0; i < enemyUnits.Count; i++)
             {
                 enemyUnits[i].actionPoints.ReplenishAllActions();
-                //enemyUnits[i].enemyAI.isBusy = false;
                 totalActions += enemyUnits[i].actionPoints.actions;
             }
         }
         playerTurn = isPlayerTurn;
     }
 
-    public void selectNextUnit()
+    public void SelectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
         {
-            if(playerUnits[i].actionPoints.actions > 0)
+            if(playerUnits[i].actionPoints.actions > 0 && selectedUnit != playerUnits[i])
             {
                 if (selectedUnit != null)
                 {
@@ -415,7 +586,7 @@ public class TurnSystem : MonoBehaviour {
                 enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
                 break;
             }
-            else if (spawnSetup.Length < thisTurn)
+            else if (spawnSetup.Length <= thisTurn)
             {
                 int newI = Random.Range(0, spawnSetup.Length);
                 enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);

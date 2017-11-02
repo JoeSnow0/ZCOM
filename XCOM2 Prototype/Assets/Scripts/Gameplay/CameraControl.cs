@@ -134,7 +134,7 @@ public class CameraControl : MonoBehaviour {
         {
             cameraHolder.transform.localPosition += cameraHolder.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
             Vector3 p = cameraHolder.transform.localPosition;
-            cameraHolder.transform.localPosition = new Vector3(0, Mathf.Clamp(p.y, yPosMin, yPosMax), 0);
+            cameraHolder.transform.localPosition = new Vector3(0, Mathf.Clamp(p.y, yPosMin, yPosMax), -5);
         }
         ////reset within bounds
         //if (cameraHolder.transform.localPosition.y >= yPosMax || cameraHolder.transform.localPosition.y <= yPosMin)
