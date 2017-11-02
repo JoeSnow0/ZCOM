@@ -57,7 +57,6 @@ public class EnemyAi : MonoBehaviour {
                 
                 isAttacking = false;
                 isMyTurn = false;
-                //mapConfig.turnSystem.enemyIndex += 1;
                 mapConfig.turnSystem.StartNextEnemy();
             }
         }
@@ -112,6 +111,13 @@ public class EnemyAi : MonoBehaviour {
                 {
                     if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))
                     {
+                        foreach (var unit in mapConfig.turnSystem.playerUnits)
+                        {
+                            if (unit.tileX == (unitConfig.tileX + x) ||unit.tileY == (unitConfig.tileY + y))
+                            {
+                                moveToUnit = unit;
+                            }
+                        }
                         moveToUnit.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
                         unitConfig.actionPoints.SubtractAllActions();
                         isAttacking = true;
