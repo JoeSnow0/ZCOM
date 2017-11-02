@@ -9,24 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dfab02793bef3b3459199b302d007a4e, type: 3}
-  m_Name: Shotgun
+  m_Name: Rifle
   m_EditorClassIdentifier: 
-  name: Shotgun
+  name: Rifle
   icon: {fileID: 0}
   value: 0
   baseAim: 100
-  rangeModShort: 0
-  rangeModMedium: -15
-  rangeModLong: -40
-  rangeModFar: -100
+  rangeModShort: -5
+  rangeModMedium: -10
+  rangeModLong: -20
+  rangeModFar: -50
   weaponRange: 0
-  baseDamage: 3
+  baseDamage: 1
   numberOfDiceDamage: 1
   numberOfSidesDamage: 2
-  weaponProjectile: {fileID: 1471206656654884, guid: e1cec01248b96c04187a39e4f1fb9efd,
+  weaponProjectile: {fileID: 1955339187017188, guid: 2a438949cafdad1458af1394627a2684,
     type: 2}
   particleColor:
-  - {r: 1, g: 0.8157201, b: 0.41911763, a: 1}
-  - {r: 1, g: 0.67626774, b: 0.38235295, a: 1}
-  weaponSoundShoot: {fileID: 8300000, guid: a4aae31f82ee89c49a9095527960bdba, type: 3}
+  - {r: 0.6985294, g: 1, b: 0.9875253, a: 1}
+  weaponSoundShoot: {fileID: 8300000, guid: 37a3b704d1173014088a2ea49e52a1aa, type: 3}
   weaponSoundReload: {fileID: 0}
