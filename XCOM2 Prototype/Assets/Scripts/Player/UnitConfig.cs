@@ -149,7 +149,7 @@ public class UnitConfig : MonoBehaviour
                 {
                     mapConfig.turnSystem.SelectNextUnit();
                 }
-                else if(actionPoints.actions > 0 && isFriendly)
+                else if(actionPoints.actions > 0 && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
                     mapConfig.tileMap.ChangeGridColor(movePoints, actionPoints.actions, this);
                 }
