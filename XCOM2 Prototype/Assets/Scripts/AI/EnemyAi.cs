@@ -52,7 +52,7 @@ public class EnemyAi : MonoBehaviour {
         }
         if (isMyTurn && unitConfig.actionPoints.actions < 1 && !unitConfig.isMoving)
         {
-            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex)
+            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex && !unitConfig.isShooting)
             {
                 
                 isAttacking = false;
@@ -119,7 +119,7 @@ public class EnemyAi : MonoBehaviour {
                                 break;
                             }
                         }
-                        moveToUnit.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+                        unitConfig.ShootTarget(moveToUnit);
                         unitConfig.actionPoints.SubtractAllActions();
                         isAttacking = true;
                         unitConfig.Attack(); //Play attack animation
