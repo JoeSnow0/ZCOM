@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 public class Health : MonoBehaviour
 {
     //[SerializeField] private Color healthColor;
@@ -24,14 +24,12 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        
-
         unitConfig = GetComponent<UnitConfig>();
-        if (unitConfig.unitClassStats == null)
+        /*if (unitConfig.unitClassStats == null)
         {
-            unitConfig.unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
+            //unitConfig.unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
             Debug.LogWarning("Couldn't find Class, using default class");
-        }
+        }*/
         InitiateUnitHealth();
     }
 
@@ -101,13 +99,19 @@ public class Health : MonoBehaviour
     void KillUnit()
     {
         //Remove gameobject from playerUnits List in TurnSystem
-        //unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
-        /*if(unitConfig.isFriendly)
+        if (unitConfig.mapConfig == null)
+            unitConfig.mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        unitConfig.mapConfig.tileMap.removeUnitMapData(unitConfig.tileX, unitConfig.tileY);
+        if(unitConfig.isFriendly)
             unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
         else
         {
             unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
         }
-        DestroyObject(gameObject, 1);*/
+        KillThings();
+    }
+    public void KillThings()
+    {
+        Destroy(gameObject);
     }
 }

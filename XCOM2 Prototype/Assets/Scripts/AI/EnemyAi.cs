@@ -13,7 +13,7 @@ public class EnemyAi : MonoBehaviour {
     bool canMove = false;
 
     int damage;
-    MapConfig mapConfig;
+    public MapConfig mapConfig;
     int posLeftOrRight;
     int posUPOrDown;
 

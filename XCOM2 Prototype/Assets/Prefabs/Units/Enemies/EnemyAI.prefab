@@ -1787,6 +1787,7 @@ MonoBehaviour:
   unitConfig: {fileID: 114840236989742042}
   isAttacking: 0
   isMyTurn: 0
+  mapConfig: {fileID: 0}
 --- !u!114 &114398108771507310
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -413,7 +413,7 @@ public class TurnSystem : MonoBehaviour {
                 enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
                 break;
             }
-            else if (spawnSetup.Length < thisTurn)
+            else if (spawnSetup.Length <= thisTurn)
             {
                 int newI = Random.Range(0, spawnSetup.Length);
                 enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
