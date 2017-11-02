@@ -9,6 +9,7 @@ public class victoryCheck : MonoBehaviour {
     public GameObject gameEndCanvas;
     public Text gameEndText;
     public GameObject gameEndPanel;
+    public GameObject markers;
     
     void Start()
     {
@@ -20,7 +21,7 @@ public class victoryCheck : MonoBehaviour {
     //Call if win/lose conditions have been met
 	public void winCheck(bool hasWon)
     {
-        mapConfig.gameObject.SetActive(false);
+        markers.SetActive(false);
         gameEndCanvas.SetActive(true);
         if (hasWon == false)
         {

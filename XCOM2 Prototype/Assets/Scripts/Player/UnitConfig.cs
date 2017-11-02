@@ -42,7 +42,8 @@ public class UnitConfig : MonoBehaviour
     public bool isSprinting = false;
     public bool isShooting = false;
     public bool isDead = false;
-    SoldierAnimation animator;
+    SoldierAnimation animatorS;
+    ZombieAnimation animatorZ;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -61,7 +62,8 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        if(enemyAi == null)
+
+        if (enemyAi == null)
             InitializeEnemy();
 
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
@@ -72,7 +74,10 @@ public class UnitConfig : MonoBehaviour
         
         line = GetComponent<LineRenderer>();
 
-        animator = GetComponentInChildren<SoldierAnimation>();
+        if(isFriendly)
+            animatorS = GetComponentInChildren<SoldierAnimation>();
+        else
+            animatorZ = GetComponentInChildren<ZombieAnimation>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         if (unitWeapon == null)
@@ -149,7 +154,7 @@ public class UnitConfig : MonoBehaviour
                 {
                     mapConfig.turnSystem.SelectNextUnit();
                 }
-                else if(actionPoints.actions > 0 && isFriendly)
+                else if(actionPoints.actions > 0 && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
                     mapConfig.tileMap.ChangeGridColor(movePoints, actionPoints.actions, this);
                 }
@@ -254,7 +259,10 @@ public class UnitConfig : MonoBehaviour
     public void ShootTarget(UnitConfig target)
     {
         isShooting = true;
-        animator.target = target;
+        if (isFriendly)
+            animatorS.target = target;
+        else
+            animatorZ.target = target;
     }
 
     public void MoveNextTile()//start to try to move unit

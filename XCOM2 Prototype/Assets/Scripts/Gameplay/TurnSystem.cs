@@ -113,7 +113,8 @@ public class TurnSystem : MonoBehaviour {
             setup.activatTurn = loopnumber;
             loopnumber++;
         }
-        spawnEnemy();
+        if(playerUnits.Count > 0)
+            spawnEnemy();
     }
 	void Update () {
 
@@ -243,7 +244,8 @@ public class TurnSystem : MonoBehaviour {
         //Move the camera to selected Unit
         MoveCameraToTarget(selectedUnit.transform.position, 0);
         //Update grid colors
-        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+        if(playerTurn)
+            mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
         //HACK: Buttons are broken uncomment when fixed
         ////Clear old abilities
         //generateButtons.ClearCurrentButtons();
@@ -508,7 +510,8 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
-                mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+                if(playerTurn)
+                    mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 break;
             }
         }

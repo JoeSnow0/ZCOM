@@ -61,5 +61,14 @@ public class ZombieAnimation : MonoBehaviour {
             transform.parent.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10);
         }
     }
+    public void ZombiePunch()
+    {
+        target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+        unitConfig.mapConfig.turnSystem.MoveCameraToTarget(unitConfig.transform.position, 1);
+    }
+    public void End()
+    {
+        unitConfig.isShooting = false;
+    }
 }
 
