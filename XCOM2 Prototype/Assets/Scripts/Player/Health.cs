@@ -21,9 +21,11 @@ public class Health : MonoBehaviour
     private int currentUnitHealth;
     private int maxUnitHealth;
     public UnitConfig unitConfig;
+    MapConfig mapConfig;
 
     void Start()
     {
+        mapConfig = FindObjectOfType<MapConfig>();
         unitConfig = GetComponent<UnitConfig>();
         /*if (unitConfig.unitClassStats == null)
         {
@@ -69,7 +71,7 @@ public class Health : MonoBehaviour
         GameObject dmg = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
-        CalculationManager.HitCheck(weapon);
+        CalculationManager.HitCheck(weapon, mapConfig.turnSystem.distance);
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";

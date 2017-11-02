@@ -253,7 +253,7 @@ public class UnitConfig : MonoBehaviour
                         if (!target.isFriendly) 
                         {
                             //Uses current weapon
-                            CalculationManager.HitCheck(unitWeapon);
+                            CalculationManager.HitCheck(unitWeapon, mapConfig.turnSystem.distance);
                             target.health.TakeDamage(CalculationManager.damage, unitWeapon);
 
                             //Spend Actions
