@@ -113,7 +113,7 @@ public class EnemyAi : MonoBehaviour {
                     {
                         foreach (var unit in mapConfig.turnSystem.playerUnits)
                         {
-                            if (unit.tileX == tileX ||unit.tileY == tileY)
+                            if (unit.tileX == tileX && unit.tileY == tileY)
                             {
                                 moveToUnit = unit;
                                 break;
