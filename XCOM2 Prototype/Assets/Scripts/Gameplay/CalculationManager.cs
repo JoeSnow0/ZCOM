@@ -22,7 +22,7 @@ public static class CalculationManager// : MonoBehaviour
     public static void HitCheck (WeaponInfoObject usedWeapon, float distance)
     {
         
-        Debug.Log(distance);
+
         if (distance < 6)
         {
             hitChance = usedWeapon.baseAim + usedWeapon.rangeModShort;

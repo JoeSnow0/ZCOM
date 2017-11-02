@@ -59,6 +59,7 @@ public class HUD : MonoBehaviour {
                 if(turnSystem.playerUnits.Count > 0)
                     turnSystem.spawnEnemy();
                 endButton.SetActive(false);
+                mapConfig.tileMap.ResetColorGrid();
             }
             else
             {

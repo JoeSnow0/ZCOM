@@ -75,15 +75,15 @@ public class Health : MonoBehaviour
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";
-            dmgText[1].text = "0";
+            dmgText[1].text = "-";
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
+            Debug.Log("miss");
         }
         else
         {
             dmgText[1].text = damageAmount.ToString();
             currentUnitHealth -= damageAmount;
-            
             if (currentUnitHealth <= 0)
             {
                 if (!unitConfig.isFriendly)
@@ -113,6 +113,7 @@ public class Health : MonoBehaviour
         {
             unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
         }
+
         Destroy(gameObject);
     }
 }
