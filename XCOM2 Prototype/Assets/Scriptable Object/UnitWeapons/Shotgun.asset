@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   value: 0
   baseAim: 100
-  rangeModShort: 0
+  rangeModShort: -100
   rangeModMedium: -50
   rangeModLong: -75
   rangeModFar: -100
