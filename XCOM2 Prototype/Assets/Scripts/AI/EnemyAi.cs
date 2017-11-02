@@ -121,6 +121,7 @@ public class EnemyAi : MonoBehaviour {
                         moveToUnit.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
                         unitConfig.actionPoints.SubtractAllActions();
                         isAttacking = true;
+                        unitConfig.Attack(); //Play attack animation
                     }
                 }
             }

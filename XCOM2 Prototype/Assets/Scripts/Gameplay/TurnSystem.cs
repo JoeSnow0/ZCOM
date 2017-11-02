@@ -64,7 +64,8 @@ public class TurnSystem : MonoBehaviour {
 
     public bool EnemyTargeting;
     
-
+    //Distance Variable (maybe put elsewhere?)
+    public float distance;
 
 
 
@@ -459,6 +460,10 @@ public class TurnSystem : MonoBehaviour {
                             CalculationManager.HitCheck(selectedUnit.unitWeapon);
                             selectedUnit.ShootTarget(target);
 
+                            //Calculate the distance between the units
+                            distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
+                            distance /= 2;
+                            Debug.Log(distance);
 
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
