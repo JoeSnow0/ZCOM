@@ -11,12 +11,13 @@ public class HUD : MonoBehaviour {
     Animator alienAnim;
     public Text turnCounter;
     public Text warningText;
+    public Text victoryText;
     public Color playerColor;
     public Color enemyColor;
     public Color victoryColor;
     public Color defeatColor;
     public GameObject warning;
-
+    public victoryCheck victoryScript;
 
     int amountTurns;
     int maxTurns;
@@ -37,17 +38,7 @@ public class HUD : MonoBehaviour {
 
 	void Update () {
         totalActions = turnSystem.totalActions;
-        
-        
-        /*if (!isPlayerTurn && totalActions <= 0) //Ends turn if the enemy doesn't have any actions left
-        {
-            pressEnd(true);
-        }*/
 
-        //if(totalActions <= 0 && turnSystem.endTurn)
-        //{
-        //    pressEnd(true);
-        //}
     }
 
     public void pressEnd(bool forceEnd)
@@ -70,6 +61,10 @@ public class HUD : MonoBehaviour {
             }
             else
             {
+                if(turnSystem.playerUnits.Count < 1)
+                {
+                    victoryScript.winCheck(false);
+                }
                 playerUI.SetActive(true);
                 alienUI.SetActive(false);
                 endButton.SetActive(true);
@@ -94,8 +89,8 @@ public class HUD : MonoBehaviour {
                 turnCounter.text = amountTurns + "/" + maxTurns;
             else
             {
-                turnCounter.text = "VICTORY";
-                turnCounter.color = victoryColor;
+                victoryText.text = "VICTORY";
+                victoryText.color = turnSystem.victoryColor;
             }
         }
         else //Show warning if player has more than 0 actions

@@ -186,7 +186,8 @@ public class TurnSystem : MonoBehaviour {
                     enemy.currentPath = null;
                 }
                 hud.pressEnd(true);
-                MoveCameraToTarget(selectedUnit.transform.position, 0);
+                if(selectedUnit != null)
+                    MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
         }
         if (playerTurn)
