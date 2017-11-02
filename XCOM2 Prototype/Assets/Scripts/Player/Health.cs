@@ -112,6 +112,7 @@ public class Health : MonoBehaviour
     }
     public void KillThings()
     {
+        Debug.Log(unitConfig.health.currentUnitHealth);
         Destroy(gameObject);
     }
 }
