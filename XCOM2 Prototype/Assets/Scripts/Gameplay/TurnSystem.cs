@@ -439,8 +439,11 @@ public class TurnSystem : MonoBehaviour {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
                         if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
+
+                            //Calculate the distance between the units
+                            distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             //Uses current weapon
-                            CalculationManager.HitCheck(selectedUnit.unitWeapon);
+                            CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
                             selectedUnit.ShootTarget(target);
 
                             //Calculate the distance between the units
