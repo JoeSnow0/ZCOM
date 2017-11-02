@@ -83,6 +83,10 @@ public class SoldierAnimation : MonoBehaviour {
         target.health.TakeDamage(CalculationManager.damage, unit.unitWeapon);
         turnSystem.SelectNextUnit();
         unit.isShooting = false;
+        //unit.actionPoints.SubtractAllActions();
+    }
+    public void End()
+    {
         unit.actionPoints.SubtractAllActions();
     }
 }
