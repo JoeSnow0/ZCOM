@@ -48,6 +48,7 @@ public class UnitConfig : MonoBehaviour
     public float pathProgress;
     LineRenderer line;
     public EnemyAi enemyAi;
+    Color currentColor;
 
     //BaseUnitCopy
     void Start()
@@ -108,7 +109,7 @@ public class UnitConfig : MonoBehaviour
 
         if (isMoving == true)
         {
-            mapConfig.turnSystem.MoveCameraToTarget(transform.position, 0);
+            mapConfig.turnSystem.MoveCameraToTarget(transform.position, 1);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
 
@@ -158,42 +159,21 @@ public class UnitConfig : MonoBehaviour
         if (currentPath != null && isFriendly && !isMoving)//1 long path
         {
 
-            if (currentPath.Count < 4)
+            if (currentPath.Count < movePoints + 2 && actionPoints.actions > 1)//Walk
             {
-                mapConfig.turnSystem.gradient.SetKeys(
-                    new GradientColorKey[] { new GradientColorKey(mapConfig.turnSystem.lineColors[0], 0.0f), new GradientColorKey(mapConfig.turnSystem.lineColors[0], 1.0f) },
-                    new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1, 1.0f) }
-                    );
-                line.colorGradient = mapConfig.turnSystem.gradient;
-                for (int i = 0; i < 2; i++)
-                {
-                    mapConfig.turnSystem.markerImage[i].color = mapConfig.turnSystem.lineColors[0];
-                }
+                currentColor = mapConfig.turnSystem.lineColors[0];
             }
-            else if (currentPath.Count < movePoints + 2 && actionPoints.actions > 1)//full length path
+            else//dash
             {
-                mapConfig.turnSystem.gradient.SetKeys(
-                    new GradientColorKey[] { new GradientColorKey(mapConfig.turnSystem.lineColors[0], 0.0f), new GradientColorKey(mapConfig.turnSystem.lineColors[0], 1.0f) },
-                    new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1f, 0.05f), new GradientAlphaKey(1, 0.95f), new GradientAlphaKey(0, 1.0f) }
-                    );
-                line.colorGradient = mapConfig.turnSystem.gradient;
-                for (int i = 0; i < 2; i++)
-                {
-                    mapConfig.turnSystem.markerImage[i].color = mapConfig.turnSystem.lineColors[0];
-                }
+                currentColor = mapConfig.turnSystem.lineColors[1];
             }
-            else//dash length path
+
+            for (int i = 0; i < mapConfig.turnSystem.markerImage.Length; i++)
             {
-                mapConfig.turnSystem.gradient.SetKeys(
-                    new GradientColorKey[] { new GradientColorKey(mapConfig.turnSystem.lineColors[1], 0.0f), new GradientColorKey(mapConfig.turnSystem.lineColors[1], 1.0f) },
-                    new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(1f, 0.05f), new GradientAlphaKey(1, 0.95f), new GradientAlphaKey(0, 1.0f) }
-                    );
-                line.colorGradient = mapConfig.turnSystem.gradient;
-                for (int i = 0; i < 2; i++)
-                {
-                    mapConfig.turnSystem.markerImage[i].color = mapConfig.turnSystem.lineColors[1];
-                }
+                mapConfig.turnSystem.markerImage[i].color = currentColor;
             }
+            line.startColor = currentColor;
+            line.endColor = currentColor;
 
             int currNode = 0;
             while (currNode < currentPath.Count - 1 && currNode < movePoints * actionPoints.actions)
@@ -212,7 +192,10 @@ public class UnitConfig : MonoBehaviour
                     line.SetPosition(currNode, new Vector3(end.x, 0.1f, end.z));
                 }
                 else
+                {
                     line.SetPosition(currNode, new Vector3(start.x, 0.1f, start.z));
+                }
+
                 currNode++;
 
                 if (line.positionCount > 0 && mapConfig.turnSystem.cursorMarker.position != end)

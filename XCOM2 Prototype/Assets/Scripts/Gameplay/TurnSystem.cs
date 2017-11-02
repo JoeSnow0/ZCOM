@@ -116,11 +116,14 @@ public class TurnSystem : MonoBehaviour {
         spawnEnemy();
     }
 	void Update () {
+
         attackUnit();
+
         if (!playerTurn && selectedUnit != null)
         {
             DeselectAllUnits();
         }
+
         if (playerTurn)
         {
             if (Input.GetKeyDown(nextTarget))
@@ -132,35 +135,6 @@ public class TurnSystem : MonoBehaviour {
                 SwitchFocusTarget(false);
             }
         }
-        //if (playerTurn)
-        //{
-        //    if (Input.GetKeyDown(nextTarget))
-        //    {
-        //        if(EnemyTargeting)
-        //        {
-        //            SwitchAttackTarget(true);
-        //        }
-        //        else
-        //        {
-        //            SwitchFocusTarget(true);
-        //        }
-
-        //    }
-        //    if (Input.GetKeyDown(previousTarget))
-        //    {
-        //        if (EnemyTargeting)
-        //        {
-        //            SwitchAttackTarget(false);
-        //        }
-        //        else
-        //        {
-        //            SwitchFocusTarget(false);
-        //        }
-        //    }
-        //}
-
-
-        //Mouse select
 
         if (!playerTurn && selectedUnit != null) //Deselects unit when it's the enemy turn
             {
@@ -193,8 +167,6 @@ public class TurnSystem : MonoBehaviour {
 
                 }
             }
-        
-        //
 
         if (!playerTurn)//enemy turn
         {
@@ -215,7 +187,8 @@ public class TurnSystem : MonoBehaviour {
                     enemy.currentPath = null;
                 }
                 hud.pressEnd(true);
-                MoveCameraToTarget(selectedUnit.transform.position, 0);
+                if(selectedUnit != null)
+                    MoveCameraToTarget(selectedUnit.transform.position, 0);
             }
         }
         if (playerTurn)
@@ -373,7 +346,11 @@ public class TurnSystem : MonoBehaviour {
             //If its empty, pick the first friendly unit in list
             else
             {
+                if (selectedUnit != null)
+                    selectedUnit.isSelected = false;
+
                 selectedUnit = playerUnits[0];
+                selectedUnit.isSelected = true;
                 currentUnitIndex = playerUnits.FindIndex(a => a == selectedUnit);
             }
 
@@ -403,8 +380,11 @@ public class TurnSystem : MonoBehaviour {
                     {
                         currentUnitIndex = 0;
                     }
+                    if(selectedUnit != null)
+                        selectedUnit.isSelected = false;
 
                     selectedUnit = playerUnits[currentUnitIndex];
+                    selectedUnit.isSelected = true;
                     if (selectedUnit.actionPoints.actions > 0)
                     {
                         
@@ -424,8 +404,11 @@ public class TurnSystem : MonoBehaviour {
                     {
                         currentUnitIndex = playerUnits.Count - 1;
                     }
+                    if (selectedUnit != null)
+                        selectedUnit.isSelected = false;
 
                     selectedUnit = playerUnits[currentUnitIndex];
+                    selectedUnit.isSelected = true;
                     if (selectedUnit.actionPoints.actions > 0)
                     {
 
@@ -467,7 +450,7 @@ public class TurnSystem : MonoBehaviour {
 
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
-                            selectedUnit.actionPoints.SubtractAllActions();
+                            //selectedUnit.actionPoints.SubtractAllActions();
                         }
                     }
                 }

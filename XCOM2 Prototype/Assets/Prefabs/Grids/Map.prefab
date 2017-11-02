@@ -131,7 +131,7 @@ MonoBehaviour:
   cameraControl: {fileID: 0}
   playerTurn: 1
   endTurn: 0
-  maxTurns: 10
+  maxTurns: 15
   enemyIndex: 0
   spawnSetup:
   - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,

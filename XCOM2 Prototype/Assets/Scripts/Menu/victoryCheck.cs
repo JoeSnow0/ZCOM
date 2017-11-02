@@ -7,7 +7,7 @@ public class victoryCheck : MonoBehaviour {
 
     public MapConfig mapConfig;
     public GameObject gameEndCanvas;
-    public GameObject gameEndText;
+    public Text gameEndText;
     public GameObject gameEndPanel;
     
     void Start()
@@ -17,18 +17,6 @@ public class victoryCheck : MonoBehaviour {
         gameEndCanvas.SetActive(false);
     }
 
-    //For testing the win/lose screen
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V) && gameEndCanvas.activeInHierarchy == false)
-        {
-            winCheck(true);
-        }
-        if (Input.GetKeyDown(KeyCode.F) && gameEndCanvas.activeInHierarchy == false)
-        {
-            winCheck(false);
-        }
-    }
     //Call if win/lose conditions have been met
 	public void winCheck(bool hasWon)
     {
@@ -36,8 +24,8 @@ public class victoryCheck : MonoBehaviour {
         gameEndCanvas.SetActive(true);
         if (hasWon == false)
         {
-            gameEndText.GetComponent<Text>().text = "Defeated!";
-            gameEndPanel.GetComponent<Image>().color = Color.red;
+            gameEndText.text = "DEFEAT";
+            gameEndText.color = mapConfig.turnSystem.defeatColor;
         }
     }
 }
