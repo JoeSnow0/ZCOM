@@ -110,7 +110,6 @@ public class Health : MonoBehaviour
         {
             unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
         }
-        Debug.Log(currentUnitHealth);
         Destroy(gameObject);
     }
 }

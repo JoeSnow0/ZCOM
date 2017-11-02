@@ -113,7 +113,8 @@ public class TurnSystem : MonoBehaviour {
             setup.activatTurn = loopnumber;
             loopnumber++;
         }
-        spawnEnemy();
+        if(playerUnits.Count > 0)
+            spawnEnemy();
     }
 	void Update () {
 
