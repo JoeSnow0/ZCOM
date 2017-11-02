@@ -113,9 +113,10 @@ public class EnemyAi : MonoBehaviour {
                     {
                         foreach (var unit in mapConfig.turnSystem.playerUnits)
                         {
-                            if (unit.tileX == (unitConfig.tileX + x) ||unit.tileY == (unitConfig.tileY + y))
+                            if (unit.tileX == tileX ||unit.tileY == tileY)
                             {
                                 moveToUnit = unit;
+                                break;
                             }
                         }
                         moveToUnit.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);

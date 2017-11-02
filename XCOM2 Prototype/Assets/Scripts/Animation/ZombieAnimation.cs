@@ -32,14 +32,16 @@ public class ZombieAnimation : MonoBehaviour {
         if (unitConfig.isShooting)
         {
             zombieAnimation.SetInteger("state", 3);
+            if(target != null)
+            {
+                transform.parent.LookAt(target.transform.position);
+                Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
+                eulerAngles.x = 0;
+                eulerAngles.z = 0;
+                // Set the altered rotation back
+                transform.parent.rotation = Quaternion.Euler(eulerAngles);
+            }
 
-            transform.parent.LookAt(target.transform.position);
-            Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
-            eulerAngles.x = 0;
-            eulerAngles.z = 0;
-
-            // Set the altered rotation back
-            transform.parent.rotation = Quaternion.Euler(eulerAngles);
         }
         if (unitConfig.isDead)
         {

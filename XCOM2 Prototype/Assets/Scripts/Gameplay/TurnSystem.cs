@@ -446,7 +446,7 @@ public class TurnSystem : MonoBehaviour {
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;
-                            Debug.Log(distance);
+
 
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
@@ -514,8 +514,10 @@ public class TurnSystem : MonoBehaviour {
     {
         if (enemyUnits == null ||
             enemyUnits[enemyIndex] == null ||
-            enemyUnits[enemyIndex].enemyAi == null)
+            enemyUnits[enemyIndex].enemyAi == null || 
+            enemyUnits.Count < 1)
         {
+            enemySpawn.SpawnEnemy(spawnSetup[1].enemyPrefab, playerUnits.Count * 2);
             Debug.Break();
         }
 
