@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 
 public class UnitConfig : MonoBehaviour
 {
@@ -80,7 +80,7 @@ public class UnitConfig : MonoBehaviour
             animatorZ = GetComponentInChildren<ZombieAnimation>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
-        if (unitWeapon == null)
+        /*if (unitWeapon == null)
         {
             unitWeapon = AssetDatabase.LoadAssetAtPath<WeaponInfoObject>("Assets/Scriptable Object/Pistol.asset");
             Debug.LogWarning("Couldn't find weapon, using default weapon");
@@ -94,7 +94,7 @@ public class UnitConfig : MonoBehaviour
         {
             unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
             Debug.LogWarning("Couldn't find abilities, using default abilities");
-        }
+        }*/
         actionPoints = GetComponent<ActionPoints>();
         health = GetComponent<Health>();
         movement = GetComponent<UnitMovement>();

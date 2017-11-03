@@ -1219,7 +1219,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1922343718545594, guid: 779cf735e3cf5b44181d66a22f69334e, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114713503827992268, guid: 779cf735e3cf5b44181d66a22f69334e,
         type: 2}
@@ -2677,6 +2677,10 @@ Prefab:
     - target: {fileID: 1652081799351794, guid: b7b84718365038040bb4d881b1ea38c7, type: 2}
       propertyPath: m_TagString
       value: Button_Type_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652081799351794, guid: b7b84718365038040bb4d881b1ea38c7, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7b84718365038040bb4d881b1ea38c7, type: 2}
@@ -4183,7 +4187,7 @@ Prefab:
     - target: {fileID: 224762287836920934, guid: 4538eff9e02c03945a0ab05d8c0a4679,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114651927740938502, guid: 4538eff9e02c03945a0ab05d8c0a4679,
         type: 2}
