@@ -71,10 +71,11 @@ public class TurnSystem : MonoBehaviour {
 
     void Start ()
     {
+        mapConfig = FindObjectOfType<MapConfig>();
+        mapConfig.tileMap.Initialize();
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-        mapConfig = FindObjectOfType<MapConfig>();
         
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
@@ -575,20 +576,22 @@ public class TurnSystem : MonoBehaviour {
     public void spawnEnemy()
     {
         
-        foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
-        {
-            if(i.activatTurn == thisTurn)
-            {
-                enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
-                break;
-            }
-            else if (spawnSetup.Length <= thisTurn)
-            {
-                int newI = Random.Range(0, spawnSetup.Length);
-                enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
-                break;
-            }
-        }
+        //foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
+        //{
+        //    if(i.activatTurn == thisTurn)
+        //    {
+        //        enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
+        //        break;
+        //    }
+        //    else if (spawnSetup.Length <= thisTurn)
+        //    {
+        //        int newI = Random.Range(0, spawnSetup.Length);
+        //        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
+        //        break;
+        //    }
+        //}
+        int newI = Random.Range(0, spawnSetup.Length);
+        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
     public void MoveCameraToTarget(Vector3 targetPosition, float time)

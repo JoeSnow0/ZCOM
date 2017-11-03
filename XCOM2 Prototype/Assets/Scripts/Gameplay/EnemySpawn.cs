@@ -39,6 +39,8 @@ public class EnemySpawn : MonoBehaviour {
 
     public Vector3 RandomPosition()
     {
+        if (mapConfig == null)
+            mapConfig = GetComponent<MapConfig>();
         int x;
         int y;
         x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1));
