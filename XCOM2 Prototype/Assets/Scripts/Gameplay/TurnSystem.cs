@@ -106,7 +106,7 @@ public class TurnSystem : MonoBehaviour {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
         SelectNextUnit();
-        mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints,selectedUnit.actionPoints.actions,selectedUnit);
+        
         int loopnumber = 0;
         foreach (SpawnSetup setup in spawnSetup)
         {
@@ -510,11 +510,12 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
                 MoveCameraToTarget(selectedUnit.transform.position, 0);
-                if(playerTurn)
+                if(playerTurn && selectedUnit != null)
                     mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 break;
             }
         }
+        
     }
     public void StartNextEnemy()
     {
