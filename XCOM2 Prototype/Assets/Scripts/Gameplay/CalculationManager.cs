@@ -74,7 +74,7 @@ public static class CalculationManager// : MonoBehaviour
         n = RandomRange.RollDice(numberOfDiceDamage, numberOfSideDamage);
 
         //Give Damage dealt
-        damage = n + baseDamage;
         hit = contact;
+        damage = n + baseDamage;
 	}
 }

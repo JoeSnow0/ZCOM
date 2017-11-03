@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-//using UnityEditor;
+
 
 //Creates a scriptable object with the parameters below
 [CreateAssetMenu(fileName = "StatsClassX", menuName = "Class/Create new class", order = 4)]
