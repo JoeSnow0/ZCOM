@@ -523,7 +523,6 @@ public class TurnSystem : MonoBehaviour {
             enemyUnits[enemyIndex].enemyAi == null || 
             enemyUnits.Count < 1)
         {
-            enemySpawn.SpawnEnemy(spawnSetup[1].enemyPrefab, playerUnits.Count * 2);
             Debug.Break();
         }
 
