@@ -42,8 +42,8 @@ public class UnitConfig : MonoBehaviour
     public bool isSprinting = false;
     public bool isShooting = false;
     public bool isDead = false;
-    SoldierAnimation animatorS;
-    ZombieAnimation animatorZ;
+    public SoldierAnimation animatorS;
+    public ZombieAnimation animatorZ;
 
     int pathIndex = 0;
     public float pathProgress;
