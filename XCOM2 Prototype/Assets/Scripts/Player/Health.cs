@@ -82,8 +82,8 @@ public class Health : MonoBehaviour
         }
         else
         {
-            dmgText[1].text = damageAmount.ToString();
-            currentUnitHealth -= damageAmount;
+            dmgText[1].text = CalculationManager.damage.ToString();
+            currentUnitHealth -= CalculationManager.damage;
             if (currentUnitHealth <= 0)
             {
                 if (!unitConfig.isFriendly)
