@@ -51,7 +51,7 @@ public class CameraControl : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
 
     MapConfig mapConfig;
-
+    public bool playerMovedCamera;
 
     private void Start()
     {
@@ -69,11 +69,19 @@ public class CameraControl : MonoBehaviour {
             if (Input.GetKey(cameraMoveLeft) && cameraTarget.transform.position.x >= xPosMin)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
             if (Input.GetKey(cameraMoveRight) && cameraTarget.transform.position.x <= xPosMax)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             } 
         }
@@ -92,11 +100,19 @@ public class CameraControl : MonoBehaviour {
             if (Input.GetKey(cameraMoveBackward) && cameraTarget.transform.position.z >= zPosMin)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
             else if (Input.GetKey(cameraMoveForward) && cameraTarget.transform.position.z <= zPosMax)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
         }
@@ -144,7 +160,7 @@ public class CameraControl : MonoBehaviour {
         //}
 
         //Moves camera to selected unit
-        if (movingCamera)
+        if (movingCamera && !playerMovedCamera)
         {
             moveToTargetLerp += Time.deltaTime / 0.5f;
             cameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));

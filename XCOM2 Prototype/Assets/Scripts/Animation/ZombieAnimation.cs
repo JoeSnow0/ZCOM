@@ -40,7 +40,7 @@ public class ZombieAnimation : MonoBehaviour {
                 eulerAngles.z = 0;
                 // Set the altered rotation back
                 transform.parent.rotation = Quaternion.Euler(eulerAngles);
-                unitConfig.mapConfig.turnSystem.cameraControl.MoveToTarget(unitConfig.transform.position);
+                
             }
 
         }
