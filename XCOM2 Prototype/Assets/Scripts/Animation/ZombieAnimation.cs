@@ -40,6 +40,7 @@ public class ZombieAnimation : MonoBehaviour {
                 eulerAngles.z = 0;
                 // Set the altered rotation back
                 transform.parent.rotation = Quaternion.Euler(eulerAngles);
+                
             }
 
         }
@@ -65,7 +66,6 @@ public class ZombieAnimation : MonoBehaviour {
     public void ZombiePunch()
     {
         target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
-        unitConfig.mapConfig.turnSystem.MoveCameraToTarget(unitConfig.transform.position, 1);
     }
     public void End()
     {

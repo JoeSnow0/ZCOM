@@ -119,6 +119,10 @@ public class EnemyAi : MonoBehaviour {
                                 break;
                             }
                         }
+                        if(!isAttacking)
+                            unitConfig.mapConfig.turnSystem.cameraControl.SetCameraTime(0);
+
+                        unitConfig.mapConfig.turnSystem.cameraControl.MoveToTarget(unitConfig.transform.position, true);
                         unitConfig.ShootTarget(moveToUnit);
                         unitConfig.actionPoints.SubtractAllActions();
                         isAttacking = true;

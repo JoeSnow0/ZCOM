@@ -10,8 +10,8 @@ public class Health : MonoBehaviour
     //[SerializeField] private Color healthColorEnemy;
     //[SerializeField] private Color HealthColorBackgroundEnemy;
     //private Image healthBarBackground;
-    [Tooltip("First image: Fill. Second image: Background.")]
-    private Image[] healthBar;
+
+    public Image[] healthBar;
     [SerializeField] private Slider healthSlider;
     public GameObject bar;
     public GameObject floatingDmg;
@@ -37,7 +37,7 @@ public class Health : MonoBehaviour
 
     private void Update()
     {
-
+        
     }
 
     //set health values
