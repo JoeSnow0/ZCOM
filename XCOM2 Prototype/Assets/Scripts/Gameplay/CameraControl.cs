@@ -15,19 +15,24 @@ public class CameraControl : MonoBehaviour {
     [Tooltip("Min and Max values for the cameras z Position")]
     public float zPosMin;
     float zPosMax;
+
     [Header("Speed")]
-    [Tooltip("Speed for camera rotation")]
+    [Tooltip("Speed for camera speed")]
     [SerializeField]
     [RangeAttribute(0f,100f)]
     float moveSpeed;
-    [Tooltip("Speed for camera movement")]
+    [Tooltip("Speed for camera rotation")]
     [SerializeField]
-    [RangeAttribute(0f, 100f)]
+    [RangeAttribute(0f, 10f)]
     private float rotationSpeed;
     [Tooltip("Speed for camera zoom")]
     [SerializeField]
     [RangeAttribute(0, 100)]
     int zoomSpeed;
+
+    [Header("Rotation Curve")]
+    public AnimationCurve rotationCurve;
+
     [Header("Camera Target")]
     public GameObject cameraTarget;
     public GameObject cameraHolder;
@@ -141,7 +146,7 @@ public class CameraControl : MonoBehaviour {
         if (rotateLerp < 1)
         {
             rotateLerp += Time.deltaTime * rotationSpeed;
-            cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
+            cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), rotationCurve.Evaluate(rotateLerp));
         }
 
         //HACK: Needs a better way of restricting movement of the zoom
