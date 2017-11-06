@@ -42,7 +42,8 @@ public class TurnSystem : MonoBehaviour {
     public MapConfig mapConfig;
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
-    public GameObject EnemyUnitSpawnType; 
+    public GameObject EnemyUnitSpawnType;
+    public Text className;
 
     //Script refs
     public EnemySpawn enemySpawn;
@@ -71,10 +72,11 @@ public class TurnSystem : MonoBehaviour {
 
     void Start ()
     {
+        mapConfig = FindObjectOfType<MapConfig>();
+        mapConfig.tileMap.Initialize();
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-        mapConfig = FindObjectOfType<MapConfig>();
         
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
@@ -105,7 +107,7 @@ public class TurnSystem : MonoBehaviour {
         {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
-        SelectNextUnit();
+        SelectFirstUnit();
         
         int loopnumber = 0;
         foreach (SpawnSetup setup in spawnSetup)
@@ -246,6 +248,8 @@ public class TurnSystem : MonoBehaviour {
         //Update grid colors
         if(playerTurn)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+
+        className.text = selectedUnit.unitClassStats.unitClassName;
         //HACK: Buttons are broken uncomment when fixed
         ////Clear old abilities
         //generateButtons.ClearCurrentButtons();
@@ -496,6 +500,19 @@ public class TurnSystem : MonoBehaviour {
         playerTurn = isPlayerTurn;
     }
 
+    public void SelectFirstUnit()
+    {
+        selectedUnit = playerUnits[0];
+        selectedUnit.isSelected = true;
+        MoveMarker(unitMarker, selectedUnit.transform.position);
+        MoveCameraToTarget(selectedUnit.transform.position, 0);
+        if (playerTurn && selectedUnit != null)
+            mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+
+        if (selectedUnit != null)
+            className.text = selectedUnit.unitClassStats.unitClassName;
+    }
+
     public void SelectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
@@ -515,6 +532,13 @@ public class TurnSystem : MonoBehaviour {
                 break;
             }
         }
+        /*if (selectedUnit == null && playerUnits.Count > 0)
+        {
+            selectedUnit = playerUnits[0];
+            selectedUnit.isSelected = true;
+        }*/
+        if(selectedUnit != null)
+            className.text = selectedUnit.unitClassStats.unitClassName;
         
     }
     public void StartNextEnemy()
@@ -575,20 +599,22 @@ public class TurnSystem : MonoBehaviour {
     public void spawnEnemy()
     {
         
-        foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
-        {
-            if(i.activatTurn == thisTurn)
-            {
-                enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
-                break;
-            }
-            else if (spawnSetup.Length <= thisTurn)
-            {
-                int newI = Random.Range(0, spawnSetup.Length);
-                enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
-                break;
-            }
-        }
+        //foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
+        //{
+        //    if(i.activatTurn == thisTurn)
+        //    {
+        //        enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
+        //        break;
+        //    }
+        //    else if (spawnSetup.Length <= thisTurn)
+        //    {
+        //        int newI = Random.Range(0, spawnSetup.Length);
+        //        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
+        //        break;
+        //    }
+        //}
+        int newI = Random.Range(0, spawnSetup.Length);
+        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
     public void MoveCameraToTarget(Vector3 targetPosition, float time)

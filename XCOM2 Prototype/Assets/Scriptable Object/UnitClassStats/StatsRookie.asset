@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51b214ede25aee4580ca8c95d0b76c1, type: 3}
   m_Name: StatsRookie
   m_EditorClassIdentifier: 
-  unitClassName: Rookie
+  unitClassName: ROOKIE
   maxUnitHealth: 4
   unitDefense: 1
   maxUnitActionPoints: 2

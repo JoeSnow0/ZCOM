@@ -38,10 +38,17 @@ public class TileMap : MonoBehaviour {
     private void Awake()
     {
         tiles = new int[mapSizeX, mapSizeY];
+        ////spawn grid
+        //GenerateMapData();//run map generate
+        //GeneratePathfindingGraph();//run pathfinding
+        //GenerateMapVisual();//make the map visuals
+        //changedColoredGrid = new List<ClickebleTile>();
     }
     private void Start()
     {
-        //spawn grid
+    }
+    public void Initialize()
+    {
         GenerateMapData();//run map generate
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
@@ -476,6 +483,8 @@ public class TileMap : MonoBehaviour {
     public void GetPlayerNeibours(int movement, int actions)
     {
         currentneighbour = new List<ClickebleTile>();
+        if (changedColoredGrid == null)
+            changedColoredGrid = new List<ClickebleTile>();
         int currentRun = 0;//how many times has the loop run
         changedColoredGrid.Add(tileobjects[playerGridColorChange.tileX, playerGridColorChange.tileY].GetComponent<ClickebleTile>());//start of color change
 
