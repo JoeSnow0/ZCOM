@@ -23,7 +23,7 @@ public class CameraControl : MonoBehaviour {
     [Tooltip("Speed for camera movement")]
     [SerializeField]
     [RangeAttribute(0f, 100f)]
-    float rotSpeed;
+    private float rotationSpeed;
     [Tooltip("Speed for camera zoom")]
     [SerializeField]
     [RangeAttribute(0, 100)]
@@ -51,7 +51,7 @@ public class CameraControl : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
 
     MapConfig mapConfig;
-
+    public bool playerMovedCamera;
 
     private void Start()
     {
@@ -69,11 +69,19 @@ public class CameraControl : MonoBehaviour {
             if (Input.GetKey(cameraMoveLeft) && cameraTarget.transform.position.x >= xPosMin)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             }
             if (Input.GetKey(cameraMoveRight) && cameraTarget.transform.position.x <= xPosMax)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             } 
         }
@@ -92,11 +100,19 @@ public class CameraControl : MonoBehaviour {
             if (Input.GetKey(cameraMoveBackward) && cameraTarget.transform.position.z >= zPosMin)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
             else if (Input.GetKey(cameraMoveForward) && cameraTarget.transform.position.z <= zPosMax)
             {
                 movingCamera = false;
+                if (!mapConfig.turnSystem.playerTurn)
+                {
+                    playerMovedCamera = true;
+                }
                 cameraTarget.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
         }
@@ -124,7 +140,7 @@ public class CameraControl : MonoBehaviour {
         }
         if (rotateLerp < 1)
         {
-            rotateLerp += Time.deltaTime;
+            rotateLerp += Time.deltaTime * rotationSpeed;
             cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
         }
 
@@ -144,18 +160,46 @@ public class CameraControl : MonoBehaviour {
         //}
 
         //Moves camera to selected unit
-        if (moveToTargetLerp <= 1 && movingCamera)
+        if (movingCamera && !playerMovedCamera)
         {
             moveToTargetLerp += Time.deltaTime / 0.5f;
             cameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));
         }
     }
     //Move the camera to a specific position within the selected time
-    public void MoveToTarget(Vector3 selectedPosition, float time)
+    public void MoveToTarget(Vector3 selectedPosition, bool overrideTime = false, float time = 0)
+    {
+        MoveToTarget(selectedPosition, cameraTarget.transform.position, overrideTime, time);
+    }
+
+    public void MoveToTarget(Vector3 selectedPosition, Vector3 cameraStartPosition, bool overrideTime = false, float time = 0)
     {
         movingCamera = true;
-        moveToTargetLerp = time;
-        startPosition = cameraTarget.transform.position;
+
+        if (overrideTime == false)
+        {
+            moveToTargetLerp = time;
+        }
+
+        if (cameraStartPosition == null)
+        {
+            startPosition = cameraTarget.transform.position;
+        }
+        else
+        {
+            startPosition = cameraStartPosition;
+        }
+
         targetPosition = selectedPosition;
+    }
+
+    public void SetCameraTime(float newTime)
+    {
+        moveToTargetLerp = newTime;
+    }
+
+    public Vector3 GetCameraPosition()
+    {
+        return cameraTarget.transform.position;
     }
 }

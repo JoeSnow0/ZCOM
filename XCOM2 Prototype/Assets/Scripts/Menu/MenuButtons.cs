@@ -9,9 +9,8 @@ public class MenuButtons : MonoBehaviour
 {
 
     static List<GameObject> sceneStates = new List<GameObject>();
-    public GameObject mainMenu;
-    public GameObject highScore;
-    public GameObject credits;
+
+    public GameObject mainMenu, highScore, credits, loadingScreen;
     public static int scene;
     static MusicController musicController;
 
@@ -34,6 +33,8 @@ public class MenuButtons : MonoBehaviour
         }
         else if (sceneName == "gameSession")
         {
+            DeactivatePanel();
+            loadingScreen.SetActive(true);
             SceneManager.LoadScene(sceneName);
         }
         else if (sceneName == "mainMenu")
@@ -75,6 +76,7 @@ public class MenuButtons : MonoBehaviour
         mainMenu.SetActive(false);
         highScore.SetActive(false);
         credits.SetActive(false);
+        loadingScreen.SetActive(false);
     }
     //reload current scene
     public void restartScene()
