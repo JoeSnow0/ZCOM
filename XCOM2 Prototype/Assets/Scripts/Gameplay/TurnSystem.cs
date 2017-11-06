@@ -451,7 +451,7 @@ public class TurnSystem : MonoBehaviour {
                             //Uses current weapon
                             CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
                             selectedUnit.ShootTarget(target);
-
+                            selectedUnit.GetAccuracy(target.tileX, target.tileY);
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;

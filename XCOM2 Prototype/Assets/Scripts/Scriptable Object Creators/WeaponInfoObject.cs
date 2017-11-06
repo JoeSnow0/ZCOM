@@ -18,30 +18,30 @@ public class WeaponInfoObject : ScriptableObject
 
     [Header("Weapon Cost")]
     [Tooltip("The value of an item if it were bought or sold")]
-    [RangeAttribute(0, 100)]
+    [Range(0, 100)]
     public int value;
 
     [Header("Aim")]
     [Tooltip("The amount of Aim the gun has by default")]
-    [RangeAttribute(0, 100)]
+    [Range(0, 100)]
     public int baseAim;
 
     //Use these to calculate hit chance for each level of distance
     [Header("Range Modifiers")]
     [Header("Short Distance")]
-    [RangeAttribute(-100, 100)]
+    [Range(-100, 100)]
     public int rangeModShort;
 
     [Header("Medium Distance")]
-    [RangeAttribute(-100, 100)]
+    [Range(-100, 100)]
     public int rangeModMedium;
 
     [Header("Long Distance")]
-    [RangeAttribute(-100, 100)]
+    [Range(-100, 100)]
     public int rangeModLong;
 
     [Header("Far Distance")]
-    [RangeAttribute(-100, 100)]
+    [Range(-100, 100)]
     public int rangeModFar;
     //Limit the range from 0-4, where 0 = melee only, 4 = melee -> far range
     [Header("Max Range")]
@@ -58,6 +58,11 @@ public class WeaponInfoObject : ScriptableObject
     [Tooltip("This is added on to the base damage")]
     public int numberOfDiceDamage;
     public int numberOfSidesDamage;
+
+    [Header("Unit Aim fall of")]
+    [Tooltip("How much will the bullet accuracy fall of at each tile")]
+    [Range(1, 10)]
+    public int unitAimFallof;
 
     [Header("Customization")]
     [Tooltip("Projectile particle system used when the weapon is shooting")]

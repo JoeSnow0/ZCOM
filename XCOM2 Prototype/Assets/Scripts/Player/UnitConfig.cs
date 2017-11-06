@@ -33,7 +33,7 @@ public class UnitConfig : MonoBehaviour
 
     //grid Reference
     public List<Node> currentPath = null;
-
+    public List<Node> currentBulletPath = null;
 
 
     public int movePoints;
@@ -223,6 +223,7 @@ public class UnitConfig : MonoBehaviour
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
     {
+       
         //Checks if it is the players turn
         if (mapConfig.turnSystem.playerTurn) 
         {
@@ -249,6 +250,7 @@ public class UnitConfig : MonoBehaviour
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.SelectNextUnit();
+                            
                         }
                     }
                 }
@@ -272,9 +274,6 @@ public class UnitConfig : MonoBehaviour
             return;
         }
 
-        
-        
-        
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
         for (int cost = 1; cost < moveTo; cost++)//is the path possible
@@ -358,4 +357,16 @@ public class UnitConfig : MonoBehaviour
         isShooting = true;
     }
 
+    public void GetAccuracy(int targetTileX,int enemyTileY)
+    {
+        mapConfig.tileMap.GeneratePathTo(targetTileX, enemyTileY, this, true);
+
+        int accuracy = unitWeapon.baseAim;
+        int distans = currentBulletPath.Count - 1;
+        for (int aim = 1; aim < distans; aim++)//is the path possible
+        {
+            accuracy -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[1 + aim].x, currentBulletPath[1 + aim].y) * unitWeapon.unitAimFallof;
+        }
+        Debug.Log(accuracy);
+    }
 }

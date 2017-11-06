@@ -15,14 +15,15 @@ MonoBehaviour:
   icon: {fileID: 0}
   value: 0
   baseAim: 100
-  rangeModShort: -5
-  rangeModMedium: -10
+  rangeModShort: -60
+  rangeModMedium: -13
   rangeModLong: -20
   rangeModFar: -50
   weaponRange: 0
   baseDamage: 1
   numberOfDiceDamage: 1
   numberOfSidesDamage: 2
+  unitAim: 1
   weaponProjectile: {fileID: 1955339187017188, guid: 2a438949cafdad1458af1394627a2684,
     type: 2}
   particleColor:

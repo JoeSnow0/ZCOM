@@ -1220,7 +1220,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1767159759882530}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30, y: 0, z: 22}
+  m_LocalPosition: {x: 30, y: 0, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4845863260046066}
@@ -2247,7 +2247,7 @@ MonoBehaviour:
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
   unitWeapon: {fileID: 11400000, guid: a9264f6bebf32444e9e639d3eca7e746, type: 2}
-  unitClassStats: {fileID: 11400000, guid: 2ba686b20a1ebb448a727be300854703, type: 2}
+  unitClassStats: {fileID: 11400000, guid: 8652fc96e6612034a9f0aa583cbf93a1, type: 2}
   unitAbilities: {fileID: 11400000, guid: 81d9ad9898adcea4d855017a6589a41b, type: 2}
   actionPoints: {fileID: 114564366821933016}
   health: {fileID: 114830031136825446}
@@ -2264,6 +2264,8 @@ MonoBehaviour:
   isSprinting: 0
   isShooting: 0
   isDead: 0
+  animatorS: {fileID: 0}
+  animatorZ: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!114 &114677385352274558

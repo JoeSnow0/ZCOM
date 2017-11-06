@@ -238,11 +238,11 @@ public class TileMap : MonoBehaviour {
     }
 
     //sourceX and Y is only used for diagonal movement
-    public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY)// get the cost for the movement to an loction
+    public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY, bool canFly = false)// get the cost for the movement to an loction
     {
 
         TileType tt = tileType[tiles[targetX, targetY]];
-        if (tt.isWalkeble == false)//make it so unwalkeble tiles can't be walked on
+        if (!tt.isWalkeble && !canFly)//make it so unwalkeble tiles can't be walked on
         {
             return Mathf.Infinity;
         }
@@ -255,6 +255,13 @@ public class TileMap : MonoBehaviour {
         //}
         
         return cost;
+    }
+    public float AccuracyFallOf(int targetX, int targetY)
+    {
+        TileType tt = tileType[tiles[targetX, targetY]];
+        float accuracy = tt.aimReduction;
+
+        return accuracy;
     }
 
     void GeneratePathfindingGraph()//create a path for units to walk on
@@ -350,10 +357,11 @@ public class TileMap : MonoBehaviour {
         return true;
     }
 
-    public void GeneratePathTo(int tileX, int tileY, UnitConfig selected)//(move to X pos, move to Y pos, gameobject that will be moved)
+    public void GeneratePathTo(int tileX, int tileY, UnitConfig selected, bool isBullet = false)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
         selectedUnit = selected;
         selectedUnit.currentPath = null;
+        selectedUnit.currentBulletPath = null;
 
         if (UnitCanEnterTile(tileX,tileY) == false)
         {
@@ -421,7 +429,7 @@ public class TileMap : MonoBehaviour {
             foreach (Node v in u.neighbours)
             {
                 
-                float alt = dist[u] + CostToEnterTile(u.x,u.y,v.x,v.y);
+                float alt = dist[u] + CostToEnterTile(u.x,u.y,v.x,v.y,isBullet);
                 if (alt < dist[v]) 
                 {
                     dist[v] = alt;
@@ -446,8 +454,10 @@ public class TileMap : MonoBehaviour {
         }
         //current path is from goal to unit here we reverse it. to make it normal
         currentPath.Reverse();
-        
-        selectedUnit.currentPath = currentPath;
+        if(!isBullet)
+            selectedUnit.currentPath = currentPath;
+        if (isBullet)
+            selectedUnit.currentBulletPath = currentPath;
     }
 
 
