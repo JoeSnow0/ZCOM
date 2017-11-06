@@ -121,6 +121,7 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
 
         attackUnit();
+        UpdateHUD();
 
         if (!playerTurn && selectedUnit != null)
         {
@@ -620,5 +621,44 @@ public class TurnSystem : MonoBehaviour {
     public void MoveCameraToTarget(Vector3 targetPosition, float time)
     {
         cameraControl.MoveToTarget(targetPosition, time);
+    }
+
+    private void UpdateHUD()
+    {
+        foreach (UnitConfig unit in playerUnits)//Updates friendly units
+        {
+            if (unit.isSelected)
+            {
+                foreach (Image image in unit.imageElements.elements)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
+                }
+            }
+            else
+            {
+                foreach (Image image in unit.health.healthBar)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
+                }
+            }
+        }
+
+        foreach (UnitConfig unit in enemyUnits)
+        {
+            if (!playerTurn && unit.enemyAi.isMyTurn || selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            {
+                foreach (Image image in unit.imageElements.elements)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
+                }
+            }
+            else
+            {
+                foreach (Image image in unit.health.healthBar)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
+                }
+            }
+        }
     }
 }

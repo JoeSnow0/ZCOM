@@ -50,6 +50,7 @@ public class UnitConfig : MonoBehaviour
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
+    [HideInInspector]public ImageElements imageElements;
 
     //BaseUnitCopy
     void Start()
@@ -62,6 +63,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        imageElements = GetComponent<ImageElements>();
 
         if (enemyAi == null)
             InitializeEnemy();
