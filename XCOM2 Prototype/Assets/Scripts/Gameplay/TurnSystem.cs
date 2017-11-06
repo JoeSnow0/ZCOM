@@ -42,7 +42,8 @@ public class TurnSystem : MonoBehaviour {
     public MapConfig mapConfig;
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
-    public GameObject EnemyUnitSpawnType; 
+    public GameObject EnemyUnitSpawnType;
+    public Text className;
 
     //Script refs
     public EnemySpawn enemySpawn;
@@ -106,7 +107,7 @@ public class TurnSystem : MonoBehaviour {
         {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
-        SelectNextUnit();
+        SelectFirstUnit();
         
         int loopnumber = 0;
         foreach (SpawnSetup setup in spawnSetup)
@@ -247,6 +248,8 @@ public class TurnSystem : MonoBehaviour {
         //Update grid colors
         if(playerTurn)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+
+        className.text = selectedUnit.unitClassStats.unitClassName;
         //HACK: Buttons are broken uncomment when fixed
         ////Clear old abilities
         //generateButtons.ClearCurrentButtons();
@@ -497,6 +500,19 @@ public class TurnSystem : MonoBehaviour {
         playerTurn = isPlayerTurn;
     }
 
+    public void SelectFirstUnit()
+    {
+        selectedUnit = playerUnits[0];
+        selectedUnit.isSelected = true;
+        MoveMarker(unitMarker, selectedUnit.transform.position);
+        MoveCameraToTarget(selectedUnit.transform.position, 0);
+        if (playerTurn && selectedUnit != null)
+            mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
+
+        if (selectedUnit != null)
+            className.text = selectedUnit.unitClassStats.unitClassName;
+    }
+
     public void SelectNextUnit()
     {
         for(int i = 0; i < playerUnits.Count; i++)
@@ -516,6 +532,13 @@ public class TurnSystem : MonoBehaviour {
                 break;
             }
         }
+        /*if (selectedUnit == null && playerUnits.Count > 0)
+        {
+            selectedUnit = playerUnits[0];
+            selectedUnit.isSelected = true;
+        }*/
+        if(selectedUnit != null)
+            className.text = selectedUnit.unitClassStats.unitClassName;
         
     }
     public void StartNextEnemy()

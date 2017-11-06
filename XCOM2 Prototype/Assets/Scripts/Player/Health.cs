@@ -87,7 +87,10 @@ public class Health : MonoBehaviour
             if (currentUnitHealth <= 0)
             {
                 if (!unitConfig.isFriendly)
+                {
                     unitConfig.isDead = true;
+                    mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
+                }
                 else
                     KillUnit();
             }
@@ -111,7 +114,7 @@ public class Health : MonoBehaviour
             unitConfig.mapConfig.turnSystem.playerUnits.Remove(unitConfig);
         else
         {
-            unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
+            //unitConfig.mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
         }
 
         Destroy(gameObject);

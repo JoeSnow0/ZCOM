@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: StatsZombie
   m_EditorClassIdentifier: 
   unitClassName: Zombie
-  maxUnitHealth: 3
+  maxUnitHealth: 4
   unitDefense: 0
   maxUnitActionPoints: 2
   maxUnitMovePoints: 5
+  moveCost: 0

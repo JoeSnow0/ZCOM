@@ -60,6 +60,11 @@ public class HUD : MonoBehaviour {
                     turnSystem.spawnEnemy();
                 endButton.SetActive(false);
                 mapConfig.tileMap.ResetColorGrid();
+                mapConfig.turnSystem.className.gameObject.SetActive(false);
+                if (turnSystem.playerUnits.Count < 1)
+                {
+                    victoryScript.winCheck(false);
+                }
             }
             else
             {
@@ -70,6 +75,7 @@ public class HUD : MonoBehaviour {
                 playerUI.SetActive(true);
                 alienUI.SetActive(false);
                 endButton.SetActive(true);
+                mapConfig.turnSystem.className.gameObject.SetActive(true);
             }
             //Add all functionality here, END TURN
             turnSystem.ResetActions(isPlayerTurn);
