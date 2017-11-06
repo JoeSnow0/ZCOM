@@ -5426,11 +5426,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4690030512747536, guid: 886ab84e6e88c5d47a21e6a82a562964, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5462,69 +5457,6 @@ Prefab:
     - target: {fileID: 4690030512747536, guid: 886ab84e6e88c5d47a21e6a82a562964, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319199428747010, guid: 886ab84e6e88c5d47a21e6a82a562964, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319199428747010, guid: 886ab84e6e88c5d47a21e6a82a562964, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotSpeed
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[1].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[1].outSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[2].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[2].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[2].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114285663534199116, guid: 886ab84e6e88c5d47a21e6a82a562964,
-        type: 2}
-      propertyPath: rotationCurve.m_Curve.Array.data[2].outSlope
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 886ab84e6e88c5d47a21e6a82a562964, type: 2}
