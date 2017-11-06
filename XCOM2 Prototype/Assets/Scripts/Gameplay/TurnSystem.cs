@@ -192,7 +192,7 @@ public class TurnSystem : MonoBehaviour {
                 }
                 hud.pressEnd(true);
                 if(selectedUnit != null)
-                    MoveCameraToTarget(selectedUnit.transform.position, 0);
+                    cameraControl.MoveToTarget(selectedUnit.transform.position);
             }
         }
         if (playerTurn)
@@ -245,7 +245,7 @@ public class TurnSystem : MonoBehaviour {
         //Move the marker to selected unit
         MoveMarker(unitMarker, selectedUnit.transform.position);
         //Move the camera to selected Unit
-        MoveCameraToTarget(selectedUnit.transform.position, 0);
+        cameraControl.MoveToTarget(selectedUnit.transform.position);
         //Update grid colors
         if(playerTurn)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
@@ -506,7 +506,7 @@ public class TurnSystem : MonoBehaviour {
         selectedUnit = playerUnits[0];
         selectedUnit.isSelected = true;
         MoveMarker(unitMarker, selectedUnit.transform.position);
-        MoveCameraToTarget(selectedUnit.transform.position, 0);
+        cameraControl.MoveToTarget(selectedUnit.transform.position);
         if (playerTurn && selectedUnit != null)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
 
@@ -527,7 +527,7 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit = playerUnits[i];
                 selectedUnit.isSelected = true;
                 MoveMarker(unitMarker, selectedUnit.transform.position);
-                MoveCameraToTarget(selectedUnit.transform.position, 0);
+                cameraControl.MoveToTarget(selectedUnit.transform.position);
                 if(playerTurn && selectedUnit != null)
                     mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
                 break;
@@ -618,11 +618,6 @@ public class TurnSystem : MonoBehaviour {
         enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
-    public void MoveCameraToTarget(Vector3 targetPosition, float time)
-    {
-        cameraControl.MoveToTarget(targetPosition, time);
-    }
-
     private void UpdateHUD()
     {
         foreach (UnitConfig unit in playerUnits)//Updates friendly units
@@ -645,7 +640,7 @@ public class TurnSystem : MonoBehaviour {
 
         foreach (UnitConfig unit in enemyUnits)
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || selectedUnit != null && selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
             {
                 foreach (Image image in unit.imageElements.elements)
                 {

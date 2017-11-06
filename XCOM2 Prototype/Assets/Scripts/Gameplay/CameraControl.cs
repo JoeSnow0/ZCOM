@@ -144,18 +144,46 @@ public class CameraControl : MonoBehaviour {
         //}
 
         //Moves camera to selected unit
-        if (moveToTargetLerp <= 1 && movingCamera)
+        if (movingCamera)
         {
             moveToTargetLerp += Time.deltaTime / 0.5f;
             cameraTarget.transform.position = Vector3.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, moveToTargetLerp));
         }
     }
     //Move the camera to a specific position within the selected time
-    public void MoveToTarget(Vector3 selectedPosition, float time)
+    public void MoveToTarget(Vector3 selectedPosition, bool overrideTime = false, float time = 0)
+    {
+        MoveToTarget(selectedPosition, cameraTarget.transform.position, overrideTime, time);
+    }
+
+    public void MoveToTarget(Vector3 selectedPosition, Vector3 cameraStartPosition, bool overrideTime = false, float time = 0)
     {
         movingCamera = true;
-        moveToTargetLerp = time;
-        startPosition = cameraTarget.transform.position;
+
+        if (overrideTime == false)
+        {
+            moveToTargetLerp = time;
+        }
+
+        if (cameraStartPosition == null)
+        {
+            startPosition = cameraTarget.transform.position;
+        }
+        else
+        {
+            startPosition = cameraStartPosition;
+        }
+
         targetPosition = selectedPosition;
+    }
+
+    public void SetCameraTime(float newTime)
+    {
+        moveToTargetLerp = newTime;
+    }
+
+    public Vector3 GetCameraPosition()
+    {
+        return cameraTarget.transform.position;
     }
 }

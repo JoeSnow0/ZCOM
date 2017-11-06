@@ -1785,7 +1785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements: []
   transparencyMax: 1
-  transparencyMin: 0.3
+  transparencyMin: 0.5
 --- !u!114 &114396943117730216
 MonoBehaviour:
   m_ObjectHideFlags: 1
