@@ -23,7 +23,7 @@ public class CameraControl : MonoBehaviour {
     [Tooltip("Speed for camera movement")]
     [SerializeField]
     [RangeAttribute(0f, 100f)]
-    float rotSpeed;
+    private float rotationSpeed;
     [Tooltip("Speed for camera zoom")]
     [SerializeField]
     [RangeAttribute(0, 100)]
@@ -140,7 +140,7 @@ public class CameraControl : MonoBehaviour {
         }
         if (rotateLerp < 1)
         {
-            rotateLerp += Time.deltaTime;
+            rotateLerp += Time.deltaTime * rotationSpeed;
             cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
         }
 
