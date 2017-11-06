@@ -2025,30 +2025,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114356259512111316, guid: 9637b752a4488454b86eaa1a4b1f0cca,
-        type: 2}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 2800000, guid: 757638475de44d043a3707513a66645b, type: 3}
-    - target: {fileID: 1399159083848536, guid: 9637b752a4488454b86eaa1a4b1f0cca, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224139977381836754, guid: 9637b752a4488454b86eaa1a4b1f0cca,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 900
-      objectReference: {fileID: 0}
-    - target: {fileID: 114593967205221076, guid: 9637b752a4488454b86eaa1a4b1f0cca,
-        type: 2}
-      propertyPath: m_FontData.m_Alignment
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114593967205221076, guid: 9637b752a4488454b86eaa1a4b1f0cca,
-        type: 2}
-      propertyPath: m_Text
-      value: Loading . . . . .
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9637b752a4488454b86eaa1a4b1f0cca, type: 2}
   m_IsPrefabParent: 0

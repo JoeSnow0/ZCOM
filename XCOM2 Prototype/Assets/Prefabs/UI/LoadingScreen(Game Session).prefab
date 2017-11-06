@@ -102,6 +102,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224203548813768846}
+  - component: {fileID: 114524441499855992}
   m_Layer: 0
   m_Name: LoadingScreen(Game Session)
   m_TagString: Untagged
@@ -217,13 +218,25 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 183
-    m_Alignment: 1
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Loading Complete
+--- !u!114 &114524441499855992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1998186926933178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b4b8eac0227f84c8b4d49e9d328412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingScreen: {fileID: 1998186926933178}
 --- !u!114 &114683531330156454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -243,7 +256,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 757638475de44d043a3707513a66645b, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -296,7 +309,7 @@ RectTransform:
   m_GameObject: {fileID: 1998186926933178}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.60984, y: 0.60984, z: 0.60984}
+  m_LocalScale: {x: 0.58611, y: 0.58611, z: 1}
   m_Children:
   - {fileID: 224818549156267066}
   - {fileID: 4750485492049660}

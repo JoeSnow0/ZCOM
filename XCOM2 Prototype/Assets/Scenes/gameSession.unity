@@ -5840,31 +5840,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114683531330156454, guid: 8eb686c2d3cf7c04995538d4706101a4,
-        type: 2}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 2800000, guid: 757638475de44d043a3707513a66645b, type: 3}
-    - target: {fileID: 224203548813768846, guid: 8eb686c2d3cf7c04995538d4706101a4,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.58611
-      objectReference: {fileID: 0}
-    - target: {fileID: 224203548813768846, guid: 8eb686c2d3cf7c04995538d4706101a4,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.58611
-      objectReference: {fileID: 0}
-    - target: {fileID: 224203548813768846, guid: 8eb686c2d3cf7c04995538d4706101a4,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344587174339010, guid: 8eb686c2d3cf7c04995538d4706101a4,
-        type: 2}
-      propertyPath: m_FontData.m_Alignment
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8eb686c2d3cf7c04995538d4706101a4, type: 2}
   m_IsPrefabParent: 0
@@ -6356,28 +6331,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224309394586797432, guid: 779cf735e3cf5b44181d66a22f69334e,
     type: 2}
   m_PrefabInternal: {fileID: 1981856078}
---- !u!1 &2020267911 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1998186926933178, guid: 8eb686c2d3cf7c04995538d4706101a4,
-    type: 2}
-  m_PrefabInternal: {fileID: 1814608331}
 --- !u!224 &2020267912 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224203548813768846, guid: 8eb686c2d3cf7c04995538d4706101a4,
     type: 2}
   m_PrefabInternal: {fileID: 1814608331}
---- !u!114 &2020267913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2020267911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b4b8eac0227f84c8b4d49e9d328412, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingScreen: {fileID: 2020267911}
 --- !u!1001 &2097190326
 Prefab:
   m_ObjectHideFlags: 0
