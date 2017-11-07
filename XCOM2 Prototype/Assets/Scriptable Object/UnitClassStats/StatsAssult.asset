@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: StatsAssult
   m_EditorClassIdentifier: 
   unitClassName: ASSAULT
+  classIcon: {fileID: 21300000, guid: 720fc53fc6d1d7148affcb0286488745, type: 3}
   maxUnitHealth: 6
   unitDefense: 1
   maxUnitActionPoints: 2

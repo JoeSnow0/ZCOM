@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UnitConfig : MonoBehaviour
 {
+    public string unitName;
     public Color[] unitColor;
     //public Transform dmgStartPos;
     //public GameObject floatingDmg;
@@ -42,6 +43,8 @@ public class UnitConfig : MonoBehaviour
     public bool isSprinting = false;
     public bool isShooting = false;
     public bool isDead = false;
+    public bool isHighlighted = false;
+
     public SoldierAnimation animatorS;
     public ZombieAnimation animatorZ;
 
@@ -50,7 +53,7 @@ public class UnitConfig : MonoBehaviour
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
-    [HideInInspector]public ImageElements imageElements;
+    [HideInInspector]public Animator animatorHealthbar;
     Vector3 cameraStartPosition;
 
     //BaseUnitCopy
@@ -64,7 +67,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        imageElements = GetComponent<ImageElements>();
+        animatorHealthbar = GetComponentInChildren<Animator>();
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -270,7 +273,7 @@ public class UnitConfig : MonoBehaviour
 
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null)// if there is no path leave funktion
+        if (currentPath == null || isShooting)// if there is no path (or unit shoots) leave function
         {
             return;
         }

@@ -257,8 +257,8 @@ GameObject:
   - component: {fileID: 114346069449372304}
   - component: {fileID: 114396943117730216}
   - component: {fileID: 114840236989742042}
-  - component: {fileID: 136676663913072674}
-  - component: {fileID: 114360077344437516}
+  - component: {fileID: 65030812391393474}
+  - component: {fileID: 136971786891125580}
   m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Unit
@@ -460,6 +460,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4688172312480720}
+  - component: {fileID: 95845775899140666}
   m_Layer: 0
   m_Name: UIHolder
   m_TagString: Untagged
@@ -1411,7 +1412,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1165749053097084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14, y: 0, z: 8}
+  m_LocalPosition: {x: 16, y: 0, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4688172312480720}
@@ -1610,6 +1611,18 @@ Transform:
   m_Father: {fileID: 4636475947599102}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65030812391393474
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165749053097084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!95 &95553894188928714
 Animator:
   serializedVersion: 3
@@ -1621,6 +1634,23 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: dd05ebf64ae7b274e8f7a5083748deb4, type: 3}
   m_Controller: {fileID: 9100000, guid: 759fedb8f6db01348b9a29b3d1065d5f, type: 2}
   m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95845775899140666
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1510474630942106}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e4deda876744c74da5121053fecba39, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -1772,20 +1802,6 @@ MonoBehaviour:
   isSprinting: 0
   pathProgress: 0
   unitClassStats: {fileID: 11400000, guid: 0748c71494070e741bc61356489eecd7, type: 2}
---- !u!114 &114360077344437516
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1165749053097084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537ba66ce86c40a488cfa40dc49051fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elements: []
-  transparencyMax: 1
-  transparencyMin: 0.5
 --- !u!114 &114396943117730216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1960,6 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: 
   unitColor:
   - {r: 0.6745098, g: 0.13725491, b: 0.1764706, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
@@ -1981,11 +1998,12 @@ MonoBehaviour:
   isSprinting: 0
   isShooting: 0
   isDead: 0
+  isHighlighted: 0
   animatorS: {fileID: 0}
   animatorZ: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  imageElements: {fileID: 0}
+  animatorHealthbar: {fileID: 0}
 --- !u!114 &114972056034855142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2028,7 +2046,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!136 &136676663913072674
+--- !u!136 &136971786891125580
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2037,10 +2055,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.65
-  m_Height: 2.31
+  m_Radius: 0.41
+  m_Height: 1.92
   m_Direction: 1
-  m_Center: {x: 0, y: 0.86, z: 0.21}
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!137 &137045931016295944
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
