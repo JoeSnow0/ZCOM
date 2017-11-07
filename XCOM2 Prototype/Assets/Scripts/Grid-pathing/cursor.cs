@@ -8,6 +8,7 @@ public class cursor : MonoBehaviour {
 
     TurnSystem turnSystem;
     TileMap map;
+    UnitConfig lastHit;
 
     public GameObject explosionObject;
 
@@ -60,6 +61,20 @@ public class cursor : MonoBehaviour {
                         turnSystem.selectedUnit.MoveNextTile();
                     }
                 }
+            }
+
+            if(hitPosition.collider.CompareTag("Unit") || hitPosition.collider.CompareTag("FriendlyUnit"))
+            {
+                if(lastHit != null && lastHit != hitPosition.collider.GetComponent<UnitConfig>())
+                {
+                    lastHit.isHighlighted = false;
+                }
+                lastHit = hitPosition.collider.GetComponent<UnitConfig>();
+                lastHit.isHighlighted = true;
+            }
+            else if(lastHit != null)
+            {
+                lastHit.isHighlighted = false;
             }
         }
     }

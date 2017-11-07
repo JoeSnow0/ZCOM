@@ -445,6 +445,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4094814771030092}
+  - component: {fileID: 95460920759550100}
   m_Layer: 0
   m_Name: UIHolder
   m_TagString: Untagged
@@ -1948,7 +1949,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!82 &82699838972468698
 AudioSource:
@@ -2041,6 +2042,23 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 259354d46f164384f898d9d012857687, type: 3}
   m_Controller: {fileID: 9100000, guid: 373725a1280d25e4ca0ef14f4a67a9f5, type: 2}
   m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95460920759550100
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1386426822824884}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e4deda876744c74da5121053fecba39, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -2223,8 +2241,12 @@ MonoBehaviour:
   isSprinting: 0
   isShooting: 0
   isDead: 0
+  isHighlighted: 0
+  animatorS: {fileID: 0}
+  animatorZ: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
+  animatorHealthbar: {fileID: 0}
 --- !u!114 &114794772884591812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2257,6 +2279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8c5a616b3a253498109618aa552bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: []
   healthSlider: {fileID: 114870263291696410}
   bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,

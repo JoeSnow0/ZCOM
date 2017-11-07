@@ -26,6 +26,12 @@ public class TurnSystem : MonoBehaviour {
     public GameObject gameOver;
     public Text gameOverText;
     public HUD hud;
+    public GameObject unitInfoHolder;
+    public Image classIcon;
+    public Text className;
+    public Text unitName;
+    Animator classInformationAnimator;
+
     [Header("Colors")]
     public Color defeatColor;
     public Color victoryColor;
@@ -43,7 +49,7 @@ public class TurnSystem : MonoBehaviour {
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType;
-    public Text className;
+
 
     //Script refs
     public EnemySpawn enemySpawn;
@@ -68,7 +74,7 @@ public class TurnSystem : MonoBehaviour {
     //Distance Variable (maybe put elsewhere?)
     public float distance;
 
-
+    private UnitConfig lastSelectedUnit;
 
     void Start ()
     {
@@ -77,7 +83,8 @@ public class TurnSystem : MonoBehaviour {
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-        
+
+        classInformationAnimator = classIcon.transform.GetComponentInParent<Animator>();
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -250,7 +257,7 @@ public class TurnSystem : MonoBehaviour {
         if(playerTurn)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
 
-        className.text = selectedUnit.unitClassStats.unitClassName;
+
         //HACK: Buttons are broken uncomment when fixed
         ////Clear old abilities
         //generateButtons.ClearCurrentButtons();
@@ -509,9 +516,6 @@ public class TurnSystem : MonoBehaviour {
         cameraControl.MoveToTarget(selectedUnit.transform.position);
         if (playerTurn && selectedUnit != null)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
-
-        if (selectedUnit != null)
-            className.text = selectedUnit.unitClassStats.unitClassName;
     }
 
     public void SelectNextUnit()
@@ -538,8 +542,7 @@ public class TurnSystem : MonoBehaviour {
             selectedUnit = playerUnits[0];
             selectedUnit.isSelected = true;
         }*/
-        if(selectedUnit != null)
-            className.text = selectedUnit.unitClassStats.unitClassName;
+        
         
     }
     public void StartNextEnemy()
@@ -620,40 +623,41 @@ public class TurnSystem : MonoBehaviour {
 
     private void UpdateHUD()
     {
+        unitInfoHolder.SetActive(playerTurn);
+        
+        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
+        {
+            classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
+            className.text = selectedUnit.unitClassStats.unitClassName;
+            unitName.text = selectedUnit.unitName;
+            classIcon.sprite = selectedUnit.unitClassStats.classIcon;
+        }
+
         foreach (UnitConfig unit in playerUnits)//Updates friendly units
         {
-            if (unit.isSelected)
+            if (unit.isSelected || unit.isHighlighted)
             {
-                foreach (Image image in unit.imageElements.elements)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
-                }
+                unit.animatorHealthbar.SetBool("display", true);
             }
             else
             {
-                foreach (Image image in unit.health.healthBar)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
-                }
+                unit.animatorHealthbar.SetBool("display", false);
             }
         }
 
         foreach (UnitConfig unit in enemyUnits)
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || selectedUnit != null && selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
             {
-                foreach (Image image in unit.imageElements.elements)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
-                }
+                unit.animatorHealthbar.SetBool("display", true);
             }
-            else
+            else if(unit.animatorHealthbar != null)
             {
-                foreach (Image image in unit.health.healthBar)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
-                }
+                unit.animatorHealthbar.SetBool("display", false);
             }
         }
+
+        if(selectedUnit != null && playerTurn)
+            lastSelectedUnit = selectedUnit;
     }
 }
