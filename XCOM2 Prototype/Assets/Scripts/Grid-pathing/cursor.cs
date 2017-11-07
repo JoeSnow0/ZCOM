@@ -38,6 +38,7 @@ public class cursor : MonoBehaviour {
                 if (activeObject != cursorObject)
                 {
                     activeObject = cursorObject;
+                    if(explosionObject != null)
                     explosionObject.transform.position = activeObject.transform.position;
 
                     if (turnSystem.playerTurn) {
