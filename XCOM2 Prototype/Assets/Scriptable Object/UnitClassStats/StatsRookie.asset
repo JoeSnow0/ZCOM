@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: StatsRookie
   m_EditorClassIdentifier: 
   unitClassName: ROOKIE
+  classIcon: {fileID: 21300000, guid: e116a0e7e610f42489c43fb5794d68cf, type: 3}
   maxUnitHealth: 4
   unitDefense: 1
   maxUnitActionPoints: 2

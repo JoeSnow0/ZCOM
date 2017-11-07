@@ -9,9 +9,11 @@ using UnityEngine;
 public class ClassStatsObject : ScriptableObject
 {
     
-    [Header("Class Name")]
+    [Header("Class Name/Icon")]
     [Tooltip("Name of the class")]
     public string unitClassName;
+    public Sprite classIcon;
+
     [Header("Health")]
     [Tooltip("The amount of health this class has")]
     [RangeAttribute(1, 40)]

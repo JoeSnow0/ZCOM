@@ -26,6 +26,12 @@ public class TurnSystem : MonoBehaviour {
     public GameObject gameOver;
     public Text gameOverText;
     public HUD hud;
+    public GameObject unitInfoHolder;
+    public Image classIcon;
+    public Text className;
+    public Text unitName;
+    Animator classInformationAnimator;
+
     [Header("Colors")]
     public Color defeatColor;
     public Color victoryColor;
@@ -44,7 +50,7 @@ public class TurnSystem : MonoBehaviour {
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType;
-    public Text className;
+
 
     //Script refs
     public EnemySpawn enemySpawn;
@@ -68,7 +74,7 @@ public class TurnSystem : MonoBehaviour {
     //Distance Variable (maybe put elsewhere?)
     public float distance;
 
-
+    private UnitConfig lastSelectedUnit;
 
     void Start ()
     {
@@ -77,7 +83,8 @@ public class TurnSystem : MonoBehaviour {
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-        
+
+        classInformationAnimator = classIcon.transform.GetComponentInParent<Animator>();
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {

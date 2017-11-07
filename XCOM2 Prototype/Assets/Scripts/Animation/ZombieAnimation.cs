@@ -74,6 +74,7 @@ public class ZombieAnimation : MonoBehaviour {
     public void Death()
     {
         unitConfig.health.KillUnit();
+        unitConfig.mapConfig.tileMap.ChangeGridColor(unitConfig.mapConfig.turnSystem.selectedUnit.movePoints, unitConfig.mapConfig.turnSystem.selectedUnit.actionPoints.actions, unitConfig.mapConfig.turnSystem.selectedUnit);
     }
 }
 

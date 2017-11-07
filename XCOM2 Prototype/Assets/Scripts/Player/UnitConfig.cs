@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UnitConfig : MonoBehaviour
 {
+    public string unitName;
     public Color[] unitColor;
     //public Transform dmgStartPos;
     //public GameObject floatingDmg;
@@ -43,6 +44,8 @@ public class UnitConfig : MonoBehaviour
     public bool isSprinting = false;
     public bool isShooting = false;
     public bool isDead = false;
+    public bool isHighlighted = false;
+
     public SoldierAnimation animatorS;
     public ZombieAnimation animatorZ;
 
