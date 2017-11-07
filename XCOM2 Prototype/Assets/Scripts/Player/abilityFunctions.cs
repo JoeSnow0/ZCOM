@@ -28,6 +28,7 @@ public class abilityFunctions : MonoBehaviour {
             return true;
         }
         previousAbility = abilityIndex;
+        mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
         return false;
     }
 

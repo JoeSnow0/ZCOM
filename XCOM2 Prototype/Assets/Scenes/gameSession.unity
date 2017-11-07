@@ -585,6 +585,7 @@ MonoBehaviour:
   - {fileID: 1740173254}
   - {fileID: 1905824202}
   selectedUnit: {fileID: 0}
+  selectedTarget: {fileID: 0}
   mapConfig: {fileID: 0}
   generateButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
@@ -608,9 +609,9 @@ MonoBehaviour:
       type: 2}
     spawnNumberOfEnemys: 5
     activatTurn: 0
+  EnemyTargeting: 0
   nextTarget: 9
   previousTarget: 304
-  EnemyTargeting: 0
   distance: 0
 --- !u!1 &100938974
 GameObject:
@@ -4684,6 +4685,7 @@ GameObject:
   - component: {fileID: 99987145}
   - component: {fileID: 1461354524}
   - component: {fileID: 1461354523}
+  - component: {fileID: 1461354527}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -4706,6 +4708,7 @@ MonoBehaviour:
   turnSystem: {fileID: 99987145}
   enemySpawn: {fileID: 1461354524}
   tileMap: {fileID: 1461354525}
+  stateController: {fileID: 1461354527}
 --- !u!114 &1461354524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4736,7 +4739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e90e5f580dcdde4b92ccab6c38e3f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedUnit: {fileID: 0}
   tileType:
   - name: walk
     tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
@@ -4769,6 +4771,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1461354527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1461354522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentState: 0
 --- !u!1001 &1467906653
 Prefab:
   m_ObjectHideFlags: 0
@@ -5353,7 +5367,7 @@ Prefab:
     - target: {fileID: 224463912301409632, guid: aef02f85c367c134fa9db6150d1cd9f1,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4934291528973080, guid: aef02f85c367c134fa9db6150d1cd9f1, type: 2}
       propertyPath: m_LocalScale.x
@@ -5371,7 +5385,7 @@ Prefab:
     - target: {fileID: 224463912301409632, guid: aef02f85c367c134fa9db6150d1cd9f1,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 114530827884062796, guid: aef02f85c367c134fa9db6150d1cd9f1,
         type: 2}

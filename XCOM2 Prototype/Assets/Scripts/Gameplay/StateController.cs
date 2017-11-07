@@ -13,14 +13,22 @@ public class StateController : MonoBehaviour
         SetCurrentState(GameState.TacticalMode);
     }
 
-    public void SetCurrentState(GameState state)
+    public void SetCurrentState(GameState setState)
     {
-        CurrentState = state;
+        CurrentState = setState;
     }
 
-    public GameState CheckCurrentState()
+    public bool CheckCurrentState(GameState CompareState)
     {
-        return CurrentState;
+        if (CurrentState == CompareState)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 

@@ -84,7 +84,7 @@ public class HUD : MonoBehaviour {
             
             if (isPlayerTurn)
             {
-                turnSystem.SwitchTarget(true, turnSystem.playerUnits,turnSystem.selectedUnit);
+                turnSystem.SwitchTarget(true, turnSystem.playerUnits,turnSystem.selectedPlayer);
             }
 
             if (isPlayerTurn)

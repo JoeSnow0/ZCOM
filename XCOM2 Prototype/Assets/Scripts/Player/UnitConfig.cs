@@ -38,6 +38,7 @@ public class UnitConfig : MonoBehaviour
 
     public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
+    public bool isIdle = true;
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isShooting = false;
@@ -50,7 +51,7 @@ public class UnitConfig : MonoBehaviour
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
-    [HideInInspector]public ImageElements imageElements;
+    //[HideInInspector]public ImageElements imageElements;
     Vector3 cameraStartPosition;
 
     //BaseUnitCopy
@@ -64,7 +65,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        imageElements = GetComponent<ImageElements>();
+        //imageElements = GetComponent<ImageElements>();
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -105,6 +106,8 @@ public class UnitConfig : MonoBehaviour
 
     void Update()
     {
+        //Check if the unit is doing something or not
+        CheckifIdle();
         if (!isSelected && isFriendly)
         {
             currentPath = null;
@@ -151,11 +154,11 @@ public class UnitConfig : MonoBehaviour
                 pathIndex = 0;
                 mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
                 if (mapConfig.turnSystem.playerTurn)
-                    mapConfig.turnSystem.cameraControl.MoveToTarget(mapConfig.turnSystem.selectedUnit.transform.position);
+                    mapConfig.turnSystem.cameraControl.MoveToTarget(mapConfig.turnSystem.selectedPlayer.transform.position);
 
                 if (actionPoints.actions <= 0)
                 {
-                    mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedUnit);
+                    mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedPlayer);
                 }
                 else if(actionPoints.actions > 0 && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
@@ -251,7 +254,7 @@ public class UnitConfig : MonoBehaviour
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
-                            mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedUnit);
+                            mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedPlayer);
                         }
                     }
                 }
@@ -368,5 +371,15 @@ public class UnitConfig : MonoBehaviour
     {
         isShooting = true;
     }
-
+    public void CheckifIdle()
+    {
+        if (isShooting || isMoving || isSprinting)
+        {
+            isIdle = false;
+        }
+        else
+        {
+            isIdle = true;
+        }
+    }
 }

@@ -86,7 +86,7 @@ public class SoldierAnimation : MonoBehaviour {
     }
     public void End()
     {
-        mapConfig.turnSystem.selectUnit(mapConfig.turnSystem.selectedUnit);
+        mapConfig.turnSystem.selectUnit(mapConfig.turnSystem.selectedPlayer);
         unit.isShooting = false;
         unit.actionPoints.SubtractAllActions();
     }
