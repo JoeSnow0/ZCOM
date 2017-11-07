@@ -39,7 +39,6 @@ public class UnitMovement : MonoBehaviour {
 
         if (isMoving == true)
         {
-            unitConfig.mapConfig.turnSystem.MoveCameraToTarget(transform.position, 0);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
 
@@ -71,7 +70,6 @@ public class UnitMovement : MonoBehaviour {
                 currentPath = null;
                 pathIndex = 0;
                 if (unitConfig.mapConfig.turnSystem.playerTurn)
-                    unitConfig.mapConfig.turnSystem.MoveCameraToTarget(unitConfig.mapConfig.turnSystem.selectedUnit.transform.position, 0);
 
                 if (unitConfig.actionPoints.actions <= 0)
                 {

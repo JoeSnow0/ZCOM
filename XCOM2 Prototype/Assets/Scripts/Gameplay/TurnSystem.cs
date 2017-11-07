@@ -122,6 +122,7 @@ public class TurnSystem : MonoBehaviour {
 	void Update () {
 
         attackUnit();
+        UpdateHUD();
 
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
@@ -203,7 +204,7 @@ public class TurnSystem : MonoBehaviour {
                 }
                 hud.pressEnd(true);
                 if(selectedUnit != null)
-                    MoveCameraToTarget(selectedUnit.transform.position, 0);
+                    cameraControl.MoveToTarget(selectedUnit.transform.position);
             }
         }
         if (playerTurn)
@@ -312,6 +313,10 @@ public class TurnSystem : MonoBehaviour {
     //Cycle through list of targets
     public void SwitchTarget(bool nextTarget, List<UnitConfig> unitList, UnitConfig selected)
     {
+        if (selectedUnit.isMoving)
+        {
+            return;
+        }
         int currentUnitIndex;
         
         //check if list is empty
@@ -423,6 +428,9 @@ public class TurnSystem : MonoBehaviour {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
                         if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
+                            //Spend Actions
+                            totalActions -= selectedUnit.actionPoints.actions;
+                            selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
@@ -434,10 +442,6 @@ public class TurnSystem : MonoBehaviour {
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;
 
-
-                            //Spend Actions
-                            totalActions -= selectedUnit.actionPoints.actions;
-                            //selectedUnit.actionPoints.SubtractAllActions();
                         }
                     }
                 }
@@ -586,8 +590,42 @@ public class TurnSystem : MonoBehaviour {
         enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
-    public void MoveCameraToTarget(Vector3 targetPosition, float time)
+    private void UpdateHUD()
     {
-        cameraControl.MoveToTarget(targetPosition, time);
+        foreach (UnitConfig unit in playerUnits)//Updates friendly units
+        {
+            if (unit.isSelected)
+            {
+                foreach (Image image in unit.imageElements.elements)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
+                }
+            }
+            else
+            {
+                foreach (Image image in unit.health.healthBar)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
+                }
+            }
+        }
+
+        foreach (UnitConfig unit in enemyUnits)
+        {
+            if (!playerTurn && unit.enemyAi.isMyTurn || selectedUnit != null && selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            {
+                foreach (Image image in unit.imageElements.elements)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
+                }
+            }
+            else
+            {
+                foreach (Image image in unit.health.healthBar)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
+                }
+            }
+        }
     }
 }

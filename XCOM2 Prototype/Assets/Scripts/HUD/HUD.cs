@@ -76,6 +76,7 @@ public class HUD : MonoBehaviour {
                 alienUI.SetActive(false);
                 endButton.SetActive(true);
                 mapConfig.turnSystem.className.gameObject.SetActive(true);
+                mapConfig.turnSystem.cameraControl.playerMovedCamera = false;
             }
             //Add all functionality here, END TURN
             turnSystem.ResetActions(isPlayerTurn);

@@ -50,6 +50,8 @@ public class UnitConfig : MonoBehaviour
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
+    [HideInInspector]public ImageElements imageElements;
+    Vector3 cameraStartPosition;
 
     //BaseUnitCopy
     void Start()
@@ -62,6 +64,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        imageElements = GetComponent<ImageElements>();
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -114,7 +117,7 @@ public class UnitConfig : MonoBehaviour
 
         if (isMoving == true)
         {
-            mapConfig.turnSystem.MoveCameraToTarget(transform.position, 1);
+            mapConfig.turnSystem.cameraControl.MoveToTarget(transform.position, cameraStartPosition, true);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
 
@@ -148,7 +151,7 @@ public class UnitConfig : MonoBehaviour
                 pathIndex = 0;
                 mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
                 if (mapConfig.turnSystem.playerTurn)
-                    mapConfig.turnSystem.MoveCameraToTarget(mapConfig.turnSystem.selectedUnit.transform.position, 0);
+                    mapConfig.turnSystem.cameraControl.MoveToTarget(mapConfig.turnSystem.selectedUnit.transform.position);
 
                 if (actionPoints.actions <= 0)
                 {
@@ -267,7 +270,7 @@ public class UnitConfig : MonoBehaviour
 
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null)// if there is no path leave funktion
+        if (currentPath == null || isShooting)// if there is no path (or unit shoots) leave function
         {
             return;
         }
@@ -283,6 +286,8 @@ public class UnitConfig : MonoBehaviour
         }
         if (remainingMovement > movePoints)//can you move the unit 
         {
+            mapConfig.turnSystem.cameraControl.SetCameraTime(0);
+            cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
             isMoving = true;//start moving in the update
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
@@ -293,6 +298,8 @@ public class UnitConfig : MonoBehaviour
         }
         if (remainingMovement > 0 && actionPoints.actions > 1)//can you move the unit 
         {
+            mapConfig.turnSystem.cameraControl.SetCameraTime(0);
+            cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
             isSprinting = true;
             isMoving = true;//start moving in the update
             mapConfig.tileMap.ResetColorGrid();
@@ -325,6 +332,8 @@ public class UnitConfig : MonoBehaviour
 
         if (remainingMovement > 0)//can you move the unit 
         {
+            mapConfig.turnSystem.cameraControl.SetCameraTime(0);
+            cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
             isMoving = true;//start moving in the update
             actionPoints.SubtractActions(1);
             return;
@@ -341,6 +350,8 @@ public class UnitConfig : MonoBehaviour
             }
             if (currentPath != null)
             {
+                mapConfig.turnSystem.cameraControl.SetCameraTime(0);
+                cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
                 isMoving = true;
                 actionPoints.SubtractActions(2);
             }
