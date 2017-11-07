@@ -341,6 +341,10 @@ public class TurnSystem : MonoBehaviour {
 
     public void SwitchFocusTarget(bool nextTarget)
     {
+        if (selectedUnit.isMoving)
+        {
+            return;
+        }
         int currentUnitIndex;
 
         //check if list is empty
@@ -435,7 +439,7 @@ public class TurnSystem : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
+            if (selectedUnit.actionPoints.actions >= 1 && !selectedUnit.isMoving) //Checks if the unit has enough action points and isn't moving
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -446,6 +450,9 @@ public class TurnSystem : MonoBehaviour {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
                         if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
+                            //Spend Actions
+                            totalActions -= selectedUnit.actionPoints.actions;
+                            selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
@@ -457,10 +464,6 @@ public class TurnSystem : MonoBehaviour {
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;
 
-
-                            //Spend Actions
-                            totalActions -= selectedUnit.actionPoints.actions;
-                            //selectedUnit.actionPoints.SubtractAllActions();
                         }
                     }
                 }
