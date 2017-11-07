@@ -9,6 +9,8 @@ public class cursor : MonoBehaviour {
     TurnSystem turnSystem;
     TileMap map;
 
+    public GameObject explosionObject;
+
     private void Start()
     {
         turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
@@ -36,6 +38,8 @@ public class cursor : MonoBehaviour {
                 if (activeObject != cursorObject)
                 {
                     activeObject = cursorObject;
+                    if(explosionObject != null)
+                    explosionObject.transform.position = activeObject.transform.position;
 
                     if (turnSystem.playerTurn) {
                         if (turnSystem.selectedUnit != null && !turnSystem.selectedUnit.isMoving)
