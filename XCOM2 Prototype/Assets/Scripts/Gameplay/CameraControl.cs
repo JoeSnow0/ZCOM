@@ -48,7 +48,7 @@ public class CameraControl : MonoBehaviour {
     Vector3 targetRotation;
     int yRotation = 45;
     bool movingCamera = false;
-    private Vector3 velocity = Vector3.zero;
+    //private Vector3 velocity = Vector3.zero;
 
     MapConfig mapConfig;
 

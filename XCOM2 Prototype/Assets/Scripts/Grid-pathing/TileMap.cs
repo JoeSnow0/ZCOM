@@ -4,10 +4,9 @@ using UnityEngine;
 using System.Linq;
 
 public class TileMap : MonoBehaviour {
+    
 
-    public UnitConfig selectedUnit;//needs to change for multiple units
-
-    public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
+    public TileType[] tileType;//walkable and unwalkable terrain can be found in here
 
     [System.Serializable]
     public class GridMaterials
@@ -55,12 +54,12 @@ public class TileMap : MonoBehaviour {
         changedColoredGrid = new List<ClickebleTile>();
     }
 
-    void GenerateMapData()//make the grid and it's obsticals.
+    void GenerateMapData()//make the grid and it's obstacles.
     {
         //Allocate our map tiles
         tiles = new int[mapSizeX, mapSizeY];
 
-        //creat map tiles
+        //create map tiles
         for (int x = 0; x < mapSizeX; x++)
         {
             for (int y = 0; y < mapSizeY; y++)
@@ -69,7 +68,7 @@ public class TileMap : MonoBehaviour {
             }
         }
 
-        {//unwalkeble terain
+        {//unwalkable terrain
             //botton left aricraft and stone
             {
                 for (int x = 0; x < 4; x++)
@@ -351,8 +350,8 @@ public class TileMap : MonoBehaviour {
 
     public void GeneratePathTo(int tileX, int tileY, UnitConfig selected)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit = selected;
-        selectedUnit.currentPath = null;
+        
+        selected.currentPath = null;
 
         if (UnitCanEnterTile(tileX,tileY) == false)
         {
@@ -372,8 +371,8 @@ public class TileMap : MonoBehaviour {
         List<Node> unvisited = new List<Node>();
 
         Node source = graph[
-                            selectedUnit.tileX,
-                            selectedUnit.tileY
+                            selected.tileX,
+                            selected.tileY
                             ];
         Node target = graph[
                             tileX,
@@ -446,7 +445,7 @@ public class TileMap : MonoBehaviour {
         //current path is from goal to unit here we reverse it. to make it normal
         currentPath.Reverse();
         
-        selectedUnit.currentPath = currentPath;
+         selected.currentPath = currentPath;
     }
 
 

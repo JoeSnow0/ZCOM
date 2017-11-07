@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114140638950140348}
   - component: {fileID: 114995828931628862}
   - component: {fileID: 114105975272966794}
+  - component: {fileID: 114728553140962198}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -57,6 +58,7 @@ MonoBehaviour:
   turnSystem: {fileID: 114140638950140348}
   enemySpawn: {fileID: 114995828931628862}
   tileMap: {fileID: 114764200081771642}
+  stateController: {fileID: 114728553140962198}
 --- !u!114 &114140638950140348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,9 +126,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   selectedUnit: {fileID: 0}
+  selectedTarget: {fileID: 0}
   mapConfig: {fileID: 0}
   generateButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
+  className: {fileID: 0}
   enemySpawn: {fileID: 0}
   cameraControl: {fileID: 0}
   playerTurn: 1
@@ -136,7 +140,7 @@ MonoBehaviour:
   spawnSetup:
   - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
       type: 2}
-    spawnNumberOfEnemys: 1
+    spawnNumberOfEnemys: 3
     activatTurn: 0
   - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
       type: 2}
@@ -146,10 +150,22 @@ MonoBehaviour:
       type: 2}
     spawnNumberOfEnemys: 5
     activatTurn: 0
+  EnemyTargeting: 0
   nextTarget: 9
   previousTarget: 304
-  EnemyTargeting: 0
   distance: 0
+--- !u!114 &114728553140962198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402832461053760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentState: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e90e5f580dcdde4b92ccab6c38e3f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedUnit: {fileID: 0}
   tileType:
   - name: walk
     tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,

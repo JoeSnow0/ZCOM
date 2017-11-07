@@ -152,7 +152,7 @@ public class UnitConfig : MonoBehaviour
 
                 if (actionPoints.actions <= 0)
                 {
-                    mapConfig.turnSystem.SelectNextUnit();
+                    mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedUnit);
                 }
                 else if(actionPoints.actions > 0 && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
@@ -248,7 +248,7 @@ public class UnitConfig : MonoBehaviour
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
-                            mapConfig.turnSystem.SelectNextUnit();
+                            mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedUnit);
                         }
                     }
                 }

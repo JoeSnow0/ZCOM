@@ -1,33 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class abilityFunctions : MonoBehaviour {
 
     public MapConfig mapConfig;
-    public TextMesh infoText;
-    //bool confirmAbility = false;
+    public Text abilityTooltip;
     int previousAbility = -1;
 
-    private void Awake()
+    private void Start()
     {
-        //Add the map
-        
-        //Get UI Element for ability text
+        //Add the map incase its missing
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
     }
-    
+
     public bool ConfirmAbilityCheck(int abilityIndex)
     {
-        if (infoText == null || mapConfig == null)
-        {
-            previousAbility = -1;
-            infoText = GameObject.FindGameObjectWithTag("UI_Elements").GetComponentInChildren<TextMesh>();
-            mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        }
-        infoText.text = "Confirm Ability Use";
+        //Add the map incase its missing
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         //make it possible to target dudes
-        mapConfig.turnSystem.EnemyTargeting = true;
-        print("You can target stuff now");
+        mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
+        print(mapConfig.stateController.CurrentState.ToString());
 
         if (previousAbility == abilityIndex)
         {
@@ -47,12 +40,17 @@ public class abilityFunctions : MonoBehaviour {
             print("Pewpewpew");
             //stop targeting mode
             mapConfig.turnSystem.DeselectAllUnits();
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
             return;
         }
         //Ability does not happen
-        print("no pewpew");
-        mapConfig.turnSystem.EnemyTargeting = false;
+        print("pls confirm");
     }
+
+    /// <summary>
+    /// ///// ignore below
+    /// </summary>
+
     public void Overwatch()
     {
         ConfirmAbilityCheck(1);

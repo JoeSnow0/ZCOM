@@ -75,7 +75,7 @@ public class UnitMovement : MonoBehaviour {
 
                 if (unitConfig.actionPoints.actions <= 0)
                 {
-                    unitConfig.mapConfig.turnSystem.SelectNextUnit();
+                    unitConfig.mapConfig.turnSystem.SwitchTarget(true, unitConfig.mapConfig.turnSystem.playerUnits, unitConfig.mapConfig.turnSystem.selectedUnit);
                 }
             }
         }

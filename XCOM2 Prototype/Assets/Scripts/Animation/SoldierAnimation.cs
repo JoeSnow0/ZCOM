@@ -10,7 +10,7 @@ public class SoldierAnimation : MonoBehaviour {
     Quaternion lookRotation;
     public UnitConfig target;
     public Transform projectileStartPos;
-    TurnSystem turnSystem;
+    MapConfig mapConfig;
 
     AudioSource audioSource;
 
@@ -18,7 +18,7 @@ public class SoldierAnimation : MonoBehaviour {
     void Start () {
         soldierAnimator = GetComponent<Animator>();
         unit = GetComponentInParent<UnitConfig>();
-        turnSystem = GameObject.FindGameObjectWithTag("Map").GetComponent<TurnSystem>();
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = unit.unitWeapon.weaponSoundShoot;
     }
@@ -86,7 +86,7 @@ public class SoldierAnimation : MonoBehaviour {
     }
     public void End()
     {
-        turnSystem.SelectNextUnit();
+        mapConfig.turnSystem.selectUnit(mapConfig.turnSystem.selectedUnit);
         unit.isShooting = false;
         unit.actionPoints.SubtractAllActions();
     }
