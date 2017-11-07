@@ -273,7 +273,7 @@ public class UnitConfig : MonoBehaviour
 
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null)// if there is no path leave funktion
+        if (currentPath == null || isShooting)// if there is no path (or unit shoots) leave function
         {
             return;
         }
