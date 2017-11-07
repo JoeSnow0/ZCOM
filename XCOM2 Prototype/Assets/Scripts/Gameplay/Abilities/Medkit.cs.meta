@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: c8a7e79062142d04a92a365479f8a2b7
+timeCreated: 1510059792
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - medkit: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
