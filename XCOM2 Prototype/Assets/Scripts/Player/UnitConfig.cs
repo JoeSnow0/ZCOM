@@ -60,10 +60,11 @@ public class UnitConfig : MonoBehaviour
     //BaseUnitCopy
     void Start()
     {
-        GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
+        //Load models
+        //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
 
-        GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
-
+        //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
+        
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
