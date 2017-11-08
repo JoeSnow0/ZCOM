@@ -19,7 +19,7 @@ public class HUD : MonoBehaviour {
     public GameObject warning;
     public victoryCheck victoryScript;
 
-    int amountTurns;
+    [HideInInspector]public int amountTurns;
     int maxTurns;
     int totalActions;
     public bool isPlayerTurn;

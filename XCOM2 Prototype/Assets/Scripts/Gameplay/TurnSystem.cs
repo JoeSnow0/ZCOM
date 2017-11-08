@@ -135,7 +135,7 @@ public class TurnSystem : MonoBehaviour {
             DeselectAllUnits();
         }
 
-        if (playerTurn)
+        if (playerTurn && selectedUnit != null && !selectedUnit.isShooting)
         {
             if (Input.GetKeyDown(nextTarget))
             {
@@ -153,7 +153,7 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit = null;
             }
 
-        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving && !selectedUnit.isShooting)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -168,12 +168,8 @@ public class TurnSystem : MonoBehaviour {
                     }
 
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    //prevents you from targeting units without actions
-                        if (selectedUnit.actionPoints.actions != 0)
-                        {
-                            selectUnit();
-                        }
-                    
+                    //prevents you from targeting units without actions 
+                    selectUnit();
                     }
 
                 }
