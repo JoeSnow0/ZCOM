@@ -8,8 +8,26 @@ public class Objective : MonoBehaviour {
     protected Animator objectiveAnimatior;
     protected MapConfig mapConfig;
     protected Text descriptionText;
+    protected string description;
 
-    public string description;
+    [SerializeField]private List<Objective> objectives = new List<Objective>();
+
+    private void Start()
+    {
+        foreach(Objective objective in GetComponentsInChildren<Objective>())
+        {
+            if (objective.transform != transform)
+            {
+                objectives.Add(objective);
+            }
+        }
+        
+    }
+
+    private void Update()
+    {
+        
+    }
 
     protected void InitializeObjective()
     {
@@ -18,12 +36,12 @@ public class Objective : MonoBehaviour {
         descriptionText = GetComponentInChildren<Text>();
     }
 
-    public void SetState(int state)
+    protected void SetState(int state)
     {
         objectiveAnimatior.SetInteger("progress", state);
     }
 
-    public void SetDescription(string newDescription)
+    protected void SetDescription(string newDescription)
     {
         descriptionText.text = newDescription;
     }

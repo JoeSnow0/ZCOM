@@ -75,6 +75,7 @@ public class TurnSystem : MonoBehaviour {
     public float distance;
 
     private UnitConfig lastSelectedUnit;
+    public int killCount = 0;
 
     void Start ()
     {
@@ -455,7 +456,7 @@ public class TurnSystem : MonoBehaviour {
                         {
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
-                            selectedUnit.actionPoints.SubtractAllActions();
+                            //selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);

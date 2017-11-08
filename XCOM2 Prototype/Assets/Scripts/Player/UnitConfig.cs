@@ -252,7 +252,7 @@ public class UnitConfig : MonoBehaviour
 
                             //Spend Actions
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
-                            actionPoints.SubtractAllActions();
+                            //actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.SelectNextUnit();
                         }
