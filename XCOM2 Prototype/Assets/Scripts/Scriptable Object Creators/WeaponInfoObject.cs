@@ -16,6 +16,9 @@ public class WeaponInfoObject : ScriptableObject
     [Header("Icon of Weapon")]
     public Sprite icon;
 
+    [Header("Weapon Model")]
+    public GameObject weaponModel;
+
     [Header("Weapon Cost")]
     [Tooltip("The value of an item if it were bought or sold")]
     [RangeAttribute(0, 100)]
