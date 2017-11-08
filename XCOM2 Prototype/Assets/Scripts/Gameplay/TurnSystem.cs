@@ -452,7 +452,7 @@ public class TurnSystem : MonoBehaviour {
                     if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
                     {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-                        if (!target.isFriendly) //Checks if the unit hit is not friendly
+                        if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
                         {
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;

@@ -67,7 +67,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        animatorHealthbar = GetComponentInChildren<Animator>();
+
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -218,6 +218,7 @@ public class UnitConfig : MonoBehaviour
     }
     public void InitializeEnemy()
     {
+        animatorHealthbar = GetComponentInChildren<Animator>();
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
