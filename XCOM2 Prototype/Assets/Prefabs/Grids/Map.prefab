@@ -80,6 +80,10 @@ MonoBehaviour:
   gameOver: {fileID: 0}
   gameOverText: {fileID: 0}
   hud: {fileID: 0}
+  unitInfoHolder: {fileID: 0}
+  classIcon: {fileID: 0}
+  className: {fileID: 0}
+  unitName: {fileID: 0}
   defeatColor: {r: 0.5294118, g: 0.19463669, b: 0.19463669, a: 1}
   victoryColor: {r: 0.30315, g: 0.5294118, b: 0.19463669, a: 1}
   lineColors:
@@ -127,7 +131,6 @@ MonoBehaviour:
   mapConfig: {fileID: 0}
   generateButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
-  className: {fileID: 0}
   enemySpawn: {fileID: 0}
   cameraControl: {fileID: 0}
   playerTurn: 1
@@ -151,6 +154,7 @@ MonoBehaviour:
   previousTarget: 304
   EnemyTargeting: 0
   distance: 0
+  killCount: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
