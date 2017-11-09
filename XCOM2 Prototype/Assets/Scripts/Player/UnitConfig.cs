@@ -22,6 +22,8 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public Health health;
     [HideInInspector]public UnitMovement movement;
     public generateButtons generateButtons;
+    public Animator animatorHealthbar;
+
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 

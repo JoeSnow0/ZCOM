@@ -76,8 +76,10 @@ public class abilityFunctions : MonoBehaviour {
                 mapConfig.turnSystem.distance /= 2;
 
             }
-            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+
             //stop targeting mode
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
             mapConfig.turnSystem.DeselectAllUnits();
         }
         else
