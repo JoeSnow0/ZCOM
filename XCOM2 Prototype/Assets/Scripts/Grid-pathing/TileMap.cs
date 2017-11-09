@@ -205,6 +205,7 @@ public class TileMap : MonoBehaviour {
             tiles[23, 10] = 1;
             tiles[7, 9] = 1;
             tiles[8, 9] = 1;
+            
         }
 
         //Full cover
@@ -260,6 +261,7 @@ public class TileMap : MonoBehaviour {
             tiles[11, 10] = 2;
             tiles[11, 17] = 2;
             tiles[9, 17] = 2;
+            tiles[23, 15] = 2;
         }
 
         //half cover

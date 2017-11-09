@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectiveKillUnit : Objective {
     public int killRequired;
-	void Start () {
+	void Start() {
         InitializeObjective();
         SetDescription("Kill " + killRequired + " zombies");
     }
