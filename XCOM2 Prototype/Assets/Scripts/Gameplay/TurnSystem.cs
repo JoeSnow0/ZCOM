@@ -596,23 +596,23 @@ public class TurnSystem : MonoBehaviour {
     }
     public void spawnEnemy()
     {
-        
-        //foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
-        //{
-        //    if(i.activatTurn == thisTurn)
-        //    {
-        //        enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
-        //        break;
-        //    }
-        //    else if (spawnSetup.Length <= thisTurn)
-        //    {
-        //        int newI = Random.Range(0, spawnSetup.Length);
-        //        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
-        //        break;
-        //    }
-        //}
-        int newI = Random.Range(0, spawnSetup.Length);
-        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
+
+        foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
+        {
+            if (i.activatTurn == thisTurn)
+            {
+                enemySpawn.SpawnEnemy(i.enemyPrefab, i.spawnNumberOfEnemys);
+                break;
+            }
+            else if (spawnSetup.Length <= thisTurn)
+            {
+                int number = Random.Range(0, spawnSetup.Length);
+                enemySpawn.SpawnEnemy(spawnSetup[number].enemyPrefab, spawnSetup[number].spawnNumberOfEnemys);
+                break;
+            }
+        }
+        //int newI = Random.Range(0, spawnSetup.Length);
+        //enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
     private void UpdateHUD()
