@@ -56,6 +56,7 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public Animator animatorHealthbar;
     Vector3 cameraStartPosition;
 
+    public int accuracy;
     //BaseUnitCopy
     void Start()
     {
@@ -400,6 +401,10 @@ public class UnitConfig : MonoBehaviour
                 break;
         }
         Debug.Log("Hit chanse: " + accuracy);
+        if (accuracy < 0)
+            accuracy = 0;
+        else if (accuracy > 100)
+            accuracy = 100;
     }
 
     private ClickebleTile GetClosestPlayersquare(int targetTileX, int targetTileY)
