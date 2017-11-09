@@ -28,6 +28,7 @@ public class UnitConfig : MonoBehaviour
     //Unit//
     [HideInInspector] public bool isSelected = false;
     public bool isFriendly;
+    public GameObject modelController;
     //Unit Position
     public int tileX;
     public int tileY;
@@ -58,6 +59,11 @@ public class UnitConfig : MonoBehaviour
     //BaseUnitCopy
     void Start()
     {
+        //Load models
+        //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
+
+        //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
+        
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
