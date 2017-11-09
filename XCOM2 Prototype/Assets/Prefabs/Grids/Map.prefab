@@ -80,6 +80,10 @@ MonoBehaviour:
   gameOver: {fileID: 0}
   gameOverText: {fileID: 0}
   hud: {fileID: 0}
+  unitInfoHolder: {fileID: 0}
+  classIcon: {fileID: 0}
+  className: {fileID: 0}
+  unitName: {fileID: 0}
   defeatColor: {r: 0.5294118, g: 0.19463669, b: 0.19463669, a: 1}
   victoryColor: {r: 0.30315, g: 0.5294118, b: 0.19463669, a: 1}
   lineColors:
@@ -136,7 +140,7 @@ MonoBehaviour:
   spawnSetup:
   - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
       type: 2}
-    spawnNumberOfEnemys: 1
+    spawnNumberOfEnemys: 3
     activatTurn: 0
   - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
       type: 2}
@@ -150,6 +154,7 @@ MonoBehaviour:
   previousTarget: 304
   EnemyTargeting: 0
   distance: 0
+  killCount: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,11 +172,31 @@ MonoBehaviour:
     tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
       type: 2}
     movemontCost: 1
+    aimReduction: 1
     isWalkeble: 1
-  - name: notWalk
+  - name: FullBlock
     tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
-    movemontCost: 0
+    movemontCost: 1.01
+    aimReduction: 10000
+    isWalkeble: 0
+  - name: Full Cover
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 6945e1964a45b864883bb9e2edb16908,
+      type: 2}
+    movemontCost: 1.01
+    aimReduction: 50
+    isWalkeble: 0
+  - name: Half cover
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 0c454b27dbe1a224d9267bb4fb60cecb,
+      type: 2}
+    movemontCost: 1.01
+    aimReduction: 25
+    isWalkeble: 0
+  - name: unit pos
+    tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
+      type: 2}
+    movemontCost: 1
+    aimReduction: 1
     isWalkeble: 0
   gridMaterials:
     normalMaterial: {fileID: 2100000, guid: bce1c97ffcc6ad347bf7f53552cc88ea, type: 2}

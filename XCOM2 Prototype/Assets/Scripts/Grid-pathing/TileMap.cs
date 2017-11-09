@@ -18,10 +18,11 @@ public class TileMap : MonoBehaviour {
     }
 
 
-    ClickebleTile[,] tileobjects;
+    public ClickebleTile[,] tileobjects;
     [HideInInspector]
     public int[,] tiles;
     Node[,] graph;
+    Node[,] graphAir;
 
     public int[,] currentGrid;
     //may need fix for more units
@@ -68,198 +69,275 @@ public class TileMap : MonoBehaviour {
                 tiles[x, y] = 0;
             }
         }
+        //Wall cover
+        {
+            tiles[2, 7] = 1;
+            tiles[4, 18] = 1;
+            tiles[4, 19] = 1;
+            tiles[4, 20] = 1;
+            tiles[4, 25] = 1;
+            tiles[4, 26] = 1;
+            tiles[1, 7] = 1;
+            tiles[0, 4] = 1;
+            tiles[0, 5] = 1;
+            tiles[0, 6] = 1;
+            tiles[7, 27] = 1;
+            tiles[8, 27] = 1;
+            tiles[11, 27] = 1;
+            tiles[4, 16] = 1;
+            tiles[4, 17] = 1;
+            tiles[6, 27] = 1;
+            tiles[12, 27] = 1;
+            tiles[3, 5] = 1;
+            tiles[3, 19] = 1;
+            tiles[3, 20] = 1;
+            tiles[5, 27] = 1;
+            tiles[22, 28] = 1;
+            tiles[23, 28] = 1;
+            tiles[24, 28] = 1;
+            tiles[17, 28] = 1;
+            tiles[9, 27] = 1;
+            tiles[10, 27] = 1;
+            tiles[26, 18] = 1;
+            tiles[26, 19] = 1;
+            tiles[26, 20] = 1;
+            tiles[26, 21] = 1;
+            tiles[26, 22] = 1;
+            tiles[26, 23] = 1;
+            tiles[26, 24] = 1;
+            tiles[26, 25] = 1;
+            tiles[18, 28] = 1;
+            tiles[19, 28] = 1;
+            tiles[20, 28] = 1;
+            tiles[21, 28] = 1;
+            tiles[23, 23] = 1;
+            tiles[23, 24] = 1;
+            tiles[22, 23] = 1;
+            tiles[22, 24] = 1;
+            tiles[23, 22] = 1;
+            tiles[23, 25] = 1;
+            tiles[21, 23] = 1;
+            tiles[21, 24] = 1;
+            tiles[24, 23] = 1;
+            tiles[24, 24] = 1;
+            tiles[22, 22] = 1;
+            tiles[22, 25] = 1;
+            tiles[15, 19] = 1;
+            tiles[15, 20] = 1;
+            tiles[16, 20] = 1;
+            tiles[16, 21] = 1;
+            tiles[15, 21] = 1;
+            tiles[15, 22] = 1;
+            tiles[14, 20] = 1;
+            tiles[14, 21] = 1;
+            tiles[20, 15] = 1;
+            tiles[20, 16] = 1;
+            tiles[20, 17] = 1;
+            tiles[21, 15] = 1;
+            tiles[21, 16] = 1;
+            tiles[21, 17] = 1;
+            tiles[23, 16] = 1;
+            tiles[23, 17] = 1;
+            tiles[22, 15] = 1;
+            tiles[22, 16] = 1;
+            tiles[22, 17] = 1;
+            tiles[19, 16] = 1;
+            tiles[13, 4] = 1;
+            tiles[24, 10] = 1;
+            tiles[25, 4] = 1;
+            tiles[25, 10] = 1;
+            tiles[26, 4] = 1;
+            tiles[26, 10] = 1;
+            tiles[10, 4] = 1;
+            tiles[15, 4] = 1;
+            tiles[27, 8] = 1;
+            tiles[27, 9] = 1;
+            tiles[27, 5] = 1;
+            tiles[27, 6] = 1;
+            tiles[27, 7] = 1;
+            tiles[19, 3] = 1;
+            tiles[11, 4] = 1;
+            tiles[20, 3] = 1;
+            tiles[14, 4] = 1;
+            tiles[12, 4] = 1;
+            tiles[10, 10] = 1;
+            tiles[10, 11] = 1;
+            tiles[10, 12] = 1;
+            tiles[9, 11] = 1;
+            tiles[9, 12] = 1;
+            tiles[9, 13] = 1;
+            tiles[9, 14] = 1;
+            tiles[9, 15] = 1;
+            tiles[9, 16] = 1;
+            tiles[10, 13] = 1;
+            tiles[10, 14] = 1;
+            tiles[10, 15] = 1;
+            tiles[10, 16] = 1;
+            tiles[10, 17] = 1;
+            tiles[8, 11] = 1;
+            tiles[8, 12] = 1;
+            tiles[11, 11] = 1;
+            tiles[11, 12] = 1;
+            tiles[11, 13] = 1;
+            tiles[11, 14] = 1;
+            tiles[11, 15] = 1;
+            tiles[11, 16] = 1;
+            tiles[9, 10] = 1;
+            tiles[7, 10] = 1;
+            tiles[7, 11] = 1;
+            tiles[8, 10] = 1;
+            tiles[26, 8] = 1;
+            tiles[26, 9] = 1;
+            tiles[19, 4] = 1;
+            tiles[25, 8] = 1;
+            tiles[25, 9] = 1;
+            tiles[21, 9] = 1;
+            tiles[21, 10] = 1;
+            tiles[21, 11] = 1;
+            tiles[20, 10] = 1;
+            tiles[20, 11] = 1;
+            tiles[22, 10] = 1;
+            tiles[22, 11] = 1;
+            tiles[20, 4] = 1;
+            tiles[20, 9] = 1;
+            tiles[19, 10] = 1;
+            tiles[22, 9] = 1;
+            tiles[23, 10] = 1;
+            tiles[7, 9] = 1;
+            tiles[8, 9] = 1;
+        }
 
-        {//unwalkeble terain
-            //botton left aricraft and stone
-            {
-                for (int x = 0; x < 4; x++)
-                {
-                    for (int y = 3; y < 8; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                tiles[4, 4] = 1;
+        //Full cover
+        {
+            tiles[27, 10] = 2;
+            tiles[1, 8] = 2;
+            tiles[25, 12] = 2;
+            tiles[16, 28] = 2;
+            tiles[4, 24] = 2;
+            tiles[4, 27] = 2;
+            tiles[16, 4] = 2;
+            tiles[23, 11] = 2;
+            tiles[14, 27] = 2;
+            tiles[1, 3] = 2;
+            tiles[24, 4] = 2;
+            tiles[2, 8] = 2;
+            tiles[21, 3] = 2;
+            tiles[21, 4] = 2;
+            tiles[13, 27] = 2;
+            tiles[4, 15] = 2;
+            tiles[26, 13] = 2;
+            tiles[26, 17] = 2;
+            tiles[3, 4] = 2;
+            tiles[3, 6] = 2;
+            tiles[19, 9] = 2;
+            tiles[19, 11] = 2;
+            tiles[25, 28] = 2;
+            tiles[18, 3] = 2;
+            tiles[18, 4] = 2;
+            tiles[23, 9] = 2;
+            tiles[4, 21] = 2;
+            tiles[3, 18] = 2;
+            tiles[3, 21] = 2;
+            tiles[2, 3] = 2;
+            tiles[26, 26] = 2;
+            tiles[27, 4] = 2;
+            tiles[19, 15] = 2;
+            tiles[19, 17] = 2;
+            tiles[6, 11] = 2;
+            tiles[16, 19] = 2;
+            tiles[16, 22] = 2;
+            tiles[6, 10] = 2;
+            tiles[14, 19] = 2;
+            tiles[14, 22] = 2;
+            tiles[19, 15] = 2;
+            tiles[19, 17] = 2;
+            tiles[6, 11] = 2;
+            tiles[16, 19] = 2;
+            tiles[16, 22] = 2;
+            tiles[6, 10] = 2;
+            tiles[14, 19] = 2;
+            tiles[14, 22] = 2;
+            tiles[11, 10] = 2;
+            tiles[11, 17] = 2;
+            tiles[9, 17] = 2;
+        }
 
-                tiles[1, 8] = 1;
-                tiles[1, 9] = 1;
-                tiles[2, 8] = 1;
-                tiles[2, 9] = 1;
-            }
-            //mid botton
-            {
-                for (int x = 9; x < 17; x++)
-                {
-                    tiles[x, 4] = 1;
-                }
-                tiles[10, 3] = 1;
-                tiles[13, 3] = 1;
-                tiles[16, 3] = 1;
-
-                for (int x = 18; x < 22; x++)
-                {
-                    for (int y = 3; y < 5; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                tiles[19, 5] = 1;
-                tiles[20, 5] = 1;
-            }
-            //botton right
-            {
-                tiles[24, 4] = 1;
-                tiles[25, 4] = 1;
-                tiles[26, 4] = 1;
-                tiles[27, 4] = 1;
-                tiles[27, 5] = 1;
-                tiles[27, 6] = 1;
-                tiles[27, 7] = 1;
-                for (int x = 25; x < 28; x++)
-                {
-                    for (int y = 8; y < 11; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                tiles[24, 10] = 1;
-                for (int x = 19; x < 24; x++)
-                {
-                    for (int y = 9; y < 12; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                tiles[21, 8] = 1;
-                tiles[22, 8] = 1;
-                tiles[21, 12] = 1;
-                tiles[22, 12] = 1;
-            }
-            //center left
-            {
-                tiles[4, 15] = 1;
-                tiles[4, 16] = 1;
-                tiles[4, 17] = 1;
-                for (int x = 3; x < 5; x++)
-                {
-                    for (int y = 18; y < 22; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-            }
-            //big building to the left
-            {
-                for (int x = 8; x < 13; x++)
-                {
-                    for (int y = 9; y < 18; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                tiles[7, 9] = 1; 
-                tiles[6, 10] = 1;
-                tiles[7, 10] = 1;
-                tiles[6, 11] = 1;
-                tiles[7, 11] = 1;
-                tiles[7, 12] = 1;
-                tiles[15, 8] = 1;
-                tiles[15, 7] = 1;
-                tiles[14, 12] = 1;
-                tiles[15, 12] = 1;
-                tiles[16, 12] = 1;
-            }
-            //top left conor
-            {
-                tiles[4, 24] = 1;
-                tiles[4, 25] = 1;
-                tiles[4, 26] = 1;
-                for (int x = 4; x < 15; x++)
-                {
-                    tiles[x, 27] = 1;
-                }
-                tiles[8, 23] = 1;
-                tiles[11, 24] = 1;
-                tiles[10, 21] = 1;
-            }
-            //center of map
-            {
-                for (int x = 14; x < 17; x++)
-                {
-                    for (int y = 19; y < 23; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                for (int x = 19; x < 24; x++)
-                {
-                    for (int y = 14; y < 19; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-
-            }
-            //top right
-            {
-                tiles[25, 12] = 1;
-                tiles[25, 13] = 1;
-                tiles[26, 13] = 1;
-                tiles[25, 14] = 1;
-                tiles[26, 14] = 1;
-                tiles[27, 14] = 1;
-                tiles[26, 15] = 1;
-                tiles[27, 15] = 1;
-                for (int x = 16; x < 26; x++)
-                {
-                    tiles[x, 28] = 1;
-                }
-                for (int x = 21; x < 25; x++)
-                {
-                    for (int y = 22; y < 26; y++)
-                    {
-                        tiles[x, y] = 1;
-                    }
-                }
-                for (int y = 17; y < 27; y++)
-                {
-                    tiles[26, y] = 1;
-                }
-            }
+        //half cover
+        {
+            tiles[8, 13] = 3;
+            tiles[16, 3] = 3;
+            tiles[10, 3] = 3;
+            tiles[15, 8] = 3;
+            tiles[15, 12] = 3;
+            tiles[20, 5] = 3;
+            tiles[8, 23] = 3;
+            tiles[24, 16] = 3;
+            tiles[20, 14] = 3;
+            tiles[22, 14] = 3;
+            tiles[22, 18] = 3;
+            tiles[24, 22] = 3;
+            tiles[24, 25] = 3;
+            tiles[4, 4] = 3;
+            tiles[11, 24] = 3;
+            tiles[13, 3] = 3;
+            tiles[22, 8] = 3;
+            tiles[22, 12] = 3;
+            tiles[14, 12] = 3;
+            tiles[19, 5] = 3;
+            tiles[10, 21] = 3;
+            tiles[21, 22] = 3;
+            tiles[21, 25] = 3;
+            tiles[23, 18] = 3;
+            tiles[15, 7] = 3;
+            tiles[16, 12] = 3;
+            tiles[9, 4] = 3;
         }
     }
     public void UnitMapData(int tileX,int tileY)//when a unit gets or change tile run funktion
     {
-        tiles[tileX, tileY] = 1;//Unit pos is unwalkeble
+        tiles[tileX, tileY] = 4;//Unit pos is unwalkeble
     }
     public void removeUnitMapData(int tileX, int tileY)
     {
         tiles[tileX, tileY] = 0;//Unit can walk on tile
     }
 
-    public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY)// get the cost for the movement to an loction
+    //sourceX and Y is only used for diagonal movement
+    public float CostToEnterTile(int sourceX , int sourceY, int targetX, int targetY, bool canFly = false)// get the cost for the movement to an loction
     {
 
         TileType tt = tileType[tiles[targetX, targetY]];
-        if (tt.isWalkeble == false)//make it so unwalkeble tiles can't be walked on
+        if (!tt.isWalkeble && !canFly)//make it so unwalkeble tiles can't be walked on
         {
             return Mathf.Infinity;
         }
 
         float cost = tt.movemontCost;
-        //if (sourceX!= targetX && sourceY != targetY)//for diagonally movement
-        //{
-        //    // we moveing diagonally
-        //    cost *= 2;
-        //}
-        
+        if (sourceX != targetX && sourceY != targetY)//for diagonally movement
+        {
+            // we moveing diagonally
+            cost *= Mathf.Sqrt(2f);
+        }
+
         return cost;
+    }
+    public float AccuracyFallOf(int sourceX, int sourceY,  int targetX, int targetY)
+    {
+        TileType tt = tileType[tiles[targetX, targetY]];
+        float accuracy = tt.aimReduction;
+        if (sourceX != targetX && sourceY != targetY)//for diagonally movement
+        {
+            // we moveing diagonally
+            accuracy *= Mathf.Sqrt(2f);
+        }
+        return accuracy;
     }
 
     void GeneratePathfindingGraph()//create a path for units to walk on
     {
         //initialize the array
         graph = new Node[mapSizeX, mapSizeY];
+        graphAir = new Node[mapSizeX, mapSizeY];
         //initilaze a Node for each spot in the array
         for (int x = 0; x < mapSizeX; x++)
         {
@@ -268,6 +346,10 @@ public class TileMap : MonoBehaviour {
                 graph[x, y] = new Node();
                 graph[x, y].x = x;
                 graph[x, y].y = y;
+
+                graphAir[x, y] = new Node();
+                graphAir[x, y].x = x;
+                graphAir[x, y].y = y;
             }
         }
         //now that the nodes exist, calculate their neighbours
@@ -288,30 +370,29 @@ public class TileMap : MonoBehaviour {
 
                 //8 way
                 //try Left
-                //if (x > 0)
-                //{
-                //    graph[x, y].neighbours.Add(graph[x - 1, y]);
-                //    if (y > 0)
-                //        graph[x, y].neighbours.Add(graph[x-1, y-1]);
-                //    if (y < mapSizeY - 1)
-                //        graph[x, y].neighbours.Add(graph[x-1, y + 1]);
-                //}
+                if (x > 0)
+                {
+                    graphAir[x, y].neighbours.Add(graphAir[x - 1, y]);
+                    if (y > 0)
+                        graphAir[x, y].neighbours.Add(graphAir[x - 1, y - 1]);//down left
+                    if (y < mapSizeY - 1)
+                        graphAir[x, y].neighbours.Add(graphAir[x - 1, y + 1]);// up left
+                }
+                //try Right
+                if (x < mapSizeX - 1)
+                {
+                    graphAir[x, y].neighbours.Add(graphAir[x + 1, y]);
+                    if (y > 0)
+                        graphAir[x, y].neighbours.Add(graphAir[x + 1, y - 1]);//down right
+                    if (y < mapSizeY - 1)
+                        graphAir[x, y].neighbours.Add(graphAir[x + 1, y + 1]);//up right
+                }
 
-                ////try Right
-                //if (x < mapSizeX - 1)
-                //{
-                //    graph[x, y].neighbours.Add(graph[x + 1, y]);
-                //    if (y > 0)
-                //        graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
-                //    if (y < mapSizeY - 1)
-                //        graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
-                //}
-
-                ////try strsit up and down
-                //if (y > 0)
-                //    graph[x, y].neighbours.Add(graph[x, y - 1]);
-                //if (y < mapSizeY - 1)
-                //    graph[x, y].neighbours.Add(graph[x, y + 1]);
+                //try neighbours up and down
+                if (y > 0)
+                    graphAir[x, y].neighbours.Add(graphAir[x, y - 1]);
+                if (y < mapSizeY - 1)
+                    graphAir[x, y].neighbours.Add(graphAir[x, y + 1]);
             }
         }
     }
@@ -349,10 +430,11 @@ public class TileMap : MonoBehaviour {
         return true;
     }
 
-    public void GeneratePathTo(int tileX, int tileY, UnitConfig selected)//(move to X pos, move to Y pos, gameobject that will be moved)
+    public void GeneratePathTo(int tileX, int tileY, UnitConfig selected, bool isBullet = false)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
         selectedUnit = selected;
         selectedUnit.currentPath = null;
+        selectedUnit.currentBulletPath = null;
 
         if (UnitCanEnterTile(tileX,tileY) == false)
         {
@@ -370,31 +452,57 @@ public class TileMap : MonoBehaviour {
         Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
 
         List<Node> unvisited = new List<Node>();
-
-        Node source = graph[
-                            selectedUnit.tileX,
-                            selectedUnit.tileY
-                            ];
-        Node target = graph[
-                            tileX,
-                            tileY
-                            ];
+        
+            Node source = graph[
+                                selectedUnit.tileX,
+                                selectedUnit.tileY
+                                ];
+            Node target = graph[
+                                tileX,
+                                tileY
+                                ];
+        
+        if(isBullet)
+        {
+             source = graphAir[
+                                selectedUnit.tileX,
+                                selectedUnit.tileY
+                                ];
+             target = graphAir[
+                                tileX,
+                                tileY
+                                ];
+        }
         
         dist[source] = 0;
         prev[source] = null;
-        
+
         //initialize everything to have infinity distance, since
         //we do not know how far a unit can move right now.
-        foreach(Node v in graph)
+        if (!isBullet)
         {
-            if(v!= source)
+            foreach(Node v in graph)
             {
-                dist[v] = Mathf.Infinity;
-                prev[v] = null;
+                if(v!= source)
+                {
+                    dist[v] = Mathf.Infinity;
+                    prev[v] = null;
+                }
+                unvisited.Add(v);
             }
-            unvisited.Add(v);
         }
-        
+        else
+        {
+            foreach (Node v in graphAir)
+            {
+                if (v != source)
+                {
+                    dist[v] = Mathf.Infinity;
+                    prev[v] = null;
+                }
+                unvisited.Add(v);
+            }
+        }
 
         while (unvisited.Count > 0)
         {
@@ -420,7 +528,7 @@ public class TileMap : MonoBehaviour {
             foreach (Node v in u.neighbours)
             {
                 
-                float alt = dist[u] + CostToEnterTile(u.x,u.y,v.x,v.y);
+                float alt = dist[u] + CostToEnterTile(u.x,u.y,v.x,v.y,isBullet);
                 if (alt < dist[v]) 
                 {
                     dist[v] = alt;
@@ -445,8 +553,10 @@ public class TileMap : MonoBehaviour {
         }
         //current path is from goal to unit here we reverse it. to make it normal
         currentPath.Reverse();
-        
-        selectedUnit.currentPath = currentPath;
+        if(!isBullet)
+            selectedUnit.currentPath = currentPath;
+        if (isBullet)
+            selectedUnit.currentBulletPath = currentPath;
     }
 
 
@@ -531,43 +641,6 @@ public class TileMap : MonoBehaviour {
                     }
             }
         }
-        //if (neighbourConfig.tileX > 0)//get neighbour to the left
-        //{
-        //    if (currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-        //        if (tiles[neighbourConfig.tileX - 1, neighbourConfig.tileY] != 1)//is tile walkeble?
-        //        {
-                
-        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX - 1, neighbourConfig.tileY]);
-        //            currentGrid[neighbourConfig.tileX - 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-        //        }
-        //}
-        //if (neighbourConfig.tileX < mapSizeX - 1)//get neighbour to the right
-        //{
-        //    if (currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] > currentRun)//check if has position has been filed
-        //        if (tiles[neighbourConfig.tileX + 1, neighbourConfig.tileY] != 1)//is tile walkeble?
-        //        {
-        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX + 1, neighbourConfig.tileY]);
-        //            currentGrid[neighbourConfig.tileX + 1, neighbourConfig.tileY] = currentRun;//if the filed position is lower then the former run replace value
-        //        }
-        //}
-        //if (neighbourConfig.tileY > 0)//get neighbour to the down
-        //{
-        //    if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] > currentRun)//check if has position has been filed
-        //        if (tiles[neighbourConfig.tileX, neighbourConfig.tileY - 1] != 1)//is tile walkeble?
-        //        {
-        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY - 1]);
-        //            currentGrid[neighbourConfig.tileX, neighbourConfig.tileY - 1] = currentRun;//if the filed position is lower then the former run replace value
-        //        }
-        //}
-        //if (neighbourConfig.tileY < mapSizeY - 1)//get neighbour to the up
-        //{
-        //    if (currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] > currentRun)//check if has position has been filed
-        //        if (tiles[neighbourConfig.tileX, neighbourConfig.tileY + 1] != 1)//is tile walkeble?
-        //        {
-        //            currentneighbour.Add(tileobjects[neighbourConfig.tileX, neighbourConfig.tileY + 1]);
-        //            currentGrid[neighbourConfig.tileX, neighbourConfig.tileY + 1] = currentRun;//if the filed position is lower then the former run replace value
-        //        }
-        //}
     }
 
     public void ChangeColorGrid(int movement, int actions)
