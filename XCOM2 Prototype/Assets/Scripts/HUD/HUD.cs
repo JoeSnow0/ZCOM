@@ -57,7 +57,7 @@ public class HUD : MonoBehaviour {
                 alienAnim.Play("AlienActivityOn");
                 turnSystem.enemyIndex = 0;
 
-                
+                mapConfig.turnSystem.spawnEnemy();
 
                 endButton.SetActive(false);
                 mapConfig.tileMap.ResetColorGrid();

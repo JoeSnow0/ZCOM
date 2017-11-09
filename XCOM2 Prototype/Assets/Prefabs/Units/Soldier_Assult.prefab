@@ -67,8 +67,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4224178937087968}
   - component: {fileID: 95422077563969784}
-  - component: {fileID: 114563336169249236}
   - component: {fileID: 82496110890812666}
+  - component: {fileID: 114627677197489702}
   m_Layer: 0
   m_Name: SpaceSoldierWhite
   m_TagString: Untagged
@@ -2236,19 +2236,6 @@ MonoBehaviour:
   elements: []
   transparencyMax: 1
   transparencyMin: 0.3
---- !u!114 &114563336169249236
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1059376159170840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da91edd577056d04ebb57e07e5343679, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  projectileStartPos: {fileID: 4123641705528062}
 --- !u!114 &114564366821933016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2265,6 +2252,19 @@ MonoBehaviour:
   actionPoint: {fileID: 1071586568103138, guid: ab07bd63ad91aec4090ef1d9e189e281,
     type: 2}
   unitConfig: {fileID: 114651927740938502}
+--- !u!114 &114627677197489702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059376159170840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ca2682d3f3b804bbf07fb2f14821d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  projectileStartPos: {fileID: 4123641705528062}
 --- !u!114 &114651927740938502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2276,6 +2276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: Thomas Richards
   unitColor:
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
@@ -2298,8 +2299,7 @@ MonoBehaviour:
   isShooting: 0
   isDead: 0
   isHighlighted: 0
-  animatorS: {fileID: 0}
-  animatorZ: {fileID: 0}
+  animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
   animatorHealthbar: {fileID: 0}

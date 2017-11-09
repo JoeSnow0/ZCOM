@@ -45,8 +45,7 @@ public class UnitConfig : MonoBehaviour
     public bool isDead = false;
     public bool isHighlighted = false;
 
-    public SoldierAnimation animatorS;
-    public ZombieAnimation animatorZ;
+    public AnimationScript animator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -80,10 +79,7 @@ public class UnitConfig : MonoBehaviour
         
         line = GetComponent<LineRenderer>();
 
-        if(isFriendly)
-            animatorS = GetComponentInChildren<SoldierAnimation>();
-        else
-            animatorZ = GetComponentInChildren<ZombieAnimation>();
+        animator = GetComponentInChildren<AnimationScript>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         /*if (unitWeapon == null)
@@ -266,10 +262,7 @@ public class UnitConfig : MonoBehaviour
     public void ShootTarget(UnitConfig target)
     {
         isShooting = true;
-        if (isFriendly)
-            animatorS.target = target;
-        else
-            animatorZ.target = target;
+        animator.target = target;
     }
 
     public void MoveNextTile()//start to try to move unit
