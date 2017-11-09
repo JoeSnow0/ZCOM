@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UnitConfig : MonoBehaviour
 {
+    public string unitName;
     public Color[] unitColor;
     //public Transform dmgStartPos;
     //public GameObject floatingDmg;
@@ -27,6 +28,7 @@ public class UnitConfig : MonoBehaviour
     //Unit//
     [HideInInspector] public bool isSelected = false;
     public bool isFriendly;
+    public GameObject modelController;
     //Unit Position
     public int tileX;
     public int tileY;
@@ -42,20 +44,26 @@ public class UnitConfig : MonoBehaviour
     public bool isSprinting = false;
     public bool isShooting = false;
     public bool isDead = false;
-    public SoldierAnimation animatorS;
-    public ZombieAnimation animatorZ;
+    public bool isHighlighted = false;
+
+    public AnimationScript animator;
 
     int pathIndex = 0;
     public float pathProgress;
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
-    [HideInInspector]public ImageElements imageElements;
+    [HideInInspector]public Animator animatorHealthbar;
     Vector3 cameraStartPosition;
 
     //BaseUnitCopy
     void Start()
     {
+        //Load models
+        //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
+
+        //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
+        
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
@@ -64,7 +72,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        imageElements = GetComponent<ImageElements>();
+
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -77,10 +85,7 @@ public class UnitConfig : MonoBehaviour
         
         line = GetComponent<LineRenderer>();
 
-        if(isFriendly)
-            animatorS = GetComponentInChildren<SoldierAnimation>();
-        else
-            animatorZ = GetComponentInChildren<ZombieAnimation>();
+        animator = GetComponentInChildren<AnimationScript>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         /*if (unitWeapon == null)
@@ -230,6 +235,7 @@ public class UnitConfig : MonoBehaviour
     }
     public void InitializeEnemy()
     {
+        animatorHealthbar = GetComponentInChildren<Animator>();
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
@@ -265,7 +271,7 @@ public class UnitConfig : MonoBehaviour
 
                             //Spend Actions
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
-                            actionPoints.SubtractAllActions();
+                            //actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.SelectNextUnit();
                             
@@ -279,15 +285,12 @@ public class UnitConfig : MonoBehaviour
     public void ShootTarget(UnitConfig target)
     {
         isShooting = true;
-        if (isFriendly)
-            animatorS.target = target;
-        else
-            animatorZ.target = target;
+        animator.target = target;
     }
 
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null)// if there is no path leave funktion
+        if (currentPath == null || isShooting)// if there is no path (or unit shoots) leave function
         {
             return;
         }

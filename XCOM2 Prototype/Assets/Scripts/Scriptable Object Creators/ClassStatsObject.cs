@@ -8,10 +8,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatsClassX", menuName = "Class/Create new class", order = 4)]
 public class ClassStatsObject : ScriptableObject
 {
-    
-    [Header("Class Name")]
+
+
+    [Header("Class Name/Icon")]
     [Tooltip("Name of the class")]
     public string unitClassName;
+    public Sprite classIcon;
+    [Header("Class Model")]
+    public GameObject classModel;
+
     [Header("Health")]
     [Tooltip("The amount of health this class has")]
     [Range(1, 40)]

@@ -9,8 +9,8 @@ public class MapEditor : EditorWindow {
 
     string path = "Assets/Scenes/GridOutput.txt";
     string tileIndex = "1";
-    string fileName = "GridOutput.txt";
-    string description = "//";
+    string fileName = "GridOutput";
+    string description = "";
     
     [MenuItem("Map Tools/Map Editor")]
     static void Init()

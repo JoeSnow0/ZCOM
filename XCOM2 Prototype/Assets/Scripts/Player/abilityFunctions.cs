@@ -68,4 +68,9 @@ public class abilityFunctions : MonoBehaviour {
         ConfirmAbilityCheck(3);
         Debug.Log("Weapon reloaded");
     }
+    public void Medkit()
+    {
+        ConfirmAbilityCheck(4);
+        Debug.Log("Healing");
+    }
 }

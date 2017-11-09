@@ -26,6 +26,12 @@ public class TurnSystem : MonoBehaviour {
     public GameObject gameOver;
     public Text gameOverText;
     public HUD hud;
+    public GameObject unitInfoHolder;
+    public Image classIcon;
+    public Text className;
+    public Text unitName;
+    Animator classInformationAnimator;
+
     [Header("Colors")]
     public Color defeatColor;
     public Color victoryColor;
@@ -43,7 +49,7 @@ public class TurnSystem : MonoBehaviour {
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType;
-    public Text className;
+
 
     //Script refs
     public EnemySpawn enemySpawn;
@@ -68,7 +74,8 @@ public class TurnSystem : MonoBehaviour {
     //Distance Variable (maybe put elsewhere?)
     public float distance;
 
-
+    private UnitConfig lastSelectedUnit;
+    public int killCount = 0;
 
     void Start ()
     {
@@ -77,7 +84,8 @@ public class TurnSystem : MonoBehaviour {
         generateButtons = FindObjectOfType<generateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-        
+
+        classInformationAnimator = classIcon.transform.GetComponentInParent<Animator>();
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
         {
@@ -128,7 +136,7 @@ public class TurnSystem : MonoBehaviour {
             DeselectAllUnits();
         }
 
-        if (playerTurn)
+        if (playerTurn && selectedUnit != null && !selectedUnit.isShooting)
         {
             if (Input.GetKeyDown(nextTarget))
             {
@@ -146,7 +154,7 @@ public class TurnSystem : MonoBehaviour {
                 selectedUnit = null;
             }
 
-        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving)
+        if (Input.GetMouseButtonDown(0) && playerTurn && !selectedUnit.isMoving && !selectedUnit.isShooting)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -161,12 +169,8 @@ public class TurnSystem : MonoBehaviour {
                     }
 
                     selectedUnit = hit.collider.GetComponent<UnitConfig>();
-                    //prevents you from targeting units without actions
-                        if (selectedUnit.actionPoints.actions != 0)
-                        {
-                            selectUnit();
-                        }
-                    
+                    //prevents you from targeting units without actions 
+                    selectUnit();
                     }
 
                 }
@@ -250,7 +254,7 @@ public class TurnSystem : MonoBehaviour {
         if(playerTurn)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
 
-        className.text = selectedUnit.unitClassStats.unitClassName;
+
         //HACK: Buttons are broken uncomment when fixed
         ////Clear old abilities
         //generateButtons.ClearCurrentButtons();
@@ -341,6 +345,10 @@ public class TurnSystem : MonoBehaviour {
 
     public void SwitchFocusTarget(bool nextTarget)
     {
+        if (selectedUnit.isMoving)
+        {
+            return;
+        }
         int currentUnitIndex;
 
         //check if list is empty
@@ -435,7 +443,7 @@ public class TurnSystem : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            if (selectedUnit.actionPoints.actions >= 1) //Checks if the unit has enough action points
+            if (selectedUnit.actionPoints.actions >= 1 && !selectedUnit.isMoving) //Checks if the unit has enough action points and isn't moving
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -444,8 +452,11 @@ public class TurnSystem : MonoBehaviour {
                     if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
                     {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-                        if (!target.isFriendly) //Checks if the unit hit is not friendly
+                        if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
                         {
+                            //Spend Actions
+                            totalActions -= selectedUnit.actionPoints.actions;
+                            //selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
@@ -457,10 +468,6 @@ public class TurnSystem : MonoBehaviour {
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;
 
-
-                            //Spend Actions
-                            totalActions -= selectedUnit.actionPoints.actions;
-                            //selectedUnit.actionPoints.SubtractAllActions();
                         }
                     }
                 }
@@ -509,9 +516,6 @@ public class TurnSystem : MonoBehaviour {
         cameraControl.MoveToTarget(selectedUnit.transform.position);
         if (playerTurn && selectedUnit != null)
             mapConfig.tileMap.ChangeGridColor(selectedUnit.movePoints, selectedUnit.actionPoints.actions, selectedUnit);
-
-        if (selectedUnit != null)
-            className.text = selectedUnit.unitClassStats.unitClassName;
     }
 
     public void SelectNextUnit()
@@ -538,8 +542,7 @@ public class TurnSystem : MonoBehaviour {
             selectedUnit = playerUnits[0];
             selectedUnit.isSelected = true;
         }*/
-        if(selectedUnit != null)
-            className.text = selectedUnit.unitClassStats.unitClassName;
+        
         
     }
     public void StartNextEnemy()
@@ -620,40 +623,41 @@ public class TurnSystem : MonoBehaviour {
 
     private void UpdateHUD()
     {
+        unitInfoHolder.SetActive(playerTurn);
+        
+        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
+        {
+            classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
+            className.text = selectedUnit.unitClassStats.unitClassName;
+            unitName.text = selectedUnit.unitName;
+            classIcon.sprite = selectedUnit.unitClassStats.classIcon;
+        }
+
         foreach (UnitConfig unit in playerUnits)//Updates friendly units
         {
-            if (unit.isSelected)
+            if (unit.isSelected || unit.isHighlighted)
             {
-                foreach (Image image in unit.imageElements.elements)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
-                }
+                unit.animatorHealthbar.SetBool("display", true);
             }
             else
             {
-                foreach (Image image in unit.health.healthBar)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
-                }
+                unit.animatorHealthbar.SetBool("display", false);
             }
         }
 
         foreach (UnitConfig unit in enemyUnits)
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || selectedUnit != null && selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
             {
-                foreach (Image image in unit.imageElements.elements)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
-                }
+                unit.animatorHealthbar.SetBool("display", true);
             }
-            else
+            else if(unit.animatorHealthbar != null)
             {
-                foreach (Image image in unit.health.healthBar)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
-                }
+                unit.animatorHealthbar.SetBool("display", false);
             }
         }
+
+        if(selectedUnit != null && playerTurn)
+            lastSelectedUnit = selectedUnit;
     }
 }

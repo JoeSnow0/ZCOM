@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Rifle
   icon: {fileID: 0}
+  weaponModel: {fileID: 1933628179992228, guid: 9ce885b0b1439d245b37eda45d7a93da,
+    type: 2}
   value: 0
   baseAim: 100
   rangeModShort: 3

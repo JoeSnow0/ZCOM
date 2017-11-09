@@ -90,6 +90,7 @@ public class Health : MonoBehaviour
                 {
                     unitConfig.isDead = true;
                     mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
+                    mapConfig.turnSystem.killCount++;
                 }
                 else
                     KillUnit();
@@ -118,5 +119,18 @@ public class Health : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void Healing(int healAmount, WeaponInfoObject weapon)
+    {
+        GameObject heal = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
+        Text[] healText = heal.GetComponentsInChildren<Text>();
+        
+        
+        healText[1].text = CalculationManager.damage.ToString();
+        currentUnitHealth += CalculationManager.damage;
+            
+        UpdateUnitHealth();
+        
     }
 }

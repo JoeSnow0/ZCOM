@@ -15,19 +15,28 @@ public class CameraControl : MonoBehaviour {
     [Tooltip("Min and Max values for the cameras z Position")]
     public float zPosMin;
     float zPosMax;
+
+    [Header("X Rotation")]
+    public float xMaxRotation;
+    public float xMinRotation;
+
     [Header("Speed")]
-    [Tooltip("Speed for camera rotation")]
+    [Tooltip("Speed for camera speed")]
     [SerializeField]
     [RangeAttribute(0f,100f)]
     float moveSpeed;
-    [Tooltip("Speed for camera movement")]
+    [Tooltip("Speed for camera rotation")]
     [SerializeField]
-    [RangeAttribute(0f, 100f)]
+    [RangeAttribute(0f, 10f)]
     private float rotationSpeed;
     [Tooltip("Speed for camera zoom")]
     [SerializeField]
     [RangeAttribute(0, 100)]
     int zoomSpeed;
+
+    [Header("Rotation Curve")]
+    public AnimationCurve rotationCurve;
+
     [Header("Camera Target")]
     public GameObject cameraTarget;
     public GameObject cameraHolder;
@@ -52,6 +61,7 @@ public class CameraControl : MonoBehaviour {
 
     MapConfig mapConfig;
     public bool playerMovedCamera;
+    public float zoomLevel;
 
     private void Start()
     {
@@ -141,7 +151,7 @@ public class CameraControl : MonoBehaviour {
         if (rotateLerp < 1)
         {
             rotateLerp += Time.deltaTime * rotationSpeed;
-            cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), Mathf.SmoothStep(0, 1, rotateLerp));
+            cameraTarget.transform.rotation = Quaternion.Lerp(cameraTarget.transform.rotation, Quaternion.Euler(targetRotation), rotationCurve.Evaluate(rotateLerp));
         }
 
         //HACK: Needs a better way of restricting movement of the zoom
@@ -150,7 +160,8 @@ public class CameraControl : MonoBehaviour {
         {
             cameraHolder.transform.localPosition += cameraHolder.transform.forward * Input.GetAxis(cameraZoom) * zoomSpeed;
             Vector3 p = cameraHolder.transform.localPosition;
-            cameraHolder.transform.localPosition = new Vector3(0, Mathf.Clamp(p.y, yPosMin, yPosMax), -5);
+            cameraHolder.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(xMinRotation, 0, 0), Quaternion.Euler(xMaxRotation, 0, 0), (p.y - yPosMin) / (yPosMax - yPosMin));
+            cameraHolder.transform.localPosition = new Vector3(0, Mathf.Clamp(p.y, yPosMin, yPosMax), Mathf.Lerp(-5, -12, (p.y - yPosMin) / (yPosMax - yPosMin)));
         }
         ////reset within bounds
         //if (cameraHolder.transform.localPosition.y >= yPosMax || cameraHolder.transform.localPosition.y <= yPosMin)

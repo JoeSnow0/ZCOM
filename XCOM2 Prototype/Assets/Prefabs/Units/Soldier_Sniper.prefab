@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 114561506583320750}
   - component: {fileID: 114034395649760910}
   - component: {fileID: 120398234714510702}
+  - component: {fileID: 114999195665263690}
   m_Layer: 0
   m_Name: Soldier_Sniper
   m_TagString: FriendlyUnit
@@ -729,6 +730,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4302729356995022}
+  - component: {fileID: 95016692329482810}
   m_Layer: 0
   m_Name: UIHolder
   m_TagString: Untagged
@@ -881,8 +883,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4137992733340176}
   - component: {fileID: 95369569318952490}
-  - component: {fileID: 114194942063301188}
   - component: {fileID: 82676052222192594}
+  - component: {fileID: 114448702033907386}
   m_Layer: 0
   m_Name: SpaceSoldierWhite
   m_TagString: Untagged
@@ -1809,7 +1811,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1056825173600858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28, y: 0, z: 22}
+  m_LocalPosition: {x: 20, y: 0, z: 16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4302729356995022}
@@ -1852,7 +1854,7 @@ Transform:
   m_GameObject: {fileID: 1873023420841430}
   m_LocalRotation: {x: 0.7052277, y: -0.11407168, z: -0.114442155, w: 0.69032216}
   m_LocalPosition: {x: 0.004, y: 0.209, z: 0.111}
-  m_LocalScale: {x: 0.06, y: 0.060000006, z: 0.060000006}
+  m_LocalScale: {x: 0.096, y: 0.09000001, z: 0.060000006}
   m_Children: []
   m_Father: {fileID: 4356195037146570}
   m_RootOrder: 0
@@ -2018,7 +2020,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!82 &82676052222192594
 AudioSource:
@@ -2100,6 +2102,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &95016692329482810
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660931612254788}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e4deda876744c74da5121053fecba39, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95369569318952490
 Animator:
   serializedVersion: 3
@@ -2167,6 +2186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc629f1f5539df24eaa84413bcb416cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: Oliver Dahlqvist
   unitColor:
   - {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 1}
   - {r: 0.12018816, g: 0.13903287, b: 0.1397059, a: 1}
@@ -2188,21 +2208,11 @@ MonoBehaviour:
   isSprinting: 0
   isShooting: 0
   isDead: 0
+  isHighlighted: 0
+  animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
---- !u!114 &114194942063301188
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1850836428816292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da91edd577056d04ebb57e07e5343679, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  projectileStartPos: {fileID: 4356195037146570}
+  animatorHealthbar: {fileID: 0}
 --- !u!114 &114204136886674946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2246,6 +2256,19 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &114448702033907386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1850836428816292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ca2682d3f3b804bbf07fb2f14821d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  projectileStartPos: {fileID: 4356195037146570}
 --- !u!114 &114530827884062796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2349,7 +2372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 0.509}
+  m_Color: {r: 0.5764706, g: 0.81568635, b: 0.7960785, a: 0.27450982}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2439,6 +2462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8c5a616b3a253498109618aa552bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: []
   healthSlider: {fileID: 114530827884062796}
   bar: {fileID: 1875260459701200, guid: 698b09707fe896444aac951368010546, type: 2}
   floatingDmg: {fileID: 1986978027609170, guid: c7651080c87627d4188e0e1fc8b0dac1,
@@ -2446,6 +2470,20 @@ MonoBehaviour:
   damagePosition: {fileID: 4672731556302774}
   barParent: {fileID: 224668156745879986}
   unitConfig: {fileID: 114083065266747040}
+--- !u!114 &114999195665263690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1056825173600858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537ba66ce86c40a488cfa40dc49051fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: []
+  transparencyMax: 1
+  transparencyMin: 0.3
 --- !u!120 &120398234714510702
 LineRenderer:
   m_ObjectHideFlags: 1

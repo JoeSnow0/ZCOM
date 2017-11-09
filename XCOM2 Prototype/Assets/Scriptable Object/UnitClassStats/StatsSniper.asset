@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: StatsSniper
   m_EditorClassIdentifier: 
   unitClassName: SNIPER
+  classIcon: {fileID: 0}
+  classModel: {fileID: 1814579743467984, guid: fc8f0b1b2a4536a4c9e103fa3abfe88e, type: 2}
   maxUnitHealth: 6
   unitDefense: 1
   maxUnitActionPoints: 2
