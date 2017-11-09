@@ -73,7 +73,7 @@ public class UnitMovement : MonoBehaviour {
 
                 if (unitConfig.actionPoints.actions <= 0)
                 {
-                    unitConfig.mapConfig.turnSystem.SwitchTarget(true, unitConfig.mapConfig.turnSystem.playerUnits, unitConfig.mapConfig.turnSystem.selectedPlayer);
+                    unitConfig.mapConfig.turnSystem.KeyboardSelect(true, unitConfig.mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                 }
             }
         }

@@ -6,7 +6,7 @@ public class StateController : MonoBehaviour
 {
 
     public enum GameState { TacticalMode, AttackMode };
-    public GameState CurrentState;
+    static public GameState CurrentState;
 
     void start()
     {
@@ -16,6 +16,7 @@ public class StateController : MonoBehaviour
     public void SetCurrentState(GameState setState)
     {
         CurrentState = setState;
+        print(CurrentState);
     }
 
     public bool CheckCurrentState(GameState CompareState)

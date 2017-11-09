@@ -44,8 +44,8 @@ public class TurnSystem : MonoBehaviour {
     public Animator unitMarkerAnimator;
     public Image[] markerImage;
     [Header("Selected Unit")]
-    public UnitConfig selectedPlayer;
-    public UnitConfig selectedTarget;
+    static public UnitConfig selectedUnit;
+    static public UnitConfig selectedTarget;
     public MapConfig mapConfig;
     public generateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
@@ -132,71 +132,46 @@ public class TurnSystem : MonoBehaviour {
         //UpdateHUD();
 
         //Deselect units on enemy turn
-        if (!playerTurn && selectedPlayer != null)
+        if (!playerTurn && selectedUnit != null)
         {
             DeselectAllUnits();
         }
         
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode))
         {
+            
             //Select next unit
             if (Input.GetKeyDown(nextTarget))
             {
-                SwitchTarget(true, playerUnits, selectedPlayer);
+                KeyboardSelect(true, playerUnits, selectedUnit);
             }
             //Select previous unit
-            if (Input.GetKeyDown(previousTarget))
+            else if (Input.GetKeyDown(previousTarget))
             {
-                SwitchTarget(false, playerUnits, selectedPlayer);
+                KeyboardSelect(false, playerUnits, selectedUnit);
             }
         }
+            
+        
+        
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //Select next enemy unit
             if (Input.GetKeyDown(nextTarget))
             {
-                SwitchTarget(true, enemyUnits, selectedTarget);
+                KeyboardSelect(true, enemyUnits, selectedTarget);
             }
             //Select previous enemy unit
             if (Input.GetKeyDown(previousTarget))
             {
-                SwitchTarget(false, enemyUnits, selectedTarget);
+                KeyboardSelect(false, enemyUnits, selectedTarget);
             }
-            
         }
         //Use mouse to target player units
         if (Input.GetMouseButtonDown(0) && playerTurn)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                //Use mouse to target check if its friendly
-                if (hit.collider.CompareTag("FriendlyUnit"))
-                {
-                    if (selectedPlayer != null)
-                    {
-                        if (!selectedPlayer.isIdle)
-                        {
-                            return;
-                        }
-                        DeselectUnit(selectedPlayer);
-                    }
-                    
-                    //Deselect previous unit
-                    
-                    selectedPlayer = hit.collider.GetComponent<UnitConfig>();
-
-                    //prevents you from targeting units without actions
-                        if (selectedPlayer.actionPoints.actions != 0)
-                        {
-                            SwitchTarget(true, playerUnits, selectedPlayer);
-                        }
-                    
-                    }
-
-                }
-            }
+            MouseSelect();
+        }
 
         if (!playerTurn)//enemy turn
         {
@@ -217,8 +192,8 @@ public class TurnSystem : MonoBehaviour {
                     enemy.currentPath = null;
                 }
                 hud.pressEnd(true);
-                if(selectedPlayer != null)
-                    cameraControl.MoveToTarget(selectedPlayer.transform.position);
+                if(selectedUnit != null)
+                    cameraControl.MoveToTarget(selectedUnit.transform.position);
             }
         }
         if (playerTurn)
@@ -234,66 +209,106 @@ public class TurnSystem : MonoBehaviour {
             }
             if (endturn == true)
             {
-                if (selectedPlayer != null)
+                if (selectedUnit != null)
                 {
-                    selectedPlayer.isSelected = false;
+                    selectedUnit.isSelected = false;
                     mapConfig.tileMap.ResetColorGrid();
                 }                
-                selectedPlayer = null;
+                selectedUnit = null;
                 hud.pressEnd(true);
             }
         }
         
     }
-    public void DeselectUnit(UnitConfig unit)
+    public void DeselectUnit(UnitConfig selection)
     {
-        unit.isSelected = false;
-        unit = null;
+        selection.isSelected = false;
+        selection = null;
     }
     public void DeselectAllUnits()
     {
-        selectedPlayer.isSelected = false;
-        selectedPlayer = null;
+        if (selectedUnit != null)
+        {
+            selectedUnit.isSelected = false;
+            selectedUnit = null;
+        }
+        
         for (int i = 0; i < playerUnits.Count; i++)
         {
             playerUnits[i].isSelected = false;
-            selectedPlayer = null;
+            selectedUnit = null;
         }
-        selectedTarget.isSelected = false;
-        selectedTarget = null;
+
+        if (selectedTarget != null)
+        {
+            selectedTarget.isSelected = false;
+            //selectedTarget = null;
+        }
+
         for (int i = 0; i < enemyUnits.Count; i++)
         {
             enemyUnits[i].isSelected = false;
-            selectedTarget = null;
+            //selectedTarget = null;
         }
 
     }
 
-    public void selectUnit(UnitConfig selected)
+    public void MouseSelect()
     {
-        if (selected.isFriendly)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
         {
-            selected.isSelected = true;
-            //Move the marker to selected unit
-            MoveMarker(unitMarker, selected.transform.position);
-            //Move the camera to selected Unit
-            cameraControl.MoveToTarget(selected.transform.position);
-            //Update grid colors
-            if (playerTurn)
-                mapConfig.tileMap.ChangeGridColor(selected.movePoints, selected.actionPoints.actions, selected);
-
-            className.text = selected.unitClassStats.unitClassName;
-            //HACK: Buttons are broken uncomment when fixed
-            //Clear old abilities
-            generateButtons.ClearCurrentButtons();
-            if (selected.isFriendly == true)
+            //Use mouse to target check if its friendly
+            if (!hit.collider.CompareTag("FriendlyUnit"))
             {
-                //Generate new abilities buttons if its a player unit
-                generateButtons.GenerateCurrentButtons(selected.unitAbilities);
+                return;
+            }
+            if (selectedUnit != null)
+            {
+                //Deselect previous unit
+                DeselectUnit(selectedUnit);
+            }
+            //select new unit
+            selectedUnit = hit.collider.GetComponent<UnitConfig>();
+            //prevents you from targeting units without actions
+            if (selectedUnit.actionPoints.actions != 0)
+            {
+                selectUnit(selectedUnit);
             }
         }
-        //Move the camera to selected Unit
-        cameraControl.MoveToTarget(selected.transform.position);
+    }
+    public void selectUnit(UnitConfig selected)
+    {
+        if(selected == null)
+        {
+            return;
+        }
+        if (selected.isFriendly)
+        {
+            selectedUnit = selected;
+            //selected = selectedUnit;
+            selectedUnit.isSelected = true;
+            //Move the marker to selected unit
+            MoveMarker(unitMarker, selectedUnit.transform.position);
+            //Update grid colors
+            mapConfig.tileMap.ChangeGridColor(selected.movePoints, selected.actionPoints.actions, selected);
+            //Update Displayed Name
+            className.text = selectedUnit.unitClassStats.unitClassName;
+            //Clear old abilities
+            generateButtons.ClearCurrentButtons();
+            //Generate new abilities buttons if its a player unit
+            generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
+            //Move the camera to selected Unit/target
+            cameraControl.MoveToTarget(selectedUnit.transform.position);
+        }
+        if(!selected.isFriendly)
+        {
+            //HACK: If you're targeting an enemy, what do?
+            selectedTarget = selected;
+            //Move the camera to selected Unit/target
+            cameraControl.MoveToTarget(selectedTarget.transform.position);
+        }
     }
 
     //Update the tile that need to be unwalkable for a specific unit
@@ -310,95 +325,91 @@ public class TurnSystem : MonoBehaviour {
             mapConfig.tileMap.UnitMapData(unit.tileX, unit.tileY);
         }
     }
+
     //Cycle through list of targets
-    public void SwitchTarget(bool nextTarget, List<UnitConfig> unitList, UnitConfig selected)
+    public void KeyboardSelect(bool ChooseNext, List<UnitConfig> unitList, UnitConfig selected)
     {
-        int currentUnitIndex = 0;
-        
-        //check if list is empty
-        if (unitList != null)
+        //if list is empty, exit function
+        if (unitList == null)
         {
-            if (selected != null)
-            {
-                //currentUnitIndex = unitList.FindIndex(a => a == selected);
-            }
-            //If its empty, pick the first friendly unit in list
-            else
-            {
-                selected = unitList[0];
-                currentUnitIndex = unitList.FindIndex(a => a == selected);
-            }
-            if (selected.isFriendly)
-            {
-                if (!selected.isIdle)
-                {
-                    return;
-                }
-                //Check if any units have actions left
-                bool UnitHasActionsLeft = false;
-                foreach (UnitConfig unit in unitList)
-                {
-                    if (unit.actionPoints.actions > 0)
-                    {
-                        //currentUnitIndex = unitList.IndexOf(unit);
-                        UnitHasActionsLeft = true;
-                        break;
-                    }
-                }
-                if (UnitHasActionsLeft == false)
-                {
-                    return;
-                }
-            }
-
-            //move to next unit in list if true
-            if (nextTarget)
-            {
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    //loops around to the beginning of the list
-                    currentUnitIndex += 1;
-                    if (currentUnitIndex > unitList.Count)
-                    {
-                        currentUnitIndex = 0;
-                    }
-
-                    selected = unitList[currentUnitIndex % unitList.Count];
-                    
-                    //Check if enemy unit is targetable
-                    if (!selected.isFriendly)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            else
-            {
-                //move to previous unit in list if false
-                for (int i = 0; i < unitList.Count; i++)
-                {
-
-                    //loops around to the end of the list
-                    currentUnitIndex -= 1;
-                    if (currentUnitIndex < 0)
-                    {
-                        currentUnitIndex = unitList.Count - 1;
-                    }
-                    selected = unitList[currentUnitIndex % unitList.Count];
-                    if (selected.isFriendly)
-                    {
-                        if (selected.actionPoints.actions > 0)
-                        {
-                            break;
-                        }
-                    }
-
-                }
-            }
-            //Select the next/previous unit
-            selectUnit(selected);
+            return;
         }
+        //If selected is null, pick the first unit in the list
+        if (selected == null)
+        {   
+            selected = unitList[0];
+        }
+        //Check if unit is idle
+        if (!selected.isIdle)
+        {
+            return;
+        }
+        int chosenUnitIndex = unitList.FindIndex(a => a == selected);
+        //DeselectUnit(selected);
+        if (selected.isFriendly)
+        {
+            //Check if any friendly units have actions left
+            //Makes sure you can't target anything at the end of your turn
+            bool UnitHasActionsLeft = false;
+            foreach (UnitConfig unit in unitList)
+            {
+                if (unit.actionPoints.actions > 0)
+                {
+                    UnitHasActionsLeft = true;
+                    break;
+                }
+            }
+            if (UnitHasActionsLeft == false)
+            {
+                return;
+            }
+        }
+        //After all the checks are done, we can start choosing a target
+        for (int i = 0; i < unitList.Count; i++)
+        {
+            //loops around the list
+            //Go up the list
+            if (ChooseNext)
+            {
+                chosenUnitIndex++;
+            }
+            //Go down the list
+            else if (!ChooseNext)
+            {
+                chosenUnitIndex --;
+            }
+        //If its too high, loop around
+        if (chosenUnitIndex >= unitList.Count)
+        {
+            chosenUnitIndex = 0;
+        }
+        //If its too low, loop around
+        else if (chosenUnitIndex < 0)
+        {
+            chosenUnitIndex = unitList.Count - 1;
+        }
+
+        //Check if enemy unit is targetable
+        if (!unitList[chosenUnitIndex].isFriendly)
+            {
+                selected = unitList[chosenUnitIndex];
+                selectedTarget = selected;
+                break;
+            }
+            if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.actions > 0)
+            {
+                selected = unitList[chosenUnitIndex];
+                selectedUnit = selected;
+                break;
+            }
+            
+        }
+        
+        //Select the next/previous unit
+        cameraControl.MoveToTarget(selected.transform.position);
+        
+        selectUnit(selected);
+        
     }
     
     //HACK: Need to move the attackUnit function to unitConfig script
@@ -406,11 +417,11 @@ public class TurnSystem : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
         {
-            if (selectedPlayer == null)
+            if (selectedUnit == null)
             {
                 return;
             }
-            if (selectedPlayer.actionPoints.actions > 0) //Checks if the unit has enough action points
+            if (selectedUnit.actionPoints.actions > 0) //Checks if the unit has enough action points
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -422,17 +433,17 @@ public class TurnSystem : MonoBehaviour {
                         if (!target.isFriendly) //Checks if the unit hit is not friendly
                         {
                             //Spend Actions
-                            totalActions -= selectedPlayer.actionPoints.actions;
-                            selectedPlayer.actionPoints.SubtractAllActions();
+                            totalActions -= selectedUnit.actionPoints.actions;
+                            selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
-                            distance = Vector3.Distance(selectedPlayer.transform.position, target.transform.position);
+                            distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             //Uses current weapon
-                            CalculationManager.HitCheck(selectedPlayer.unitWeapon, distance);
-                            selectedPlayer.ShootTarget(target);
+                            CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
+                            selectedUnit.ShootTarget(target);
 
                             //Calculate the distance between the units
-                            distance = Vector3.Distance(selectedPlayer.transform.position, target.transform.position);
+                            distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;
 
                         }

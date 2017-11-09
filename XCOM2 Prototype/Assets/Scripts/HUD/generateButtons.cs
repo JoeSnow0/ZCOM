@@ -9,6 +9,7 @@ public class generateButtons : MonoBehaviour {
     AbilityInfoObject characterClass;
     [SerializeField]
     AbilityButton abilityButtonPrefab;
+    abilityFunctions abilityFunctions;
 
     public void GenerateCurrentButtons(AbilityInfoObject characterClass)
     {
@@ -31,5 +32,4 @@ public class generateButtons : MonoBehaviour {
             GameObject.Destroy(child.gameObject);
         }
     }
-    
 }

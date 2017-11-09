@@ -4,48 +4,90 @@ using UnityEngine;
 using UnityEngine.UI;
 public class abilityFunctions : MonoBehaviour {
 
-    public MapConfig mapConfig;
+    private MapConfig _mapConfig = null;
+    public MapConfig mapConfig { get { if (_mapConfig == null) _mapConfig = GameObject.FindObjectOfType<MapConfig>(); return _mapConfig; } }
+
     public Text abilityTooltip;
-    int previousAbility = -1;
+    //
+    public enum AbilityStuff
+    {
+        None = 0,
+        Shoot,
+        Overwatch,
+        Hunker,
+        Reload,
+        Medkit
+    }
+
+    static public AbilityStuff previousAbility = AbilityStuff.None;
 
     private void Start()
     {
         //Add the map incase its missing
-        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        //mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        previousAbility = AbilityStuff.None;
+        _mapConfig = null;
+    }
+
+    private void Awake()
+    {
+        previousAbility = AbilityStuff.None;
+        //mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+        _mapConfig = null;
+    }
+
+    public bool ConfirmAbilityCheck(AbilityStuff ability)
+    {
+        if (previousAbility == ability)
+        {
+            previousAbility = AbilityStuff.None;
+            return true;
+        }
+        previousAbility = ability;
+        return false;
     }
 
     public bool ConfirmAbilityCheck(int abilityIndex)
     {
-        //Add the map incase its missing
-        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        //make it possible to target dudes
-        mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
-        print(mapConfig.stateController.CurrentState.ToString());
-
-        if (previousAbility == abilityIndex)
-        {
-            print("Doing ability-stuff()");
-            return true;
-        }
-        previousAbility = abilityIndex;
-        mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-        return false;
+        //make it possible to target with attack mode
+        return ConfirmAbilityCheck((AbilityStuff)abilityIndex);           
     }
 
     public void ShootTarget()
     {
         //if ability has been confirmed by player
-        if (ConfirmAbilityCheck(0))
+        if (ConfirmAbilityCheck(AbilityStuff.Shoot) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
-            //ability happens
-            print("Pewpewpew");
+            //Shooting target
+            if (!TurnSystem.selectedTarget.isFriendly) //Checks if the unit hit is not friendly
+            {
+                //Spend Actions
+                mapConfig.turnSystem.totalActions -= TurnSystem.selectedUnit.actionPoints.actions;
+                TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
+
+                //Calculate the distance between the units
+                mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
+                //Uses current weapon
+                CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, mapConfig.turnSystem.distance);
+                TurnSystem.selectedUnit.ShootTarget(TurnSystem.selectedTarget);
+
+                //Calculate the distance between the units
+                mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
+                mapConfig.turnSystem.distance /= 2;
+
+            }
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
             //stop targeting mode
             mapConfig.turnSystem.DeselectAllUnits();
-            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-            return;
         }
-        //Ability does not happen
-        print("pls confirm");
+        else
+        {
+            //Ability does not happen
+            print("pls confirm");
+            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
+            mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
+        }
+       
     }
 
     /// <summary>
@@ -54,22 +96,22 @@ public class abilityFunctions : MonoBehaviour {
 
     public void Overwatch()
     {
-        ConfirmAbilityCheck(1);
+        ConfirmAbilityCheck(AbilityStuff.Overwatch);
         Debug.Log("Unit in overwatch");
     }
     public void HunkerDown()
     {
-        ConfirmAbilityCheck(2);
+        ConfirmAbilityCheck(AbilityStuff.Hunker);
         Debug.Log("Hunkered down, defense increased");
     }
     public void ReloadWeapon()
     {
-        ConfirmAbilityCheck(3);
+        ConfirmAbilityCheck(AbilityStuff.Reload);
         Debug.Log("Weapon reloaded");
     }
     public void Medkit()
     {
-        ConfirmAbilityCheck(4);
+        ConfirmAbilityCheck(AbilityStuff.Medkit);
         Debug.Log("Healing");
     }
 }

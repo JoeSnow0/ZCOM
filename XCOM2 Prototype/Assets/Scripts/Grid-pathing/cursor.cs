@@ -43,22 +43,22 @@ public class cursor : MonoBehaviour {
                     explosionObject.transform.position = activeObject.transform.position;
 
                     if (turnSystem.playerTurn) {
-                        if (turnSystem.selectedPlayer != null && !turnSystem.selectedPlayer.isMoving)
+                        if (TurnSystem.selectedUnit != null && !TurnSystem.selectedUnit.isMoving)
                         {
                             if(map != null && map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
-                                map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedPlayer);
+                                map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, TurnSystem.selectedUnit);
                         }
                     }
                 }
 
                 if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn)
                 {
-                    if (!turnSystem.selectedPlayer.isMoving)
+                    if (!TurnSystem.selectedUnit.isMoving)
                     {
                         //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
 
-                        
-                        turnSystem.selectedPlayer.MoveNextTile();
+
+                        TurnSystem.selectedUnit.MoveNextTile();
                     }
                 }
             }

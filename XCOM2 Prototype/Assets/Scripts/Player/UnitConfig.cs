@@ -157,11 +157,11 @@ public class UnitConfig : MonoBehaviour
                 pathIndex = 0;
                 mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
                 if (mapConfig.turnSystem.playerTurn)
-                    mapConfig.turnSystem.cameraControl.MoveToTarget(mapConfig.turnSystem.selectedPlayer.transform.position);
+                    mapConfig.turnSystem.cameraControl.MoveToTarget(TurnSystem.selectedUnit.transform.position);
 
                 if (actionPoints.actions <= 0)
                 {
-                    mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedPlayer);
+                    mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                 }
                 else if(actionPoints.actions > 0 && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
@@ -257,7 +257,7 @@ public class UnitConfig : MonoBehaviour
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
                             actionPoints.SubtractAllActions();
                             //Move camera to next unit
-                            mapConfig.turnSystem.SwitchTarget(true, mapConfig.turnSystem.playerUnits, mapConfig.turnSystem.selectedPlayer);
+                            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                         }
                     }
                 }
@@ -269,9 +269,9 @@ public class UnitConfig : MonoBehaviour
     {
         isShooting = true;
         if (isFriendly)
-            animatorS.target = target;
+            TurnSystem.selectedTarget = target;
         else
-            animatorZ.target = target;
+            TurnSystem.selectedUnit = target;
     }
 
     public void MoveNextTile()//start to try to move unit

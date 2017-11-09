@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoldierAnimation : MonoBehaviour {
     Animator soldierAnimator;
-    UnitConfig unit;
+    UnitConfig unitConfig;
     Vector3 lastPosition;
     Vector3 direction;
     Quaternion lookRotation;
@@ -17,30 +17,30 @@ public class SoldierAnimation : MonoBehaviour {
 
     void Start () {
         soldierAnimator = GetComponent<Animator>();
-        unit = GetComponentInParent<UnitConfig>();
+        unitConfig = GetComponentInParent<UnitConfig>();
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = unit.unitWeapon.weaponSoundShoot;
+        audioSource.clip = unitConfig.unitWeapon.weaponSoundShoot;
     }
 	
 	void Update () {
-        if (!unit.isMoving)
+        if (!unitConfig.isMoving)
         {
             soldierAnimator.SetInteger("state", 0);
         }
-        if (unit.isMoving)
+        if (unitConfig.isMoving)
         {
             soldierAnimator.SetInteger("state", 1);
         }
-        if (unit.isSprinting)
+        if (unitConfig.isSprinting)
         {
             soldierAnimator.SetInteger("state", 2);
         }
-        if (unit.isShooting)
+        if (unitConfig.isShooting)
         {
             soldierAnimator.SetInteger("state", 3);
 
-            transform.parent.LookAt(target.transform.position);
+            transform.parent.LookAt(TurnSystem.selectedTarget.transform.position);
             Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
             eulerAngles.x = 0;
             eulerAngles.z = 0;
@@ -64,11 +64,11 @@ public class SoldierAnimation : MonoBehaviour {
     }
     public void ShootProjectile()
     {
-        if (unit.unitWeapon.weaponProjectile != null)
+        if (unitConfig.unitWeapon.weaponProjectile != null)
         {
-            ParticleSystem.MainModule settings = Instantiate(unit.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
+            ParticleSystem.MainModule settings = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
 
-            settings.startColor = unit.unitWeapon.particleColor[Random.Range(0, unit.unitWeapon.particleColor.Length - 1)];
+            settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];
         }
         else
         {
@@ -80,14 +80,13 @@ public class SoldierAnimation : MonoBehaviour {
     }
     public void ProjectileHit()
     {
-        target.health.TakeDamage(CalculationManager.damage, unit.unitWeapon);
-        
-        //unit.actionPoints.SubtractAllActions();
+        //HACK: dealing damage should not be in animation
+        TurnSystem.selectedTarget.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
     }
     public void End()
     {
-        mapConfig.turnSystem.selectUnit(mapConfig.turnSystem.selectedPlayer);
-        unit.isShooting = false;
-        unit.actionPoints.SubtractAllActions();
+        mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits,TurnSystem.selectedUnit);
+        unitConfig.isShooting = false;
+        unitConfig.actionPoints.SubtractAllActions();
     }
 }

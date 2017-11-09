@@ -52,6 +52,7 @@ public class TileMap : MonoBehaviour {
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
         changedColoredGrid = new List<ClickebleTile>();
+        currentGrid = new int[mapSizeX, mapSizeY];
     }
 
     void GenerateMapData()//make the grid and it's obstacles.
@@ -451,7 +452,7 @@ public class TileMap : MonoBehaviour {
 
     public void ChangeGridColor(int movement, int actions, UnitConfig position)
     {
-        currentGrid = new int[mapSizeX, mapSizeY];
+        
         playerGridColorChange = position;
 
         for (int x = 0; x < mapSizeX; x++)

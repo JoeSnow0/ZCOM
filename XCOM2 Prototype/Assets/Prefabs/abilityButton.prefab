@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useAbility: 0
+  abilityButton: {fileID: 0}
 --- !u!114 &114622711459177458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -282,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04ec2029248c5e4f9fd24cbf09f9451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityTooltip: {fileID: 0}
 --- !u!114 &114786421516944532
 MonoBehaviour:
   m_ObjectHideFlags: 1
