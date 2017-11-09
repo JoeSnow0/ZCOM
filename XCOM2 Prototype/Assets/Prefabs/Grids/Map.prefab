@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 114140638950140348}
   - component: {fileID: 114995828931628862}
   - component: {fileID: 114105975272966794}
-  - component: {fileID: 114728553140962198}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -58,7 +57,6 @@ MonoBehaviour:
   turnSystem: {fileID: 114140638950140348}
   enemySpawn: {fileID: 114995828931628862}
   tileMap: {fileID: 114764200081771642}
-  stateController: {fileID: 114728553140962198}
 --- !u!114 &114140638950140348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,6 +80,10 @@ MonoBehaviour:
   gameOver: {fileID: 0}
   gameOverText: {fileID: 0}
   hud: {fileID: 0}
+  unitInfoHolder: {fileID: 0}
+  classIcon: {fileID: 0}
+  className: {fileID: 0}
+  unitName: {fileID: 0}
   defeatColor: {r: 0.5294118, g: 0.19463669, b: 0.19463669, a: 1}
   victoryColor: {r: 0.30315, g: 0.5294118, b: 0.19463669, a: 1}
   lineColors:
@@ -126,11 +128,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   selectedUnit: {fileID: 0}
-  selectedTarget: {fileID: 0}
   mapConfig: {fileID: 0}
   generateButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
-  className: {fileID: 0}
   enemySpawn: {fileID: 0}
   cameraControl: {fileID: 0}
   playerTurn: 1
@@ -150,22 +150,11 @@ MonoBehaviour:
       type: 2}
     spawnNumberOfEnemys: 5
     activatTurn: 0
-  EnemyTargeting: 0
   nextTarget: 9
   previousTarget: 304
+  EnemyTargeting: 0
   distance: 0
---- !u!114 &114728553140962198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentState: 0
+  killCount: 0
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -177,16 +166,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e90e5f580dcdde4b92ccab6c38e3f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedUnit: {fileID: 0}
   tileType:
   - name: walk
     tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
       type: 2}
     movemontCost: 1
+    aimReduction: 1
     isWalkeble: 1
-  - name: notWalk
+  - name: FullBlock
     tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
-    movemontCost: 0
+    movemontCost: 0.99
+    aimReduction: 10000
+    isWalkeble: 0
+  - name: Full Cover
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 6945e1964a45b864883bb9e2edb16908,
+      type: 2}
+    movemontCost: 1.03
+    aimReduction: 50
+    isWalkeble: 0
+  - name: Half cover
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 0c454b27dbe1a224d9267bb4fb60cecb,
+      type: 2}
+    movemontCost: 1.03
+    aimReduction: 25
+    isWalkeble: 0
+  - name: unit pos
+    tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
+      type: 2}
+    movemontCost: 1
+    aimReduction: 1
     isWalkeble: 0
   gridMaterials:
     normalMaterial: {fileID: 2100000, guid: bce1c97ffcc6ad347bf7f53552cc88ea, type: 2}

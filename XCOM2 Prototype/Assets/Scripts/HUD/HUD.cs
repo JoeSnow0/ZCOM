@@ -31,7 +31,7 @@ public class HUD : MonoBehaviour {
         mapConfig = FindObjectOfType<MapConfig>();
         amountTurns = 1;
         isPlayerTurn = true;
-        maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
+        maxTurns = mapConfig.turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
         turnCounter.text = amountTurns + "/" + maxTurns;
         alienAnim = alienUI.GetComponent<Animator>();
     }

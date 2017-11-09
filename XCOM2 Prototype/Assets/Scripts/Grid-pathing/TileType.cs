@@ -8,6 +8,6 @@ public class TileType {
     public string name;
     public GameObject tileVisualPrefab;
     public float movemontCost = 10;
+    public float aimReduction = 1;
     public bool isWalkeble = true;
-    
 }

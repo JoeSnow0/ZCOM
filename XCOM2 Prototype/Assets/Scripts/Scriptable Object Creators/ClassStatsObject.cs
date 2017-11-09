@@ -19,19 +19,19 @@ public class ClassStatsObject : ScriptableObject
 
     [Header("Health")]
     [Tooltip("The amount of health this class has")]
-    [RangeAttribute(1, 40)]
+    [Range(1, 40)]
     public int maxUnitHealth;
     [Header("Unit Defense")]
     [Tooltip("The amount which enemy aim is reduced when they shoot at this unit")]
-    [RangeAttribute(1, 10)]
+    [Range(1, 10)]
     public int unitDefense;
     [Header("Action Points")]
     [Tooltip("Action points are spent when using abilities")]
-    [RangeAttribute(1, 5)]
+    [Range(1, 5)]
     public int maxUnitActionPoints;
     [Header("Movement Points")]
     [Tooltip("The amount of tiles a unit can move in a single action")]
-    [RangeAttribute(1, 10)]
+    [Range(1, 10)]
     public int maxUnitMovePoints;
     [Header("Movement Cost")]
     [Tooltip("How much many actions movement costs to use")]
