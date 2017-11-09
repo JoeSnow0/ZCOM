@@ -434,9 +434,9 @@ public class TileMap : MonoBehaviour {
 
     public void GeneratePathTo(int tileX, int tileY, UnitConfig selected, bool isBullet = false)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit = selected;
-        selectedUnit.currentPath = null;
-        selectedUnit.currentBulletPath = null;
+        TurnSystem.selectedUnit = selected;
+        TurnSystem.selectedUnit.currentPath = null;
+        TurnSystem.selectedUnit.currentBulletPath = null;
 
         if (UnitCanEnterTile(tileX,tileY) == false)
         {
@@ -456,8 +456,8 @@ public class TileMap : MonoBehaviour {
         List<Node> unvisited = new List<Node>();
         
             Node source = graph[
-                                selectedUnit.tileX,
-                                selectedUnit.tileY
+                                TurnSystem.selectedUnit.tileX,
+                                TurnSystem.selectedUnit.tileY
                                 ];
             Node target = graph[
                                 tileX,
@@ -467,8 +467,8 @@ public class TileMap : MonoBehaviour {
         if(isBullet)
         {
              source = graphAir[
-                                selectedUnit.tileX,
-                                selectedUnit.tileY
+                                TurnSystem.selectedUnit.tileX,
+                                TurnSystem.selectedUnit.tileY
                                 ];
              target = graphAir[
                                 tileX,
@@ -556,9 +556,9 @@ public class TileMap : MonoBehaviour {
         //current path is from goal to unit here we reverse it. to make it normal
         currentPath.Reverse();
         if(!isBullet)
-            selectedUnit.currentPath = currentPath;
+            TurnSystem.selectedUnit.currentPath = currentPath;
         if (isBullet)
-            selectedUnit.currentBulletPath = currentPath;
+            TurnSystem.selectedUnit.currentBulletPath = currentPath;
     }
 
 

@@ -71,6 +71,7 @@ public class TurnSystem : MonoBehaviour
     //Input
     public KeyCode nextTarget;
     public KeyCode previousTarget;
+    public KeyCode backOutofAttack;
 
 
     //Distance Variable (maybe put elsewhere?)
@@ -224,13 +225,21 @@ public class TurnSystem : MonoBehaviour
         }
 
     }
+
+    public void SelectUnit()
+    {
+        selectedUnit.isSelected = true;
+    }
+
     public void DeselectUnit(UnitConfig selection)
     {
+        mapConfig.tileMap.ResetColorGrid();
         selection.isSelected = false;
         selection = null;
     }
     public void DeselectAllUnits()
     {
+        mapConfig.tileMap.ResetColorGrid();
         if (selectedUnit != null)
         {
             selectedUnit.isSelected = false;
@@ -246,13 +255,13 @@ public class TurnSystem : MonoBehaviour
         if (selectedTarget != null)
         {
             selectedTarget.isSelected = false;
-            //selectedTarget = null;
+            selectedTarget = null;
         }
 
         for (int i = 0; i < enemyUnits.Count; i++)
         {
             enemyUnits[i].isSelected = false;
-            //selectedTarget = null;
+            selectedTarget = null;
         }
 
     }

@@ -38,6 +38,7 @@ public class abilityFunctions : MonoBehaviour {
 
     public bool ConfirmAbilityCheck(AbilityStuff ability)
     {
+        mapConfig.turnSystem.cameraControl.MoveToTarget(TurnSystem.selectedUnit.transform.position);
         if (previousAbility == ability)
         {
             previousAbility = AbilityStuff.None;
@@ -55,6 +56,11 @@ public class abilityFunctions : MonoBehaviour {
 
     public void ShootTarget()
     {
+
+        if (TurnSystem.selectedUnit == null && TurnSystem.selectedUnit.actionPoints.actions <= 0)
+        {
+            return;
+        }
         //if ability has been confirmed by player
         if (ConfirmAbilityCheck(AbilityStuff.Shoot) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
@@ -79,8 +85,9 @@ public class abilityFunctions : MonoBehaviour {
 
             //stop targeting mode
             mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
             mapConfig.turnSystem.DeselectAllUnits();
+            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
+            
         }
         else
         {

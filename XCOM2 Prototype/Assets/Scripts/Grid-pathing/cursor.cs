@@ -47,11 +47,15 @@ public class cursor : MonoBehaviour {
                         {
                             if(map != null && map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
                                 map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, TurnSystem.selectedUnit);
+                            else
+                            {
+                                TurnSystem.selectedUnit.currentPath = null;
+                            }
                         }
                     }
                 }
 
-                if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn)
+                if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn && StateController.CurrentState == StateController.GameState.TacticalMode)
                 {
                     if (!TurnSystem.selectedUnit.isMoving)
                     {
