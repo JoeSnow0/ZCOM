@@ -59,11 +59,6 @@ public class WeaponInfoObject : ScriptableObject
     public int numberOfDiceDamage;
     public int numberOfSidesDamage;
 
-    [Header("Unit Aim fall of")]
-    [Tooltip("How much will the bullet accuracy fall of at each tile")]
-    [Range(1, 10)]
-    public int unitAimFallof;
-
     [Header("Customization")]
     [Tooltip("Projectile particle system used when the weapon is shooting")]
     public GameObject weaponProjectile;

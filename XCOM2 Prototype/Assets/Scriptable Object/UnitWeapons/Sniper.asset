@@ -14,11 +14,11 @@ MonoBehaviour:
   name: Sniper
   icon: {fileID: 0}
   value: 0
-  baseAim: 100
-  rangeModShort: -75
-  rangeModMedium: -25
-  rangeModLong: -5
-  rangeModFar: -25
+  baseAim: 40
+  rangeModShort: -10
+  rangeModMedium: -4
+  rangeModLong: 5
+  rangeModFar: 20
   weaponRange: 0
   baseDamage: 3
   numberOfDiceDamage: 1

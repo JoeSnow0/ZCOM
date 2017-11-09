@@ -15,10 +15,10 @@ MonoBehaviour:
   icon: {fileID: 0}
   value: 0
   baseAim: 100
-  rangeModShort: 0
-  rangeModMedium: -15
-  rangeModLong: -40
-  rangeModFar: -100
+  rangeModShort: 2
+  rangeModMedium: 5
+  rangeModLong: 10
+  rangeModFar: 15
   weaponRange: 0
   baseDamage: 3
   numberOfDiceDamage: 1
