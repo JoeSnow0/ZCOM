@@ -2062,7 +2062,7 @@ Prefab:
     - target: {fileID: 224751810720143708, guid: 1b5c274c7c9ee794fbeaab7389f87f63,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 224751810720143708, guid: 1b5c274c7c9ee794fbeaab7389f87f63,
         type: 2}
@@ -2963,7 +2963,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1922343718545594, guid: 779cf735e3cf5b44181d66a22f69334e, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114713503827992268, guid: 779cf735e3cf5b44181d66a22f69334e,
         type: 2}
@@ -3845,7 +3845,7 @@ Prefab:
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_AnchorMin.y
@@ -3887,7 +3887,7 @@ Prefab:
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1973597339924420, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
       propertyPath: m_IsActive
@@ -4859,6 +4859,7 @@ MonoBehaviour:
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6
@@ -6711,7 +6712,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1652081799351794, guid: b7b84718365038040bb4d881b1ea38c7, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7b84718365038040bb4d881b1ea38c7, type: 2}
@@ -8681,7 +8682,7 @@ Prefab:
     - target: {fileID: 224831591004823230, guid: 4c36a5c17caf7f040b8add17d5542ce4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
@@ -11520,6 +11521,7 @@ MonoBehaviour:
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6
@@ -12175,7 +12177,7 @@ Prefab:
     - target: {fileID: 224751810720143708, guid: 1b5c274c7c9ee794fbeaab7389f87f63,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -46
       objectReference: {fileID: 0}
     - target: {fileID: 224751810720143708, guid: 1b5c274c7c9ee794fbeaab7389f87f63,
         type: 2}
@@ -12426,6 +12428,7 @@ MonoBehaviour:
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6

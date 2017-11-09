@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ba353880e920148b8e420ee1ff4265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeMaster: 0.5
   soundClip:
   - {fileID: 8300000, guid: 1e2c9e0b5a9b63a4d9177bc34d3f0284, type: 3}
   - {fileID: 8300000, guid: 316aaa944cee01e4aa3e161de9773cdf, type: 3}
@@ -140,4 +141,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cda830885bc46054d9590974e95f0a7f, type: 3}
   - {fileID: 8300000, guid: 0693d8b7fffba8e4883d7a7d60aba397, type: 3}
   - {fileID: 8300000, guid: e63484aa2cc625947a03c959ccf4def1, type: 3}
+  - {fileID: 8300000, guid: 2ccd6d277c452e54bbdea76cdab03652, type: 3}
+  - {fileID: 8300000, guid: 7ff6fc231839c0e46a0b55bd2506bbcf, type: 3}
+  - {fileID: 8300000, guid: b25103c861bab7e48a52a8bc948980a5, type: 3}
   audioSource: {fileID: 82487514275217778}
+  testFloat: 18.400034
