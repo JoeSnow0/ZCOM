@@ -38722,21 +38722,21 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 1.5666667
-    functionName: ShootProjectile
+    functionName: AttackStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.8333334
-    functionName: ProjectileHit
+    functionName: AttackHit
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.5333333
-    functionName: End
+    functionName: AttackEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

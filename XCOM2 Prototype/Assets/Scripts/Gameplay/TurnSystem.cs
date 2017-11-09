@@ -75,6 +75,7 @@ public class TurnSystem : MonoBehaviour {
     public float distance;
 
     private UnitConfig lastSelectedUnit;
+    public int killCount = 0;
 
     void Start ()
     {
@@ -430,11 +431,11 @@ public class TurnSystem : MonoBehaviour {
                     if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
                     {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-                        if (!target.isFriendly) //Checks if the unit hit is not friendly
+                        if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
                         {
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
-                            selectedUnit.actionPoints.SubtractAllActions();
+                            //selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
@@ -565,25 +566,41 @@ public class TurnSystem : MonoBehaviour {
         enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
-    //private void UpdateHUD()
-    //{
-    //    foreach (UnitConfig unit in playerUnits)//Updates friendly units
-    //    {
-    //        if (unit.isSelected)
-    //        {
-    //            foreach (Image image in unit.imageElements.elements)
-    //            {
-    //                image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMax);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            foreach (Image image in unit.health.healthBar)
-    //            {
-    //                image.color = new Color(image.color.r, image.color.g, image.color.b, unit.imageElements.transparencyMin);
-    //            }
-    //        }
-    //    }
+    private void UpdateHUD()
+    {
+        unitInfoHolder.SetActive(playerTurn);
+        
+        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
+        {
+            classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
+            className.text = selectedUnit.unitClassStats.unitClassName;
+            unitName.text = selectedUnit.unitName;
+            classIcon.sprite = selectedUnit.unitClassStats.classIcon;
+        }
+
+        foreach (UnitConfig unit in playerUnits)//Updates friendly units
+        {
+            if (unit.isSelected || unit.isHighlighted)
+            {
+                unit.animatorHealthbar.SetBool("display", true);
+            }
+            else
+            {
+                unit.animatorHealthbar.SetBool("display", false);
+            }
+        }
+
+        foreach (UnitConfig unit in enemyUnits)
+        {
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            {
+                unit.animatorHealthbar.SetBool("display", true);
+            }
+            else if(unit.animatorHealthbar != null)
+            {
+                unit.animatorHealthbar.SetBool("display", false);
+            }
+        }
 
     //    foreach (UnitConfig unit in enemyUnits)
     //    {

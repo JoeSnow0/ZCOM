@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shotgun
   icon: {fileID: 0}
+  weaponModel: {fileID: 1994628847380316, guid: 20956168f2a98d449a22ea82a77c3d5b,
+    type: 2}
   value: 0
   baseAim: 100
   rangeModShort: 0

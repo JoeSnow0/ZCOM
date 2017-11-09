@@ -90,6 +90,7 @@ public class Health : MonoBehaviour
                 {
                     unitConfig.isDead = true;
                     mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
+                    mapConfig.turnSystem.killCount++;
                 }
                 else
                     KillUnit();

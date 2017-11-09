@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: StatsZombie
   m_EditorClassIdentifier: 
   unitClassName: Zombie
+  classIcon: {fileID: 0}
+  classModel: {fileID: 1465679864678236, guid: e338475e4cf5a394a816938467bfc3a9, type: 2}
   maxUnitHealth: 4
   unitDefense: 0
   maxUnitActionPoints: 2

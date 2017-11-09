@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sniper
   icon: {fileID: 0}
+  weaponModel: {fileID: 1159676966995846, guid: a47098a61078e7a43ac40bbe4a188fab,
+    type: 2}
   value: 0
   baseAim: 100
   rangeModShort: -75

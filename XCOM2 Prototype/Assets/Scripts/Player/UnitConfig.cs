@@ -28,6 +28,7 @@ public class UnitConfig : MonoBehaviour
     //Unit//
     [HideInInspector] public bool isSelected = false;
     public bool isFriendly;
+    public GameObject modelController;
     //Unit Position
     public int tileX;
     public int tileY;
@@ -46,8 +47,7 @@ public class UnitConfig : MonoBehaviour
     public bool isDead = false;
     public bool isHighlighted = false;
 
-    public SoldierAnimation animatorS;
-    public ZombieAnimation animatorZ;
+    public AnimationScript animator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -60,6 +60,11 @@ public class UnitConfig : MonoBehaviour
     //BaseUnitCopy
     void Start()
     {
+        //Load models
+        //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
+
+        //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
+        
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
@@ -68,7 +73,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        //imageElements = GetComponent<ImageElements>();
+
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -81,10 +86,7 @@ public class UnitConfig : MonoBehaviour
         
         line = GetComponent<LineRenderer>();
 
-        if(isFriendly)
-            animatorS = GetComponentInChildren<SoldierAnimation>();
-        else
-            animatorZ = GetComponentInChildren<ZombieAnimation>();
+        animator = GetComponentInChildren<AnimationScript>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         /*if (unitWeapon == null)
@@ -221,6 +223,7 @@ public class UnitConfig : MonoBehaviour
     }
     public void InitializeEnemy()
     {
+        animatorHealthbar = GetComponentInChildren<Animator>();
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
@@ -255,7 +258,7 @@ public class UnitConfig : MonoBehaviour
 
                             //Spend Actions
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
-                            actionPoints.SubtractAllActions();
+                            //actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                         }

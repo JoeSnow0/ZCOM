@@ -40,9 +40,7 @@ public class ZombieAnimation : MonoBehaviour {
                 eulerAngles.z = 0;
                 // Set the altered rotation back
                 transform.parent.rotation = Quaternion.Euler(eulerAngles);
-                
             }
-
         }
         if (unitConfig.isDead)
         {
@@ -77,4 +75,3 @@ public class ZombieAnimation : MonoBehaviour {
         unitConfig.mapConfig.tileMap.ChangeGridColor(TurnSystem.selectedUnit.movePoints, TurnSystem.selectedUnit.actionPoints.actions, TurnSystem.selectedUnit);
     }
 }
-
