@@ -1004,7 +1004,7 @@ GameObject:
   - component: {fileID: 114926315396523272}
   - component: {fileID: 114139811261921410}
   - component: {fileID: 120123932883889892}
-  - component: {fileID: 114115794196145466}
+  - component: {fileID: 114708323393383134}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: FriendlyUnit
@@ -2066,17 +2066,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114115794196145466
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1973597339924420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114139811261921410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2221,6 +2210,19 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &114708323393383134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973597339924420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ca2682d3f3b804bbf07fb2f14821d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  projectileStartPos: {fileID: 0}
 --- !u!114 &114710749034637548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2243,22 +2245,24 @@ MonoBehaviour:
   health: {fileID: 114799151252263356}
   movement: {fileID: 114139811261921410}
   generateButtons: {fileID: 0}
+  animatorHealthbar: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6
   animaitionSpeed: 0.05
+  isIdle: 1
   isMoving: 0
   isSprinting: 0
   isShooting: 0
   isDead: 0
   isHighlighted: 0
-  animator: {fileID: 0}
+  animator: {fileID: 114708323393383134}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
 --- !u!114 &114794772884591812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2406,7 +2410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f8cb8cd879ee44381818577f27eeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions: 0
   actionPointParent: {fileID: 1690719409434392}
   actionPoint: {fileID: 1071586568103138, guid: ab07bd63ad91aec4090ef1d9e189e281,
     type: 2}

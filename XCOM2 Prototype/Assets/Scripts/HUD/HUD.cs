@@ -21,7 +21,6 @@ public class HUD : MonoBehaviour {
 
     [HideInInspector]public int amountTurns;
     int maxTurns;
-    int totalActions;
     public bool isPlayerTurn;
 
     public TurnSystem turnSystem;
@@ -37,7 +36,6 @@ public class HUD : MonoBehaviour {
     }
 
 	void Update () {
-        totalActions = turnSystem.totalActions;
 
     }
 
@@ -45,7 +43,7 @@ public class HUD : MonoBehaviour {
     {
         warning.SetActive(false);
 
-        if (totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
+        if (TurnSystem.totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
         {
             isPlayerTurn = !isPlayerTurn;
             turnSystem.ToggleMarkers(isPlayerTurn);
@@ -107,7 +105,7 @@ public class HUD : MonoBehaviour {
         else //Show warning if player has more than 0 actions
         {
             warning.SetActive(true);
-            warningText.text = "Are you sure? You still have " + turnSystem.totalActions + " actions left";
+            warningText.text = "Are you sure? You still have " + TurnSystem.totalActions + " actions left";
         }
     }
     public void abortPress()

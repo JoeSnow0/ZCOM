@@ -120,7 +120,30 @@ public class Health : MonoBehaviour
 
         Destroy(gameObject);
     }
-
+    public void RestoreHealthFull()
+    {
+        currentUnitHealth = maxUnitHealth;
+        UpdateUnitHealth();
+    }
+    public void AddHealth(int healthRestored)
+    {
+        currentUnitHealth += healthRestored;
+        if (currentUnitHealth > maxUnitHealth)
+        {
+            currentUnitHealth = maxUnitHealth;
+        }
+        UpdateUnitHealth();
+    }
+    public void SubractHealth(int healthRemoved)
+    {
+        currentUnitHealth -= healthRemoved;
+        UpdateUnitHealth();
+        if (currentUnitHealth <= 0)
+        {
+            currentUnitHealth = 0;
+            KillUnit();
+        }
+    }
     public void Healing(int healAmount, WeaponInfoObject weapon)
     {
         GameObject heal = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));

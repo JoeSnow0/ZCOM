@@ -71,7 +71,7 @@ public class UnitMovement : MonoBehaviour {
                 pathIndex = 0;
                 if (unitConfig.mapConfig.turnSystem.playerTurn)
 
-                if (unitConfig.actionPoints.actions <= 0)
+                if (unitConfig.actionPoints.CheckAvailableActions(unitClassStats.moveCost))
                 {
                     unitConfig.mapConfig.turnSystem.KeyboardSelect(true, unitConfig.mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                 }
@@ -93,7 +93,7 @@ public class UnitMovement : MonoBehaviour {
                     unitConfig.mapConfig.turnSystem.markerImage[i].color = unitConfig.mapConfig.turnSystem.lineColors[0];
                 }
             }
-            else if (currentPath.Count < movePoints + 2 && unitConfig.actionPoints.actions > 1)//full length path
+            else if (currentPath.Count < movePoints + 2 && unitConfig.actionPoints.CheckAvailableActions(unitClassStats.moveCost))//full length path
             {
                 unitConfig.mapConfig.turnSystem.gradient.SetKeys(
                     new GradientColorKey[] { new GradientColorKey(unitConfig.mapConfig.turnSystem.lineColors[0], 0.0f), new GradientColorKey(unitConfig.mapConfig.turnSystem.lineColors[0], 1.0f) },
@@ -119,7 +119,7 @@ public class UnitMovement : MonoBehaviour {
             }
 
             int currNode = 0;
-            while (currNode < currentPath.Count - 1 && currNode < movePoints * unitConfig.actionPoints.actions)
+            while (currNode < currentPath.Count - 1 && currNode < movePoints * unitConfig.actionPoints.ReturnAvailableActions())
             {
                 Vector3 start = unitConfig.mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
                 Vector3 end = unitConfig.mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
@@ -157,7 +157,7 @@ public class UnitMovement : MonoBehaviour {
 
         else
         {
-            int remainingMovement = movePoints * unitConfig.actionPoints.actions;
+            int remainingMovement = movePoints * unitConfig.actionPoints.ReturnAvailableActions();
             int moveTo = currentPath.Count - 1;
             for (int cost = 1; cost < moveTo; cost++)//is the path possible
             {
@@ -169,16 +169,14 @@ public class UnitMovement : MonoBehaviour {
                 animaitionSpeed = 2;
                 //HACK:Subtracts actions, needs to be a variable in stats
                 unitConfig.actionPoints.SubtractActions(1);
-                unitConfig.mapConfig.turnSystem.totalActions--;
                 return;
             }
-            if (remainingMovement > 0 && unitConfig.actionPoints.actions > 1)//can you move the unit 
+            if (remainingMovement > 0 && unitConfig.actionPoints.CheckAvailableActions(2))//can you move the unit 
             {
                 isSprinting = true;
                 isMoving = true;//start moving in the update
                 animaitionSpeed = 4;
                 unitConfig.actionPoints.SubtractAllActions();
-                unitConfig.mapConfig.turnSystem.totalActions--;
                 return;
             }
             else//is too far away do not move

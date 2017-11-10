@@ -575,7 +575,7 @@ public class TileMap : MonoBehaviour {
             }
         }
         ResetColorGrid();
-        GetPlayerNeibours(movement, actions);
+        GetPlayerNeighbours(movement, actions);
 
     }
 
@@ -591,7 +591,7 @@ public class TileMap : MonoBehaviour {
         }
     }
 
-    public void GetPlayerNeibours(int movement, int actions)
+    public void GetPlayerNeighbours(int movement, int actions)
     {
         currentneighbour = new List<ClickebleTile>();
         if (changedColoredGrid == null)
@@ -607,7 +607,7 @@ public class TileMap : MonoBehaviour {
                 if (neighbour == null)//if neighbour does not have a ClickebleTile skip to next neighbour
                     continue;
 
-                GetNeibours(neighbour, currentRun);
+                GetNeighbours(neighbour, currentRun);
             }
 
             foreach (var neighbour in currentneighbour)//if the neighbour is walkeble or not
@@ -622,7 +622,7 @@ public class TileMap : MonoBehaviour {
         ChangeColorGrid(movement, actions);
     }
 
-    private void GetNeibours(ClickebleTile neighbourConfig, int currentRun)
+    private void GetNeighbours(ClickebleTile neighbourConfig, int currentRun)
     {
         for (int x = -1; x <= 1; x++)
         {

@@ -22,7 +22,7 @@ public class TurnSystem : MonoBehaviour
     }
     //[Header("Actions")]
     [HideInInspector]
-    public int totalActions;
+    static public int totalActions;
     public UnitConfig[] enemyPrefab;
     [Header("UI elements")]
     public GameObject gameOver;
@@ -49,7 +49,7 @@ public class TurnSystem : MonoBehaviour
     static public UnitConfig selectedUnit;
     static public UnitConfig selectedTarget;
     public MapConfig mapConfig;
-    public generateButtons generateButtons;
+    public GenerateButtons generateButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType;
 
@@ -84,7 +84,7 @@ public class TurnSystem : MonoBehaviour
     {
         mapConfig = FindObjectOfType<MapConfig>();
         mapConfig.tileMap.Initialize();
-        generateButtons = FindObjectOfType<generateButtons>();
+        generateButtons = FindObjectOfType<GenerateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
 
@@ -105,10 +105,7 @@ public class TurnSystem : MonoBehaviour
             }
         }
         //Calculate total amount of action points
-        for (int i = 0; i < playerUnits.Count; i++)
-        {
-            totalActions += playerUnits[i].actionPoints.actions;
-        }
+        
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
@@ -133,7 +130,7 @@ public class TurnSystem : MonoBehaviour
     void Update()
     {
 
-        attackUnit();
+        //attackUnit();
         UpdateHUD();
 
         //Deselect units on enemy turn
@@ -183,7 +180,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (var enemy in enemyUnits)
             {
-                if (enemy.actionPoints.actions > 0 || enemy.isMoving)
+                if (enemy.actionPoints.CheckAvailableActions(1) || enemy.isMoving)
                 {
                     endturn = false;
                     break;
@@ -206,7 +203,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (UnitConfig unit in playerUnits)
             {
-                if (unit.actionPoints.actions > 0 || unit.isMoving)
+                if (unit.actionPoints.CheckAvailableActions(1) || unit.isMoving)
                 {
                     endturn = false;
                     break;
@@ -285,7 +282,7 @@ public class TurnSystem : MonoBehaviour
             //select new unit
             selectedUnit = hit.collider.GetComponent<UnitConfig>();
             //prevents you from targeting units without actions
-            if (selectedUnit.actionPoints.actions != 0)
+            if (selectedUnit.actionPoints.CheckAvailableActions(1))
             {
                 selectUnit(selectedUnit);
             }
@@ -306,7 +303,7 @@ public class TurnSystem : MonoBehaviour
             //Move the marker to selected unit
             MoveMarker(unitMarker, selectedUnit.transform.position);
             //Update grid colors
-            mapConfig.tileMap.ChangeGridColor(selected.movePoints, selected.actionPoints.actions, selected);
+            mapConfig.tileMap.ChangeGridColor(selected.movePoints, selected.actionPoints.ReturnAvailableActions(), selected);
             //Update Displayed Name
             unitName.text = selectedUnit.unitName;
             className.text = selectedUnit.unitClassStats.unitClassName;
@@ -369,7 +366,7 @@ public class TurnSystem : MonoBehaviour
             bool UnitHasActionsLeft = false;
             foreach (UnitConfig unit in unitList)
             {
-                if (unit.actionPoints.actions > 0)
+                if (unit.actionPoints.CheckAvailableActions(1))
                 {
                     UnitHasActionsLeft = true;
                     break;
@@ -412,7 +409,7 @@ public class TurnSystem : MonoBehaviour
                 selectedTarget = selected;
                 break;
             }
-            if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.actions > 0)
+            if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
             {
                 selected = unitList[chosenUnitIndex];
                 selectedUnit = selected;
@@ -427,45 +424,45 @@ public class TurnSystem : MonoBehaviour
     }
 
     //HACK: Need to move the attackUnit function to unitConfig script
-    void attackUnit()
-    {
-        if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
-        {
-            if (selectedUnit == null)
-            {
-                return;
-            }
-            if (selectedUnit.actionPoints.actions > 0) //Checks if the unit has enough action points
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
-                    {
-                        UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-                        if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
-                        {
-                            //Spend Actions
-                            totalActions -= selectedUnit.actionPoints.actions;
-                            //selectedUnit.actionPoints.SubtractAllActions();
+    //void attackUnit()
+    //{
+    //    if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
+    //    {
+    //        if (selectedUnit == null)
+    //        {
+    //            return;
+    //        }
+    //        if (selectedUnit.actionPoints.CheckAvailableActions(1)) //Checks if the unit has enough action points
+    //        {
+    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //            RaycastHit hit;
+    //            if (Physics.Raycast(ray, out hit))
+    //            {
+    //                if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
+    //                {
+    //                    UnitConfig target = hit.collider.GetComponent<UnitConfig>();
+    //                    if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
+    //                    {
+    //                        //Spend Actions
+    //                        selectedUnit.actionPoints.SubtractAllActions();
+    //                        //selectedUnit.actionPoints.SubtractAllActions();
 
-                            //Calculate the distance between the units
-                            distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
-                            //Uses current weapon
-                            CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
-                            selectedUnit.ShootTarget(target);
-                            selectedUnit.GetAccuracy(target.tileX, target.tileY);
-                            //Calculate the distance between the units
-                            distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
-                            distance /= 2;
+    //                        //Calculate the distance between the units
+    //                        distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
+    //                        //Uses current weapon
+    //                        CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
+    //                        selectedUnit.ShootTarget(target);
+    //                        selectedUnit.GetAccuracy(target.tileX, target.tileY);
+    //                        //Calculate the distance between the units
+    //                        distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
+    //                        distance /= 2;
 
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     public void MoveMarker(Transform marker, Vector3 newPosition)
     {
@@ -487,17 +484,20 @@ public class TurnSystem : MonoBehaviour
             for (int i = 0; i < playerUnits.Count; i++)
             {
                 playerUnits[i].actionPoints.ReplenishAllActions();
-                totalActions += playerUnits[i].actionPoints.actions;
 
             }
         }
         //For enemy units
+        if (enemyUnits == null)
+        {
+            return;
+        }
+        
         else
         {
             for (int i = 0; i < enemyUnits.Count; i++)
             {
                 enemyUnits[i].actionPoints.ReplenishAllActions();
-                totalActions += enemyUnits[i].actionPoints.actions;
             }
         }
         playerTurn = isPlayerTurn;
@@ -542,14 +542,6 @@ public class TurnSystem : MonoBehaviour
             enemyUnits.Remove(unit);
         }
 
-
-        //Destroy(unit.gameObject);
-        //if(enemyUnits.Count <= 0)
-        //{
-        //    gameOver.SetActive(true);
-        //    gameOverText.text = "VICTORY";
-        //    gameOverText.color = victoryColor;
-        //}
         if (playerUnits.Count <= 0)
         {
             gameObject.SetActive(false);//deactivates the map

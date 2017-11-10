@@ -16,7 +16,6 @@ public class StateController : MonoBehaviour
     public void SetCurrentState(GameState setState)
     {
         CurrentState = setState;
-        print(CurrentState);
     }
 
     public bool CheckCurrentState(GameState CompareState)
