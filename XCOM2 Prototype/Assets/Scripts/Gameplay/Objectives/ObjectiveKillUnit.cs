@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectiveKillUnit : Objective {
-    public int killRequired;
+    [SerializeField] private int killRequired;
+    [SerializeField] ClassStatsObject unitType;
+
 	void Start() {
         InitializeObjective();
-        SetDescription("Kill " + killRequired + " zombies");
+
+        if (mapConfig.turnSystem.killedUnits.ContainsKey(unitType.unitClassName))
+        {
+            killRequired = mapConfig.turnSystem.killedUnits[unitType.unitClassName] + killRequired;
+        }
+
+        
+        SetDescription("Kill " + (killRequired - mapConfig.turnSystem.GetKillCount(unitType)) + " " + unitType.unitClassName + 
+            ((killRequired - mapConfig.turnSystem.GetKillCount(unitType) > 1) ? "s" : ""));
     }
 	
 	void Update() {
-		if(mapConfig.turnSystem.killCount >= killRequired)
+		if(mapConfig.turnSystem.killedUnits.ContainsKey(unitType.unitClassName) && mapConfig.turnSystem.killedUnits[unitType.unitClassName] >= killRequired)
         {
-            SetState(1);
+            SetState(ObjectiveState.Completed);
         }
 	}
 }

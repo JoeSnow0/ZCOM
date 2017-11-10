@@ -2609,17 +2609,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1380134655598648, guid: bb03952fabfb3e245a7ba312bb11c442, type: 2}
       propertyPath: m_Name
-      value: ObjectiveKillBoss
+      value: ObjectiveKillMore
       objectReference: {fileID: 0}
     - target: {fileID: 114320875736111244, guid: bb03952fabfb3e245a7ba312bb11c442,
         type: 2}
       propertyPath: killRequired
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1380134655598648, guid: bb03952fabfb3e245a7ba312bb11c442, type: 2}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114320875736111244, guid: bb03952fabfb3e245a7ba312bb11c442,
+        type: 2}
+      propertyPath: unitType
+      value: 
+      objectReference: {fileID: 11400000, guid: e02e90f118a97ba40b47e8d4aa63e1f0,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb03952fabfb3e245a7ba312bb11c442, type: 2}
   m_IsPrefabParent: 0
@@ -9136,6 +9142,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114859601301065056, guid: bb1da194a48ee8e40b4e1dde45deee64,
+        type: 2}
+      propertyPath: maxTurns
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859601301065056, guid: bb1da194a48ee8e40b4e1dde45deee64,
+        type: 2}
+      propertyPath: requiredTurns
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb1da194a48ee8e40b4e1dde45deee64, type: 2}
   m_IsPrefabParent: 0
@@ -10874,6 +10890,17 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114320875736111244, guid: bb03952fabfb3e245a7ba312bb11c442,
+        type: 2}
+      propertyPath: unitType
+      value: 
+      objectReference: {fileID: 11400000, guid: 0748c71494070e741bc61356489eecd7,
+        type: 2}
+    - target: {fileID: 114320875736111244, guid: bb03952fabfb3e245a7ba312bb11c442,
+        type: 2}
+      propertyPath: killRequired
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb03952fabfb3e245a7ba312bb11c442, type: 2}

@@ -75,7 +75,8 @@ public class TurnSystem : MonoBehaviour {
     public float distance;
 
     private UnitConfig lastSelectedUnit;
-    public int killCount = 0;
+
+    public Dictionary<string, int> killedUnits = new Dictionary<string, int>();
 
     void Start ()
     {
@@ -653,5 +654,24 @@ public class TurnSystem : MonoBehaviour {
 
         if(selectedUnit != null && playerTurn)
             lastSelectedUnit = selectedUnit;
+    }
+
+    public void AddKillCount(ClassStatsObject unitType)
+    {
+        if (!killedUnits.ContainsKey(unitType.unitClassName))
+            killedUnits.Add(unitType.unitClassName, 1);
+        else
+            killedUnits[unitType.unitClassName] += 1;
+    }
+    public int GetKillCount(ClassStatsObject unitType)
+    {
+        if (killedUnits.ContainsKey(unitType.unitClassName))
+        {
+            return killedUnits[unitType.unitClassName];
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
