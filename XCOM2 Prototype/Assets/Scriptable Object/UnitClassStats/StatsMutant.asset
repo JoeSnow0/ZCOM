@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51b214ede25aee4580ca8c95d0b76c1, type: 3}
+  m_Name: StatsMutant
+  m_EditorClassIdentifier: 
+  unitClassName: Mutant
+  classIcon: {fileID: 0}
+  classModel: {fileID: 0}
+  hitParticleSystem: {fileID: 1144918940945408, guid: 93310074761d6c74ca845a371db0a1de,
+    type: 2}
+  maxUnitHealth: 10
+  unitDefense: 0
+  maxUnitActionPoints: 2
+  maxUnitMovePoints: 4
+  moveCost: 0

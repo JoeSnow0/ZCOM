@@ -11,9 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51b214ede25aee4580ca8c95d0b76c1, type: 3}
   m_Name: StatsSniper
   m_EditorClassIdentifier: 
-  unitClassName: SNIPER
+  unitClassName: Sniper
   classIcon: {fileID: 21300000, guid: 2c37208f896f0d046b63bb7fa3f96dce, type: 3}
   classModel: {fileID: 1814579743467984, guid: fc8f0b1b2a4536a4c9e103fa3abfe88e, type: 2}
+  hitParticleSystem: {fileID: 1144918940945408, guid: 93310074761d6c74ca845a371db0a1de,
+    type: 2}
   maxUnitHealth: 6
   unitDefense: 1
   maxUnitActionPoints: 2

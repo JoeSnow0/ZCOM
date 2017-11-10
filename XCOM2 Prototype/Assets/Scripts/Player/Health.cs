@@ -84,19 +84,19 @@ public class Health : MonoBehaviour
         {
             dmgText[1].text = CalculationManager.damage.ToString();
             currentUnitHealth -= CalculationManager.damage;
+            Instantiate(unitConfig.unitClassStats.hitParticleSystem, transform.GetChild(0).position, Quaternion.identity);
             if (currentUnitHealth <= 0)
             {
+                unitConfig.isDead = true;
                 if (!unitConfig.isFriendly)
                 {
-                    unitConfig.isDead = true;
                     mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
-                    mapConfig.turnSystem.AddKillCount(unitConfig.unitClassStats);
                 }
                 else
                 {
-                    KillUnit();
-                    mapConfig.turnSystem.AddKillCount(unitConfig.unitClassStats);
+                    mapConfig.turnSystem.playerUnits.Remove(unitConfig);
                 }
+                mapConfig.turnSystem.AddKillCount(unitConfig.unitClassStats);
             }
             UpdateUnitHealth();
         }

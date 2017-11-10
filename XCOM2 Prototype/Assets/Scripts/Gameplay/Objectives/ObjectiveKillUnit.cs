@@ -14,7 +14,7 @@ public class ObjectiveKillUnit : Objective {
             killRequired = mapConfig.turnSystem.killedUnits[unitType.unitClassName] + killRequired;
         }
 
-        
+        //Checks if any units have previously been killed, if remove them from the counter, adds 's' when plural
         SetDescription("Kill " + (killRequired - mapConfig.turnSystem.GetKillCount(unitType)) + " " + unitType.unitClassName + 
             ((killRequired - mapConfig.turnSystem.GetKillCount(unitType) > 1) ? "s" : ""));
     }

@@ -623,7 +623,7 @@ public class TurnSystem : MonoBehaviour {
         if (selectedUnit != null && selectedUnit != lastSelectedUnit)
         {
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
-            className.text = selectedUnit.unitClassStats.unitClassName;
+            className.text = selectedUnit.unitClassStats.unitClassName.ToUpper();
             unitName.text = selectedUnit.unitName;
             classIcon.sprite = selectedUnit.unitClassStats.classIcon;
         }
@@ -663,6 +663,7 @@ public class TurnSystem : MonoBehaviour {
         else
             killedUnits[unitType.unitClassName] += 1;
     }
+
     public int GetKillCount(ClassStatsObject unitType)
     {
         if (killedUnits.ContainsKey(unitType.unitClassName))
