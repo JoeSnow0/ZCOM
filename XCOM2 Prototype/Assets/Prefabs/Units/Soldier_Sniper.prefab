@@ -2200,6 +2200,7 @@ MonoBehaviour:
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6
@@ -2213,6 +2214,7 @@ MonoBehaviour:
   pathProgress: 0
   enemyAi: {fileID: 0}
   animatorHealthbar: {fileID: 0}
+  accuracy: 0
 --- !u!114 &114204136886674946
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ public class ObjectiveKillUnit : Objective {
         SetDescription("Kill " + killRequired + " zombies");
     }
 	
-	void Update () {
+	void Update() {
 		if(mapConfig.turnSystem.killCount >= killRequired)
         {
             SetState(1);
