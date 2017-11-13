@@ -21,7 +21,7 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public ActionPoints actionPoints;
     [HideInInspector]public Health health;
     [HideInInspector]public UnitMovement movement;
-    public GenerateButtons generateButtons;
+    public GenerateAbilityButtons generateAbilityButtons;
     public Animator animatorHealthbar;
 
     //Script References, external

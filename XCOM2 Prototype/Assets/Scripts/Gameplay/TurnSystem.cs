@@ -49,7 +49,7 @@ public class TurnSystem : MonoBehaviour
     static public UnitConfig selectedUnit;
     static public UnitConfig selectedTarget;
     public MapConfig mapConfig;
-    public GenerateButtons generateButtons;
+    public GenerateAbilityButtons generateAbilityButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType;
 
@@ -88,7 +88,7 @@ public class TurnSystem : MonoBehaviour
 
         mapConfig = FindObjectOfType<MapConfig>();
         mapConfig.tileMap.Initialize();
-        generateButtons = FindObjectOfType<GenerateButtons>();
+        generateAbilityButtons = FindObjectOfType<GenerateAbilityButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
 
@@ -337,9 +337,9 @@ public class TurnSystem : MonoBehaviour
             unitName.text = selectedUnit.unitName;
             className.text = selectedUnit.unitClassStats.unitClassName;
             //Clear old abilities
-            generateButtons.ClearCurrentButtons();
+            generateAbilityButtons.ClearCurrentButtons();
             //Generate new abilities buttons if its a player unit
-            generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
+            generateAbilityButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
             //Move the camera to selected Unit/target
             cameraControl.MoveToTarget(selectedUnit.transform.position);
         }

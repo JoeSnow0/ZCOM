@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class GenerateButtons : MonoBehaviour
+public class GenerateAbilityButtons : MonoBehaviour
 {
 
     AbilityInfoObject characterClass;
