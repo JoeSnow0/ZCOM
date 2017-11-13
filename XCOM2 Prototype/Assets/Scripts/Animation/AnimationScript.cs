@@ -14,27 +14,40 @@ public class AnimationScript : MonoBehaviour {
     AudioSource audioSource;
 
 	void Start () {
+        target = TurnSystem.selectedTarget;
         animator = GetComponent<Animator>();
         unitConfig = GetComponentInParent<UnitConfig>();
         audioSource = GetComponent<AudioSource>();
 	}
-	
-	void Update () {
-        if (!unitConfig.isMoving)
+
+    public void AnimationUpdate()
+    {
+        if (!TurnSystem.selectedUnit.isMoving)
         {
             animator.SetInteger("state", 0);
         }
-        if (unitConfig.isMoving)
+        if (TurnSystem.selectedUnit.isMoving)
         {
             animator.SetInteger("state", 1);
         }
-        if (unitConfig.isSprinting)
+        if (TurnSystem.selectedUnit.isSprinting)
         {
             animator.SetInteger("state", 2);
         }
-        if (unitConfig.isShooting)
+        if (TurnSystem.selectedUnit.isShooting)
         {
             animator.SetInteger("state", 3);
+            if (target == null)
+            {
+                if (TurnSystem.selectedUnit = TurnSystem.selectedTarget)
+                {
+                    target = TurnSystem.selectedUnit;
+                }
+                else
+                {
+                    target = TurnSystem.selectedTarget;
+                }
+            }
             if (target != null)
             {
                 transform.parent.LookAt(target.transform.position);
@@ -45,7 +58,7 @@ public class AnimationScript : MonoBehaviour {
                 transform.parent.rotation = Quaternion.Euler(eulerAngles);
             }
         }
-        if (unitConfig.isDead)
+        if (TurnSystem.selectedUnit.isDead)
         {
             animator.SetInteger("state", 4);
         }
@@ -65,13 +78,18 @@ public class AnimationScript : MonoBehaviour {
         }
     }
 
-    public void AttackStart()//When the projectile is supposed to shoot
+    public void SetAnimationState(int animationState)
     {
-        if (unitConfig.unitWeapon.weaponProjectile != null)
+        animator.SetInteger("state", animationState);
+    }
+    public void AttackStart()
+    {
+        //When the projectile is supposed to shoot
+        if (TurnSystem.selectedUnit.unitWeapon.weaponProjectile != null)
         {
-            ParticleSystem.MainModule settings = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
+            ParticleSystem.MainModule settings = Instantiate(TurnSystem.selectedUnit.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
 
-            settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];
+            settings.startColor = TurnSystem.selectedUnit.unitWeapon.particleColor[Random.Range(0, TurnSystem.selectedUnit.unitWeapon.particleColor.Length - 1)];
         }
         else
         {
@@ -91,11 +109,11 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackEnd()
     {
-        unitConfig.isShooting = false;
+        TurnSystem.selectedUnit.isShooting = false;
     }
 
     public void Death()// DESTROYS THE UNIT, Called at death animation end
     {
-        unitConfig.health.KillUnit();
+        TurnSystem.selectedUnit.health.KillUnit();
     }
 }

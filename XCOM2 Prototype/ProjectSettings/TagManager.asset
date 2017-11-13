@@ -12,6 +12,7 @@ TagManager:
   - Button_Type_1
   - Panel_Type_1
   - UI Elements
+  - GameStateController
   layers:
   - Default
   - TransparentFX

@@ -9,21 +9,21 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1402832461053760}
+  m_RootGameObject: {fileID: 1354358122862754}
   m_IsPrefabParent: 1
---- !u!1 &1402832461053760
+--- !u!1 &1354358122862754
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4606675595661444}
-  - component: {fileID: 114764200081771642}
-  - component: {fileID: 114140638950140348}
-  - component: {fileID: 114995828931628862}
-  - component: {fileID: 114105975272966794}
-  - component: {fileID: 114180962689554276}
+  - component: {fileID: 4657409712063388}
+  - component: {fileID: 114428363839586652}
+  - component: {fileID: 114411477686465662}
+  - component: {fileID: 114628174850158198}
+  - component: {fileID: 114168211994414856}
+  - component: {fileID: 114864505483398848}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -31,12 +31,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4606675595661444
+--- !u!4 &4657409712063388
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1354358122862754}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -44,27 +44,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114105975272966794
+--- !u!114 &114168211994414856
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1354358122862754}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ad7ee196e174d9498fda78011c0966d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSystem: {fileID: 114140638950140348}
-  enemySpawn: {fileID: 114995828931628862}
-  tileMap: {fileID: 114764200081771642}
-  stateController: {fileID: 114180962689554276}
---- !u!114 &114140638950140348
+  turnSystem: {fileID: 114411477686465662}
+  enemySpawn: {fileID: 114628174850158198}
+  tileMap: {fileID: 114428363839586652}
+  stateController: {fileID: 114864505483398848}
+--- !u!114 &114411477686465662
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1354358122862754}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9975f76c26a07d242b3bb75fe9dfbeb0, type: 3}
@@ -129,6 +129,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  selectedUnit: {fileID: 0}
+  selectedTarget: {fileID: 0}
   mapConfig: {fileID: 0}
   generateButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
@@ -155,24 +157,12 @@ MonoBehaviour:
   nextTarget: 9
   previousTarget: 304
   distance: 0
-  killCount: 0
---- !u!114 &114180962689554276
+--- !u!114 &114428363839586652
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114764200081771642
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1354358122862754}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e90e5f580dcdde4b92ccab6c38e3f5b, type: 3}
@@ -183,31 +173,11 @@ MonoBehaviour:
     tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
       type: 2}
     movemontCost: 1
-    aimReduction: 1
     isWalkeble: 1
-  - name: FullBlock
+  - name: notWalk
     tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
-    movemontCost: 0.99
-    aimReduction: 1
-    isWalkeble: 0
-  - name: Full Cover
-    tileVisualPrefab: {fileID: 1214502950277038, guid: 6945e1964a45b864883bb9e2edb16908,
-      type: 2}
-    movemontCost: 1
-    aimReduction: 1
-    isWalkeble: 0
-  - name: Half cover
-    tileVisualPrefab: {fileID: 1214502950277038, guid: 0c454b27dbe1a224d9267bb4fb60cecb,
-      type: 2}
-    movemontCost: 1
-    aimReduction: 1
-    isWalkeble: 0
-  - name: unit pos
-    tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
-      type: 2}
-    movemontCost: 1
-    aimReduction: 1
+    movemontCost: 0
     isWalkeble: 0
   gridMaterials:
     normalMaterial: {fileID: 2100000, guid: bce1c97ffcc6ad347bf7f53552cc88ea, type: 2}
@@ -216,12 +186,12 @@ MonoBehaviour:
   mapSizeX: 30
   mapSizeY: 30
   offset: 2
---- !u!114 &114995828931628862
+--- !u!114 &114628174850158198
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1354358122862754}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 028e7fe15257c1d46977c77bff8f4472, type: 3}
@@ -233,3 +203,14 @@ MonoBehaviour:
   spawnNode: {fileID: 1435588625020456, guid: 8847849d0d1c0de46a013b25e1a3f132, type: 2}
   current: 1
   maxNodes: 0
+--- !u!114 &114864505483398848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354358122862754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

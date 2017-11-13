@@ -4,10 +4,9 @@ using UnityEngine;
 using System.Linq;
 
 public class TileMap : MonoBehaviour {
+    
 
-    public UnitConfig selectedUnit;//needs to change for multiple units
-
-    public TileType[] tileType;//walkeble and unwalkeble terain can be fund in here
+    public TileType[] tileType;//walkable and unwalkable terrain can be found in here
 
     [System.Serializable]
     public class GridMaterials
@@ -54,14 +53,15 @@ public class TileMap : MonoBehaviour {
         GeneratePathfindingGraph();//run pathfinding
         GenerateMapVisual();//make the map visuals
         changedColoredGrid = new List<ClickebleTile>();
+        currentGrid = new int[mapSizeX, mapSizeY];
     }
 
-    void GenerateMapData()//make the grid and it's obsticals.
+    void GenerateMapData()//make the grid and it's obstacles.
     {
         //Allocate our map tiles
         tiles = new int[mapSizeX, mapSizeY];
 
-        //creat map tiles
+        //create map tiles
         for (int x = 0; x < mapSizeX; x++)
         {
             for (int y = 0; y < mapSizeY; y++)
@@ -434,9 +434,9 @@ public class TileMap : MonoBehaviour {
 
     public void GeneratePathTo(int tileX, int tileY, UnitConfig selected, bool isBullet = false)//(move to X pos, move to Y pos, gameobject that will be moved)
     {
-        selectedUnit = selected;
-        selectedUnit.currentPath = null;
-        selectedUnit.currentBulletPath = null;
+        TurnSystem.selectedUnit = selected;
+        TurnSystem.selectedUnit.currentPath = null;
+        TurnSystem.selectedUnit.currentBulletPath = null;
 
         if (UnitCanEnterTile(tileX,tileY) == false)
         {
@@ -456,8 +456,8 @@ public class TileMap : MonoBehaviour {
         List<Node> unvisited = new List<Node>();
         
             Node source = graph[
-                                selectedUnit.tileX,
-                                selectedUnit.tileY
+                                TurnSystem.selectedUnit.tileX,
+                                TurnSystem.selectedUnit.tileY
                                 ];
             Node target = graph[
                                 tileX,
@@ -467,8 +467,8 @@ public class TileMap : MonoBehaviour {
         if(isBullet)
         {
              source = graphAir[
-                                selectedUnit.tileX,
-                                selectedUnit.tileY
+                                TurnSystem.selectedUnit.tileX,
+                                TurnSystem.selectedUnit.tileY
                                 ];
              target = graphAir[
                                 tileX,
@@ -556,15 +556,15 @@ public class TileMap : MonoBehaviour {
         //current path is from goal to unit here we reverse it. to make it normal
         currentPath.Reverse();
         if(!isBullet)
-            selectedUnit.currentPath = currentPath;
+            TurnSystem.selectedUnit.currentPath = currentPath;
         if (isBullet)
-            selectedUnit.currentBulletPath = currentPath;
+            TurnSystem.selectedUnit.currentBulletPath = currentPath;
     }
 
 
     public void ChangeGridColor(int movement, int actions, UnitConfig position)
     {
-        currentGrid = new int[mapSizeX, mapSizeY];
+        
         playerGridColorChange = position;
 
         for (int x = 0; x < mapSizeX; x++)
@@ -575,7 +575,7 @@ public class TileMap : MonoBehaviour {
             }
         }
         ResetColorGrid();
-        GetPlayerNeibours(movement, actions);
+        GetPlayerNeighbours(movement, actions);
 
     }
 
@@ -591,7 +591,7 @@ public class TileMap : MonoBehaviour {
         }
     }
 
-    public void GetPlayerNeibours(int movement, int actions)
+    public void GetPlayerNeighbours(int movement, int actions)
     {
         currentneighbour = new List<ClickebleTile>();
         if (changedColoredGrid == null)
@@ -607,7 +607,7 @@ public class TileMap : MonoBehaviour {
                 if (neighbour == null)//if neighbour does not have a ClickebleTile skip to next neighbour
                     continue;
 
-                GetNeibours(neighbour, currentRun);
+                GetNeighbours(neighbour, currentRun);
             }
 
             foreach (var neighbour in currentneighbour)//if the neighbour is walkeble or not
@@ -622,7 +622,7 @@ public class TileMap : MonoBehaviour {
         ChangeColorGrid(movement, actions);
     }
 
-    private void GetNeibours(ClickebleTile neighbourConfig, int currentRun)
+    private void GetNeighbours(ClickebleTile neighbourConfig, int currentRun)
     {
         for (int x = -1; x <= 1; x++)
         {

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionPoints : MonoBehaviour {
-    public int actions;
+    private int currentActions;
+    private int maxActions;
 
 
     List <Image> actionPoints = new List<Image>();
@@ -24,11 +25,11 @@ public class ActionPoints : MonoBehaviour {
         {
             for (int i = 0; i < actionPoints.Count; i++)
             {
-                if (i > actions - 1 && actionPoints[i].color != unitConfig.unitColor[1])
+                if (i > currentActions - 1 && actionPoints[i].color != unitConfig.unitColor[1])
                 {
                     actionPoints[i].color = unitConfig.unitColor[1];
                 }
-                else if(i < actions && actionPoints[i].color != unitConfig.unitColor[0])
+                else if(i < currentActions && actionPoints[i].color != unitConfig.unitColor[0])
                 {
                     actionPoints[i].color = unitConfig.unitColor[0];
                 }
@@ -37,33 +38,51 @@ public class ActionPoints : MonoBehaviour {
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
-
+    public bool CheckAvailableActions(int requiredActions)
+    {
+        if (currentActions >= requiredActions)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public int ReturnAvailableActions()
+    {
+        return currentActions;
+    }
     public void ReplenishAllActions()
     {
-        actions = unitConfig.unitClassStats.maxUnitActionPoints;
+        currentActions = maxActions;
+        TurnSystem.totalActions += currentActions;
     }
 
     public void AddActions(int addition)
     {
-        actions += addition;
-        if (actions > unitConfig.unitClassStats.maxUnitActionPoints)
+        currentActions += addition;
+        if (currentActions > unitConfig.unitClassStats.maxUnitActionPoints)
         {
-            actions = unitConfig.unitClassStats.maxUnitActionPoints;
+            currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
         }
     }
 
     public void SubtractActions(int subtraction)
     {
-        actions -= subtraction;
+        TurnSystem.totalActions -= subtraction;
+        currentActions -= subtraction;
     }
 
     public void SubtractAllActions()
     {
-        actions = 0;
+        TurnSystem.totalActions -= currentActions;
+        currentActions = 0;
     }
     private void InitializeActions()
     {
-        actions = unitConfig.unitClassStats.maxUnitActionPoints;
+        currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
+        maxActions = unitConfig.unitClassStats.maxUnitActionPoints;
 
         if (actionPointParent != null && actionPointParent.transform.childCount > 0 && unitConfig.isFriendly)//Removes any gameobjects in action point parent and sends an error message
         {
@@ -81,7 +100,7 @@ public class ActionPoints : MonoBehaviour {
 
         if (actionPointParent != null)
         {
-            for (int i = 0; i < actions; i++)
+            for (int i = 0; i < currentActions; i++)
             {
                 actionPoints.Add(Instantiate(actionPoint, actionPointParent.transform).GetComponent<Image>());
             }

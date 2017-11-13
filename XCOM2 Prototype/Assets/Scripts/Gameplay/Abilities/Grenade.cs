@@ -20,7 +20,7 @@ public class Grenade : MonoBehaviour {
             DamageUnitsInSphere();
         }
         
-        line.SetPosition(0, mapConfig.turnSystem.selectedUnit.transform.position);
+        line.SetPosition(0, TurnSystem.selectedUnit.transform.position);
         line.SetPosition(1, transform.position);
 	}
     void DamageUnitsInSphere()
