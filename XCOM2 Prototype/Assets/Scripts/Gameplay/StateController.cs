@@ -20,11 +20,14 @@ public class StateController : MonoBehaviour
         if (CurrentState == StateController.GameState.AttackMode)
         {
             panelAnimator.SetBool("displayPanel", true);
+            TurnSystem.EnemyTargeting = true;
         }
         else
         {
             panelAnimator.SetBool("displayPanel", false);
+            TurnSystem.EnemyTargeting = false;
         }
+        print(CurrentState);
 
     }
 

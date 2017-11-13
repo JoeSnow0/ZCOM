@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationScript : MonoBehaviour {
-    Animator animator;
+    public Animator animator;
     UnitConfig unitConfig;
     Vector3 lastPosition;
     Vector3 direction;
@@ -20,61 +20,63 @@ public class AnimationScript : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
 	}
     public void Update()
-    {
-        if (unitConfig.isMoving)
+    {   if (animator != null)
         {
-            animator.SetInteger("state", 0);
-        }
-        if (unitConfig.isMoving)
-        {
-            animator.SetInteger("state", 1);
-        }
-        if (unitConfig.isSprinting)
-        {
-            animator.SetInteger("state", 2);
-        }
-        if (unitConfig.isShooting)
-        {
-            animator.SetInteger("state", 3);
-            if (target == null)
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
             {
-                if (TurnSystem.selectedUnit = TurnSystem.selectedTarget)
+                animator.SetInteger("state", 0);
+            }
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Walking))
+            {
+                animator.SetInteger("state", 1);
+            }
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Sprinting))
+            {
+                animator.SetInteger("state", 2);
+            }
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Shooting))
+            {
+                animator.SetInteger("state", 3);
+                if (target == null)
                 {
-                    target = TurnSystem.selectedUnit;
+                    if (TurnSystem.selectedUnit = TurnSystem.selectedTarget)
+                    {
+                        target = TurnSystem.selectedUnit;
+                    }
+                    else
+                    {
+                        target = TurnSystem.selectedTarget;
+                    }
                 }
-                else
+                if (target != null)
                 {
-                    target = TurnSystem.selectedTarget;
+                    transform.parent.LookAt(target.transform.position);
+                    Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
+                    eulerAngles.x = 0;
+                    eulerAngles.z = 0;
+                    // Set the altered rotation back
+                    transform.parent.rotation = Quaternion.Euler(eulerAngles);
                 }
             }
-            if (target != null)
+            //Death animation
+            if ((unitConfig.CheckUnitState(UnitConfig.UnitState.Dead)))
             {
-                transform.parent.LookAt(target.transform.position);
-                Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
-                eulerAngles.x = 0;
-                eulerAngles.z = 0;
-                // Set the altered rotation back
-                transform.parent.rotation = Quaternion.Euler(eulerAngles);
+                animator.SetInteger("state", 4);
             }
-        }
-        //Death animation
-        if (unitConfig.isDead)
-        {
-            animator.SetInteger("state", 4);
-        }
-        //walking rotation
-        if (animator.GetInteger("state") > 0 && animator.GetInteger("state") != 3) // HACK: What!?
-        {
-            direction = transform.root.position - lastPosition;
-            lastPosition = transform.root.position;
-            lookRotation = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
-            transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, lookRotation, Time.deltaTime * 10);
-        }
-        else if (animator.GetInteger("state") != 3)
-        {
-            Quaternion a = transform.parent.rotation;
-            Quaternion b = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
-            transform.parent.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10);
+            //walking rotation
+            if (animator.GetInteger("state") > 0 && animator.GetInteger("state") != 3) // HACK: What!?
+            {
+                direction = transform.root.position - lastPosition;
+                lastPosition = transform.root.position;
+                lookRotation = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
+                transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, lookRotation, Time.deltaTime * 10);
+            }
+            else if (animator.GetInteger("state") != 3)
+            {
+                Quaternion a = transform.parent.rotation;
+                Quaternion b = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
+                transform.parent.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10);
+            }
         }
     }
 

@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1560370254234900
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23586514851555872}
   - component: {fileID: 114091575391371340}
   m_Layer: 5
-  m_Name: AbilityButtonsHolderl
+  m_Name: AbilityButtonsHolder
   m_TagString: Panel_Type_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

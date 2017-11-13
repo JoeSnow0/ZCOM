@@ -82,30 +82,20 @@ public class TurnSystem : MonoBehaviour
 
     void Start()
     {
+        //Clear lists
+        playerUnits.Clear();
+        enemyUnits.Clear();
+
         mapConfig = FindObjectOfType<MapConfig>();
         mapConfig.tileMap.Initialize();
         generateButtons = FindObjectOfType<GenerateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-        
+
         classInformationAnimator = classIcon.transform.GetComponentInParent<Animator>();
-        //add units to array
-        for (int i = 0; i < allUnits.Length; i++)
-        {
-            if (allUnits[i] != null)
-            {
-                if (allUnits[i].isFriendly)
-                {
-                    playerUnits.Add(allUnits[i]);
-                }
-                else
-                {
-                    enemyUnits.Add(allUnits[i]);
-                }
-            }
-        }
+        AddUnitsToLists();
         //Calculate total amount of action points
-        
+
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
@@ -129,8 +119,6 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
-
-        //attackUnit();
         UpdateHUD();
 
         //Deselect units on enemy turn
@@ -160,6 +148,7 @@ public class TurnSystem : MonoBehaviour
             {
                 mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
                 SelectUnit(selectedUnit);
+                EnemyTargeting = false;
             }
         }
 
@@ -250,6 +239,24 @@ public class TurnSystem : MonoBehaviour
     //    selectedUnit.isSelected = true;
     //}
 
+    private void AddUnitsToLists()
+        {
+        //add units to seperate lists
+        for (int i = 0; i<allUnits.Length; i++)
+        {
+            if (allUnits[i] != null)
+            {
+                if (allUnits[i].isFriendly)
+                {
+                    playerUnits.Add(allUnits[i]);
+                }
+                else
+                {
+                    enemyUnits.Add(allUnits[i]);
+                }
+            }
+        }
+        }
     public void DeselectUnit(UnitConfig selection)
     {
         mapConfig.tileMap.ResetColorGrid();
@@ -445,47 +452,6 @@ public class TurnSystem : MonoBehaviour
 
     }
 
-    //HACK: Need to move the attackUnit function to unitConfig script
-    //void attackUnit()
-    //{
-    //    if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
-    //    {
-    //        if (selectedUnit == null)
-    //        {
-    //            return;
-    //        }
-    //        if (selectedUnit.actionPoints.CheckAvailableActions(1)) //Checks if the unit has enough action points
-    //        {
-    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //            RaycastHit hit;
-    //            if (Physics.Raycast(ray, out hit))
-    //            {
-    //                if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
-    //                {
-    //                    UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-    //                    if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
-    //                    {
-    //                        //Spend Actions
-    //                        selectedUnit.actionPoints.SubtractAllActions();
-    //                        //selectedUnit.actionPoints.SubtractAllActions();
-
-    //                        //Calculate the distance between the units
-    //                        distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
-    //                        //Uses current weapon
-    //                        CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
-    //                        selectedUnit.ShootTarget(target);
-    //                        selectedUnit.GetAccuracy(target.tileX, target.tileY);
-    //                        //Calculate the distance between the units
-    //                        distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
-    //                        distance /= 2;
-
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-
     public void MoveMarker(Transform marker, Vector3 newPosition)
     {
         marker.position = newPosition;
@@ -510,18 +476,22 @@ public class TurnSystem : MonoBehaviour
             }
         }
         //For enemy units
-        if (enemyUnits == null)
-        {
-            return;
-        }
-        
         else
         {
-            for (int i = 0; i < enemyUnits.Count; i++)
+            if (enemyUnits == null)
             {
-                enemyUnits[i].actionPoints.ReplenishAllActions();
+                return;
+            }
+
+            else
+            {
+                for (int i = 0; i < enemyUnits.Count; i++)
+                {
+                    enemyUnits[i].actionPoints.ReplenishAllActions();
+                }
             }
         }
+        
         playerTurn = isPlayerTurn;
     }
 
@@ -617,7 +587,7 @@ public class TurnSystem : MonoBehaviour
             }
         }
 
-        foreach (UnitConfig unit in enemyUnits)
+        foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
             if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
             {
