@@ -17,9 +17,9 @@ public class MusicController : MonoBehaviour {
     static MusicController _instance = null;
 
     static List<AudioSource> playingSources = new List<AudioSource>();
-    [SerializeField] float volumeMaster = 0.75f;
-    [SerializeField] float volumeEffects = 0.75f; // <-- NOT IN USE
-    [SerializeField] float volumeMusic = 0.75f; // <-- NOT IN USE
+    float volumeMaster = 0.75f;
+    //[SerializeField] float volumeEffects = 0.75f; // <-- NOT IN USE
+    //[SerializeField] float volumeMusic = 0.75f; // <-- NOT IN USE
 
     [Header("A list of audioclips available to this specific audio source.")]
     [Tooltip("Each audioclip has a soundIndex equal to where it is in the list.")]
@@ -43,7 +43,8 @@ public class MusicController : MonoBehaviour {
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
-            
+
+        
         
         //gets Scene Build Index
         gameScreen = SceneManager.GetActiveScene().buildIndex;
@@ -61,13 +62,12 @@ public class MusicController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        volumeMaster = PlayerPrefs.GetFloat("MasterVolume");
         //Stops music between sceens
         if (gameScreen != SceneManager.GetActiveScene().buildIndex)
         {
             StopAllSound();
             gameScreen = SceneManager.GetActiveScene().buildIndex;
-
         }
         //Plays MainMenu music
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("mainMenu") && !isPlaying)
@@ -130,7 +130,7 @@ public class MusicController : MonoBehaviour {
         {
             audioSource.volume = newVolume;
         }
+        PlayerPrefs.SetFloat("MasterVolume", newVolume);
 
-        
     }
 }

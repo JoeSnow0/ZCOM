@@ -28,5 +28,9 @@ public class victoryCheck : MonoBehaviour {
             gameEndText.text = "DEFEAT";
             gameEndText.color = mapConfig.turnSystem.defeatColor;
         }
+        else
+        {
+            gameEndText.color = mapConfig.turnSystem.victoryColor;
+        }
     }
 }
