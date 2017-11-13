@@ -14,18 +14,11 @@ public class Objective : MonoBehaviour {
     protected Objective objectiveController;
 
     private victoryCheck victoryScript;
-    private List<Objective> objectives = new List<Objective>();
+    [SerializeField]private List<Objective> objectives = new List<Objective>();
 
     private void Awake()
     {
-        foreach(Objective objective in GetComponentsInChildren<Objective>())
-        {
-            if (objective.transform != transform)
-            {
-                objectives.Add(objective);
-                objective.objectiveController = this;
-            }
-        }
+        AddActiveObjectives(objectives);
 
         victoryScript = FindObjectOfType<victoryCheck>();
     }
@@ -43,6 +36,23 @@ public class Objective : MonoBehaviour {
         currentState = state;
         isBonus = bonus;
         SetState(state);
+    }
+    private void AddActiveObjectives(List<Objective> allObjectives)
+    {
+        foreach (Objective objective in GetComponentsInChildren<Objective>(true))
+        {
+            if (objective.transform != transform)
+            {
+                allObjectives.Add(objective);
+                objective.objectiveController = this;
+            }
+        }
+    }
+
+    private void AddObjective(Objective objective)
+    {
+        objectives.Add(objective);
+        objective.objectiveController = this;
     }
 
     private void CheckObjectives(List<Objective> objectiveList)
@@ -72,8 +82,21 @@ public class Objective : MonoBehaviour {
 
     protected void SetDescription(string newDescription)
     {
-        descriptionText.text = newDescription;
+        description = newDescription;
+        descriptionText.text = "";
+        StartCoroutine(PlayText(description, descriptionText));
     }
+
+    protected IEnumerator PlayText(string inputText, Text outputText)
+    {
+        float waitDuration = 1f / inputText.Length;
+        foreach (char c in inputText)
+        {
+            outputText.text += c;
+            yield return new WaitForSeconds(waitDuration);
+        }
+    }
+
     private void SetController()
     {
 

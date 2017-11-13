@@ -9,7 +9,7 @@ public class ObjectiveSurvive : Objective {
         SetDescription("Survive " + mapConfig.turnSystem.maxTurns + " rounds");
     }
 
-	void Update () {
+	void Update() {
         if(mapConfig.turnSystem.hud.amountTurns >= mapConfig.turnSystem.maxTurns)
         {
             SetState(1);
