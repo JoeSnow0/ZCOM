@@ -80,7 +80,7 @@ public class SoldierAnimation : MonoBehaviour {
     }
     public void ProjectileHit()
     {
-        target.health.TakeDamage(CalculationManager.damage, unit.unitWeapon);
+        //target.health.TakeDamage(CalculationManager.damage, unit.unitWeapon);
         
         //unit.actionPoints.SubtractAllActions();
     }

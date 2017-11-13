@@ -17,6 +17,11 @@ public class AnimationScript : MonoBehaviour {
         animator = GetComponent<Animator>();
         unitConfig = GetComponentInParent<UnitConfig>();
         audioSource = GetComponent<AudioSource>();
+
+        if (audioSource)
+        {
+            audioSource.clip = unitConfig.unitWeapon.weaponSoundShoot;
+        }
 	}
 	
 	void Update () {
@@ -69,7 +74,15 @@ public class AnimationScript : MonoBehaviour {
     {
         if (unitConfig.unitWeapon.weaponProjectile != null)
         {
-            ParticleSystem.MainModule settings = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
+            ParticleSystem projectileSystem = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>();
+            ParticleSystem.MainModule settings = projectileSystem.main;
+            ParticleSystem.SubEmittersModule subEmitter = projectileSystem.subEmitters;
+
+            ParticleSystem hitEmitter = Instantiate(target.unitClassStats.hitParticleSystem, projectileSystem.transform).GetComponent<ParticleSystem>();
+            hitEmitter.transform.localRotation = transform.parent.rotation;
+
+
+            subEmitter.AddSubEmitter(hitEmitter, ParticleSystemSubEmitterType.Collision, ParticleSystemSubEmitterProperties.InheritRotation);
 
             if(unitConfig.unitWeapon.particleColor.Length > 0)
                 settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];

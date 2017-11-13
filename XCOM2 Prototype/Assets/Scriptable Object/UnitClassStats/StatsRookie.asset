@@ -14,7 +14,7 @@ MonoBehaviour:
   unitClassName: Rookie
   classIcon: {fileID: 21300000, guid: e116a0e7e610f42489c43fb5794d68cf, type: 3}
   classModel: {fileID: 1952634916483066, guid: 9fc01155272d9cb48a8fd5f0036e8215, type: 2}
-  hitParticleSystem: {fileID: 1144918940945408, guid: 93310074761d6c74ca845a371db0a1de,
+  hitParticleSystem: {fileID: 1824900903465906, guid: e00d217379006ab4f89489933146286b,
     type: 2}
   maxUnitHealth: 4
   unitDefense: 1

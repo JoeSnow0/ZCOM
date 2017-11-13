@@ -63,7 +63,7 @@ public class ZombieAnimation : MonoBehaviour {
     }
     public void ZombiePunch()
     {
-        target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+        //target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
     }
     public void End()
     {

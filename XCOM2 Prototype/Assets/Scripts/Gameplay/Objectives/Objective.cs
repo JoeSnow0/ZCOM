@@ -16,7 +16,7 @@ public class Objective : MonoBehaviour {
     protected Objective objectiveController;
 
     private victoryCheck victoryScript;
-    [SerializeField]private List<Objective> objectives = new List<Objective>();
+    private List<Objective> objectives = new List<Objective>();
 
     private void Awake()
     {
