@@ -37,7 +37,7 @@ public class EnemySpawn : MonoBehaviour {
         mapConfig.turnSystem.StartNextEnemy();
     }
 
-    public Vector3 RandomPosition()
+    private Vector3 RandomPosition()
     {
         if (mapConfig == null)
             mapConfig = GetComponent<MapConfig>();

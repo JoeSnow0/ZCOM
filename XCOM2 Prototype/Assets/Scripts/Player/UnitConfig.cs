@@ -449,21 +449,21 @@ public class UnitConfig : MonoBehaviour
         return closest;
     }
 
-    private int AimReductionAmount(int location)
+    private int AimReductionAmount(int distance)
     {
         int amount = 0;
-        if(mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 0 &&
-           mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 4)//0 = normal grid and 4 = unit place on grid
+        if(mapConfig.tileMap.tiles[currentBulletPath[distance].x, currentBulletPath[distance].y] != 0 &&
+           mapConfig.tileMap.tiles[currentBulletPath[distance].x, currentBulletPath[distance].y] != 4)//0 = normal grid and 4 = unit place on grid
         {//reduse amount by the value on the tile
-            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[location-1].x, currentBulletPath[location-1].y, currentBulletPath[location].x, currentBulletPath[location].y);
+            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[distance-1].x, currentBulletPath[distance-1].y, currentBulletPath[distance].x, currentBulletPath[distance].y);
         }
-        else if (location < 9 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+        else if (distance < 6)
             amount -= unitWeapon.rangeModShort;
 
-        else if (location < 16 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+        else if (distance < 13)
             amount -= unitWeapon.rangeModMedium;
 
-        else if (location < 30)
+        else if (distance < 19)
             amount -= unitWeapon.rangeModLong;
 
         else
