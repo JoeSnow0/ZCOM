@@ -3470,6 +3470,7 @@ MonoBehaviour:
   pathProgress: 0
   enemyAi: {fileID: 0}
   animatorHealthbar: {fileID: 0}
+  accuracy: 0
 --- !u!23 &401261312
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11593,6 +11594,7 @@ MonoBehaviour:
   pathProgress: 0
   enemyAi: {fileID: 0}
   animatorHealthbar: {fileID: 0}
+  accuracy: 0
 --- !u!23 &1597087411
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12350,6 +12352,7 @@ MonoBehaviour:
   pathProgress: 0
   enemyAi: {fileID: 0}
   animatorHealthbar: {fileID: 0}
+  accuracy: 0
 --- !u!23 &1677402167
 MeshRenderer:
   m_ObjectHideFlags: 0

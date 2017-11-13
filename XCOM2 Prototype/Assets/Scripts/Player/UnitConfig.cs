@@ -393,7 +393,13 @@ public class UnitConfig : MonoBehaviour
         mapConfig.tileMap.GeneratePathTo(closest.tileX, closest.tileY, this, true);
         testDebug = currentBulletPath;
         int accuracy = unitWeapon.baseAim;
-        int distans = currentBulletPath.Count - 1;
+        int distans;
+        if (currentBulletPath == null)
+            distans = 0;
+        else
+        {
+            distans = currentBulletPath.Count - 1;
+        }
         for (int aim = 1; aim < distans; aim++)//is the path possible
         {
             accuracy += AimReductionAmount(aim + 1);
