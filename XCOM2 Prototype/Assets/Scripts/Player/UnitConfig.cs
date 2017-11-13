@@ -61,9 +61,9 @@ public class UnitConfig : MonoBehaviour
     void Start()
     {
         //Load models
-        //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
+        GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
 
-        //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
+        GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
         
         //Initiate Variables//
         //////////////////////
