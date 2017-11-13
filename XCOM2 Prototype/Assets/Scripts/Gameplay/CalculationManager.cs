@@ -4,8 +4,7 @@ using UnityEngine;
 
 public static class CalculationManager// : MonoBehaviour
 {
-
-
+    
     static int hitRoll;
     static int hitChance;
     public static int smallCoverIntervenience = 25;
@@ -13,12 +12,7 @@ public static class CalculationManager// : MonoBehaviour
     public static int heightAdvantage = 25;
     public static int damage = 0;
     public static bool hit;
-
-
-
-
- 
-
+    
     public static void HitCheck (WeaponInfoObject usedWeapon, float distance)
     {
         

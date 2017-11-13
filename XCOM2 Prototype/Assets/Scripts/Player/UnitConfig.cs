@@ -35,8 +35,8 @@ public class UnitConfig : MonoBehaviour
 
     //grid Reference
     public List<Node> currentPath = null;
-
-
+    public List<Node> currentBulletPath = null;
+    List<Node> testDebug = null; // delete all things that has this list later
 
     public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
@@ -46,8 +46,7 @@ public class UnitConfig : MonoBehaviour
     public bool isDead = false;
     public bool isHighlighted = false;
 
-    public SoldierAnimation animatorS;
-    public ZombieAnimation animatorZ;
+    public AnimationScript animator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -57,6 +56,7 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public Animator animatorHealthbar;
     Vector3 cameraStartPosition;
 
+    public int accuracy;
     //BaseUnitCopy
     void Start()
     {
@@ -73,7 +73,7 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-        animatorHealthbar = GetComponentInChildren<Animator>();
+
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -86,10 +86,7 @@ public class UnitConfig : MonoBehaviour
         
         line = GetComponent<LineRenderer>();
 
-        if(isFriendly)
-            animatorS = GetComponentInChildren<SoldierAnimation>();
-        else
-            animatorZ = GetComponentInChildren<ZombieAnimation>();
+        animator = GetComponentInChildren<AnimationScript>();
 
         //Make sure scriptable objects are assigned, if not, assign defaults and send message
         /*if (unitWeapon == null)
@@ -114,6 +111,21 @@ public class UnitConfig : MonoBehaviour
 
     void Update()
     {
+        if(testDebug != null)
+        {
+            int currNode = 0;
+            while(currNode < testDebug.Count-1)
+            {
+                Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(testDebug[currNode].x, testDebug[currNode].y) +
+                    new Vector3(0, 1, 0);
+                Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(testDebug[currNode+1].x, testDebug[currNode+1].y) +
+                   new Vector3(0, 1, 0);
+
+                Debug.DrawLine(start, end, Color.red);
+                currNode++;
+            }
+            
+        }
         if (!isSelected && isFriendly)
         {
             currentPath = null;
@@ -224,6 +236,7 @@ public class UnitConfig : MonoBehaviour
     }
     public void InitializeEnemy()
     {
+        animatorHealthbar = GetComponentInChildren<Animator>();
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
@@ -235,6 +248,7 @@ public class UnitConfig : MonoBehaviour
     //HACK: Finish this code block when abilities work!
     public void attackUnit(UnitConfig target)
     {
+       
         //Checks if it is the players turn
         if (mapConfig.turnSystem.playerTurn) 
         {
@@ -258,9 +272,10 @@ public class UnitConfig : MonoBehaviour
 
                             //Spend Actions
                             mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
-                            actionPoints.SubtractAllActions();
+                            //actionPoints.SubtractAllActions();
                             //Move camera to next unit
                             mapConfig.turnSystem.SelectNextUnit();
+                            
                         }
                     }
                 }
@@ -271,10 +286,7 @@ public class UnitConfig : MonoBehaviour
     public void ShootTarget(UnitConfig target)
     {
         isShooting = true;
-        if (isFriendly)
-            animatorS.target = target;
-        else
-            animatorZ.target = target;
+        animator.target = target;
     }
 
     public void MoveNextTile()//start to try to move unit
@@ -284,9 +296,6 @@ public class UnitConfig : MonoBehaviour
             return;
         }
 
-        
-        
-        
         int remainingMovement = movePoints * 2;
         int moveTo = currentPath.Count - 1;
         for (int cost = 1; cost < moveTo; cost++)//is the path possible
@@ -378,4 +387,83 @@ public class UnitConfig : MonoBehaviour
         isShooting = true;
     }
 
+    public void GetAccuracy(int targetTileX,int targetTileY)
+    {
+        ClickebleTile closest = GetClosestPlayersquare(targetTileX, targetTileY);
+        mapConfig.tileMap.GeneratePathTo(closest.tileX, closest.tileY, this, true);
+        testDebug = currentBulletPath;
+        int accuracy = unitWeapon.baseAim;
+        int distans = currentBulletPath.Count - 1;
+        for (int aim = 1; aim < distans; aim++)//is the path possible
+        {
+            accuracy += AimReductionAmount(aim + 1);
+            if (accuracy <= 0)
+                break;
+        }
+        Debug.Log("Hit chanse: " + accuracy);
+        if (accuracy < 0)
+            accuracy = 0;
+        else if (accuracy > 100)
+            accuracy = 100;
+    }
+
+    private ClickebleTile GetClosestPlayersquare(int targetTileX, int targetTileY)
+    {
+        ClickebleTile closest = null;
+        float distance = Mathf.Infinity;
+        for (int x = -1; x < 2; x++)
+        {
+            for (int y = -1; y < 2; y++)
+            {
+                //the loop will not work under the following conditions
+                if ((x == 0 && y == 0) || (y != 0 && x != 0))
+                    continue;
+                if ((y + targetTileY)  < 0 ||
+                    (y + targetTileY) > mapConfig.tileMap.mapSizeY - 1 ||
+                    (x + targetTileX) < 0 ||
+                    (x + targetTileX) > mapConfig.tileMap.mapSizeX - 1)
+                    continue;
+
+                Vector3 diff = transform.position - mapConfig.tileMap.tileobjects[x + targetTileX, y + targetTileY].transform.position;
+                float curDistance = diff.sqrMagnitude;
+                if (curDistance < distance)//set new closest location
+                {
+                    closest = mapConfig.tileMap.tileobjects[x + targetTileX, y + targetTileY];
+                    distance = curDistance;
+                }
+                else if (curDistance <= (distance + 45f) && 
+                        (mapConfig.tileMap.tiles[x + targetTileX, y + targetTileY] != 0 &&
+                         mapConfig.tileMap.tiles[x + targetTileX, y + targetTileY] != 4))//if location is not the closest but has a cover
+                {
+                    closest = mapConfig.tileMap.tileobjects[x + targetTileX, y + targetTileY];
+                    distance = curDistance;
+                }
+            }
+        }
+        return closest;
+    }
+
+    private int AimReductionAmount(int location)
+    {
+        int amount = 0;
+        if(mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 0 &&
+           mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 4)//0 = normal grid and 4 = unit place on grid
+        {//reduse amount by the value on the tile
+            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[location-1].x, currentBulletPath[location-1].y, currentBulletPath[location].x, currentBulletPath[location].y);
+        }
+        else if (location < 9 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+            amount -= unitWeapon.rangeModShort;
+
+        else if (location < 16 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+            amount -= unitWeapon.rangeModMedium;
+
+        else if (location < 30)
+            amount -= unitWeapon.rangeModLong;
+
+        else
+            amount -= unitWeapon.rangeModFar;
+
+        Debug.Log("fall of rate" + amount);
+        return amount;//return the amount to lose on the current tile location
+    }
 }

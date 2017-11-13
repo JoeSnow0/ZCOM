@@ -183,14 +183,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.42474642
-        functionName: ZombiePunch
+        functionName: AttackHit
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.9217687
-        functionName: End
+        functionName: AttackEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

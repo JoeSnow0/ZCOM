@@ -41,14 +41,31 @@ public class EnemySpawn : MonoBehaviour {
     {
         if (mapConfig == null)
             mapConfig = GetComponent<MapConfig>();
-        int x;
-        int y;
-        x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1));
-        y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1));
+        int x = 0;
+        int y = 4;
+        
         while (mapConfig.tileMap.tiles[x, y] != 0)
         {
-            x = Random.Range(0, (mapConfig.tileMap.mapSizeX - 1));
-            y = Random.Range(0, (mapConfig.tileMap.mapSizeY - 1));
+            int wall = Random.Range(0, 3);
+            switch (wall)
+            {
+                case 0://left end of map
+                    x = 0;
+                    y = Random.Range(0, mapConfig.tileMap.mapSizeY - 1);
+                    break;
+                case 1://top of map
+                    x = Random.Range(0, mapConfig.tileMap.mapSizeX - 1);
+                    y = mapConfig.tileMap.mapSizeY - 1;
+                    break;
+                case 2://right end of map
+                    x = mapConfig.tileMap.mapSizeX - 1;
+                    y = Random.Range(0, mapConfig.tileMap.mapSizeY - 1);
+                    break;
+                case 3://down end of map
+                    x = Random.Range(0, mapConfig.tileMap.mapSizeX - 1);
+                    y = 0;
+                    break;
+            }
         }
         return new Vector3(x * (mapConfig.tileMap.offset), 0, y * (mapConfig.tileMap.offset));
     }

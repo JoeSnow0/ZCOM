@@ -31,7 +31,7 @@ public class HUD : MonoBehaviour {
         mapConfig = FindObjectOfType<MapConfig>();
         amountTurns = 1;
         isPlayerTurn = true;
-        maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
+        maxTurns = mapConfig.turnSystem.getCurrentTurn(amountTurns); //Sets max turns and prints it out
         turnCounter.text = amountTurns + "/" + maxTurns;
         alienAnim = alienUI.GetComponent<Animator>();
     }
@@ -56,11 +56,13 @@ public class HUD : MonoBehaviour {
                 alienUI.SetActive(true);
                 alienAnim.Play("AlienActivityOn");
                 turnSystem.enemyIndex = 0;
-                if(turnSystem.playerUnits.Count > 0)
-                    turnSystem.spawnEnemy();
+
+                mapConfig.turnSystem.spawnEnemy();
+
                 endButton.SetActive(false);
                 mapConfig.tileMap.ResetColorGrid();
                 mapConfig.turnSystem.className.gameObject.SetActive(false);
+
                 if (turnSystem.playerUnits.Count < 1)
                 {
                     victoryScript.winCheck(false);
@@ -98,7 +100,7 @@ public class HUD : MonoBehaviour {
                 turnCounter.text = amountTurns + "/" + maxTurns;
             else
             {
-                victoryText.text = "VICTORY";
+                victoryText.text = "VICTORY";                                                                                                                               
                 victoryText.color = turnSystem.victoryColor;
             }
         }

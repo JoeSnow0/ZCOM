@@ -75,6 +75,7 @@ public class TurnSystem : MonoBehaviour {
     public float distance;
 
     private UnitConfig lastSelectedUnit;
+    public int killCount = 0;
 
     void Start ()
     {
@@ -451,18 +452,18 @@ public class TurnSystem : MonoBehaviour {
                     if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
                     {
                         UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-                        if (!target.isFriendly) //Checks if the unit hit is not friendly
+                        if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
                         {
                             //Spend Actions
                             totalActions -= selectedUnit.actionPoints.actions;
-                            selectedUnit.actionPoints.SubtractAllActions();
+                            //selectedUnit.actionPoints.SubtractAllActions();
 
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             //Uses current weapon
                             CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
                             selectedUnit.ShootTarget(target);
-
+                            selectedUnit.GetAccuracy(target.tileX, target.tileY);
                             //Calculate the distance between the units
                             distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
                             distance /= 2;
@@ -559,12 +560,6 @@ public class TurnSystem : MonoBehaviour {
     }
     public int getCurrentTurn(int currentTurn)
     {
-        if (currentTurn > maxTurns)
-        {
-            //deactivates the map
-            gameObject.SetActive(false);
-            gameOver.SetActive(true);
-        }        
         thisTurn = currentTurn;
         return maxTurns;
     }
@@ -601,23 +596,23 @@ public class TurnSystem : MonoBehaviour {
     }
     public void spawnEnemy()
     {
-        
-        //foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
-        //{
-        //    if(i.activatTurn == thisTurn)
-        //    {
-        //        enemySpawn.SpawnEnemy(i.enemyPrefab,i.spawnNumberOfEnemys);
-        //        break;
-        //    }
-        //    else if (spawnSetup.Length <= thisTurn)
-        //    {
-        //        int newI = Random.Range(0, spawnSetup.Length);
-        //        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab,spawnSetup[newI].spawnNumberOfEnemys);
-        //        break;
-        //    }
-        //}
-        int newI = Random.Range(0, spawnSetup.Length);
-        enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
+
+        foreach (SpawnSetup i in spawnSetup) // Checks if current turn should spawn an enemy
+        {
+            if (i.activatTurn == thisTurn)
+            {
+                enemySpawn.SpawnEnemy(i.enemyPrefab, i.spawnNumberOfEnemys);
+                break;
+            }
+            else if (spawnSetup.Length <= thisTurn)
+            {
+                int number = Random.Range(0, spawnSetup.Length);
+                enemySpawn.SpawnEnemy(spawnSetup[number].enemyPrefab, spawnSetup[number].spawnNumberOfEnemys);
+                break;
+            }
+        }
+        //int newI = Random.Range(0, spawnSetup.Length);
+        //enemySpawn.SpawnEnemy(spawnSetup[newI].enemyPrefab, spawnSetup[newI].spawnNumberOfEnemys);
     }
 
     private void UpdateHUD()
@@ -646,7 +641,7 @@ public class TurnSystem : MonoBehaviour {
 
         foreach (UnitConfig unit in enemyUnits)
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animatorS.target != null && selectedUnit.animatorS.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
             {
                 unit.animatorHealthbar.SetBool("display", true);
             }

@@ -14,8 +14,8 @@ MonoBehaviour:
   name: Pistol
   icon: {fileID: 0}
   value: 0
-  baseAim: 0
-  rangeModShort: 20
+  baseAim: 100
+  rangeModShort: 9
   rangeModMedium: 0
   rangeModLong: -40
   rangeModFar: -100
