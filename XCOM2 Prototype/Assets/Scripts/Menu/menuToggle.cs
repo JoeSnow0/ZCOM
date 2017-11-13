@@ -8,8 +8,10 @@ public class menuToggle : MonoBehaviour {
     public bool optionsToggle;
     public GameObject ingameMenu;
     public GameObject ingameOptions;
+    ManagerConfig managerConfig;
     private void Start()
     {
+        managerConfig = GetComponent<ManagerConfig>();
         isPaused = false;
         optionsToggle = false;
     }
@@ -18,14 +20,14 @@ public class menuToggle : MonoBehaviour {
     {
         if (optionsToggle == false)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && managerConfig.mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode))
             {
                 toggleMenu();
             }
         }
         if (optionsToggle == true)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && managerConfig.mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode))
             {
                 ToggleOptions();
             }

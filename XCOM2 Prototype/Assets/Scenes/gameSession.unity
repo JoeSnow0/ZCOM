@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienUI: {fileID: 219806313}
-  playerUI: {fileID: 0}
+  playerUI: {fileID: 676594669}
   endButton: {fileID: 2097190327}
   turnCounter: {fileID: 1090103900}
   warningText: {fileID: 1398305341}
@@ -4629,6 +4629,28 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7df807b3cdcda564cb0cc674e71dd9ce, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &676594669 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1282223255841526, guid: 2593851e77dfc7a43b67d83125904f8e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1540168513}
+--- !u!95 &676594671
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 676594669}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e832380954bca564aaa9e548d67a02b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &692608387
 GameObject:
   m_ObjectHideFlags: 0
@@ -10977,7 +10999,7 @@ Prefab:
     - target: {fileID: 224526715753495020, guid: 2593851e77dfc7a43b67d83125904f8e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -105
       objectReference: {fileID: 0}
     - target: {fileID: 224526715753495020, guid: 2593851e77dfc7a43b67d83125904f8e,
         type: 2}
@@ -11072,6 +11094,19 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282223255841526, guid: 2593851e77dfc7a43b67d83125904f8e, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560370254234900, guid: 2593851e77dfc7a43b67d83125904f8e, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224273967848817098, guid: 2593851e77dfc7a43b67d83125904f8e,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114091575391371340, guid: 2593851e77dfc7a43b67d83125904f8e, type: 2}
@@ -11980,6 +12015,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1038330834783658, guid: 8ca858a6be5ab744c8894e1b3bc602e7,
     type: 2}
   m_PrefabInternal: {fileID: 1089984934}
+--- !u!114 &1660919755 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114465218600070282, guid: 2593851e77dfc7a43b67d83125904f8e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1540168513}
+  m_Script: {fileID: 11500000, guid: 330e625acd6547c44958faabdffd4654, type: 3}
 --- !u!1001 &1668100367
 Prefab:
   m_ObjectHideFlags: 0
@@ -13258,6 +13299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967ce0aa0d289cc43abf3db98ed025e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitConfig: {fileID: 0}
+  mapConfig: {fileID: 0}
 --- !u!114 &1766845900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13453,9 +13496,24 @@ Prefab:
       objectReference: {fileID: 1905824202}
     - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
         type: 2}
+      propertyPath: generateButtons
+      value: 
+      objectReference: {fileID: 1660919755}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
       propertyPath: cameraControl
       value: 
       objectReference: {fileID: 1959895072}
+    - target: {fileID: 114180962689554276, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: panelAnimator
+      value: 
+      objectReference: {fileID: 676594671}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: leaveAttackMode
+      value: 27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0

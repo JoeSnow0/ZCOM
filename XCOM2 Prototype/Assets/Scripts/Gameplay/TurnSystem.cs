@@ -67,11 +67,11 @@ public class TurnSystem : MonoBehaviour
     //public int[] spawnEnemyTurns; old
     public SpawnSetup[] spawnSetup;
 
-    public bool EnemyTargeting = false;
+    static public bool EnemyTargeting = false;
     //Input
     public KeyCode nextTarget;
     public KeyCode previousTarget;
-    public KeyCode backOutofAttack;
+    public KeyCode leaveAttackMode;
 
 
     //Distance Variable (maybe put elsewhere?)
@@ -87,7 +87,7 @@ public class TurnSystem : MonoBehaviour
         generateButtons = FindObjectOfType<GenerateButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
-
+        
         classInformationAnimator = classIcon.transform.GetComponentInParent<Animator>();
         //add units to array
         for (int i = 0; i < allUnits.Length; i++)
@@ -139,7 +139,7 @@ public class TurnSystem : MonoBehaviour
             DeselectAllUnits();
         }
 
-        if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode))
+        if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode) && EnemyTargeting == false)
         {
 
             //Select next unit
@@ -154,19 +154,41 @@ public class TurnSystem : MonoBehaviour
             }
         }
 
-
+        if (Input.GetKeyDown(leaveAttackMode))
+        {
+            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+            {
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                SelectUnit(selectedUnit);
+            }
+        }
 
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //Select next enemy unit
             if (Input.GetKeyDown(nextTarget))
             {
-                KeyboardSelect(true, enemyUnits, selectedTarget);
+                if (EnemyTargeting)
+                {
+                    KeyboardSelect(true, enemyUnits, selectedTarget);
+                }
+                else
+                {
+                    KeyboardSelect(true, playerUnits, selectedTarget);
+                }
+
             }
             //Select previous enemy unit
             if (Input.GetKeyDown(previousTarget))
             {
-                KeyboardSelect(false, enemyUnits, selectedTarget);
+                if (EnemyTargeting)
+                {
+                    KeyboardSelect(false, enemyUnits, selectedTarget);
+                }
+                else
+                {
+                    KeyboardSelect(false, playerUnits, selectedTarget);
+                }
             }
         }
         //Use mouse to target player units
@@ -223,10 +245,10 @@ public class TurnSystem : MonoBehaviour
 
     }
 
-    public void SelectUnit()
-    {
-        selectedUnit.isSelected = true;
-    }
+    //public void SelectUnit()
+    //{
+    //    selectedUnit.isSelected = true;
+    //}
 
     public void DeselectUnit(UnitConfig selection)
     {
@@ -284,11 +306,11 @@ public class TurnSystem : MonoBehaviour
             //prevents you from targeting units without actions
             if (selectedUnit.actionPoints.CheckAvailableActions(1))
             {
-                selectUnit(selectedUnit);
+                SelectUnit(selectedUnit);
             }
         }
     }
-    public void selectUnit(UnitConfig selected)
+    public void SelectUnit(UnitConfig selected)
     {
         if (selected == null)
         {
@@ -419,7 +441,7 @@ public class TurnSystem : MonoBehaviour
         }
 
         //Select the next/previous unit
-        selectUnit(selected);
+        SelectUnit(selected);
 
     }
 

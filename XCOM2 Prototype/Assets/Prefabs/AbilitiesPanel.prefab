@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1560370254234900
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityButtonPrefab: {fileID: 114704483964503080, guid: 4dadf4d83eeac1743ac5dc364360f4ef,
     type: 2}
+  abilityTooltip: {fileID: 0}
 --- !u!114 &114609593566803722
 MonoBehaviour:
   m_ObjectHideFlags: 1

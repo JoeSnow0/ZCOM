@@ -21,6 +21,7 @@ public class ActionPoints : MonoBehaviour {
     }
     private void Update()
     {
+        //Update UI elements
         if (actionPoints != null && unitConfig.isFriendly)
         {
             for (int i = 0; i < actionPoints.Count; i++)
@@ -38,6 +39,7 @@ public class ActionPoints : MonoBehaviour {
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
+    //returns true if unit has more or equal actions compared to requiredActions
     public bool CheckAvailableActions(int requiredActions)
     {
         if (currentActions >= requiredActions)
@@ -49,16 +51,18 @@ public class ActionPoints : MonoBehaviour {
             return false;
         }
     }
+    //returns available actions
     public int ReturnAvailableActions()
     {
         return currentActions;
     }
+    //adds all actions on this unit
     public void ReplenishAllActions()
     {
         currentActions = maxActions;
         TurnSystem.totalActions += currentActions;
     }
-
+    //adds actions on this unit
     public void AddActions(int addition)
     {
         currentActions += addition;
@@ -67,18 +71,19 @@ public class ActionPoints : MonoBehaviour {
             currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
         }
     }
-
+    //removes actions on this unit
     public void SubtractActions(int subtraction)
     {
         TurnSystem.totalActions -= subtraction;
         currentActions -= subtraction;
     }
-
+    //removes all actions on this unit
     public void SubtractAllActions()
     {
         TurnSystem.totalActions -= currentActions;
         currentActions = 0;
     }
+    //Get stats from class and set 
     private void InitializeActions()
     {
         currentActions = unitConfig.unitClassStats.maxUnitActionPoints;

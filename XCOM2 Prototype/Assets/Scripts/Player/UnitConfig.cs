@@ -267,14 +267,7 @@ public class UnitConfig : MonoBehaviour
             //Shoot target
             SetIdle(false);
             isShooting = true;
-            if (isFriendly)
-            {
-                TurnSystem.selectedTarget = target;
-            }
-            else
-            {
-                TurnSystem.selectedUnit = target;
-            }
+            //Trigger shooting animation
 
             //Calculate the distance between the units
             mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
@@ -282,10 +275,11 @@ public class UnitConfig : MonoBehaviour
 
             //Spend Actions
             TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
-
             //Stop targeting mode
             mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-            mapConfig.turnSystem.DeselectAllUnits();
+            SetIdle(true);
+            mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
+
         }
     }
     public void MeleeAttack(UnitConfig self, UnitConfig target)

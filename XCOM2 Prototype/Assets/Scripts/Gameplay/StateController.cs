@@ -7,6 +7,7 @@ public class StateController : MonoBehaviour
 
     public enum GameState { TacticalMode, AttackMode };
     static public GameState CurrentState;
+    public Animator panelAnimator;
 
     void start()
     {
@@ -16,6 +17,15 @@ public class StateController : MonoBehaviour
     public void SetCurrentState(GameState setState)
     {
         CurrentState = setState;
+        if (CurrentState == StateController.GameState.AttackMode)
+        {
+            panelAnimator.SetBool("displayPanel", true);
+        }
+        else
+        {
+            panelAnimator.SetBool("displayPanel", false);
+        }
+
     }
 
     public bool CheckCurrentState(GameState CompareState)
