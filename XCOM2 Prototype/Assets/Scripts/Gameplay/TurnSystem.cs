@@ -560,12 +560,6 @@ public class TurnSystem : MonoBehaviour {
     }
     public int getCurrentTurn(int currentTurn)
     {
-        if (currentTurn > maxTurns)
-        {
-            //deactivates the map
-            gameObject.SetActive(false);
-            gameOver.SetActive(true);
-        }        
         thisTurn = currentTurn;
         return maxTurns;
     }
