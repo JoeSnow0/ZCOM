@@ -15,7 +15,7 @@ public class TurnSystem : MonoBehaviour
     [System.Serializable]
     public class SpawnSetup
     {
-        public UnitConfig enemyPrefab;
+        public UnitConfig[] enemyPrefab;
         public int spawnNumberOfEnemys;
         [HideInInspector]
         public int activatTurn;
@@ -440,6 +440,7 @@ public class TurnSystem : MonoBehaviour
             {
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
+                selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -553,13 +554,13 @@ public class TurnSystem : MonoBehaviour
         {
             if (i.activatTurn == thisTurn)
             {
-                enemySpawn.SpawnEnemy(i.enemyPrefab, i.spawnNumberOfEnemys);
+                enemySpawn.SpawnEnemy(i, i.spawnNumberOfEnemys);
                 break;
             }
             else if (spawnSetup.Length <= thisTurn)
             {
                 int number = Random.Range(0, spawnSetup.Length);
-                enemySpawn.SpawnEnemy(spawnSetup[number].enemyPrefab, spawnSetup[number].spawnNumberOfEnemys);
+                enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 break;
             }
         }

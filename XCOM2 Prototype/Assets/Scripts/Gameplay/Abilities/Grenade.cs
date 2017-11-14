@@ -31,7 +31,7 @@ public class Grenade : MonoBehaviour {
             {
 
                 UnitConfig unitConfig = other.GetComponent<UnitConfig>();
-                unitConfig.health.TakeDamage(1, unitConfig.unitWeapon);
+                unitConfig.health.TakeDamage(unitConfig.unitWeapon);
             }
         }
         

@@ -265,10 +265,8 @@ public class UnitConfig : MonoBehaviour
         if (!target.isFriendly) //Checks if the unit hit is not friendly
         {
             animator.SetAnimationState(0);
-            //Calculate the distance between the units
-            mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
             //Check if you hit
-            CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, mapConfig.turnSystem.distance);
+            health.TakeDamage(unitWeapon);
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
@@ -292,7 +290,7 @@ public class UnitConfig : MonoBehaviour
     {
         //Melee attack script goes here
         //hit check
-        CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, mapConfig.turnSystem.distance);
+        CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, unitWeapon.baseAim);
         //Calculate damage
         CalculationManager.DamageDealt(unitWeapon.baseDamage, unitWeapon.numberOfDiceDamage, unitWeapon.numberOfSidesDamage, true);
         //Spend Actions
@@ -425,8 +423,14 @@ public class UnitConfig : MonoBehaviour
         ClickebleTile closest = GetClosestPlayersquare(targetTileX, targetTileY);
         mapConfig.tileMap.GeneratePathTo(closest.tileX, closest.tileY, this, true);
         testDebug = currentBulletPath;
-        int accuracy = unitWeapon.baseAim;
-        int distans = currentBulletPath.Count - 1;
+        accuracy = unitWeapon.baseAim;
+        int distans;
+        if (currentBulletPath == null)
+            distans = 0;
+        else
+        {
+            distans = currentBulletPath.Count - 1;
+        }
         for (int aim = 1; aim < distans; aim++)//is the path possible
         {
             accuracy += AimReductionAmount(aim + 1);
@@ -476,21 +480,21 @@ public class UnitConfig : MonoBehaviour
         return closest;
     }
 
-    private int AimReductionAmount(int location)
+    private int AimReductionAmount(int distance)
     {
         int amount = 0;
-        if(mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 0 &&
-           mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 4)//0 = normal grid and 4 = unit place on grid
+        if(mapConfig.tileMap.tiles[currentBulletPath[distance].x, currentBulletPath[distance].y] != 0 &&
+           mapConfig.tileMap.tiles[currentBulletPath[distance].x, currentBulletPath[distance].y] != 4)//0 = normal grid and 4 = unit place on grid
         {//reduse amount by the value on the tile
-            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[location-1].x, currentBulletPath[location-1].y, currentBulletPath[location].x, currentBulletPath[location].y);
+            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[distance-1].x, currentBulletPath[distance-1].y, currentBulletPath[distance].x, currentBulletPath[distance].y);
         }
-        else if (location < 9 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+        else if (distance < 6)
             amount -= unitWeapon.rangeModShort;
 
-        else if (location < 16 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+        else if (distance < 13)
             amount -= unitWeapon.rangeModMedium;
 
-        else if (location < 30)
+        else if (distance < 19)
             amount -= unitWeapon.rangeModLong;
 
         else
