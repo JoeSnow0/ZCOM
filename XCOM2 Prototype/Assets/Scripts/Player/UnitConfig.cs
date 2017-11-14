@@ -264,7 +264,7 @@ public class UnitConfig : MonoBehaviour
             //Calculate the distance between the units
             mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
             //Check if you hit
-            CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, mapConfig.turnSystem.distance);
+            CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, accuracy);
             //Shoot target
             SetIdle(false);
             isShooting = true;
@@ -293,7 +293,7 @@ public class UnitConfig : MonoBehaviour
     {
         //Melee attack script goes here
         //hit check
-        CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, mapConfig.turnSystem.distance);
+        CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, unitWeapon.baseAim);
         //Calculate damage
         CalculationManager.DamageDealt(unitWeapon.baseDamage, unitWeapon.numberOfDiceDamage, unitWeapon.numberOfSidesDamage, true);
         //Spend Actions
@@ -436,7 +436,7 @@ public class UnitConfig : MonoBehaviour
         ClickebleTile closest = GetClosestPlayersquare(targetTileX, targetTileY);
         mapConfig.tileMap.GeneratePathTo(closest.tileX, closest.tileY, this, true);
         testDebug = currentBulletPath;
-        int accuracy = unitWeapon.baseAim;
+        accuracy = unitWeapon.baseAim;
         int distans;
         if (currentBulletPath == null)
             distans = 0;

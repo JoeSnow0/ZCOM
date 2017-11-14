@@ -71,7 +71,7 @@ public class Health : MonoBehaviour
         GameObject dmg = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
-        CalculationManager.HitCheck(weapon, mapConfig.turnSystem.distance);
+        CalculationManager.HitCheck(weapon, unitConfig.accuracy);
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";

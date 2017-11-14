@@ -13,26 +13,10 @@ public static class CalculationManager// : MonoBehaviour
     public static int damage = 0;
     public static bool hit;
     
-    public static void HitCheck (WeaponInfoObject usedWeapon, float distance)
+    public static void HitCheck (WeaponInfoObject usedWeapon, int aim)
     {
+        hitChance = aim;
         
-
-        if (distance < 6)
-        {
-            hitChance = usedWeapon.baseAim + usedWeapon.rangeModShort;
-        }
-        else if (distance < 10)
-        {
-            hitChance = usedWeapon.baseAim + usedWeapon.rangeModMedium;
-        }
-        else if (distance < 14)
-        {
-            hitChance = usedWeapon.baseAim + usedWeapon.rangeModLong;
-        }
-        else
-        {
-            hitChance = usedWeapon.baseAim + usedWeapon.rangeModFar;
-        }
         //hitChance= (coverIntervenience + weaponBaseAccuracy + WeaponProficiency + heightAdvantage + Bonuses - Penalties - (distance * weapontypeRange))
         hitRoll = RandomRange.RollDice(1, 100);
         if (hitRoll <= hitChance)
