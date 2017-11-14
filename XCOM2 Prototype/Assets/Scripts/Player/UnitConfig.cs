@@ -267,7 +267,7 @@ public class UnitConfig : MonoBehaviour
         {
             animator.SetAnimationState(0);
             //Calculate the distance between the units
-            mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
+            GetAccuracy(target.tileX, target.tileY);
             //Check if you hit
             CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, accuracy);
             //Shoot target
