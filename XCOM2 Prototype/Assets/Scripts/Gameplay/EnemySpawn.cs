@@ -28,7 +28,8 @@ public class EnemySpawn : MonoBehaviour {
         {
             for (int i = 0; i < numberOfUnits; i++)
             {
-                Instantiate(unitType, RandomPosition(), Quaternion.identity);
+                UnitConfig enemy = Instantiate(unitType, RandomPosition(), Quaternion.identity);
+                mapConfig.turnSystem.enemyUnits.Add(enemy);
             }
         }
     }
