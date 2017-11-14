@@ -441,6 +441,7 @@ public class TurnSystem : MonoBehaviour
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
+                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy +"%";
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -507,7 +508,6 @@ public class TurnSystem : MonoBehaviour
             enemyUnits[enemyIndex].enemyAi == null ||
             enemyUnits.Count < 1)
         {
-            Debug.Break();
         }
 
         enemyUnits[enemyIndex].enemyAi.isMyTurn = true;

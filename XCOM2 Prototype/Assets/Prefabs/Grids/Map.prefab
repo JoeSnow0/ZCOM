@@ -144,18 +144,13 @@ MonoBehaviour:
   spawnSetup:
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    - {fileID: 0}
-    - {fileID: 0}
     spawnNumberOfEnemys: 3
     activatTurn: 0
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
-    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     spawnNumberOfEnemys: 2
     activatTurn: 1
   - enemyPrefab:
-    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     spawnNumberOfEnemys: 2
     activatTurn: 2
@@ -197,7 +192,7 @@ MonoBehaviour:
   - name: FullBlock
     tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
-    movemontCost: 0.99
+    movemontCost: 1
     aimReduction: 1000
     isWalkeble: 0
   - name: Full Cover

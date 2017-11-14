@@ -64,7 +64,7 @@ public class UnitConfig : MonoBehaviour
     //[HideInInspector]public ImageElements imageElements;
     Vector3 cameraStartPosition;
 
-    public int accuracy;
+    public static int accuracy;
     //BaseUnitCopy
     void Start()
     {
@@ -72,7 +72,7 @@ public class UnitConfig : MonoBehaviour
         //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
 
         //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
-        
+
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
@@ -262,11 +262,11 @@ public class UnitConfig : MonoBehaviour
         }
         //if ability has been confirmed by player
         //Shooting target
-        if (!target.isFriendly) //Checks if the unit hit is not friendly
+        if (!target.isFriendly && accuracy != 0) //Checks if the unit hit is not friendly
         {
             animator.SetAnimationState(0);
             //Check if you hit
-            health.TakeDamage(unitWeapon);
+            target.health.TakeDamage(unitWeapon);
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
@@ -290,11 +290,10 @@ public class UnitConfig : MonoBehaviour
     {
         //Melee attack script goes here
         //hit check
-        CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, unitWeapon.baseAim);
-        //Calculate damage
-        CalculationManager.DamageDealt(unitWeapon.baseDamage, unitWeapon.numberOfDiceDamage, unitWeapon.numberOfSidesDamage, true);
+        accuracy = unitWeapon.baseAim;
+        target.health.TakeDamage(unitWeapon);
         //Spend Actions
-        TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
+        actionPoints.SubtractAllActions();
     }
 
     //public void ShootTarget(UnitConfig target)
@@ -410,12 +409,12 @@ public class UnitConfig : MonoBehaviour
     }
     public void Die()//
     {
-        TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Dead);
+        SetUnitState(UnitState.Dead);
     }
 
     public void Attack()//
     {
-        TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Shooting);
+        SetUnitState(UnitState.Shooting);
     }
 
     public void GetAccuracy(int targetTileX,int targetTileY)
@@ -437,7 +436,6 @@ public class UnitConfig : MonoBehaviour
             if (accuracy <= 0)
                 break;
         }
-        Debug.Log("Hit chanse: " + accuracy);
         if (accuracy < 0)
             accuracy = 0;
         else if (accuracy > 100)
@@ -499,8 +497,7 @@ public class UnitConfig : MonoBehaviour
 
         else
             amount -= unitWeapon.rangeModFar;
-
-        Debug.Log("fall of rate" + amount);
+        
         return amount;//return the amount to lose on the current tile location
     }
 }
