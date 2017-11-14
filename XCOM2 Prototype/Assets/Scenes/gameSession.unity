@@ -2593,7 +2593,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  accuracy: 0
 --- !u!23 &401261312
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7289,7 +7288,6 @@ MonoBehaviour:
   animator: {fileID: 679248494}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  accuracy: 0
 --- !u!23 &1266361781
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9819,7 +9817,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  accuracy: 0
 --- !u!23 &1597087411
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10436,7 +10433,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  accuracy: 0
 --- !u!23 &1677402167
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11249,6 +11245,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114180962689554276, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: panelAnimator
+      value: 
+      objectReference: {fileID: 738983731}
     - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
         type: 2}
       propertyPath: gameOver
@@ -11334,11 +11335,6 @@ Prefab:
       propertyPath: cameraControl
       value: 
       objectReference: {fileID: 1959895072}
-    - target: {fileID: 114180962689554276, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: panelAnimator
-      value: 
-      objectReference: {fileID: 738983731}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0
