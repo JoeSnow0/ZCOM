@@ -191,7 +191,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (var enemy in enemyUnits)
             {
-                if (enemy.actionPoints.CheckAvailableActions(1) || enemy.isMoving)
+                if (enemy.actionPoints.CheckAvailableActions(1) || enemy.CheckUnitState(UnitConfig.UnitState.Walking))
                 {
                     endturn = false;
                     break;
@@ -214,7 +214,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (UnitConfig unit in playerUnits)
             {
-                if (unit.actionPoints.CheckAvailableActions(1) || unit.isMoving)
+                if (unit.actionPoints.CheckAvailableActions(1) || unit.CheckUnitState(UnitConfig.UnitState.Walking))
                 {
                     endturn = false;
                     break;
@@ -381,7 +381,7 @@ public class TurnSystem : MonoBehaviour
             selected = unitList[0];
         }
         //Check if unit is idle
-        if (!selected.isIdle)
+        if (!selected.CheckUnitState(UnitConfig.UnitState.Idle))
         {
             return;
         }

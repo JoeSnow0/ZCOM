@@ -88,7 +88,7 @@ public class Health : MonoBehaviour
             {
                 if (!unitConfig.isFriendly)
                 {
-                    unitConfig.isDead = true;
+                    unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
                     mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
                     mapConfig.turnSystem.killCount++;
                 }
