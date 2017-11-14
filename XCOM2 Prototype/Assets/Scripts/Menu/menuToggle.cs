@@ -16,6 +16,7 @@ public class menuToggle : MonoBehaviour {
         isPaused = false;
         optionsToggle = false;
     }
+
     //hide options/ingame menu depending on what's currently visible
     void Update()
     {
