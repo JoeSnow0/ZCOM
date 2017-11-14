@@ -106163,7 +106163,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   mapConfig: {fileID: 114105975272966794}
-  generateButtons: {fileID: 0}
+  generateAbilityButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
   enemySpawn: {fileID: 114995828931628862}
   cameraControl: {fileID: 0}
@@ -106172,17 +106172,19 @@ MonoBehaviour:
   maxTurns: 15
   enemyIndex: 1
   spawnSetup:
-  - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
-      type: 2}
-    spawnNumberOfEnemys: 3
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
+    spawnNumberOfEnemys: 1
     activatTurn: 0
-  - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
-      type: 2}
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
+    - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
     spawnNumberOfEnemys: 2
     activatTurn: 1
-  - enemyPrefab: {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a,
-      type: 2}
-    spawnNumberOfEnemys: 5
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
+    - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
+    spawnNumberOfEnemys: 2
     activatTurn: 2
   nextTarget: 9
   previousTarget: 304

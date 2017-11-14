@@ -38,7 +38,7 @@ public class EnemySpawn : MonoBehaviour {
         if (mapConfig == null)
             mapConfig = GetComponent<MapConfig>();
         int x = 0;
-        int y = 4;
+        int y = 0;
         
         while (mapConfig.tileMap.tiles[x, y] != 0)
         {
