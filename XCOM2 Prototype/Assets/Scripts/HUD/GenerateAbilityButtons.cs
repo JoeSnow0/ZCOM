@@ -20,7 +20,7 @@ public class GenerateAbilityButtons : MonoBehaviour
             //Create gameobject with veriables from Class/Abilities
             AbilityButton newButton = GameObject.Instantiate(abilityButtonPrefab, transform);
             newButton.abilityName.text = ability.name;
-            newButton.abilityButton.GetComponent<AbilityButtonFunctions>().useAbility = ability.keybind;
+            newButton.abilityButton.GetComponent<AbilityButtonFunctions>().abilityKeybind = ability.keybind;
             newButton.abilityIcon.sprite = ability.icon;
             newButton.abilityKeybind = ability.keybind;
             newButton.abilityTooltip = ability.tooltip;
