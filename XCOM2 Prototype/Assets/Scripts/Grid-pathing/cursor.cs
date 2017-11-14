@@ -43,7 +43,7 @@ public class cursor : MonoBehaviour {
                     explosionObject.transform.position = activeObject.transform.position;
 
                     if (turnSystem.playerTurn) {
-                        if (TurnSystem.selectedUnit != null && !TurnSystem.selectedUnit.isMoving)
+                        if (TurnSystem.selectedUnit != null && TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
                         {
                             if(map != null && map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
                                 map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, TurnSystem.selectedUnit);
@@ -57,7 +57,7 @@ public class cursor : MonoBehaviour {
 
                 if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn && StateController.CurrentState == StateController.GameState.TacticalMode)
                 {
-                    if (!TurnSystem.selectedUnit.isMoving)
+                    if (TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
                     {
                         //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
 
