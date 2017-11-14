@@ -787,6 +787,7 @@ GameObject:
   - component: {fileID: 4095206695965060}
   - component: {fileID: 95940793954637078}
   - component: {fileID: 114495758181867844}
+  - component: {fileID: 114778857325434526}
   m_Layer: 0
   m_Name: SoldierBlue
   m_TagString: Untagged
@@ -861,7 +862,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1952634916483066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4071281136942294}
@@ -1592,7 +1593,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 373725a1280d25e4ca0ef14f4a67a9f5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1609,6 +1610,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 4446570407401272}
+--- !u!114 &114778857325434526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952634916483066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ca2682d3f3b804bbf07fb2f14821d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  target: {fileID: 0}
+  projectileStartPos: {fileID: 4470615823678876}
 --- !u!137 &137280759367741534
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
