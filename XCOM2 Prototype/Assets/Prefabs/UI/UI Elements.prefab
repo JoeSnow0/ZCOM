@@ -4574,7 +4574,7 @@ MonoBehaviour:
   abilityTooltip: {fileID: 114807782398336774}
   abilityName: {fileID: 114321260648272314}
   abilityChanceToHit: {fileID: 114953807510881932}
-  abilityEfect: {fileID: 114988865434301976}
+  abilityEfect: {fileID: 0}
 --- !u!114 &114551589436980634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5953,7 +5953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 50
+    m_Left: 40
     m_Right: 0
     m_Top: 6
     m_Bottom: 0
@@ -6351,7 +6351,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Damage
+  m_Text: ' damage'
 --- !u!114 &114992491979895148
 MonoBehaviour:
   m_ObjectHideFlags: 1
