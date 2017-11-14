@@ -72,7 +72,7 @@ public class UnitConfig : MonoBehaviour
         //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
 
         //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
-        
+
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
