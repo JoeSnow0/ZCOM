@@ -142,15 +142,7 @@ public class TurnSystem : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(leaveAttackMode))
-        {
-            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
-            {
-                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-                SelectUnit(selectedUnit);
-                EnemyTargeting = false;
-            }
-        }
+      
 
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
@@ -234,6 +226,18 @@ public class TurnSystem : MonoBehaviour
 
     }
 
+    private void LateUpdate()
+    {
+        if (Input.GetKeyUp(leaveAttackMode))
+        {
+            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+            {
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                SelectUnit(selectedUnit);
+                EnemyTargeting = false;
+            }
+        }
+    }
     //public void SelectUnit()
     //{
     //    selectedUnit.isSelected = true;
