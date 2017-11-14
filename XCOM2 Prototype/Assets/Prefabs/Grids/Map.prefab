@@ -106163,7 +106163,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   mapConfig: {fileID: 114105975272966794}
-  generateButtons: {fileID: 0}
+  generateAbilityButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
   enemySpawn: {fileID: 114995828931628862}
   cameraControl: {fileID: 0}
