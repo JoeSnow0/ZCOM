@@ -66,12 +66,12 @@ public class Health : MonoBehaviour
         UpdateUnitHealth();
     }
 
-    public void TakeDamage(int damageAmount, WeaponInfoObject weapon)
+    public void TakeDamage(WeaponInfoObject weapon)
     {
         GameObject dmg = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
-        CalculationManager.HitCheck(weapon, mapConfig.turnSystem.distance);
+        CalculationManager.HitCheck(weapon, UnitConfig.accuracy);
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";
