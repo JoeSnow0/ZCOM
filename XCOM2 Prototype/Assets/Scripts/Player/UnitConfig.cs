@@ -265,10 +265,8 @@ public class UnitConfig : MonoBehaviour
         if (!target.isFriendly) //Checks if the unit hit is not friendly
         {
             animator.SetAnimationState(0);
-            //Calculate the distance between the units
-            GetAccuracy(target.tileX, target.tileY);
             //Check if you hit
-            CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, accuracy);
+            health.TakeDamage(unitWeapon);
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);

@@ -54,5 +54,6 @@ public static class CalculationManager// : MonoBehaviour
         //Give Damage dealt
         hit = contact;
         damage = n + baseDamage;
+        
 	}
 }

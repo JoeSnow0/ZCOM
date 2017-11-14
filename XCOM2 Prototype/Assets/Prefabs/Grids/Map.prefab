@@ -144,16 +144,19 @@ MonoBehaviour:
   spawnSetup:
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    spawnNumberOfEnemys: 1
+    - {fileID: 0}
+    - {fileID: 0}
+    spawnNumberOfEnemys: 3
     activatTurn: 0
   - enemyPrefab:
-    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     spawnNumberOfEnemys: 2
     activatTurn: 1
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     spawnNumberOfEnemys: 2
     activatTurn: 2
   nextTarget: 9
@@ -195,19 +198,19 @@ MonoBehaviour:
     tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
     movemontCost: 0.99
-    aimReduction: 1
+    aimReduction: 1000
     isWalkeble: 0
   - name: Full Cover
     tileVisualPrefab: {fileID: 1214502950277038, guid: 6945e1964a45b864883bb9e2edb16908,
       type: 2}
     movemontCost: 1
-    aimReduction: 1
+    aimReduction: 50
     isWalkeble: 0
   - name: Half cover
     tileVisualPrefab: {fileID: 1214502950277038, guid: 0c454b27dbe1a224d9267bb4fb60cecb,
       type: 2}
     movemontCost: 1
-    aimReduction: 1
+    aimReduction: 25
     isWalkeble: 0
   - name: unit pos
     tileVisualPrefab: {fileID: 1308620801044318, guid: d0a4fb608b8f86d49a8ba3d78e411afd,
