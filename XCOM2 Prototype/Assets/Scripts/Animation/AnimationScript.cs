@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationScript : MonoBehaviour {
-    Animator animator;
+    public Animator animator;
     UnitConfig unitConfig;
     Vector3 lastPosition;
     Vector3 direction;
@@ -19,62 +19,64 @@ public class AnimationScript : MonoBehaviour {
         unitConfig = GetComponentInParent<UnitConfig>();
         audioSource = GetComponent<AudioSource>();
 	}
-
-    public void AnimationUpdate()
-    {
-        if (!TurnSystem.selectedUnit.isMoving)
+    public void Update()
+    {   if (animator != null)
         {
-            animator.SetInteger("state", 0);
-        }
-        if (TurnSystem.selectedUnit.isMoving)
-        {
-            animator.SetInteger("state", 1);
-        }
-        if (TurnSystem.selectedUnit.isSprinting)
-        {
-            animator.SetInteger("state", 2);
-        }
-        if (TurnSystem.selectedUnit.isShooting)
-        {
-            animator.SetInteger("state", 3);
-            if (target == null)
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
             {
-                if (TurnSystem.selectedUnit = TurnSystem.selectedTarget)
+                animator.SetInteger("state", 0);
+            }
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Walking))
+            {
+                animator.SetInteger("state", 1);
+            }
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Sprinting))
+            {
+                animator.SetInteger("state", 2);
+            }
+            if (unitConfig.CheckUnitState(UnitConfig.UnitState.Shooting))
+            {
+                animator.SetInteger("state", 3);
+                if (target == null)
                 {
-                    target = TurnSystem.selectedUnit;
+                    if (TurnSystem.selectedUnit = TurnSystem.selectedTarget)
+                    {
+                        target = TurnSystem.selectedUnit;
+                    }
+                    else
+                    {
+                        target = TurnSystem.selectedTarget;
+                    }
                 }
-                else
+                if (target != null)
                 {
-                    target = TurnSystem.selectedTarget;
+                    transform.parent.LookAt(target.transform.position);
+                    Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
+                    eulerAngles.x = 0;
+                    eulerAngles.z = 0;
+                    // Set the altered rotation back
+                    transform.parent.rotation = Quaternion.Euler(eulerAngles);
                 }
             }
-            if (target != null)
+            //Death animation
+            if ((unitConfig.CheckUnitState(UnitConfig.UnitState.Dead)))
             {
-                transform.parent.LookAt(target.transform.position);
-                Vector3 eulerAngles = transform.parent.rotation.eulerAngles;
-                eulerAngles.x = 0;
-                eulerAngles.z = 0;
-                // Set the altered rotation back
-                transform.parent.rotation = Quaternion.Euler(eulerAngles);
+                animator.SetInteger("state", 4);
             }
-        }
-        if (TurnSystem.selectedUnit.isDead)
-        {
-            animator.SetInteger("state", 4);
-        }
-
-        if (animator.GetInteger("state") > 0 && animator.GetInteger("state") != 3) // HACK: What!?
-        {
-            direction = transform.root.position - lastPosition;
-            lastPosition = transform.root.position;
-            lookRotation = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
-            transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, lookRotation, Time.deltaTime * 10);
-        }
-        else if (animator.GetInteger("state") != 3)
-        {
-            Quaternion a = transform.parent.rotation;
-            Quaternion b = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
-            transform.parent.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10);
+            //walking rotation
+            if (animator.GetInteger("state") > 0 && animator.GetInteger("state") != 3) // HACK: What!?
+            {
+                direction = transform.root.position - lastPosition;
+                lastPosition = transform.root.position;
+                lookRotation = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
+                transform.parent.rotation = Quaternion.Lerp(transform.parent.rotation, lookRotation, Time.deltaTime * 10);
+            }
+            else if (animator.GetInteger("state") != 3)
+            {
+                Quaternion a = transform.parent.rotation;
+                Quaternion b = Quaternion.LookRotation((direction == Vector3.zero) ? Vector3.forward : direction);
+                transform.parent.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10);
+            }
         }
     }
 
@@ -85,11 +87,11 @@ public class AnimationScript : MonoBehaviour {
     public void AttackStart()
     {
         //When the projectile is supposed to shoot
-        if (TurnSystem.selectedUnit.unitWeapon.weaponProjectile != null)
+        if (unitConfig.unitWeapon.weaponProjectile != null)
         {
-            ParticleSystem.MainModule settings = Instantiate(TurnSystem.selectedUnit.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
+            ParticleSystem.MainModule settings = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
 
-            settings.startColor = TurnSystem.selectedUnit.unitWeapon.particleColor[Random.Range(0, TurnSystem.selectedUnit.unitWeapon.particleColor.Length - 1)];
+            settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];
         }
         else
         {
@@ -104,16 +106,16 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackHit()
     {
-        target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+        //target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
     }
 
     public void AttackEnd()
     {
-        TurnSystem.selectedUnit.isShooting = false;
+        unitConfig.isShooting = false;
     }
 
     public void Death()// DESTROYS THE UNIT, Called at death animation end
     {
-        TurnSystem.selectedUnit.health.KillUnit();
+        unitConfig.health.KillUnit();
     }
 }

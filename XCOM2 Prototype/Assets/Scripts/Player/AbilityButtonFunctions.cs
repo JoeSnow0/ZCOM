@@ -76,12 +76,18 @@ public class AbilityButtonFunctions : MonoBehaviour
         {
             //Trigger Ranged Attack
             TurnSystem.selectedUnit.RangedAttack(TurnSystem.selectedUnit, TurnSystem.selectedTarget);
+            //End shooting mode
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+            //select next unit
+            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
+
             return;
         }
         else
         {
             //Enter shooting mode
             mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
+            TurnSystem.EnemyTargeting = true;
             //Select first enemy unit
             mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
             return;

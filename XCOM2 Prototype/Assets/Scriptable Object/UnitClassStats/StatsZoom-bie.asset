@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e51b214ede25aee4580ca8c95d0b76c1, type: 3}
-  m_Name: StatsSniper
+  m_Name: StatsZoom-bie
   m_EditorClassIdentifier: 
-  unitClassName: SNIPER
-  classIcon: {fileID: 21300000, guid: 2c37208f896f0d046b63bb7fa3f96dce, type: 3}
-  classModel: {fileID: 1814579743467984, guid: fc8f0b1b2a4536a4c9e103fa3abfe88e, type: 2}
-  maxUnitHealth: 6
-  unitDefense: 1
+  unitClassName: Zoom-bie
+  classIcon: {fileID: 0}
+  classModel: {fileID: 1465679864678236, guid: e338475e4cf5a394a816938467bfc3a9, type: 2}
+  maxUnitHealth: 3
+  unitDefense: 0
   maxUnitActionPoints: 2
-  maxUnitMovePoints: 4
+  maxUnitMovePoints: 7
   moveCost: 0

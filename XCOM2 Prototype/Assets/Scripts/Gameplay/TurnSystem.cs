@@ -49,7 +49,7 @@ public class TurnSystem : MonoBehaviour
     static public UnitConfig selectedUnit;
     static public UnitConfig selectedTarget;
     public MapConfig mapConfig;
-    public GenerateButtons generateButtons;
+    public GenerateAbilityButtons generateAbilityButtons;
     //Enemy to spawn, can be changed to an array to randomize
     public GameObject EnemyUnitSpawnType;
 
@@ -67,11 +67,11 @@ public class TurnSystem : MonoBehaviour
     //public int[] spawnEnemyTurns; old
     public SpawnSetup[] spawnSetup;
 
-    public bool EnemyTargeting = false;
+    static public bool EnemyTargeting = false;
     //Input
     public KeyCode nextTarget;
     public KeyCode previousTarget;
-    public KeyCode backOutofAttack;
+    public KeyCode leaveAttackMode;
 
 
     //Distance Variable (maybe put elsewhere?)
@@ -82,30 +82,20 @@ public class TurnSystem : MonoBehaviour
 
     void Start()
     {
+        //Clear lists
+        playerUnits.Clear();
+        enemyUnits.Clear();
+
         mapConfig = FindObjectOfType<MapConfig>();
         mapConfig.tileMap.Initialize();
-        generateButtons = FindObjectOfType<GenerateButtons>();
+        generateAbilityButtons = FindObjectOfType<GenerateAbilityButtons>();
         enemySpawn = GetComponent<EnemySpawn>();
         allUnits = FindObjectsOfType<UnitConfig>();
 
         classInformationAnimator = classIcon.transform.GetComponentInParent<Animator>();
-        //add units to array
-        for (int i = 0; i < allUnits.Length; i++)
-        {
-            if (allUnits[i] != null)
-            {
-                if (allUnits[i].isFriendly)
-                {
-                    playerUnits.Add(allUnits[i]);
-                }
-                else
-                {
-                    enemyUnits.Add(allUnits[i]);
-                }
-            }
-        }
+        AddUnitsToLists();
         //Calculate total amount of action points
-        
+
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
@@ -129,8 +119,6 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
-
-        //attackUnit();
         UpdateHUD();
 
         //Deselect units on enemy turn
@@ -139,7 +127,7 @@ public class TurnSystem : MonoBehaviour
             DeselectAllUnits();
         }
 
-        if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode))
+        if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode) && EnemyTargeting == false)
         {
 
             //Select next unit
@@ -154,19 +142,42 @@ public class TurnSystem : MonoBehaviour
             }
         }
 
-
+        if (Input.GetKeyDown(leaveAttackMode))
+        {
+            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+            {
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                SelectUnit(selectedUnit);
+                EnemyTargeting = false;
+            }
+        }
 
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //Select next enemy unit
             if (Input.GetKeyDown(nextTarget))
             {
-                KeyboardSelect(true, enemyUnits, selectedTarget);
+                if (EnemyTargeting)
+                {
+                    KeyboardSelect(true, enemyUnits, selectedTarget);
+                }
+                else
+                {
+                    KeyboardSelect(true, playerUnits, selectedTarget);
+                }
+
             }
             //Select previous enemy unit
             if (Input.GetKeyDown(previousTarget))
             {
-                KeyboardSelect(false, enemyUnits, selectedTarget);
+                if (EnemyTargeting)
+                {
+                    KeyboardSelect(false, enemyUnits, selectedTarget);
+                }
+                else
+                {
+                    KeyboardSelect(false, playerUnits, selectedTarget);
+                }
             }
         }
         //Use mouse to target player units
@@ -223,11 +234,29 @@ public class TurnSystem : MonoBehaviour
 
     }
 
-    public void SelectUnit()
-    {
-        selectedUnit.isSelected = true;
-    }
+    //public void SelectUnit()
+    //{
+    //    selectedUnit.isSelected = true;
+    //}
 
+    private void AddUnitsToLists()
+        {
+        //add units to seperate lists
+        for (int i = 0; i<allUnits.Length; i++)
+        {
+            if (allUnits[i] != null)
+            {
+                if (allUnits[i].isFriendly)
+                {
+                    playerUnits.Add(allUnits[i]);
+                }
+                else
+                {
+                    enemyUnits.Add(allUnits[i]);
+                }
+            }
+        }
+        }
     public void DeselectUnit(UnitConfig selection)
     {
         mapConfig.tileMap.ResetColorGrid();
@@ -284,11 +313,11 @@ public class TurnSystem : MonoBehaviour
             //prevents you from targeting units without actions
             if (selectedUnit.actionPoints.CheckAvailableActions(1))
             {
-                selectUnit(selectedUnit);
+                SelectUnit(selectedUnit);
             }
         }
     }
-    public void selectUnit(UnitConfig selected)
+    public void SelectUnit(UnitConfig selected)
     {
         if (selected == null)
         {
@@ -308,9 +337,9 @@ public class TurnSystem : MonoBehaviour
             unitName.text = selectedUnit.unitName;
             className.text = selectedUnit.unitClassStats.unitClassName;
             //Clear old abilities
-            generateButtons.ClearCurrentButtons();
+            generateAbilityButtons.ClearCurrentButtons();
             //Generate new abilities buttons if its a player unit
-            generateButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
+            generateAbilityButtons.GenerateCurrentButtons(selectedUnit.unitAbilities);
             //Move the camera to selected Unit/target
             cameraControl.MoveToTarget(selectedUnit.transform.position);
         }
@@ -420,50 +449,9 @@ public class TurnSystem : MonoBehaviour
         }
 
         //Select the next/previous unit
-        selectUnit(selected);
+        SelectUnit(selected);
 
     }
-
-    //HACK: Need to move the attackUnit function to unitConfig script
-    //void attackUnit()
-    //{
-    //    if (Input.GetMouseButtonDown(0) && playerTurn) //Checks if it is the players turn
-    //    {
-    //        if (selectedUnit == null)
-    //        {
-    //            return;
-    //        }
-    //        if (selectedUnit.actionPoints.CheckAvailableActions(1)) //Checks if the unit has enough action points
-    //        {
-    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //            RaycastHit hit;
-    //            if (Physics.Raycast(ray, out hit))
-    //            {
-    //                if (hit.collider.GetComponent<UnitConfig>()) //Checks if the unit hit an enemy
-    //                {
-    //                    UnitConfig target = hit.collider.GetComponent<UnitConfig>();
-    //                    if (!target.isFriendly && !target.isDead) //Checks if the unit hit is not friendly & if the enemy is not dead
-    //                    {
-    //                        //Spend Actions
-    //                        selectedUnit.actionPoints.SubtractAllActions();
-    //                        //selectedUnit.actionPoints.SubtractAllActions();
-
-    //                        //Calculate the distance between the units
-    //                        distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
-    //                        //Uses current weapon
-    //                        CalculationManager.HitCheck(selectedUnit.unitWeapon, distance);
-    //                        selectedUnit.ShootTarget(target);
-    //                        selectedUnit.GetAccuracy(target.tileX, target.tileY);
-    //                        //Calculate the distance between the units
-    //                        distance = Vector3.Distance(selectedUnit.transform.position, target.transform.position);
-    //                        distance /= 2;
-
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
 
     public void MoveMarker(Transform marker, Vector3 newPosition)
     {
@@ -489,18 +477,22 @@ public class TurnSystem : MonoBehaviour
             }
         }
         //For enemy units
-        if (enemyUnits == null)
-        {
-            return;
-        }
-        
         else
         {
-            for (int i = 0; i < enemyUnits.Count; i++)
+            if (enemyUnits == null)
             {
-                enemyUnits[i].actionPoints.ReplenishAllActions();
+                return;
+            }
+
+            else
+            {
+                for (int i = 0; i < enemyUnits.Count; i++)
+                {
+                    enemyUnits[i].actionPoints.ReplenishAllActions();
+                }
             }
         }
+        
         playerTurn = isPlayerTurn;
     }
 
@@ -519,6 +511,12 @@ public class TurnSystem : MonoBehaviour
     }
     public int getCurrentTurn(int currentTurn)
     {
+        if (currentTurn > maxTurns)
+        {
+            //deactivates the map
+            gameObject.SetActive(false);
+            gameOver.SetActive(true);
+        }
         thisTurn = currentTurn;
         return maxTurns;
     }
@@ -590,7 +588,7 @@ public class TurnSystem : MonoBehaviour
             }
         }
 
-        foreach (UnitConfig unit in enemyUnits)
+        foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
             if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
             {

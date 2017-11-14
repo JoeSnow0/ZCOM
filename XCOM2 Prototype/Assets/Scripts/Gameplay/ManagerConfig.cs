@@ -6,14 +6,19 @@ public class ManagerConfig : MonoBehaviour {
 
     //This Manager controls all objects in the scene,
     //if you make a new object add its config script to this list!
-    /*
+    
     public UnitConfig unitConfig; //Units
     public MapConfig mapConfig; //Map
-    public UIConfig uiConfig; //UI elements
-    public TerrainConfig terrainConfig; //Terrain
-    public WallConfig wallConfig; //World border
-    public MarkerConfig markerConfig; //Markers
-    public CameraConfig cameraConfig; //Camera access
-    public 
-    */
+    //public UIConfig uiConfig; //UI elements
+    //public TerrainConfig terrainConfig; //Terrain
+    //public WallConfig wallConfig; //World border
+    //public MarkerConfig markerConfig; //Markers
+    //public CameraConfig cameraConfig; //Camera access
+    //public 
+    
+    private void Start()
+    {
+        //Add the map incase its missing
+        mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
+    }
 }

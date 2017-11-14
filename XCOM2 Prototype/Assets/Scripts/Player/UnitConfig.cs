@@ -21,7 +21,7 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public ActionPoints actionPoints;
     [HideInInspector]public Health health;
     [HideInInspector]public UnitMovement movement;
-    public GenerateButtons generateButtons;
+    public GenerateAbilityButtons generateAbilityButtons;
     public Animator animatorHealthbar;
 
     //Script References, external
@@ -42,6 +42,11 @@ public class UnitConfig : MonoBehaviour
 
     public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
+    public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
+    private UnitState currentUnitState;
+
+
+
     public bool isIdle = true;
     public bool isMoving = false;
     public bool isSprinting = false;
@@ -266,27 +271,23 @@ public class UnitConfig : MonoBehaviour
             //Check if you hit
             CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, accuracy);
             //Shoot target
-            SetIdle(false);
+            //Trigger shooting animation
+            SetUnitState(UnitState.Shooting);
             isShooting = true;
-            if (isFriendly)
-            {
-                TurnSystem.selectedTarget = target;
-            }
-            else
-            {
-                TurnSystem.selectedUnit = target;
-            }
-
+            animator.AttackStart();
+            
+            
+            
             //Calculate the distance between the units
             mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
             mapConfig.turnSystem.distance /= 2;
 
             //Spend Actions
             TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
-
             //Stop targeting mode
-            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-            mapConfig.turnSystem.DeselectAllUnits();
+            SetUnitState(UnitState.Idle);
+            mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
+
         }
     }
     public void MeleeAttack(UnitConfig self, UnitConfig target)
@@ -323,8 +324,7 @@ public class UnitConfig : MonoBehaviour
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
             //HACK: idle check should replace isSprinting & isMoving if possible
-            SetIdle(false);
-            isMoving = true;//start moving in the update
+            SetUnitState(UnitState.Walking); //start moving in the update
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 2;
@@ -336,9 +336,7 @@ public class UnitConfig : MonoBehaviour
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
             //HACK: idle check should replace isSprinting & isMoving if possible
-            SetIdle(false);
-            isSprinting = true;
-            isMoving = true;//start moving in the update
+            SetUnitState(UnitState.Sprinting);
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 4;
@@ -351,24 +349,16 @@ public class UnitConfig : MonoBehaviour
         }
         
     }
-    public void SetIdle(bool setTo)
+    //Change the Units current state (used for animations)
+    public void SetUnitState(UnitState setTo)
     {
-        if (setTo)
-        {
-            isMoving = false;
-            isSprinting = false;
-            isShooting = false;
-            isIdle = true;
-        }
-        else
-        {
-            isIdle = false;
-        }
+        currentUnitState = setTo;
 
     }
-    public bool CheckIdle()
+    //check the Units current state, returns true if correct
+    public bool CheckUnitState(UnitState compareTo)
     {
-        if (isIdle)
+        if (currentUnitState == compareTo)
         {
             return true;
         }
@@ -377,6 +367,7 @@ public class UnitConfig : MonoBehaviour
             return false;
         }
     }
+
     public void EnemyMoveNextTile()//start to try to move unit
     {
 
