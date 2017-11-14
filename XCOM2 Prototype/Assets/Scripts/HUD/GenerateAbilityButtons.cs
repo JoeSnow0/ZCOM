@@ -9,7 +9,10 @@ public class GenerateAbilityButtons : MonoBehaviour
 
     AbilityInfoObject characterClass;
     [SerializeField] AbilityButton abilityButtonPrefab;
-    [SerializeField] Text abilityTooltip;
+    [SerializeField] public Text abilityTooltip;
+    [SerializeField] public Text abilityName;
+    [SerializeField] public Text abilityChanceToHit;
+    [SerializeField] public Text abilityEfect;
     AbilityButtonFunctions abilityButtonFunctions;
 
     public void GenerateCurrentButtons(AbilityInfoObject characterClass)
@@ -18,7 +21,7 @@ public class GenerateAbilityButtons : MonoBehaviour
         foreach (AbilityInfo ability in characterClass.abilities)
         {
             //Create gameobject with veriables from Class/Abilities
-            AbilityButton newButton = GameObject.Instantiate(abilityButtonPrefab, transform);
+            AbilityButton newButton = Instantiate(abilityButtonPrefab, transform);
             newButton.abilityName.text = ability.name;
             newButton.abilityButton.GetComponent<AbilityButtonFunctions>().useAbility = ability.keybind;
             newButton.abilityIcon.sprite = ability.icon;
@@ -31,7 +34,7 @@ public class GenerateAbilityButtons : MonoBehaviour
     {
         foreach (Transform child in gameObject.transform)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
     }
 }

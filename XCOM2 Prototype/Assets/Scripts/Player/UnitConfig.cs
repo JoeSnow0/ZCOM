@@ -262,7 +262,7 @@ public class UnitConfig : MonoBehaviour
         }
         //if ability has been confirmed by player
         //Shooting target
-        if (!target.isFriendly) //Checks if the unit hit is not friendly
+        if (!target.isFriendly && accuracy != 0) //Checks if the unit hit is not friendly
         {
             animator.SetAnimationState(0);
             //Check if you hit
@@ -290,9 +290,8 @@ public class UnitConfig : MonoBehaviour
     {
         //Melee attack script goes here
         //hit check
-        CalculationManager.HitCheck(unitWeapon, unitWeapon.baseAim);
-        //Calculate damage
-        CalculationManager.DamageDealt(unitWeapon.baseDamage, unitWeapon.numberOfDiceDamage, unitWeapon.numberOfSidesDamage, true);
+        accuracy = unitWeapon.baseAim;
+        target.health.TakeDamage(unitWeapon);
         //Spend Actions
         actionPoints.SubtractAllActions();
     }
@@ -437,7 +436,6 @@ public class UnitConfig : MonoBehaviour
             if (accuracy <= 0)
                 break;
         }
-        Debug.Log("Hit chanse: " + accuracy);
         if (accuracy < 0)
             accuracy = 0;
         else if (accuracy > 100)
@@ -499,8 +497,7 @@ public class UnitConfig : MonoBehaviour
 
         else
             amount -= unitWeapon.rangeModFar;
-
-        Debug.Log("fall of rate" + amount);
+        
         return amount;//return the amount to lose on the current tile location
     }
 }

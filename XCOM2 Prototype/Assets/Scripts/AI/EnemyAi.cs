@@ -35,7 +35,7 @@ public class EnemyAi : MonoBehaviour {
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
             {
                 IsPlayerNextToMe(unit.tileX, unit.tileY);
-                if(unitConfig.actionPoints.CheckAvailableActions(unitConfig.unitClassStats.moveCost))
+                if(isAttacking)
                 {
                     break;
                 }
@@ -107,6 +107,12 @@ public class EnemyAi : MonoBehaviour {
         {
             for (int y = -1; y <= 1; y++)
             {
+                if ((y + tileY) < 0 ||
+                    (y + tileY) > mapConfig.tileMap.mapSizeY - 1 ||
+                    (x + tileX) < 0 ||
+                    (x + tileX) > mapConfig.tileMap.mapSizeX - 1)
+                    continue;
+
                 if (x == 0 || y == 0)
                 {
                     if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))

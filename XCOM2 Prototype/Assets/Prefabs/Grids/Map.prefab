@@ -192,7 +192,7 @@ MonoBehaviour:
   - name: FullBlock
     tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
-    movemontCost: 0.99
+    movemontCost: 1
     aimReduction: 1000
     isWalkeble: 0
   - name: Full Cover
