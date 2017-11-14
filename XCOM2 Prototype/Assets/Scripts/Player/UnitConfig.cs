@@ -64,7 +64,7 @@ public class UnitConfig : MonoBehaviour
     //[HideInInspector]public ImageElements imageElements;
     Vector3 cameraStartPosition;
 
-    public int accuracy;
+    public static int accuracy;
     //BaseUnitCopy
     void Start()
     {
@@ -266,7 +266,7 @@ public class UnitConfig : MonoBehaviour
         {
             animator.SetAnimationState(0);
             //Check if you hit
-            health.TakeDamage(unitWeapon);
+            target.health.TakeDamage(unitWeapon);
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
@@ -290,11 +290,11 @@ public class UnitConfig : MonoBehaviour
     {
         //Melee attack script goes here
         //hit check
-        CalculationManager.HitCheck(TurnSystem.selectedUnit.unitWeapon, unitWeapon.baseAim);
+        CalculationManager.HitCheck(unitWeapon, unitWeapon.baseAim);
         //Calculate damage
         CalculationManager.DamageDealt(unitWeapon.baseDamage, unitWeapon.numberOfDiceDamage, unitWeapon.numberOfSidesDamage, true);
         //Spend Actions
-        TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
+        actionPoints.SubtractAllActions();
     }
 
     //public void ShootTarget(UnitConfig target)
@@ -410,12 +410,12 @@ public class UnitConfig : MonoBehaviour
     }
     public void Die()//
     {
-        TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Dead);
+        SetUnitState(UnitState.Dead);
     }
 
     public void Attack()//
     {
-        TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Shooting);
+        SetUnitState(UnitState.Shooting);
     }
 
     public void GetAccuracy(int targetTileX,int targetTileY)
