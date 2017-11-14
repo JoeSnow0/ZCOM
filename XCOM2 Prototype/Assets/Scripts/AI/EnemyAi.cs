@@ -29,7 +29,7 @@ public class EnemyAi : MonoBehaviour {
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
 
         //HACK: AI Movement?
-        if (isMyTurn && !mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.CheckAvailableActions(unitConfig.unitClassStats.moveCost) && unitConfig.isMoving == false)
+        if (isMyTurn && !mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.CheckAvailableActions(unitConfig.unitClassStats.moveCost) && unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
         {
             
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
@@ -50,9 +50,9 @@ public class EnemyAi : MonoBehaviour {
                 unitConfig.actionPoints.SubtractAllActions();
             }
         }
-        if (isMyTurn && !unitConfig.actionPoints.CheckAvailableActions(1) && !unitConfig.isMoving)
+        if (isMyTurn && !unitConfig.actionPoints.CheckAvailableActions(1) && unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
         {
-            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex && !unitConfig.isShooting)
+            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex)
             {
                 
                 isAttacking = false;

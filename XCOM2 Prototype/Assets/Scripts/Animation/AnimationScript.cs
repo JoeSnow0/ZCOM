@@ -111,7 +111,7 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackEnd()
     {
-        unitConfig.isShooting = false;
+        unitConfig.SetUnitState(UnitConfig.UnitState.Idle);
     }
 
     public void Death()// DESTROYS THE UNIT, Called at death animation end

@@ -47,11 +47,11 @@ public class UnitConfig : MonoBehaviour
 
 
 
-    public bool isIdle = true;
-    public bool isMoving = false;
-    public bool isSprinting = false;
-    public bool isShooting = false;
-    public bool isDead = false;
+    //public bool isIdle = true;
+    //public bool isMoving = false;
+    //public bool isSprinting = false;
+    //public bool isShooting = false;
+    //public bool isDead = false;
     public bool isHighlighted = false;
 
     public AnimationScript animator;
@@ -139,12 +139,12 @@ public class UnitConfig : MonoBehaviour
             currentPath = null;
             line.positionCount = 0;
         }
-        if (isShooting)
+        if (CheckUnitState(UnitState.Shooting))
         {
             //Vector3.RotateTowards(rotation, )
         }
-
-        if (isMoving == true)
+        //Turn in the direction they're moving.
+        if (CheckUnitState(UnitState.Walking) || CheckUnitState(UnitState.Sprinting))
         {
             mapConfig.turnSystem.cameraControl.MoveToTarget(transform.position, cameraStartPosition, true);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
@@ -172,10 +172,9 @@ public class UnitConfig : MonoBehaviour
 
             else//when unit reach location reset special stats
             {
-                isMoving = false;
+                
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
-             
-                isSprinting = false;
+                SetUnitState(UnitConfig.UnitState.Idle);
                 currentPath = null;
                 pathIndex = 0;
                 mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
@@ -194,7 +193,7 @@ public class UnitConfig : MonoBehaviour
             }
         }
         //draw line need to be fixed cant be seen in the built version
-        if (currentPath != null && isFriendly && !isMoving)//1 long path
+        if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))//1 long path
         {
 
             if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(1))//Walk
@@ -273,7 +272,6 @@ public class UnitConfig : MonoBehaviour
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
-            isShooting = true;
             animator.AttackStart();
             
             
@@ -308,7 +306,7 @@ public class UnitConfig : MonoBehaviour
 
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null || isShooting)// if there is no path (or unit shoots) leave function
+        if (currentPath == null || TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Shooting))// if there is no path (or unit shoots) leave function
         {
             return;
         }
@@ -387,7 +385,7 @@ public class UnitConfig : MonoBehaviour
         {
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-            isMoving = true;//start moving in the update
+            TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Walking);
             actionPoints.SubtractActions(1);
             return;
         }
@@ -405,7 +403,7 @@ public class UnitConfig : MonoBehaviour
             {
                 mapConfig.turnSystem.cameraControl.SetCameraTime(0);
                 cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-                isMoving = true;
+                TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Walking);
                 actionPoints.SubtractActions(2);
             }
             return;
@@ -414,12 +412,12 @@ public class UnitConfig : MonoBehaviour
     }
     public void Die()//
     {
-        isDead = true;
+        TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Dead);
     }
 
     public void Attack()//
     {
-        isShooting = true;
+        TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Shooting);
     }
 
     public void GetAccuracy(int targetTileX,int targetTileY)
