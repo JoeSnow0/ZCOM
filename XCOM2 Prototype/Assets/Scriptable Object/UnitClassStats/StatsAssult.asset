@@ -20,4 +20,4 @@ MonoBehaviour:
   unitDefense: 1
   maxUnitActionPoints: 2
   maxUnitMovePoints: 5
-  moveCost: 0
+  moveCost: 1

@@ -66,12 +66,12 @@ public class Health : MonoBehaviour
         UpdateUnitHealth();
     }
 
-    public void TakeDamage(int damageAmount, WeaponInfoObject weapon, Quaternion particleRotation)
+    public void TakeDamage(WeaponInfoObject weapon)
     {
         GameObject dmg = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));
         Text[] dmgText = dmg.GetComponentsInChildren<Text>();
         //Check if miss
-        CalculationManager.HitCheck(weapon, mapConfig.turnSystem.distance);
+        CalculationManager.HitCheck(weapon, UnitConfig.accuracy);
         if (CalculationManager.hit == false)
         {
             dmgText[0].text = "Missed!";
@@ -90,6 +90,7 @@ public class Health : MonoBehaviour
                 unitConfig.isDead = true;
                 if (!unitConfig.isFriendly)
                 {
+                    unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
                     mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
                 }
                 else
@@ -123,7 +124,30 @@ public class Health : MonoBehaviour
 
         Destroy(gameObject);
     }
-
+    public void RestoreHealthFull()
+    {
+        currentUnitHealth = maxUnitHealth;
+        UpdateUnitHealth();
+    }
+    public void AddHealth(int healthRestored)
+    {
+        currentUnitHealth += healthRestored;
+        if (currentUnitHealth > maxUnitHealth)
+        {
+            currentUnitHealth = maxUnitHealth;
+        }
+        UpdateUnitHealth();
+    }
+    public void SubractHealth(int healthRemoved)
+    {
+        currentUnitHealth -= healthRemoved;
+        UpdateUnitHealth();
+        if (currentUnitHealth <= 0)
+        {
+            currentUnitHealth = 0;
+            KillUnit();
+        }
+    }
     public void Healing(int healAmount, WeaponInfoObject weapon)
     {
         GameObject heal = Instantiate(floatingDmg, damagePosition.position, Quaternion.Euler(transform.GetChild(0).localEulerAngles));

@@ -37,5 +37,6 @@ public class ClassStatsObject : ScriptableObject
     public int maxUnitMovePoints;
     [Header("Movement Cost")]
     [Tooltip("How much many actions movement costs to use")]
-    public int moveCost;
+    //Default to 1
+    public int moveCost = 1;
 }

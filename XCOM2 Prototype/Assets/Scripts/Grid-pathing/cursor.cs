@@ -43,22 +43,26 @@ public class cursor : MonoBehaviour {
                     explosionObject.transform.position = activeObject.transform.position;
 
                     if (turnSystem.playerTurn) {
-                        if (turnSystem.selectedUnit != null && !turnSystem.selectedUnit.isMoving)
+                        if (TurnSystem.selectedUnit != null && TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
                         {
                             if(map != null && map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
-                                map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, turnSystem.selectedUnit);
+                                map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, TurnSystem.selectedUnit);
+                            else
+                            {
+                                TurnSystem.selectedUnit.currentPath = null;
+                            }
                         }
                     }
                 }
 
-                if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn)
+                if (Input.GetMouseButtonUp(1) && turnSystem.playerTurn && StateController.CurrentState == StateController.GameState.TacticalMode)
                 {
-                    if (!turnSystem.selectedUnit.isMoving)
+                    if (TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
                     {
                         //map.GeneratePathTo(activeObject.tileX, activeObject.tileY, turnSystem.selectedUnit.baseUnit);
 
-                        
-                        turnSystem.selectedUnit.MoveNextTile();
+
+                        TurnSystem.selectedUnit.MoveNextTile();
                     }
                 }
             }

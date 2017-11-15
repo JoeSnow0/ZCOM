@@ -21,7 +21,9 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public ActionPoints actionPoints;
     [HideInInspector]public Health health;
     [HideInInspector]public UnitMovement movement;
-    public generateButtons generateButtons;
+    public GenerateAbilityButtons generateAbilityButtons;
+    public Animator animatorHealthbar;
+
     //Script References, external
     [HideInInspector]public MapConfig mapConfig;
 
@@ -40,10 +42,14 @@ public class UnitConfig : MonoBehaviour
 
     public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
-    public bool isMoving = false;
-    public bool isSprinting = false;
-    public bool isShooting = false;
-    public bool isDead = false;
+    public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
+    private UnitState currentUnitState;
+    
+    //public bool isIdle = true;
+    //public bool isMoving = false;
+    //public bool isSprinting = false;
+    //public bool isShooting = false;
+    //public bool isDead = false;
     public bool isHighlighted = false;
 
     public AnimationScript animator;
@@ -53,10 +59,10 @@ public class UnitConfig : MonoBehaviour
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
-    [HideInInspector]public Animator animatorHealthbar;
+    //[HideInInspector]public ImageElements imageElements;
     Vector3 cameraStartPosition;
 
-    public int accuracy;
+    public static int accuracy;
     //BaseUnitCopy
     void Start()
     {
@@ -64,7 +70,7 @@ public class UnitConfig : MonoBehaviour
         //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
 
         //GameObject weaponModel = Instantiate(unitWeapon.weaponModel, classModel.GetComponent<WeaponPosition>().hand);
-        
+
         //Initiate Variables//
         //////////////////////
         //Get Unit movement points
@@ -131,12 +137,12 @@ public class UnitConfig : MonoBehaviour
             currentPath = null;
             line.positionCount = 0;
         }
-        if (isShooting)
+        if (CheckUnitState(UnitState.Shooting))
         {
             //Vector3.RotateTowards(rotation, )
         }
-
-        if (isMoving == true)
+        //Turn in the direction they're moving.
+        if (CheckUnitState(UnitState.Walking) || CheckUnitState(UnitState.Sprinting))
         {
             mapConfig.turnSystem.cameraControl.MoveToTarget(transform.position, cameraStartPosition, true);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
@@ -164,31 +170,31 @@ public class UnitConfig : MonoBehaviour
 
             else//when unit reach location reset special stats
             {
-                isMoving = false;
+                
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
-             
-                isSprinting = false;
+                SetUnitState(UnitConfig.UnitState.Idle);
                 currentPath = null;
                 pathIndex = 0;
                 mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
                 if (mapConfig.turnSystem.playerTurn)
-                    mapConfig.turnSystem.cameraControl.MoveToTarget(mapConfig.turnSystem.selectedUnit.transform.position);
+                    mapConfig.turnSystem.cameraControl.MoveToTarget(TurnSystem.selectedUnit.transform.position);
 
-                if (actionPoints.actions <= 0)
+                if (actionPoints.ReturnAvailableActions() <= 0)
                 {
-                    mapConfig.turnSystem.SelectNextUnit();
+                    mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                 }
-                else if(actionPoints.actions > 0 && isFriendly && mapConfig.turnSystem.playerTurn)
+                else if(actionPoints.CheckAvailableActions(1) && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
-                    mapConfig.tileMap.ChangeGridColor(movePoints, actionPoints.actions, this);
+                    //Current actions can't be accessed anymore, deal with it
+                    mapConfig.tileMap.ChangeGridColor(movePoints, actionPoints.ReturnAvailableActions(), this);
                 }
             }
         }
         //draw line need to be fixed cant be seen in the built version
-        if (currentPath != null && isFriendly && !isMoving)//1 long path
+        if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))//1 long path
         {
 
-            if (currentPath.Count < movePoints + 2 && actionPoints.actions > 1)//Walk
+            if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(1))//Walk
             {
                 currentColor = mapConfig.turnSystem.lineColors[0];
             }
@@ -205,7 +211,7 @@ public class UnitConfig : MonoBehaviour
             line.endColor = currentColor;
 
             int currNode = 0;
-            while (currNode < currentPath.Count - 1 && currNode < movePoints * actionPoints.actions)
+            while (currNode < currentPath.Count - 1 && currNode < movePoints * actionPoints.ReturnAvailableActions())
             {
                 Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
                 Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
@@ -245,53 +251,57 @@ public class UnitConfig : MonoBehaviour
         mapConfig.tileMap.UnitMapData(tileX, tileY);
         actionPoints.unitConfig = this;
     }
-    //HACK: Finish this code block when abilities work!
-    public void attackUnit(UnitConfig target)
-    {
-       
-        //Checks if it is the players turn
-        if (mapConfig.turnSystem.playerTurn) 
-        {
-            //Checks if the unit has enough action points
-            if (actionPoints.actions > 0) 
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    //Checks if the unit clicked on an enemy
-                    if (hit.collider.GetComponent<UnitConfig>()) 
-                    {
-                        target = hit.collider.GetComponent<UnitConfig>();
-                        //Checks if the unit hit is not friendly
-                        if (!target.isFriendly) 
-                        {
-                            //Uses current weapon
-                            CalculationManager.HitCheck(unitWeapon, mapConfig.turnSystem.distance);
-                            //target.health.TakeDamage(CalculationManager.damage, unitWeapon);
 
-                            //Spend Actions
-                            mapConfig.turnSystem.totalActions -= target.actionPoints.actions;
-                            //actionPoints.SubtractAllActions();
-                            //Move camera to next unit
-                            mapConfig.turnSystem.SelectNextUnit();
-                            
-                        }
-                    }
-                }
-            }
+    public void RangedAttack(UnitConfig self, UnitConfig target)
+    {
+        if (TurnSystem.selectedUnit == null && !TurnSystem.selectedUnit.actionPoints.CheckAvailableActions(1))
+        {
+            return;
+        }
+        //if ability has been confirmed by player
+        //Shooting target
+        if (!target.isFriendly && accuracy != 0) //Checks if the unit hit is not friendly
+        {
+            animator.SetAnimationState(0);
+            //Check if you hit
+            target.health.TakeDamage(unitWeapon);
+            //Shoot target
+            //Trigger shooting animation
+            SetUnitState(UnitState.Shooting);
+            animator.AttackStart();
+            
+            
+            
+            //Calculate the distance between the units
+            mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
+            mapConfig.turnSystem.distance /= 2;
+
+            //Spend Actions
+            TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
+            //Stop targeting mode
+            SetUnitState(UnitState.Idle);
+            mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
+
         }
     }
-
-    public void ShootTarget(UnitConfig target)
+    public void MeleeAttack(UnitConfig self, UnitConfig target)
     {
-        isShooting = true;
-        animator.target = target;
+        //Melee attack script goes here
+        //hit check
+        accuracy = unitWeapon.baseAim;
+        target.health.TakeDamage(unitWeapon);
+        //Spend Actions
+        actionPoints.SubtractAllActions();
     }
+
+    //public void ShootTarget(UnitConfig target)
+    //{
+        
+    //}
 
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null || isShooting)// if there is no path (or unit shoots) leave function
+        if (currentPath == null || TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Shooting))// if there is no path (or unit shoots) leave function
         {
             return;
         }
@@ -306,25 +316,24 @@ public class UnitConfig : MonoBehaviour
         {
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-            isMoving = true;//start moving in the update
+            //HACK: idle check should replace isSprinting & isMoving if possible
+            SetUnitState(UnitState.Walking); //start moving in the update
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 2;
-            actionPoints.actions--;
-            mapConfig.turnSystem.totalActions--;
+            actionPoints.SubtractActions(1); //1 should be whatever it costs to move the unit
             return;
         }
-        if (remainingMovement > 0 && actionPoints.actions > 1)//can you move the unit 
+        if (remainingMovement > 0 && actionPoints.CheckAvailableActions(1))//can you move the unit 
         {
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-            isSprinting = true;
-            isMoving = true;//start moving in the update
+            //HACK: idle check should replace isSprinting & isMoving if possible
+            SetUnitState(UnitState.Sprinting);
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 4;
-            actionPoints.actions = 0;
-            mapConfig.turnSystem.totalActions--;
+            actionPoints.SubtractAllActions();
             return;
         }
         else//is too far away do not move
@@ -333,6 +342,25 @@ public class UnitConfig : MonoBehaviour
         }
         
     }
+    //Change the Units current state (used for animations)
+    public void SetUnitState(UnitState setTo)
+    {
+        currentUnitState = setTo;
+
+    }
+    //check the Units current state, returns true if correct
+    public bool CheckUnitState(UnitState compareTo)
+    {
+        if (currentUnitState == compareTo)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void EnemyMoveNextTile()//start to try to move unit
     {
 
@@ -352,7 +380,7 @@ public class UnitConfig : MonoBehaviour
         {
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-            isMoving = true;//start moving in the update
+            TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Walking);
             actionPoints.SubtractActions(1);
             return;
         }
@@ -370,7 +398,7 @@ public class UnitConfig : MonoBehaviour
             {
                 mapConfig.turnSystem.cameraControl.SetCameraTime(0);
                 cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-                isMoving = true;
+                TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Walking);
                 actionPoints.SubtractActions(2);
             }
             return;
@@ -379,12 +407,12 @@ public class UnitConfig : MonoBehaviour
     }
     public void Die()//
     {
-        isDead = true;
+        SetUnitState(UnitState.Dead);
     }
 
     public void Attack()//
     {
-        isShooting = true;
+        SetUnitState(UnitState.Shooting);
     }
 
     public void GetAccuracy(int targetTileX,int targetTileY)
@@ -392,15 +420,20 @@ public class UnitConfig : MonoBehaviour
         ClickebleTile closest = GetClosestPlayersquare(targetTileX, targetTileY);
         mapConfig.tileMap.GeneratePathTo(closest.tileX, closest.tileY, this, true);
         testDebug = currentBulletPath;
-        int accuracy = unitWeapon.baseAim;
-        int distans = currentBulletPath.Count - 1;
+        accuracy = unitWeapon.baseAim;
+        int distans;
+        if (currentBulletPath == null)
+            distans = 0;
+        else
+        {
+            distans = currentBulletPath.Count - 1;
+        }
         for (int aim = 1; aim < distans; aim++)//is the path possible
         {
             accuracy += AimReductionAmount(aim + 1);
             if (accuracy <= 0)
                 break;
         }
-        Debug.Log("Hit chanse: " + accuracy);
         if (accuracy < 0)
             accuracy = 0;
         else if (accuracy > 100)
@@ -443,27 +476,26 @@ public class UnitConfig : MonoBehaviour
         return closest;
     }
 
-    private int AimReductionAmount(int location)
+    private int AimReductionAmount(int distance)
     {
         int amount = 0;
-        if(mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 0 &&
-           mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] != 4)//0 = normal grid and 4 = unit place on grid
+        if(mapConfig.tileMap.tiles[currentBulletPath[distance].x, currentBulletPath[distance].y] != 0 &&
+           mapConfig.tileMap.tiles[currentBulletPath[distance].x, currentBulletPath[distance].y] != 4)//0 = normal grid and 4 = unit place on grid
         {//reduse amount by the value on the tile
-            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[location-1].x, currentBulletPath[location-1].y, currentBulletPath[location].x, currentBulletPath[location].y);
+            amount -= (int)mapConfig.tileMap.AccuracyFallOf(currentBulletPath[distance-1].x, currentBulletPath[distance-1].y, currentBulletPath[distance].x, currentBulletPath[distance].y);
         }
-        else if (location < 9 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+        else if (distance < 6)
             amount -= unitWeapon.rangeModShort;
 
-        else if (location < 16 && mapConfig.tileMap.tiles[currentBulletPath[location].x, currentBulletPath[location].y] == 0)
+        else if (distance < 13)
             amount -= unitWeapon.rangeModMedium;
 
-        else if (location < 30)
+        else if (distance < 19)
             amount -= unitWeapon.rangeModLong;
 
         else
             amount -= unitWeapon.rangeModFar;
-
-        Debug.Log("fall of rate" + amount);
+        
         return amount;//return the amount to lose on the current tile location
     }
 }

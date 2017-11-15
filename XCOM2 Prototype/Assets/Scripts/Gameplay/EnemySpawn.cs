@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(MapConfig))]
 
 public class EnemySpawn : MonoBehaviour {
-    public List<GameObject> spawnNodes;
-    public GameObject spawnNode;
     
     public int current;
 
@@ -17,32 +15,33 @@ public class EnemySpawn : MonoBehaviour {
 	void Start () {
         
         mapConfig = GetComponent<MapConfig>();
-
-        spawnNodes = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemySpawn"));
+        
         current = -1;
     }
 
-    public void SpawnEnemy(UnitConfig enemyPrefab, int numberOfUnits)
+    public void SpawnEnemy(TurnSystem.SpawnSetup spawnSetup, int numberOfUnits)
     {
-        for (int i = 0; i < numberOfUnits; i++)
+        foreach (var unitType in spawnSetup.enemyPrefab)
         {
-            UnitConfig enemy = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
-            enemy.InitializeEnemy();
-            if(mapConfig.turnSystem.enemyUnits.Count == 0)
+            for (int i = 0; i < numberOfUnits; i++)
             {
-                enemy.enemyAi.isMyTurn = true;
+                if (unitType == null)
+                    continue;
+
+                UnitConfig enemy = Instantiate(unitType, RandomPosition(), Quaternion.identity);
+                mapConfig.turnSystem.enemyUnits.Add(enemy);
+                enemy.InitializeEnemy();
             }
-            mapConfig.turnSystem.enemyUnits.Add(enemy);
         }
-        mapConfig.turnSystem.StartNextEnemy();
+        mapConfig.turnSystem.enemyUnits[1].enemyAi.isMyTurn = true;
     }
 
-    public Vector3 RandomPosition()
+    private Vector3 RandomPosition()
     {
         if (mapConfig == null)
             mapConfig = GetComponent<MapConfig>();
         int x = 0;
-        int y = 4;
+        int y = 0;
         
         while (mapConfig.tileMap.tiles[x, y] != 0)
         {

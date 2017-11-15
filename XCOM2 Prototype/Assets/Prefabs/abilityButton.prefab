@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 222064415827833470}
   - component: {fileID: 114474410702145156}
   - component: {fileID: 114979671691811852}
-  - component: {fileID: 114498213348295244}
   - component: {fileID: 114721028441311738}
   m_Layer: 5
   m_Name: button
@@ -211,18 +210,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
---- !u!114 &114498213348295244
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1023975117529606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0af3d910b5fd584191ee6c1531c3d9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useAbility: 0
 --- !u!114 &114622711459177458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,6 +258,7 @@ MonoBehaviour:
   abilityKeybind: 0
   abilityIcon: {fileID: 114197469396552236}
   abilityButton: {fileID: 114474410702145156}
+  abilityTooltip: 
 --- !u!114 &114721028441311738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,9 +267,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1023975117529606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04ec2029248c5e4f9fd24cbf09f9451, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a10a594a99d8b46932e6fc5dbac13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useAbility: 0
+  abilityButton: {fileID: 0}
+  abilityTooltip: {fileID: 0}
 --- !u!114 &114786421516944532
 MonoBehaviour:
   m_ObjectHideFlags: 1

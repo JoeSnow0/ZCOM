@@ -8,31 +8,34 @@ public class menuToggle : MonoBehaviour {
     public bool optionsToggle;
     public GameObject ingameMenu;
     public GameObject ingameOptions;
+    public ManagerConfig managerConfig;
+
     private void Start()
     {
+        managerConfig = GetComponent<ManagerConfig>();
         isPaused = false;
         optionsToggle = false;
     }
- //hide options/ingame menu depending on what's currently visible
-	void Update ()
+
+    //hide options/ingame menu depending on what's currently visible
+    void Update()
     {
-        if (optionsToggle == false)
+        if (Input.GetKeyDown(managerConfig.mapConfig.turnSystem.leaveAttackMode) && managerConfig.mapConfig.stateController.CheckCurrentState(StateController.GameState.TacticalMode))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (optionsToggle == false)
             {
+
                 toggleMenu();
             }
-        }
-        if (optionsToggle == true)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (optionsToggle == true)
             {
+
                 ToggleOptions();
             }
+            
         }
-
-
     }
+    
     //Show/hide menu
     public void toggleMenu()
 

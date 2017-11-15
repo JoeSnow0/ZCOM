@@ -29,13 +29,13 @@ public class EnemyAi : MonoBehaviour {
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
 
         //HACK: AI Movement?
-        if (isMyTurn && !mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.actions > 0 && unitConfig.isMoving == false)
+        if (isMyTurn && !mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.CheckAvailableActions(unitConfig.unitClassStats.moveCost) && unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
         {
             
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
             {
                 IsPlayerNextToMe(unit.tileX, unit.tileY);
-                if(unitConfig.actionPoints.actions < 1)
+                if(isAttacking)
                 {
                     break;
                 }
@@ -45,14 +45,14 @@ public class EnemyAi : MonoBehaviour {
                 FindClosestPlayerUnit();
             
             unitConfig.EnemyMoveNextTile();
-            if (unitConfig.actionPoints.actions == 2)
+            if (unitConfig.actionPoints.CheckAvailableActions(2))
             {
                 unitConfig.actionPoints.SubtractAllActions();
             }
         }
-        if (isMyTurn && unitConfig.actionPoints.actions < 1 && !unitConfig.isMoving)
+        if (isMyTurn && !unitConfig.actionPoints.CheckAvailableActions(1) && unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
         {
-            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex && !unitConfig.isShooting)
+            if (mapConfig.turnSystem.enemyUnits.Count > mapConfig.turnSystem.enemyIndex)
             {
                 
                 isAttacking = false;
@@ -107,6 +107,12 @@ public class EnemyAi : MonoBehaviour {
         {
             for (int y = -1; y <= 1; y++)
             {
+                if ((y + tileY) < 0 ||
+                    (y + tileY) > mapConfig.tileMap.mapSizeY - 1 ||
+                    (x + tileX) < 0 ||
+                    (x + tileX) > mapConfig.tileMap.mapSizeX - 1)
+                    continue;
+
                 if (x == 0 || y == 0)
                 {
                     if (tileX == (unitConfig.tileX + x) && tileY == (unitConfig.tileY + y))
@@ -115,7 +121,7 @@ public class EnemyAi : MonoBehaviour {
                         {
                             if (unit.tileX == tileX && unit.tileY == tileY)
                             {
-                                moveToUnit = unit;
+                                TurnSystem.selectedTarget = unit;
                                 break;
                             }
                         }
@@ -123,7 +129,7 @@ public class EnemyAi : MonoBehaviour {
                             unitConfig.mapConfig.turnSystem.cameraControl.SetCameraTime(0);
 
                         unitConfig.mapConfig.turnSystem.cameraControl.MoveToTarget(unitConfig.transform.position, true);
-                        unitConfig.ShootTarget(moveToUnit);
+                        unitConfig.MeleeAttack(TurnSystem.selectedUnit,TurnSystem.selectedTarget);
                         unitConfig.actionPoints.SubtractAllActions();
                         isAttacking = true;
                         unitConfig.Attack(); //Play attack animation
