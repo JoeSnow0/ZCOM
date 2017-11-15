@@ -64,7 +64,6 @@ public class TurnSystem : MonoBehaviour
     public int maxTurns;
     int thisTurn = 1;
     public int enemyIndex = 0;
-    //public int[] spawnEnemyTurns; old
     public SpawnSetup[] spawnSetup;
 
     static public bool EnemyTargeting = false;
@@ -99,7 +98,11 @@ public class TurnSystem : MonoBehaviour
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
-
+        foreach (var unit in allUnits)
+        {
+            
+            unit.actionPoints.InitializeActions();
+        }
 
 
         //replenish actions to player units

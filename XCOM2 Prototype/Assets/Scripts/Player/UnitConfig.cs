@@ -79,7 +79,9 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-
+        actionPoints = GetComponent<ActionPoints>();
+        health = GetComponent<Health>();
+        movement = GetComponent<UnitMovement>();
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -110,11 +112,12 @@ public class UnitConfig : MonoBehaviour
             unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
             Debug.LogWarning("Couldn't find abilities, using default abilities");
         }*/
-        actionPoints = GetComponent<ActionPoints>();
-        health = GetComponent<Health>();
-        movement = GetComponent<UnitMovement>();
+        
     }
-
+    public void InitializedUnit()
+    {
+        
+    }
     void Update()
     {
         if(testDebug != null)
@@ -139,7 +142,7 @@ public class UnitConfig : MonoBehaviour
         }
         if (CheckUnitState(UnitState.Shooting))
         {
-            //Vector3.RotateTowards(rotation, )
+            
         }
         //Turn in the direction they're moving.
         if (CheckUnitState(UnitState.Walking) || CheckUnitState(UnitState.Sprinting))
@@ -268,10 +271,9 @@ public class UnitConfig : MonoBehaviour
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
-            animator.AttackStart();
-            
-            
-            
+            //animator.AttackStart();
+
+
             //Calculate the distance between the units
             mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
             mapConfig.turnSystem.distance /= 2;
@@ -279,7 +281,7 @@ public class UnitConfig : MonoBehaviour
             //Spend Actions
             TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
             //Stop targeting mode
-            SetUnitState(UnitState.Idle);
+            //SetUnitState(UnitState.Idle);
             mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
 
         }
@@ -464,7 +466,7 @@ public class UnitConfig : MonoBehaviour
                     closest = mapConfig.tileMap.tileobjects[x + targetTileX, y + targetTileY];
                     distance = curDistance;
                 }
-                else if (curDistance <= (distance + 45f) && 
+                else if (curDistance <= (distance) && 
                         (mapConfig.tileMap.tiles[x + targetTileX, y + targetTileY] != 0 &&
                          mapConfig.tileMap.tiles[x + targetTileX, y + targetTileY] != 4))//if location is not the closest but has a cover
                 {
