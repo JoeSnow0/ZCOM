@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 92539711915363842}
   - component: {fileID: 124896073192475888}
   - component: {fileID: 81989076418750606}
+  - component: {fileID: 114017817438680168}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -83,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1573534242814182}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 3.8999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4319199428747010}
@@ -110,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1328681092427702}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 25, z: -5}
+  m_LocalPosition: {x: 0, y: 20, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4310141240495248}
@@ -124,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1177028480029248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 37, y: 0, z: 22.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4114288298750744}
@@ -161,7 +162,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -181,6 +182,18 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192871602967792}
   m_Enabled: 1
+--- !u!114 &114017817438680168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1192871602967792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: ecf68f0babae77e4e8ed98945f5fcce4, type: 2}
 --- !u!114 &114285663534199116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,11 +206,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xPosMin: 0
-  yPosMin: 10
-  yPosMax: 25
+  yPosMin: 5
+  yPosMax: 20
   zPosMin: 0
+  xMaxRotation: 60
+  xMinRotation: 40
   moveSpeed: 50
-  rotationSpeed: 0.5
+  rotationSpeed: 1
   zoomSpeed: 20
   rotationCurve:
     serializedVersion: 2
@@ -211,8 +226,8 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -227,6 +242,7 @@ MonoBehaviour:
   cameraRotateLeft: 113
   cameraRotateRight: 101
   playerMovedCamera: 0
+  zoomLevel: 0
 --- !u!124 &124896073192475888
 Behaviour:
   m_ObjectHideFlags: 1

@@ -76,13 +76,13 @@ public class AnimationScript : MonoBehaviour {
         {
             ParticleSystem projectileSystem = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>();
             ParticleSystem.MainModule settings = projectileSystem.main;
-            ParticleSystem.SubEmittersModule subEmitter = projectileSystem.subEmitters;
+            //ParticleSystem.SubEmittersModule subEmitter = projectileSystem.subEmitters;
 
-            ParticleSystem hitEmitter = Instantiate(target.unitClassStats.hitParticleSystem, projectileSystem.transform).GetComponent<ParticleSystem>();
-            hitEmitter.transform.localRotation = transform.parent.rotation;
+            //ParticleSystem hitEmitter = Instantiate(target.unitClassStats.hitParticleSystem, projectileSystem.transform).GetComponent<ParticleSystem>();
+            //hitEmitter.transform.localRotation = transform.parent.rotation;
 
 
-            subEmitter.AddSubEmitter(hitEmitter, ParticleSystemSubEmitterType.Collision, ParticleSystemSubEmitterProperties.InheritRotation);
+            //subEmitter.AddSubEmitter(hitEmitter, ParticleSystemSubEmitterType.Collision, ParticleSystemSubEmitterProperties.InheritRotation);
 
             if(unitConfig.unitWeapon.particleColor.Length > 0)
                 settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];
@@ -100,7 +100,7 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackHit()
     {
-        target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+        target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon, transform.parent.rotation);
     }
 
     public void AttackEnd()
