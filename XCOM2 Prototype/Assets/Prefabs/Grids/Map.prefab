@@ -59,6 +59,7 @@ MonoBehaviour:
   enemySpawn: {fileID: 114995828931628862}
   tileMap: {fileID: 114764200081771642}
   stateController: {fileID: 114180962689554276}
+  managerConfig: {fileID: 0}
 --- !u!114 &114140638950140348
 MonoBehaviour:
   m_ObjectHideFlags: 1

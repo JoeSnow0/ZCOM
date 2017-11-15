@@ -207,7 +207,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (UnitConfig unit in playerUnits)
             {
-                if (unit.actionPoints.CheckAvailableActions(1) || unit.CheckUnitState(UnitConfig.UnitState.Walking))
+                if (unit.actionPoints.CheckAvailableActions(1) || !unit.CheckUnitState(UnitConfig.UnitState.Idle))
                 {
                     endturn = false;
                     break;
@@ -229,7 +229,7 @@ public class TurnSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Input.GetKeyUp(leaveAttackMode))
+        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
         {
             if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
             {
@@ -444,14 +444,13 @@ public class TurnSystem : MonoBehaviour
             {
                 chosenUnitIndex = unitList.Count - 1;
             }
-
             //Check if enemy unit is targetable
-            if (!unitList[chosenUnitIndex].isFriendly)
+            if (!unitList[chosenUnitIndex].isFriendly && !selected.CheckUnitState(UnitConfig.UnitState.Dead))
             {
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
-                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy +"%";
+                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -460,6 +459,7 @@ public class TurnSystem : MonoBehaviour
                 selectedUnit = selected;
                 break;
             }
+            
 
         }
 
@@ -604,7 +604,7 @@ public class TurnSystem : MonoBehaviour
 
         foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
             {
                 unit.animatorHealthbar.SetBool("display", true);
             }

@@ -2654,6 +2654,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433572820 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114231188020316052, guid: 35a0bfa044172414688498e7f94cfb0b,
+    type: 2}
+  m_PrefabInternal: {fileID: 2139216885}
+  m_Script: {fileID: 11500000, guid: 967ce0aa0d289cc43abf3db98ed025e2, type: 3}
 --- !u!1 &434596448
 GameObject:
   m_ObjectHideFlags: 0
@@ -3948,7 +3954,7 @@ Prefab:
     - target: {fileID: 224350612767541868, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 224112682139406428, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -3968,7 +3974,7 @@ Prefab:
     - target: {fileID: 224112682139406428, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -3.7500005
       objectReference: {fileID: 0}
     - target: {fileID: 224032226546428764, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -3988,7 +3994,7 @@ Prefab:
     - target: {fileID: 224032226546428764, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -27.625
       objectReference: {fileID: 0}
     - target: {fileID: 224994612983900622, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -4008,7 +4014,7 @@ Prefab:
     - target: {fileID: 224994612983900622, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -51.5
       objectReference: {fileID: 0}
     - target: {fileID: 224067482432841164, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -4028,7 +4034,7 @@ Prefab:
     - target: {fileID: 224067482432841164, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75.375
       objectReference: {fileID: 0}
     - target: {fileID: 224784897800314956, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -11136,6 +11142,11 @@ Prefab:
       propertyPath: panelAnimator
       value: 
       objectReference: {fileID: 738983731}
+    - target: {fileID: 114105975272966794, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: managerConfig
+      value: 
+      objectReference: {fileID: 433572820}
     - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
         type: 2}
       propertyPath: gameOver
