@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class AbilityButtonFunctions : MonoBehaviour
 {
-    public KeyCode useAbility;
+    public KeyCode abilityKeybind;
     public Button abilityButton;
     private MapConfig _mapConfig = null;
     public MapConfig mapConfig { get { if (_mapConfig == null) _mapConfig = GameObject.FindObjectOfType<MapConfig>(); return _mapConfig; } }
@@ -39,7 +39,7 @@ public class AbilityButtonFunctions : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(useAbility))
+        if (Input.GetKeyDown(abilityKeybind))
         {
             abilityButton.onClick.Invoke();
         }
