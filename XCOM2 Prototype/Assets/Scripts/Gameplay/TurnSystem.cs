@@ -298,6 +298,14 @@ public class TurnSystem : MonoBehaviour
 
     public void MouseSelect()
     {
+        if ( selectedUnit != null && !selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle)) 
+        {
+            return;
+        }
+        if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
