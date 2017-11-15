@@ -122,8 +122,6 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
-        UpdateHUD();
-
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
         {
@@ -351,6 +349,7 @@ public class TurnSystem : MonoBehaviour
             //Update Displayed Name
             unitName.text = selectedUnit.unitName;
             className.text = selectedUnit.unitClassStats.unitClassName;
+            UpdateHUD();
             //Clear old abilities
             generateAbilityButtons.ClearCurrentButtons();
             //Generate new abilities buttons if its a player unit
@@ -583,7 +582,7 @@ public class TurnSystem : MonoBehaviour
     {
         unitInfoHolder.SetActive(playerTurn);
 
-        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
+        if (selectedUnit != null)
         {
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
             className.text = selectedUnit.unitClassStats.unitClassName;
