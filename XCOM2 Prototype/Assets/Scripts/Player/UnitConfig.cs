@@ -44,9 +44,7 @@ public class UnitConfig : MonoBehaviour
     [SerializeField]float animaitionSpeed = 0.05f;
     public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
     private UnitState currentUnitState;
-
-
-
+    
     //public bool isIdle = true;
     //public bool isMoving = false;
     //public bool isSprinting = false;
