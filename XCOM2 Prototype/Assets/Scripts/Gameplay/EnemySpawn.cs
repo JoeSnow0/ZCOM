@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(MapConfig))]
 
 public class EnemySpawn : MonoBehaviour {
-    public List<GameObject> spawnNodes;
-    public GameObject spawnNode;
     
     public int current;
 
@@ -17,8 +15,7 @@ public class EnemySpawn : MonoBehaviour {
 	void Start () {
         
         mapConfig = GetComponent<MapConfig>();
-
-        spawnNodes = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemySpawn"));
+        
         current = -1;
     }
 
@@ -28,6 +25,9 @@ public class EnemySpawn : MonoBehaviour {
         {
             for (int i = 0; i < numberOfUnits; i++)
             {
+                if (unitType == null)
+                    continue;
+
                 UnitConfig enemy = Instantiate(unitType, RandomPosition(), Quaternion.identity);
                 mapConfig.turnSystem.enemyUnits.Add(enemy);
                 enemy.InitializeEnemy();

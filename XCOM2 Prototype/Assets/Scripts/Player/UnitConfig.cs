@@ -44,9 +44,7 @@ public class UnitConfig : MonoBehaviour
     [SerializeField]float animaitionSpeed = 0.05f;
     public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
     private UnitState currentUnitState;
-
-
-
+    
     //public bool isIdle = true;
     //public bool isMoving = false;
     //public bool isSprinting = false;
@@ -181,7 +179,7 @@ public class UnitConfig : MonoBehaviour
                 if (mapConfig.turnSystem.playerTurn)
                     mapConfig.turnSystem.cameraControl.MoveToTarget(TurnSystem.selectedUnit.transform.position);
 
-                if (actionPoints.CheckAvailableActions(1))
+                if (actionPoints.ReturnAvailableActions() <= 0)
                 {
                     mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
                 }
