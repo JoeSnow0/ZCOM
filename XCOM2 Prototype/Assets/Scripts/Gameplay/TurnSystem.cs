@@ -302,6 +302,10 @@ public class TurnSystem : MonoBehaviour
         {
             return;
         }
+        if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
