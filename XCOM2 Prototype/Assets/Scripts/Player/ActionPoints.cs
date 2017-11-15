@@ -86,22 +86,22 @@ public class ActionPoints : MonoBehaviour {
     //Get stats from class and set 
     private void InitializeActions()
     {
-        currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
         maxActions = unitConfig.unitClassStats.maxUnitActionPoints;
+        currentActions = maxActions;
 
-        if (actionPointParent != null && actionPointParent.transform.childCount > 0 && unitConfig.isFriendly)//Removes any gameobjects in action point parent and sends an error message
-        {
-            for(int i = 0; i < actionPointParent.transform.childCount; i++)
-            {
-                Destroy(actionPointParent.transform.GetChild(i).gameObject);
+        //if (actionPointParent != null && actionPointParent.transform.childCount > 0 && unitConfig.isFriendly)//Removes any gameobjects in action point parent and sends an error message
+        //{
+        //    for(int i = 0; i < actionPointParent.transform.childCount; i++)
+        //    {
+        //        Destroy(actionPointParent.transform.GetChild(i).gameObject);
                 
-            }
-            Debug.LogError("Remove action point(s) from action point parent in " + this.name);
-        }
-        else if (actionPointParent == null && unitConfig.isFriendly)
-        {
-            Debug.LogError("Action points parent needed in " + this.name);
-        }
+        //    }
+        //    //Debug.LogError("Remove action point(s) from action point parent in " + this.name);
+        //}
+        //else if (actionPointParent == null && unitConfig.isFriendly)
+        //{
+        //    //Debug.LogError("Action points parent needed in " + this.name);
+        //}
 
         if (actionPointParent != null)
         {

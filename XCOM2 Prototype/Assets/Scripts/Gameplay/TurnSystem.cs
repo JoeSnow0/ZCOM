@@ -20,10 +20,10 @@ public class TurnSystem : MonoBehaviour
         [HideInInspector]
         public int activatTurn;
     }
-    //[Header("Actions")]
-    [HideInInspector]
-    static public int totalActions;
+    
     public UnitConfig[] enemyPrefab;
+    [Header("Actions")]
+    static public int totalActions = 0;
     [Header("UI elements")]
     public GameObject gameOver;
     public Text gameOverText;
@@ -32,7 +32,7 @@ public class TurnSystem : MonoBehaviour
     public Image classIcon;
     public Text className;
     public Text unitName;
-    Animator classInformationAnimator;
+    [SerializeField]Animator classInformationAnimator;
 
     [Header("Colors")]
     public Color defeatColor;

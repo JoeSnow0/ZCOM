@@ -89,6 +89,7 @@ MonoBehaviour:
   classIcon: {fileID: 0}
   className: {fileID: 0}
   unitName: {fileID: 0}
+  classInformationAnimator: {fileID: 0}
   defeatColor: {r: 0.5294118, g: 0.19463669, b: 0.19463669, a: 1}
   victoryColor: {r: 0.30315, g: 0.5294118, b: 0.19463669, a: 1}
   lineColors:
@@ -231,9 +232,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028e7fe15257c1d46977c77bff8f4472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnNodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  spawnNode: {fileID: 1435588625020456, guid: 8847849d0d1c0de46a013b25e1a3f132, type: 2}
   current: -1
   maxNodes: 0
