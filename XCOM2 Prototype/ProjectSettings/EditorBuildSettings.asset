@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/gameSession.unity
     guid: 85353fdfc0939ef4f8cada6256f5a355
   - enabled: 0
-    path: Assets/Scenes/credits.unity
+    path: 
     guid: 99776cdfd1e43da45a1d939d888ea5e1
   - enabled: 0
-    path: Assets/Scenes/highScore.unity
+    path: 
     guid: c72805643cfc46e4087a526f608a045e
   - enabled: 0
     path: Assets/Scenes/testScenes/Erik.unity

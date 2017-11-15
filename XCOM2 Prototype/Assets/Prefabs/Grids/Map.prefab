@@ -197,13 +197,13 @@ MonoBehaviour:
     aimReduction: 1000
     isWalkeble: 0
   - name: Full Cover
-    tileVisualPrefab: {fileID: 1214502950277038, guid: 6945e1964a45b864883bb9e2edb16908,
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
     movemontCost: 1
     aimReduction: 50
     isWalkeble: 0
   - name: Half cover
-    tileVisualPrefab: {fileID: 1214502950277038, guid: 0c454b27dbe1a224d9267bb4fb60cecb,
+    tileVisualPrefab: {fileID: 1214502950277038, guid: 39e6620a4dcc06e4494f9a851c7419a8,
       type: 2}
     movemontCost: 1
     aimReduction: 25

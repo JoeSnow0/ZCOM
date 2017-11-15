@@ -1974,23 +1974,20 @@ MonoBehaviour:
   actionPoints: {fileID: 114972056034855142}
   health: {fileID: 114300657596204300}
   movement: {fileID: 0}
-  generateButtons: {fileID: 0}
+  generateAbilityButtons: {fileID: 0}
+  animatorHealthbar: {fileID: 0}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 0
+  modelController: {fileID: 1846847353742682}
   tileX: 0
   tileY: 0
   movePoints: 6
   animaitionSpeed: 3
-  isMoving: 0
-  isSprinting: 0
-  isShooting: 0
-  isDead: 0
   isHighlighted: 0
   animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
 --- !u!114 &114940735665209172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2002,6 +1999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ca2682d3f3b804bbf07fb2f14821d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   target: {fileID: 0}
   projectileStartPos: {fileID: 0}
 --- !u!114 &114972056034855142
@@ -2015,7 +2013,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f8cb8cd879ee44381818577f27eeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions: 0
   actionPointParent: {fileID: 0}
   actionPoint: {fileID: 0}
   unitConfig: {fileID: 114840236989742042}
