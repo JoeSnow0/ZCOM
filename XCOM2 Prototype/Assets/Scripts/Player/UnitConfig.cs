@@ -79,7 +79,9 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-
+        actionPoints = GetComponent<ActionPoints>();
+        health = GetComponent<Health>();
+        movement = GetComponent<UnitMovement>();
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -110,11 +112,12 @@ public class UnitConfig : MonoBehaviour
             unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
             Debug.LogWarning("Couldn't find abilities, using default abilities");
         }*/
-        actionPoints = GetComponent<ActionPoints>();
-        health = GetComponent<Health>();
-        movement = GetComponent<UnitMovement>();
+        
     }
-
+    public void InitializedUnit()
+    {
+        
+    }
     void Update()
     {
         if(testDebug != null)
