@@ -3180,6 +3180,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1809213299245748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4370908738347826}
+  - component: {fileID: 218309310286578974}
+  - component: {fileID: 154254020820101912}
+  - component: {fileID: 114086700477150108}
+  m_Layer: 0
+  m_Name: Terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
 --- !u!1 &1815149105271052
 GameObject:
   m_ObjectHideFlags: 1
@@ -5114,6 +5132,19 @@ Transform:
   m_Father: {fileID: 4584941473129362}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -270, y: -180, z: -180}
+--- !u!4 &4370908738347826
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809213299245748}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -296.99042, y: -244.28275, z: -8.5}
+  m_LocalScale: {x: 11.550012, y: 8.329468, z: 10.783965}
+  m_Children: []
+  m_Father: {fileID: 4800586287051162}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4372721910438808
 Transform:
   m_ObjectHideFlags: 1
@@ -6498,6 +6529,7 @@ Transform:
   - {fileID: 4028007306919478}
   - {fileID: 4803131521005966}
   - {fileID: 4038167366994516}
+  - {fileID: 4370908738347826}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15389,6 +15421,30 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114086700477150108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809213299245748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6525fd4a9fb974b7f878dee70144de99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  templateMaterial: {fileID: 2100000, guid: 79006d7cba53c864496e4c22e909ceff, type: 2}
+  terrainDesc: {fileID: 0}
+  blendMat: {fileID: 0}
+  terrain: {fileID: 218309310286578974}
+  tintMapOverride: {fileID: 0}
+  globalNormalOverride: {fileID: 0}
+  geoTextureOverride: {fileID: 0}
+  streamTexture: {fileID: 0}
+  vsGrassMap: {fileID: 0}
+  propData: {fileID: 11400000, guid: 8110d7eac2633644bae247919d6e93eb, type: 2}
+  oldBaseMapSize: 16
+  oldBaseMapDistance: 0
+  sTerrainDirty: 0
 --- !u!137 &137212371509576012
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -15577,3 +15633,44 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0, z: 9.0895195}
     m_Extent: {x: 8.20894, y: 7.88733, z: 9.325354}
   m_DirtyAABB: 0
+--- !u!154 &154254020820101912
+TerrainCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809213299245748}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 8d5fa69aff613224d9905452f2c1233e, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &218309310286578974
+Terrain:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809213299245748}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_TerrainData: {fileID: 15600000, guid: 8d5fa69aff613224d9905452f2c1233e, type: 2}
+  m_TreeDistance: 2000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 0
+  m_HeightmapMaximumLOD: 0
+  m_CastShadows: 1
+  m_DrawHeightmap: 1
+  m_DrawTreesAndFoliage: 1
+  m_ReflectionProbeUsage: 1
+  m_MaterialType: 3
+  m_LegacySpecular:
+    serializedVersion: 2
+    rgba: 4286545791
+  m_LegacyShininess: 0.078125
+  m_MaterialTemplate: {fileID: 0}
+  m_BakeLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0512
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}

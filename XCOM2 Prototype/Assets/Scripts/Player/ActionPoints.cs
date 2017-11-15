@@ -84,7 +84,7 @@ public class ActionPoints : MonoBehaviour {
         currentActions = 0;
     }
     //Get stats from class and set 
-    private void InitializeActions()
+    public void InitializeActions()
     {
         currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
         maxActions = unitConfig.unitClassStats.maxUnitActionPoints;
