@@ -93,6 +93,7 @@ public class UnitConfig : MonoBehaviour
         animator = GetComponentInChildren<AnimationScript>();
         actionPoints = GetComponent<ActionPoints>();
         health = GetComponent<Health>();
+        animatorHealthbar = GetComponentInChildren<Animator>();
         //movement = GetComponent<UnitMovement>();
     }
     public void InitializedUnit()

@@ -35,9 +35,6 @@ public class HUD : MonoBehaviour {
         alienAnim = alienUI.GetComponent<Animator>();
     }
 
-	void Update () {
-
-    }
 
     public void pressEnd(bool forceEnd)
     {

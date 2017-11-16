@@ -2579,7 +2579,7 @@ MonoBehaviour:
   health: {fileID: 401261310}
   movement: {fileID: 401261308}
   generateAbilityButtons: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
+  animatorHealthbar: {fileID: 23656743}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -3448,6 +3448,11 @@ Prefab:
       propertyPath: generateButtons
       value: 
       objectReference: {fileID: 1170131479}
+    - target: {fileID: 114710749034637548, guid: 4c36a5c17caf7f040b8add17d5542ce4,
+        type: 2}
+      propertyPath: animatorHealthbar
+      value: 
+      objectReference: {fileID: 805055830}
     m_RemovedComponents:
     - {fileID: 114197252614156778, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
@@ -4762,6 +4767,11 @@ Transform:
   m_Father: {fileID: 1940333251}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &805055830 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 95437274474760678, guid: 4c36a5c17caf7f040b8add17d5542ce4,
+    type: 2}
+  m_PrefabInternal: {fileID: 593345808}
 --- !u!1 &817543769
 GameObject:
   m_ObjectHideFlags: 0
@@ -7258,7 +7268,7 @@ MonoBehaviour:
   health: {fileID: 1266361779}
   movement: {fileID: 1266361777}
   generateAbilityButtons: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
+  animatorHealthbar: {fileID: 679248496}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -9781,7 +9791,7 @@ MonoBehaviour:
   health: {fileID: 1597087409}
   movement: {fileID: 1597087407}
   generateAbilityButtons: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
+  animatorHealthbar: {fileID: 129865595}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -10391,7 +10401,7 @@ MonoBehaviour:
   health: {fileID: 1677402165}
   movement: {fileID: 1677402163}
   generateAbilityButtons: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
+  animatorHealthbar: {fileID: 1475090186}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
@@ -11237,6 +11247,26 @@ Prefab:
       propertyPath: cameraControl
       value: 
       objectReference: {fileID: 1959895072}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: spawnSetup.Array.data[0].spawnNumberOfEnemys
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: spawnSetup.Array.data[1].spawnNumberOfEnemys
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: spawnSetup.Array.data[2].spawnNumberOfEnemys
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: spawnSetup.Array.data[0].boss
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0
