@@ -16,6 +16,8 @@ public class ClassStatsObject : ScriptableObject
     public Sprite classIcon;
     [Header("Class Model")]
     public GameObject classModel;
+    [Header("Hit particle")]
+    public GameObject hitParticleSystem;
 
     [Header("Health")]
     [Tooltip("The amount of health this class has")]
