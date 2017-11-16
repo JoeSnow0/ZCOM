@@ -60,7 +60,7 @@ public class UnitConfig : MonoBehaviour
 
     public static int accuracy;
     //BaseUnitCopy
-    void Start()
+    void Awake()
     {
         //Load models
         //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
