@@ -84,10 +84,10 @@ public class Health : MonoBehaviour
         {
             dmgText[1].text = CalculationManager.damage.ToString();
             currentUnitHealth -= CalculationManager.damage;
-            Instantiate(unitConfig.unitClassStats.hitParticleSystem, transform.GetChild(0).position, particleRotation);
+            Instantiate(unitConfig.unitClassStats.hitParticleSystem, transform.GetChild(0));
             if (currentUnitHealth <= 0)
             {
-                unitConfig.isDead = true;
+                //unitConfig.isDead = true;
                 if (!unitConfig.isFriendly)
                 {
                     unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
