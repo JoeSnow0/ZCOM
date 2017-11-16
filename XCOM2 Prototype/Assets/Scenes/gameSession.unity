@@ -2590,6 +2590,7 @@ MonoBehaviour:
   animaitionSpeed: 0.05
   isHighlighted: 0
   animator: {fileID: 0}
+  markerAnimator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!23 &401261312
@@ -3432,7 +3433,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4444186056801462, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1973597339924420, guid: 4c36a5c17caf7f040b8add17d5542ce4, type: 2}
       propertyPath: m_Name
@@ -3834,7 +3835,7 @@ Prefab:
     - target: {fileID: 224989280043673674, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 224989280043673674, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -5799,7 +5800,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4362063398351594, guid: 8847849d0d1c0de46a013b25e1a3f132, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8847849d0d1c0de46a013b25e1a3f132, type: 2}
@@ -5917,6 +5918,21 @@ Prefab:
       value: 
       objectReference: {fileID: 1584105898848970, guid: 5d4b53c3290eca04883ad42970edce56,
         type: 2}
+    - target: {fileID: 114909663780418608, guid: 8ca858a6be5ab744c8894e1b3bc602e7,
+        type: 2}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114909663780418608, guid: 8ca858a6be5ab744c8894e1b3bc602e7,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114173842511098308, guid: 8ca858a6be5ab744c8894e1b3bc602e7,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8ca858a6be5ab744c8894e1b3bc602e7, type: 2}
   m_IsPrefabParent: 0
@@ -7309,6 +7325,7 @@ MonoBehaviour:
   animaitionSpeed: 0.05
   isHighlighted: 0
   animator: {fileID: 679248494}
+  markerAnimator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!23 &1266361781
@@ -8318,6 +8335,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 172938c79e7b5284aa69972881c60664, type: 2}
+    - target: {fileID: 218309310286578974, guid: c7c090c2ace172049a2783d82f9275a9,
+        type: 2}
+      propertyPath: m_MaterialTemplate
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7c090c2ace172049a2783d82f9275a9, type: 2}
   m_IsPrefabParent: 0
@@ -8457,7 +8479,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1425133864
 GameObject:
@@ -9837,6 +9859,7 @@ MonoBehaviour:
   animaitionSpeed: 0.05
   isHighlighted: 0
   animator: {fileID: 0}
+  markerAnimator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!23 &1597087411
@@ -9899,7 +9922,7 @@ Transform:
   - {fileID: 219072195}
   - {fileID: 778453608}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1599197510
 GameObject:
@@ -10453,6 +10476,7 @@ MonoBehaviour:
   animaitionSpeed: 0.05
   isHighlighted: 0
   animator: {fileID: 0}
+  markerAnimator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!23 &1677402167
@@ -10515,7 +10539,7 @@ Transform:
   - {fileID: 995321038}
   - {fileID: 1690052306}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1677566997
 GameObject:
@@ -11307,6 +11331,11 @@ Prefab:
         type: 2}
       propertyPath: spawnSetup.Array.data[0].boss
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: lineYOffset
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}

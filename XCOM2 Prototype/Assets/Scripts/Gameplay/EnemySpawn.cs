@@ -41,10 +41,9 @@ public class EnemySpawn : MonoBehaviour {
     {
         if (mapConfig == null)
             mapConfig = GetComponent<MapConfig>();
-        int x = 0;
-        int y = 0;
-        
-        while (mapConfig.tileMap.tiles[x, y] != 0)
+        int x = -1;
+        int y = -1;
+        while (x == -1 && y == -1 || mapConfig.tileMap.tiles[x, y] != 0)
         {
             int wall = Random.Range(0, 3);
             switch (wall)
