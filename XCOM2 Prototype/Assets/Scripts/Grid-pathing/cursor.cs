@@ -29,7 +29,7 @@ public class cursor : MonoBehaviour {
         RaycastHit hitPosition;
 
         Physics.Raycast(raycast, out hitPosition);
-        if (hitPosition.collider)
+        if (hitPosition.collider && StateController.CurrentState == StateController.GameState.TacticalMode)
         {
             if (hitPosition.collider.CompareTag("Ground"))
             {

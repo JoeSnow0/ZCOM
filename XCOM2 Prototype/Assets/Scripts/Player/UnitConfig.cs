@@ -248,7 +248,7 @@ public class UnitConfig : MonoBehaviour
         {
             animator.SetAnimationState(0);
             //Check if you hit
-            target.health.TakeDamage(unitWeapon);
+            //target.health.TakeDamage(unitWeapon);
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
@@ -264,7 +264,6 @@ public class UnitConfig : MonoBehaviour
             //Stop targeting mode
             //SetUnitState(UnitState.Idle);
             mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
-
         }
     }
     public void MeleeAttack(UnitConfig self, UnitConfig target)

@@ -121,12 +121,13 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackHit()
     {
-        //target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+        target.health.TakeDamage(unitConfig.unitWeapon);
     }
 
     public void AttackEnd()
     {
         unitConfig.SetUnitState(UnitConfig.UnitState.Idle);
+        unitConfig.mapConfig.turnSystem.KeyboardSelect(true, unitConfig.mapConfig.turnSystem.playerUnits, unitConfig);
     }
 
     public void Death()// DESTROYS THE UNIT, Called at death animation end
