@@ -145,6 +145,8 @@ public class Health : MonoBehaviour
         if (currentUnitHealth <= 0)
         {
             currentUnitHealth = 0;
+
+            unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
             KillUnit();
         }
     }

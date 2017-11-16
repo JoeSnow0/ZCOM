@@ -89,25 +89,17 @@ public class AbilityButtonFunctions : MonoBehaviour
         }
         else
         {
-            
-            
             //Select first enemy unit
-            foreach (UnitConfig enemy in mapConfig.turnSystem.enemyUnits)
+            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
+            //Enter shooting mode
+            mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
+            TurnSystem.EnemyTargeting = true;
+            if (TurnSystem.selectedTarget.CheckUnitState(UnitConfig.UnitState.Dead))
             {
-                if (TurnSystem.selectedTarget == null || !TurnSystem.selectedTarget.CheckUnitState(UnitConfig.UnitState.Idle))
-                {
-                    mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
-                }
-                else
-                {
-                    //Enter shooting mode
-                    mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
-                    TurnSystem.EnemyTargeting = true;
-                    break;
-                }
+                //Enter shooting mode
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                TurnSystem.EnemyTargeting = false;      
             }
-            
-            
             return;
         }
 
