@@ -12,7 +12,7 @@ public class GenerateAbilityButtons : MonoBehaviour
     [SerializeField] public Text abilityTooltip;
     [SerializeField] public Text abilityName;
     [SerializeField] public Text abilityChanceToHit;
-    [SerializeField] public Text abilityEfect;
+    [SerializeField] public Text abilityEffect;
     AbilityButtonFunctions abilityButtonFunctions;
 
     public void GenerateCurrentButtons(AbilityInfoObject characterClass)

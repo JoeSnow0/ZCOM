@@ -453,7 +453,14 @@ public class TurnSystem : MonoBehaviour
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
+                //HACK: Hard coded, fix for multiple abilities
+                generateAbilityButtons.abilityName.text = selectedUnit.unitAbilities.abilities[0].abilityName;
                 generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
+                generateAbilityButtons.abilityTooltip.text = selectedUnit.unitAbilities.abilities[0].tooltip;
+                //HACK: quick calculations
+                int minDamage = selectedUnit.unitWeapon.baseDamage + selectedUnit.unitWeapon.numberOfDiceDamage;
+                int maxDamage = selectedUnit.unitWeapon.baseDamage + selectedUnit.unitWeapon.numberOfDiceDamage * selectedUnit.unitWeapon.numberOfSidesDamage;
+                generateAbilityButtons.abilityEffect.text = minDamage + " - " + maxDamage + " Damage";
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))

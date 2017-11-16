@@ -35,7 +35,7 @@ public class UnitConfig : MonoBehaviour
     //Unit Position
     public int tileX;
     public int tileY;
-
+    
     //grid Reference
     public List<Node> currentPath = null;
     public List<Node> currentBulletPath = null;

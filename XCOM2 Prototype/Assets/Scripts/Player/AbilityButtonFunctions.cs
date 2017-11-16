@@ -85,7 +85,6 @@ public class AbilityButtonFunctions : MonoBehaviour
             mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
             //select next unit
             mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
-
             return;
         }
         else
