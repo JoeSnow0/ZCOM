@@ -101,11 +101,6 @@ public class UnitConfig : MonoBehaviour
     }
     void Update()
     {
-        //HACK:Failsafe prevents code from running when game is ended
-        if(!mapConfig.managerConfig.victoryCheck.gameEnded)
-        {
-            return;
-        }
         if(testDebug != null)
         {
             int currNode = 0;
