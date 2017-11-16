@@ -598,8 +598,9 @@ public class TurnSystem : MonoBehaviour
     {
         unitInfoHolder.SetActive(playerTurn);
         
-        if (selectedUnit != null)
+        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
         {
+            lastSelectedUnit = selectedUnit;
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
             className.text = selectedUnit.unitClassStats.unitClassName.ToUpper();
             unitName.text = selectedUnit.unitName;
