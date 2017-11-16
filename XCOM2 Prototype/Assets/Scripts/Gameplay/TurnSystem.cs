@@ -19,6 +19,7 @@ public class TurnSystem : MonoBehaviour
         public int spawnNumberOfEnemys;
         [HideInInspector]
         public int activatTurn;
+        public bool boss = false;
     }
     
     public UnitConfig[] enemyPrefab;
@@ -120,6 +121,8 @@ public class TurnSystem : MonoBehaviour
         }
         if (playerUnits.Count > 0)
             spawnEnemy();
+        KeyboardSelect(true, playerUnits, selectedUnit);
+        
     }
     void Update()
     {
@@ -342,7 +345,6 @@ public class TurnSystem : MonoBehaviour
             selectedUnit = selected;
             //selected = selectedUnit;
             selectedUnit.isSelected = true;
-            UpdateHUD();
             //Move the marker to selected unit
             MoveMarker(unitMarker, selectedUnit.transform.position);
             //Update grid colors
@@ -508,7 +510,6 @@ public class TurnSystem : MonoBehaviour
                 }
             }
         }
-        
         playerTurn = isPlayerTurn;
     }
 
@@ -570,8 +571,12 @@ public class TurnSystem : MonoBehaviour
             }
             else if (spawnSetup.Length <= thisTurn)
             {
-                int number = Random.Range(0, spawnSetup.Length);
-                enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
+                int number = 0;
+                while (spawnSetup[number].boss)
+                {
+                    number = Random.Range(0, spawnSetup.Length);
+                    enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
+                }
                 break;
             }
         }

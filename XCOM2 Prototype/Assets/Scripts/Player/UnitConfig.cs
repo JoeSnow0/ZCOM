@@ -60,7 +60,7 @@ public class UnitConfig : MonoBehaviour
 
     public static int accuracy;
     //BaseUnitCopy
-    void Start()
+    void Awake()
     {
         //Load models
         //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
@@ -93,6 +93,7 @@ public class UnitConfig : MonoBehaviour
         animator = GetComponentInChildren<AnimationScript>();
         actionPoints = GetComponent<ActionPoints>();
         health = GetComponent<Health>();
+        animatorHealthbar = GetComponentInChildren<Animator>();
         //movement = GetComponent<UnitMovement>();
     }
     public void InitializedUnit()
