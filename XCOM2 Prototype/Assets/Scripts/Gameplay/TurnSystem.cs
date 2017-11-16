@@ -46,6 +46,8 @@ public class TurnSystem : MonoBehaviour
     public Animator cursorAnimator;
     public Animator unitMarkerAnimator;
     public Image[] markerImage;
+    [Header("Line offset")]
+    public float lineYOffset;
     [Header("Selected Unit")]
     static public UnitConfig selectedUnit;
     static public UnitConfig selectedTarget;
@@ -126,6 +128,7 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
+        UpdateHUD();
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
         {
@@ -587,7 +590,7 @@ public class TurnSystem : MonoBehaviour
     private void UpdateHUD()
     {
         unitInfoHolder.SetActive(playerTurn);
-
+        
         if (selectedUnit != null)
         {
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
@@ -595,6 +598,15 @@ public class TurnSystem : MonoBehaviour
             unitName.text = selectedUnit.unitName;
             classIcon.sprite = selectedUnit.unitClassStats.classIcon;
         }
+
+        /*if(selectedTarget != null && selectedTarget.markerAnimator != null)
+        {
+            selectedTarget.markerAnimator.SetBool("display", true);
+        }
+        else
+        {
+
+        }*/
 
         foreach (UnitConfig unit in playerUnits)//Updates friendly units
         {
@@ -610,13 +622,20 @@ public class TurnSystem : MonoBehaviour
 
         foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit
+                || selectedTarget == unit && unit.markerAnimator != null)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
             {
                 unit.animatorHealthbar.SetBool("display", true);
+                if(selectedTarget == unit && unit.markerAnimator != null)
+                {
+                    unit.markerAnimator.SetBool("display", true);
+                }
             }
             else if (unit.animatorHealthbar != null)
             {
                 unit.animatorHealthbar.SetBool("display", false);
+                if(unit.markerAnimator != null)
+                    unit.markerAnimator.SetBool("display", false);
             }
         }
     }

@@ -49,6 +49,7 @@ public class UnitConfig : MonoBehaviour
     public bool isHighlighted = false;
 
     public AnimationScript animator;
+    public Animator markerAnimator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -89,6 +90,7 @@ public class UnitConfig : MonoBehaviour
         tileY = (int)tileCoords.z;
         
         line = GetComponent<LineRenderer>();
+        
 
         animator = GetComponentInChildren<AnimationScript>();
         actionPoints = GetComponent<ActionPoints>();
@@ -195,25 +197,28 @@ public class UnitConfig : MonoBehaviour
             line.endColor = currentColor;
 
             int currNode = 0;
-            while (currNode < currentPath.Count - 1 && currNode < movePoints * actionPoints.ReturnAvailableActions())
+            line.positionCount = 0;
+            int currNodeOffset = 1;
+            while (currNode <= currentPath.Count - 1 && currNode <= movePoints * actionPoints.ReturnAvailableActions())
             {
-                Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
-                Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
-                line.positionCount = currNode + 1;
-                if (currentPath.Count == 2)
-                {
-                    line.positionCount = 2;
-                    line.SetPosition(0, new Vector3(transform.position.x, 0.1f, transform.position.z));
-                    line.SetPosition(1, new Vector3(end.x, 0.1f, end.z));
-                }
-                if (currNode > 0)
-                {
-                    line.SetPosition(currNode, new Vector3(end.x, 0.1f, end.z));
-                }
+
+                if (currNode < currentPath.Count - 1)
+                    currNodeOffset = 1;
                 else
+                    currNodeOffset = 0;
+
+                Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
+                Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + currNodeOffset].x, currentPath[currNode + currNodeOffset].y);
+
+                if (currNode == 0)
                 {
-                    line.SetPosition(currNode, new Vector3(start.x, 0.1f, start.z));
+                    
+                    line.positionCount = currNode+1;
+                    line.SetPosition(currNode, new Vector3(start.x, mapConfig.turnSystem.lineYOffset, start.z));
+
                 }
+                line.positionCount = currNode+2;
+                line.SetPosition(currNode+1, new Vector3(end.x, mapConfig.turnSystem.lineYOffset, end.z));
 
                 currNode++;
 
@@ -222,6 +227,7 @@ public class UnitConfig : MonoBehaviour
                     mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.cursorMarker, end);
                 }
             }
+            line.positionCount = line.positionCount-1;
         }
     }
     public void InitializeEnemy()
@@ -271,7 +277,7 @@ public class UnitConfig : MonoBehaviour
         //Melee attack script goes here
         //hit check
         accuracy = unitWeapon.baseAim;
-        target.health.TakeDamage(unitWeapon);
+        //target.health.TakeDamage(unitWeapon);
         //Spend Actions
         actionPoints.SubtractAllActions();
     }
