@@ -65,12 +65,17 @@ public class AbilityButtonFunctions : MonoBehaviour
 
     public void ShootTarget()
     {
-        //failsafes
+        //failsafes, need to be added to all abilities
+        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle) || !TurnSystem.selectedUnit.actionPoints.CheckAvailableActions(1))
+        {
+            return;
+        }
         if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
         {
             return;
         }
 
+        //Actual ability start
         //Check for confirmation & make sure you're in the correct mode
         if (ConfirmAbilityCheck(AbilityStuff.Shoot) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
@@ -97,22 +102,95 @@ public class AbilityButtonFunctions : MonoBehaviour
 
     public void Overwatch()
     {
-        ConfirmAbilityCheck(AbilityStuff.Overwatch);
-        Debug.Log("Unit in overwatch");
+        //failsafes, need to be added to all abilities
+        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
+        if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
+        {
+            return;
+        }
+        //Actual ability start
+        if (ConfirmAbilityCheck(AbilityStuff.Overwatch) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            //This happens when ability is activated
+            Debug.Log("Unit in overwatch");
+        }
+        else
+        {
+            //This happens when ability is toggled (first click)
+            return;
+        }
     }
     public void HunkerDown()
     {
-        ConfirmAbilityCheck(AbilityStuff.Hunker);
-        Debug.Log("Hunkered down, defense increased");
+        //failsafes, need to be added to all abilities
+        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
+        if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
+        {
+            return;
+        }
+        //Actual ability start
+        if (ConfirmAbilityCheck(AbilityStuff.Hunker) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            //This happens when ability is activated
+            Debug.Log("Hunkered down, defense increased");
+        }
+        else
+        {
+            //This happens when ability is toggled (first click)
+            return;
+        }
+        
     }
     public void ReloadWeapon()
     {
-        ConfirmAbilityCheck(AbilityStuff.Reload);
-        Debug.Log("Weapon reloaded");
+        //failsafes, need to be added to all abilities
+        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
+        if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
+        {
+            return;
+        }
+        //Actual ability start
+        if (ConfirmAbilityCheck(AbilityStuff.Reload) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            //This happens when ability is activated
+            Debug.Log("Weapon reloaded");
+        }
+        else
+        {
+            //This happens when ability is toggled (first click)
+            return;
+        }
     }
     public void Medkit()
     {
-        ConfirmAbilityCheck(AbilityStuff.Medkit);
-        Debug.Log("Healing");
+        //failsafes, need to be added to all abilities
+        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
+        if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
+        {
+            return;
+        }
+        //Actual ability start
+        if (ConfirmAbilityCheck(AbilityStuff.Medkit) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            //This happens when ability is activated
+            Debug.Log("Healing");
+        }
+        else
+        {
+            //This happens when ability is toggled (first click)
+            return;
+        }
     }
 }

@@ -8,4 +8,5 @@ public class MapConfig : MonoBehaviour {
     public EnemySpawn enemySpawn;
     public TileMap tileMap;
     public StateController stateController;
+    public ManagerConfig managerConfig;
 }

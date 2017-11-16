@@ -20,10 +20,10 @@ public class TurnSystem : MonoBehaviour
         [HideInInspector]
         public int activatTurn;
     }
-    //[Header("Actions")]
-    [HideInInspector]
-    static public int totalActions;
+    
     public UnitConfig[] enemyPrefab;
+    [Header("Actions")]
+    static public int totalActions = 0;
     [Header("UI elements")]
     public GameObject gameOver;
     public Text gameOverText;
@@ -32,7 +32,7 @@ public class TurnSystem : MonoBehaviour
     public Image classIcon;
     public Text className;
     public Text unitName;
-    Animator classInformationAnimator;
+    [SerializeField]Animator classInformationAnimator;
 
     [Header("Colors")]
     public Color defeatColor;
@@ -64,7 +64,6 @@ public class TurnSystem : MonoBehaviour
     public int maxTurns;
     int thisTurn = 1;
     public int enemyIndex = 0;
-    //public int[] spawnEnemyTurns; old
     public SpawnSetup[] spawnSetup;
 
     static public bool EnemyTargeting = false;
@@ -100,7 +99,11 @@ public class TurnSystem : MonoBehaviour
         cursorAnimator = cursorMarker.GetComponent<Animator>();
         unitMarkerAnimator = unitMarker.GetComponent<Animator>();
 
-
+        foreach (var unit in allUnits)
+        {
+            
+            unit.actionPoints.InitializeActions();
+        }
 
 
         //replenish actions to player units
@@ -120,8 +123,6 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
-        UpdateHUD();
-
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
         {
@@ -207,7 +208,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (UnitConfig unit in playerUnits)
             {
-                if (unit.actionPoints.CheckAvailableActions(1) || unit.CheckUnitState(UnitConfig.UnitState.Walking))
+                if (unit.actionPoints.CheckAvailableActions(1) || !unit.CheckUnitState(UnitConfig.UnitState.Idle))
                 {
                     endturn = false;
                     break;
@@ -229,7 +230,7 @@ public class TurnSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Input.GetKeyUp(leaveAttackMode))
+        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
         {
             if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
             {
@@ -303,6 +304,10 @@ public class TurnSystem : MonoBehaviour
         {
             return;
         }
+        if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+        {
+            mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
@@ -345,6 +350,7 @@ public class TurnSystem : MonoBehaviour
             //Update Displayed Name
             unitName.text = selectedUnit.unitName;
             className.text = selectedUnit.unitClassStats.unitClassName;
+            UpdateHUD();
             //Clear old abilities
             generateAbilityButtons.ClearCurrentButtons();
             //Generate new abilities buttons if its a player unit
@@ -439,14 +445,13 @@ public class TurnSystem : MonoBehaviour
             {
                 chosenUnitIndex = unitList.Count - 1;
             }
-
             //Check if enemy unit is targetable
-            if (!unitList[chosenUnitIndex].isFriendly)
+            if (!unitList[chosenUnitIndex].isFriendly && !selected.CheckUnitState(UnitConfig.UnitState.Dead))
             {
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
-                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy +"%";
+                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -455,6 +460,7 @@ public class TurnSystem : MonoBehaviour
                 selectedUnit = selected;
                 break;
             }
+            
 
         }
 
@@ -577,7 +583,7 @@ public class TurnSystem : MonoBehaviour
     {
         unitInfoHolder.SetActive(playerTurn);
 
-        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
+        if (selectedUnit != null)
         {
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
             className.text = selectedUnit.unitClassStats.unitClassName.ToUpper();
@@ -599,7 +605,7 @@ public class TurnSystem : MonoBehaviour
 
         foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
             {
                 unit.animatorHealthbar.SetBool("display", true);
             }

@@ -1979,21 +1979,15 @@ MonoBehaviour:
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 0
-  modelController: {fileID: 0}
+  modelController: {fileID: 1846847353742682}
   tileX: 0
   tileY: 0
   movePoints: 6
   animaitionSpeed: 3
-  isIdle: 1
-  isMoving: 0
-  isSprinting: 0
-  isShooting: 0
-  isDead: 0
   isHighlighted: 0
   animator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
-  accuracy: 0
 --- !u!114 &114940735665209172
 MonoBehaviour:
   m_ObjectHideFlags: 1

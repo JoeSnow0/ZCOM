@@ -22,20 +22,7 @@ public class ActionPoints : MonoBehaviour {
     private void Update()
     {
         //Update UI elements
-        if (actionPoints != null && unitConfig.isFriendly)
-        {
-            for (int i = 0; i < actionPoints.Count; i++)
-            {
-                if (i > currentActions - 1 && actionPoints[i].color != unitConfig.unitColor[1])
-                {
-                    actionPoints[i].color = unitConfig.unitColor[1];
-                }
-                else if(i < currentActions && actionPoints[i].color != unitConfig.unitColor[0])
-                {
-                    actionPoints[i].color = unitConfig.unitColor[0];
-                }
-            }
-        }
+        
 
         transform.GetChild(0).localEulerAngles = new Vector3(0, Camera.main.transform.root.GetChild(0).rotation.eulerAngles.y, 0);
     }
@@ -61,6 +48,7 @@ public class ActionPoints : MonoBehaviour {
     {
         currentActions = maxActions;
         TurnSystem.totalActions += currentActions;
+        AdjustActionImages();
     }
     //adds actions on this unit
     public void AddActions(int addition)
@@ -70,44 +58,66 @@ public class ActionPoints : MonoBehaviour {
         {
             currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
         }
+        AdjustActionImages();
     }
     //removes actions on this unit
     public void SubtractActions(int subtraction)
     {
         TurnSystem.totalActions -= subtraction;
         currentActions -= subtraction;
+        AdjustActionImages();
     }
     //removes all actions on this unit
     public void SubtractAllActions()
     {
         TurnSystem.totalActions -= currentActions;
         currentActions = 0;
+        AdjustActionImages();
     }
     //Get stats from class and set 
-    private void InitializeActions()
+    public void InitializeActions()
     {
-        currentActions = unitConfig.unitClassStats.maxUnitActionPoints;
         maxActions = unitConfig.unitClassStats.maxUnitActionPoints;
+        currentActions = maxActions;
+        AdjustActionImages();
 
-        if (actionPointParent != null && actionPointParent.transform.childCount > 0 && unitConfig.isFriendly)//Removes any gameobjects in action point parent and sends an error message
-        {
-            for(int i = 0; i < actionPointParent.transform.childCount; i++)
-            {
-                Destroy(actionPointParent.transform.GetChild(i).gameObject);
-                
-            }
-            Debug.LogError("Remove action point(s) from action point parent in " + this.name);
-        }
-        else if (actionPointParent == null && unitConfig.isFriendly)
-        {
-            Debug.LogError("Action points parent needed in " + this.name);
-        }
 
+
+
+    }
+    private void AdjustActionImages()
+    {
+        //Draw new UI APs
         if (actionPointParent != null)
         {
+            //Destroy all
+            if(actionPointParent.transform.childCount != maxActions)
+            {
+                foreach (Transform child in actionPointParent.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+                //create new ones
+                for (int i = 0; i < maxActions; i++)
+                {
+                    actionPoints.Add(Instantiate(actionPoint, actionPointParent.transform).GetComponent<Image>());
+                }
+            }
+            
+        }
+        //change their color
+        if (actionPoints != null && unitConfig.isFriendly)
+        {
+           
+            //Inactive color
+            for (int i = 0; i < maxActions; i++)
+            {
+                actionPoints[i].color = unitConfig.unitColor[1];
+            }
+            //Active color
             for (int i = 0; i < currentActions; i++)
             {
-                actionPoints.Add(Instantiate(actionPoint, actionPointParent.transform).GetComponent<Image>());
+                actionPoints[i].color = unitConfig.unitColor[0];
             }
         }
     }

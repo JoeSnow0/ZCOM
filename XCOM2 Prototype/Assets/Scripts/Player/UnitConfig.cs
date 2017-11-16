@@ -21,6 +21,7 @@ public class UnitConfig : MonoBehaviour
     [HideInInspector]public ActionPoints actionPoints;
     [HideInInspector]public Health health;
     [HideInInspector]public UnitMovement movement;
+    //[HideInInspector]public UnitMovement movement;
     public GenerateAbilityButtons generateAbilityButtons;
     public Animator animatorHealthbar;
 
@@ -45,11 +46,6 @@ public class UnitConfig : MonoBehaviour
     public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
     private UnitState currentUnitState;
     
-    //public bool isIdle = true;
-    //public bool isMoving = false;
-    //public bool isSprinting = false;
-    //public bool isShooting = false;
-    //public bool isDead = false;
     public bool isHighlighted = false;
 
     public AnimationScript animator;
@@ -59,7 +55,7 @@ public class UnitConfig : MonoBehaviour
     LineRenderer line;
     public EnemyAi enemyAi;
     Color currentColor;
-    //[HideInInspector]public ImageElements imageElements;
+    
     Vector3 cameraStartPosition;
 
     public static int accuracy;
@@ -79,7 +75,9 @@ public class UnitConfig : MonoBehaviour
 
         //Add the map incase its missing
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
-
+        actionPoints = GetComponent<ActionPoints>();
+        health = GetComponent<Health>();
+        movement = GetComponent<UnitMovement>();
 
         if (enemyAi == null)
             InitializeEnemy();
@@ -93,30 +91,21 @@ public class UnitConfig : MonoBehaviour
         line = GetComponent<LineRenderer>();
 
         animator = GetComponentInChildren<AnimationScript>();
-
-        //Make sure scriptable objects are assigned, if not, assign defaults and send message
-        /*if (unitWeapon == null)
-        {
-            unitWeapon = AssetDatabase.LoadAssetAtPath<WeaponInfoObject>("Assets/Scriptable Object/Pistol.asset");
-            Debug.LogWarning("Couldn't find weapon, using default weapon");
-        }
-        if (unitClassStats == null)
-        {
-            unitClassStats = AssetDatabase.LoadAssetAtPath<ClassStatsObject>("Assets/Scriptable Object/StatsRookie.asset");
-            Debug.LogWarning("Couldn't find Class, using default class");
-        }
-        if (unitWeapon == null)
-        {
-            unitAbilities = AssetDatabase.LoadAssetAtPath<AbilityInfoObject>("Assets/Scriptable Object/AbilityRookie.asset");
-            Debug.LogWarning("Couldn't find abilities, using default abilities");
-        }*/
         actionPoints = GetComponent<ActionPoints>();
         health = GetComponent<Health>();
-        movement = GetComponent<UnitMovement>();
+        //movement = GetComponent<UnitMovement>();
     }
-
+    public void InitializedUnit()
+    {
+        
+    }
     void Update()
     {
+        //HACK:Failsafe prevents code from running when game is ended
+        if(!mapConfig.managerConfig.victoryCheck.gameEnded)
+        {
+            return;
+        }
         if(testDebug != null)
         {
             int currNode = 0;
@@ -139,7 +128,7 @@ public class UnitConfig : MonoBehaviour
         }
         if (CheckUnitState(UnitState.Shooting))
         {
-            //Vector3.RotateTowards(rotation, )
+            
         }
         //Turn in the direction they're moving.
         if (CheckUnitState(UnitState.Walking) || CheckUnitState(UnitState.Sprinting))
@@ -172,7 +161,7 @@ public class UnitConfig : MonoBehaviour
             {
                 
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
-                SetUnitState(UnitConfig.UnitState.Idle);
+                SetUnitState(UnitState.Idle);
                 currentPath = null;
                 pathIndex = 0;
                 mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.unitMarker, transform.position);
@@ -185,13 +174,12 @@ public class UnitConfig : MonoBehaviour
                 }
                 else if(actionPoints.CheckAvailableActions(1) && isFriendly && mapConfig.turnSystem.playerTurn)
                 {
-                    //Current actions can't be accessed anymore, deal with it
                     mapConfig.tileMap.ChangeGridColor(movePoints, actionPoints.ReturnAvailableActions(), this);
                 }
             }
         }
-        //draw line need to be fixed cant be seen in the built version
-        if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))//1 long path
+        //draw line 
+        if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitState.Idle))//1 long path
         {
 
             if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(1))//Walk
@@ -268,10 +256,9 @@ public class UnitConfig : MonoBehaviour
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
-            animator.AttackStart();
-            
-            
-            
+            //animator.AttackStart();
+
+
             //Calculate the distance between the units
             mapConfig.turnSystem.distance = Vector3.Distance(TurnSystem.selectedUnit.transform.position, TurnSystem.selectedTarget.transform.position);
             mapConfig.turnSystem.distance /= 2;
@@ -279,7 +266,7 @@ public class UnitConfig : MonoBehaviour
             //Spend Actions
             TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
             //Stop targeting mode
-            SetUnitState(UnitState.Idle);
+            //SetUnitState(UnitState.Idle);
             mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
 
         }
@@ -294,19 +281,14 @@ public class UnitConfig : MonoBehaviour
         actionPoints.SubtractAllActions();
     }
 
-    //public void ShootTarget(UnitConfig target)
-    //{
-        
-    //}
-
     public void MoveNextTile()//start to try to move unit
     {
-        if (currentPath == null || TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Shooting))// if there is no path (or unit shoots) leave function
+        if (currentPath == null || !TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))// if there is no path (or unit shoots) leave function
         {
             return;
         }
 
-        int remainingMovement = movePoints * 2;
+        int remainingMovement = movePoints * actionPoints.ReturnAvailableActions();
         int moveTo = currentPath.Count - 1;
         for (int cost = 1; cost < moveTo; cost++)//is the path possible
         {
@@ -321,7 +303,7 @@ public class UnitConfig : MonoBehaviour
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
             animaitionSpeed = 2;
-            actionPoints.SubtractActions(1); //1 should be whatever it costs to move the unit
+            actionPoints.SubtractActions(unitClassStats.moveCost); //1 should be whatever it costs to move the unit
             return;
         }
         if (remainingMovement > 0 && actionPoints.CheckAvailableActions(1))//can you move the unit 
@@ -464,7 +446,7 @@ public class UnitConfig : MonoBehaviour
                     closest = mapConfig.tileMap.tileobjects[x + targetTileX, y + targetTileY];
                     distance = curDistance;
                 }
-                else if (curDistance <= (distance + 45f) && 
+                else if (curDistance <= (distance) && 
                         (mapConfig.tileMap.tiles[x + targetTileX, y + targetTileY] != 0 &&
                          mapConfig.tileMap.tiles[x + targetTileX, y + targetTileY] != 4))//if location is not the closest but has a cover
                 {

@@ -293,6 +293,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1170221479194764, guid: 722a98e23115ac94db3fa3e1fcaaefca,
     type: 2}
   m_PrefabInternal: {fileID: 660766425}
+--- !u!95 &32003562 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 95940051240027728, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+    type: 2}
+  m_PrefabInternal: {fileID: 660766425}
 --- !u!1 &33214661
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,12 +2520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
-  unitClassStats: {fileID: 0}
 --- !u!114 &401261309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2655,6 +2654,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433572820 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114231188020316052, guid: 35a0bfa044172414688498e7f94cfb0b,
+    type: 2}
+  m_PrefabInternal: {fileID: 2139216885}
+  m_Script: {fileID: 11500000, guid: 967ce0aa0d289cc43abf3db98ed025e2, type: 3}
 --- !u!1 &434596448
 GameObject:
   m_ObjectHideFlags: 0
@@ -4049,7 +4054,7 @@ Prefab:
     - target: {fileID: 224784897800314956, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -104
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224591379670833048, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -4069,7 +4074,47 @@ Prefab:
     - target: {fileID: 224591379670833048, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -203.57
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224524934749409872, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224524934749409872, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224524934749409872, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 224524934749409872, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224416287958808576, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224416287958808576, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224416287958808576, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 224416287958808576, guid: 722a98e23115ac94db3fa3e1fcaaefca,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 722a98e23115ac94db3fa3e1fcaaefca, type: 2}
@@ -4403,102 +4448,6 @@ Animator:
   m_PrefabParentObject: {fileID: 95504324349320446, guid: 722a98e23115ac94db3fa3e1fcaaefca,
     type: 2}
   m_PrefabInternal: {fileID: 660766425}
---- !u!1 &748045707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 748045710}
-  - component: {fileID: 748045709}
-  - component: {fileID: 748045708}
-  - component: {fileID: 748045711}
-  m_Layer: 0
-  m_Name: Terrain
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!154 &748045708
-TerrainCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 748045707}
-  m_Material: {fileID: 0}
-  m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: 8d5fa69aff613224d9905452f2c1233e, type: 2}
-  m_EnableTreeColliders: 1
---- !u!218 &748045709
-Terrain:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 748045707}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_TerrainData: {fileID: 15600000, guid: 8d5fa69aff613224d9905452f2c1233e, type: 2}
-  m_TreeDistance: 2000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
-  m_SplatMapDistance: 0
-  m_HeightmapMaximumLOD: 0
-  m_CastShadows: 1
-  m_DrawHeightmap: 1
-  m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
-  m_MaterialType: 3
-  m_LegacySpecular:
-    serializedVersion: 2
-    rgba: 4286545791
-  m_LegacyShininess: 0.078125
-  m_MaterialTemplate: {fileID: 0}
-  m_BakeLightProbesForTrees: 1
-  m_ScaleInLightmap: 0.0512
-  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
---- !u!4 &748045710
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 748045707}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -0.01, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &748045711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 748045707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6525fd4a9fb974b7f878dee70144de99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  templateMaterial: {fileID: 2100000, guid: 79006d7cba53c864496e4c22e909ceff, type: 2}
-  terrainDesc: {fileID: 0}
-  blendMat: {fileID: 0}
-  terrain: {fileID: 748045709}
-  tintMapOverride: {fileID: 0}
-  globalNormalOverride: {fileID: 0}
-  geoTextureOverride: {fileID: 0}
-  streamTexture: {fileID: 0}
-  vsGrassMap: {fileID: 0}
-  propData: {fileID: 11400000, guid: 8110d7eac2633644bae247919d6e93eb, type: 2}
-  oldBaseMapSize: 16
-  oldBaseMapDistance: 0
-  sTerrainDirty: 0
 --- !u!1 &753551172
 GameObject:
   m_ObjectHideFlags: 0
@@ -7250,12 +7199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
-  unitClassStats: {fileID: 0}
 --- !u!114 &1266361778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9779,12 +9722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
-  unitClassStats: {fileID: 0}
 --- !u!114 &1597087408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10395,12 +10332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
-  unitClassStats: {fileID: 0}
 --- !u!114 &1677402164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11211,6 +11142,11 @@ Prefab:
       propertyPath: panelAnimator
       value: 
       objectReference: {fileID: 738983731}
+    - target: {fileID: 114105975272966794, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: managerConfig
+      value: 
+      objectReference: {fileID: 433572820}
     - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
         type: 2}
       propertyPath: gameOver
@@ -11246,6 +11182,11 @@ Prefab:
       propertyPath: unitName
       value: 
       objectReference: {fileID: 1952660755}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: classInformationAnimator
+      value: 
+      objectReference: {fileID: 32003562}
     - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
         type: 2}
       propertyPath: cursorMarker
