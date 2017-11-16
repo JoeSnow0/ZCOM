@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51b214ede25aee4580ca8c95d0b76c1, type: 3}
   m_Name: StatsZombulk
   m_EditorClassIdentifier: 
-  unitClassName: Zombie
+  unitClassName: Zombulk
   classIcon: {fileID: 0}
   classModel: {fileID: 1465679864678236, guid: e338475e4cf5a394a816938467bfc3a9, type: 2}
   maxUnitHealth: 8
