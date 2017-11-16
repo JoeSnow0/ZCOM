@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectiveSurvive : Objective {
+    [SerializeField] private int maxTurns;
 
     void Start() {
         InitializeObjective();
-        SetDescription("Survive " + mapConfig.turnSystem.maxTurns + " rounds");
+
+        if(maxTurns < 1)
+            maxTurns = mapConfig.turnSystem.maxTurns;
+        
+        SetDescription("Survive " + maxTurns + " rounds");
+
     }
 
 	void Update() {
-        if(mapConfig.turnSystem.hud.amountTurns >= mapConfig.turnSystem.maxTurns)
+        if(mapConfig.turnSystem.hud.amountTurns > maxTurns)
         {
-            SetState(1);
+            SetState(ObjectiveState.Completed);
         }
 	}
 }

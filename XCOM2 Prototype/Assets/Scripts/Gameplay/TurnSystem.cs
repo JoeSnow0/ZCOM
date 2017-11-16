@@ -19,6 +19,7 @@ public class TurnSystem : MonoBehaviour
         public int spawnNumberOfEnemys;
         [HideInInspector]
         public int activatTurn;
+        public bool boss = false;
     }
     
     public UnitConfig[] enemyPrefab;
@@ -77,7 +78,8 @@ public class TurnSystem : MonoBehaviour
     public float distance;
 
     private UnitConfig lastSelectedUnit;
-    public int killCount = 0;
+
+    public Dictionary<string, int> killedUnits = new Dictionary<string, int>();
 
     void Start()
     {
@@ -119,6 +121,8 @@ public class TurnSystem : MonoBehaviour
         }
         if (playerUnits.Count > 0)
             spawnEnemy();
+        KeyboardSelect(true, playerUnits, selectedUnit);
+        
     }
     void Update()
     {
@@ -207,7 +211,7 @@ public class TurnSystem : MonoBehaviour
             bool endturn = true;
             foreach (UnitConfig unit in playerUnits)
             {
-                if (unit.actionPoints.CheckAvailableActions(1) || unit.CheckUnitState(UnitConfig.UnitState.Walking))
+                if (unit.actionPoints.CheckAvailableActions(1) || !unit.CheckUnitState(UnitConfig.UnitState.Idle))
                 {
                     endturn = false;
                     break;
@@ -229,7 +233,7 @@ public class TurnSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Input.GetKeyUp(leaveAttackMode))
+        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
         {
             if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
             {
@@ -341,7 +345,6 @@ public class TurnSystem : MonoBehaviour
             selectedUnit = selected;
             //selected = selectedUnit;
             selectedUnit.isSelected = true;
-            UpdateHUD();
             //Move the marker to selected unit
             MoveMarker(unitMarker, selectedUnit.transform.position);
             //Update grid colors
@@ -444,14 +447,13 @@ public class TurnSystem : MonoBehaviour
             {
                 chosenUnitIndex = unitList.Count - 1;
             }
-
             //Check if enemy unit is targetable
-            if (!unitList[chosenUnitIndex].isFriendly)
+            if (!unitList[chosenUnitIndex].isFriendly && !selected.CheckUnitState(UnitConfig.UnitState.Dead))
             {
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
-                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy +"%";
+                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -460,6 +462,7 @@ public class TurnSystem : MonoBehaviour
                 selectedUnit = selected;
                 break;
             }
+            
 
         }
 
@@ -507,7 +510,6 @@ public class TurnSystem : MonoBehaviour
                 }
             }
         }
-        
         playerTurn = isPlayerTurn;
     }
 
@@ -569,8 +571,12 @@ public class TurnSystem : MonoBehaviour
             }
             else if (spawnSetup.Length <= thisTurn)
             {
-                int number = Random.Range(0, spawnSetup.Length);
-                enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
+                int number = 0;
+                while (spawnSetup[number].boss)
+                {
+                    number = Random.Range(0, spawnSetup.Length);
+                    enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
+                }
                 break;
             }
         }
@@ -585,7 +591,7 @@ public class TurnSystem : MonoBehaviour
         if (selectedUnit != null)
         {
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
-            className.text = selectedUnit.unitClassStats.unitClassName;
+            className.text = selectedUnit.unitClassStats.unitClassName.ToUpper();
             unitName.text = selectedUnit.unitName;
             classIcon.sprite = selectedUnit.unitClassStats.classIcon;
         }
@@ -604,7 +610,7 @@ public class TurnSystem : MonoBehaviour
 
         foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit /*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */)
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
             {
                 unit.animatorHealthbar.SetBool("display", true);
             }
@@ -612,6 +618,26 @@ public class TurnSystem : MonoBehaviour
             {
                 unit.animatorHealthbar.SetBool("display", false);
             }
+        }
+    }
+
+    public void AddKillCount(ClassStatsObject unitType)
+    {
+        if (!killedUnits.ContainsKey(unitType.unitClassName))
+            killedUnits.Add(unitType.unitClassName, 1);
+        else
+            killedUnits[unitType.unitClassName] += 1;
+    }
+
+    public int GetKillCount(ClassStatsObject unitType)
+    {
+        if (killedUnits.ContainsKey(unitType.unitClassName))
+        {
+            return killedUnits[unitType.unitClassName];
+        }
+        else
+        {
+            return 0;
         }
     }
 }

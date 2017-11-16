@@ -2375,8 +2375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0e5774c9bce2648b8af01bff7122b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectives: []
   killRequired: 3
+  unitType: {fileID: 11400000, guid: 0748c71494070e741bc61356489eecd7, type: 2}
 --- !u!114 &114037139636943290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4439,7 +4439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a10a594a99d8b46932e6fc5dbac13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useAbility: 49
+  abilityKeybind: 0
   abilityButton: {fileID: 114047151381315254}
   abilityTooltip: {fileID: 0}
 --- !u!114 &114504117258477284
@@ -4847,7 +4847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ab8b68646880c41a3e01943a162fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectives: []
+  maxTurns: 0
 --- !u!114 &114628692842710478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5500,8 +5500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0e5774c9bce2648b8af01bff7122b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectives: []
   killRequired: 6
+  unitType: {fileID: 0}
 --- !u!114 &114780206471027120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5620,10 +5620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90189bca4a3eef04081f258ff3001d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectives:
-  - {fileID: 114619259519085324}
-  - {fileID: 114036608795548066}
-  - {fileID: 114771250369489074}
 --- !u!114 &114826703046272956
 MonoBehaviour:
   m_ObjectHideFlags: 1

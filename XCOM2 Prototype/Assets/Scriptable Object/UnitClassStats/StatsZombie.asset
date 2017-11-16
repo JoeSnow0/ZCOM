@@ -14,6 +14,8 @@ MonoBehaviour:
   unitClassName: Zombie
   classIcon: {fileID: 0}
   classModel: {fileID: 1465679864678236, guid: e338475e4cf5a394a816938467bfc3a9, type: 2}
+  hitParticleSystem: {fileID: 1422695315692348, guid: 2fc2fcc402b5fdf4595633c0b4cb2323,
+    type: 2}
   maxUnitHealth: 4
   unitDefense: 0
   maxUnitActionPoints: 2

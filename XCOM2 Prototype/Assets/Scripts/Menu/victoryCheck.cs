@@ -10,7 +10,8 @@ public class victoryCheck : MonoBehaviour {
     public Text gameEndText;
     public GameObject gameEndPanel;
     public GameObject markers;
-    
+    public bool gameEnded = false;
+
     void Start()
     {
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
@@ -23,6 +24,7 @@ public class victoryCheck : MonoBehaviour {
     {
         markers.SetActive(false);
         gameEndCanvas.SetActive(true);
+        gameEnded = true;
         if (hasWon == false)
         {
             gameEndText.text = "DEFEAT";

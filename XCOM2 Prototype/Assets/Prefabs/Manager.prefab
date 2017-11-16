@@ -43,6 +43,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitConfig: {fileID: 0}
   mapConfig: {fileID: 0}
+  menuButtons: {fileID: 114711847211086842}
+  menuToggle: {fileID: 114281732701316990}
+  victoryCheck: {fileID: 114550365347561240}
 --- !u!114 &114281732701316990
 MonoBehaviour:
   m_ObjectHideFlags: 1

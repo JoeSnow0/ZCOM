@@ -66,7 +66,7 @@ public class AbilityButtonFunctions : MonoBehaviour
     public void ShootTarget()
     {
         //failsafes, need to be added to all abilities
-        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+        if (!TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle) || !TurnSystem.selectedUnit.actionPoints.CheckAvailableActions(1))
         {
             return;
         }

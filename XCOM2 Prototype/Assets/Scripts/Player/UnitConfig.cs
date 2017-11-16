@@ -60,7 +60,7 @@ public class UnitConfig : MonoBehaviour
 
     public static int accuracy;
     //BaseUnitCopy
-    void Start()
+    void Awake()
     {
         //Load models
         //GameObject classModel = Instantiate(unitClassStats.classModel, modelController.transform);
@@ -93,6 +93,7 @@ public class UnitConfig : MonoBehaviour
         animator = GetComponentInChildren<AnimationScript>();
         actionPoints = GetComponent<ActionPoints>();
         health = GetComponent<Health>();
+        animatorHealthbar = GetComponentInChildren<Animator>();
         //movement = GetComponent<UnitMovement>();
     }
     public void InitializedUnit()
@@ -247,7 +248,7 @@ public class UnitConfig : MonoBehaviour
         {
             animator.SetAnimationState(0);
             //Check if you hit
-            target.health.TakeDamage(unitWeapon);
+            //target.health.TakeDamage(unitWeapon);
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
@@ -263,7 +264,6 @@ public class UnitConfig : MonoBehaviour
             //Stop targeting mode
             //SetUnitState(UnitState.Idle);
             mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
-
         }
     }
     public void MeleeAttack(UnitConfig self, UnitConfig target)

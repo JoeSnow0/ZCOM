@@ -18,9 +18,15 @@ public class AnimationScript : MonoBehaviour {
         animator = GetComponent<Animator>();
         unitConfig = GetComponentInParent<UnitConfig>();
         audioSource = GetComponent<AudioSource>();
+
+        if (audioSource)
+        {
+            audioSource.clip = unitConfig.unitWeapon.weaponSoundShoot;
+        }
 	}
-    public void Update()
-    {   if (animator != null)
+	
+	void Update () {
+        if (animator != null)
         {
             if (unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
             {
@@ -89,9 +95,18 @@ public class AnimationScript : MonoBehaviour {
         //When the projectile is supposed to shoot
         if (unitConfig.unitWeapon.weaponProjectile != null)
         {
-            ParticleSystem.MainModule settings = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>().main;
+            ParticleSystem projectileSystem = Instantiate(unitConfig.unitWeapon.weaponProjectile, projectileStartPos.position, transform.parent.rotation).GetComponent<ParticleSystem>();
+            ParticleSystem.MainModule settings = projectileSystem.main;
+            //ParticleSystem.SubEmittersModule subEmitter = projectileSystem.subEmitters;
 
-            settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];
+            //ParticleSystem hitEmitter = Instantiate(target.unitClassStats.hitParticleSystem, projectileSystem.transform).GetComponent<ParticleSystem>();
+            //hitEmitter.transform.localRotation = transform.parent.rotation;
+
+
+            //subEmitter.AddSubEmitter(hitEmitter, ParticleSystemSubEmitterType.Collision, ParticleSystemSubEmitterProperties.InheritRotation);
+
+            if(unitConfig.unitWeapon.particleColor.Length > 0)
+                settings.startColor = unitConfig.unitWeapon.particleColor[Random.Range(0, unitConfig.unitWeapon.particleColor.Length - 1)];
         }
         else
         {
@@ -106,12 +121,13 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackHit()
     {
-        //target.health.TakeDamage(CalculationManager.damage, unitConfig.unitWeapon);
+        target.health.TakeDamage(unitConfig.unitWeapon);
     }
 
     public void AttackEnd()
     {
         unitConfig.SetUnitState(UnitConfig.UnitState.Idle);
+        unitConfig.mapConfig.turnSystem.KeyboardSelect(true, unitConfig.mapConfig.turnSystem.playerUnits, unitConfig);
     }
 
     public void Death()// DESTROYS THE UNIT, Called at death animation end

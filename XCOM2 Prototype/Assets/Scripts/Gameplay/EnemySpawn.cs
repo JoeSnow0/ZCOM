@@ -31,9 +31,10 @@ public class EnemySpawn : MonoBehaviour {
                 UnitConfig enemy = Instantiate(unitType, RandomPosition(), Quaternion.identity);
                 mapConfig.turnSystem.enemyUnits.Add(enemy);
                 enemy.InitializeEnemy();
+                enemy.actionPoints.ReplenishAllActions();
             }
         }
-        mapConfig.turnSystem.enemyUnits[1].enemyAi.isMyTurn = true;
+        mapConfig.turnSystem.enemyUnits[0].enemyAi.isMyTurn = true;
     }
 
     private Vector3 RandomPosition()

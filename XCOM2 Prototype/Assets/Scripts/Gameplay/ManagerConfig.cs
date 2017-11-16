@@ -14,8 +14,11 @@ public class ManagerConfig : MonoBehaviour {
     //public WallConfig wallConfig; //World border
     //public MarkerConfig markerConfig; //Markers
     //public CameraConfig cameraConfig; //Camera access
-    //public 
-    
+    public MenuButtons menuButtons;
+    public menuToggle menuToggle;
+    public victoryCheck victoryCheck;
+
+
     private void Start()
     {
         //Add the map incase its missing
