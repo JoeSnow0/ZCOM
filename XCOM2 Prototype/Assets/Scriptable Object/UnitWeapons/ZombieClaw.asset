@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Zombie Claw
   icon: {fileID: 0}
+  weaponModel: {fileID: 0}
   value: 0
   baseAim: 90
   rangeModShort: 0
@@ -20,9 +21,9 @@ MonoBehaviour:
   rangeModLong: 0
   rangeModFar: 0
   weaponRange: 0
-  baseDamage: 1
+  baseDamage: 0
   numberOfDiceDamage: 1
-  numberOfSidesDamage: 1
+  numberOfSidesDamage: 3
   weaponProjectile: {fileID: 0}
   particleColor: []
   weaponSoundShoot: {fileID: 0}
