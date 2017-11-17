@@ -35,7 +35,7 @@ public class UnitConfig : MonoBehaviour
     //Unit Position
     public int tileX;
     public int tileY;
-
+    
     //grid Reference
     public List<Node> currentPath = null;
     public List<Node> currentBulletPath = null;
@@ -49,6 +49,7 @@ public class UnitConfig : MonoBehaviour
     public bool isHighlighted = false;
 
     public AnimationScript animator;
+    public Animator markerAnimator;
 
     int pathIndex = 0;
     public float pathProgress;
@@ -89,6 +90,7 @@ public class UnitConfig : MonoBehaviour
         tileY = (int)tileCoords.z;
         
         line = GetComponent<LineRenderer>();
+        
 
         animator = GetComponentInChildren<AnimationScript>();
         actionPoints = GetComponent<ActionPoints>();
@@ -177,8 +179,8 @@ public class UnitConfig : MonoBehaviour
         //draw line 
         if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitState.Idle))//1 long path
         {
-
-            if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(1))//Walk
+            mapConfig.turnSystem.ToggleMarkers(true);
+            if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(2))//Walk
             {
                 currentColor = mapConfig.turnSystem.lineColors[0];
             }
@@ -189,31 +191,35 @@ public class UnitConfig : MonoBehaviour
 
             for (int i = 0; i < mapConfig.turnSystem.markerImage.Length; i++)
             {
+
                 mapConfig.turnSystem.markerImage[i].color = currentColor;
             }
             line.startColor = currentColor;
             line.endColor = currentColor;
 
             int currNode = 0;
-            while (currNode < currentPath.Count - 1 && currNode < movePoints * actionPoints.ReturnAvailableActions())
+            line.positionCount = 0;
+            int currNodeOffset = 1;
+            while (currNode <= currentPath.Count - 1 && currNode <= movePoints * actionPoints.ReturnAvailableActions())
             {
-                Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
-                Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + 1].x, currentPath[currNode + 1].y);
-                line.positionCount = currNode + 1;
-                if (currentPath.Count == 2)
-                {
-                    line.positionCount = 2;
-                    line.SetPosition(0, new Vector3(transform.position.x, 0.1f, transform.position.z));
-                    line.SetPosition(1, new Vector3(end.x, 0.1f, end.z));
-                }
-                if (currNode > 0)
-                {
-                    line.SetPosition(currNode, new Vector3(end.x, 0.1f, end.z));
-                }
+
+                if (currNode < currentPath.Count - 1)
+                    currNodeOffset = 1;
                 else
+                    currNodeOffset = 0;
+
+                Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode].x, currentPath[currNode].y);
+                Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[currNode + currNodeOffset].x, currentPath[currNode + currNodeOffset].y);
+
+                if (currNode == 0)
                 {
-                    line.SetPosition(currNode, new Vector3(start.x, 0.1f, start.z));
+                    
+                    line.positionCount = currNode+1;
+                    line.SetPosition(currNode, new Vector3(start.x, mapConfig.turnSystem.lineYOffset, start.z));
+
                 }
+                line.positionCount = currNode+2;
+                line.SetPosition(currNode+1, new Vector3(end.x, mapConfig.turnSystem.lineYOffset, end.z));
 
                 currNode++;
 
@@ -222,6 +228,12 @@ public class UnitConfig : MonoBehaviour
                     mapConfig.turnSystem.MoveMarker(mapConfig.turnSystem.cursorMarker, end);
                 }
             }
+            line.positionCount = line.positionCount-1;
+        }
+        else if(isFriendly && isSelected)
+        {
+            line.positionCount = 0;
+            mapConfig.turnSystem.ToggleMarkers(false);
         }
     }
     public void InitializeEnemy()
@@ -230,6 +242,7 @@ public class UnitConfig : MonoBehaviour
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
+        actionPoints = GetComponent<ActionPoints>();
         tileX = (int)tileCoords.x;
         tileY = (int)tileCoords.z;
         mapConfig.tileMap.UnitMapData(tileX, tileY);
@@ -271,7 +284,7 @@ public class UnitConfig : MonoBehaviour
         //Melee attack script goes here
         //hit check
         accuracy = unitWeapon.baseAim;
-        target.health.TakeDamage(unitWeapon);
+        //target.health.TakeDamage(unitWeapon);
         //Spend Actions
         actionPoints.SubtractAllActions();
     }

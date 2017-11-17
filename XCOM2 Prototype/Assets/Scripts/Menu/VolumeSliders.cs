@@ -33,7 +33,7 @@ public class VolumeSliders : MonoBehaviour {
         musicController = FindObjectOfType<MusicController>();
         volumeSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MasterVolume");
 
-        PlayerPrefs.SetFloat("MasterVolume", musicController.audioSource.volume);
+    
 
 
     }

@@ -32,6 +32,8 @@ public class EnemySpawn : MonoBehaviour {
                 mapConfig.turnSystem.enemyUnits.Add(enemy);
                 enemy.InitializeEnemy();
                 enemy.actionPoints.ReplenishAllActions();
+                enemy.unitName = "Zombie Håkan";
+
             }
         }
         mapConfig.turnSystem.enemyUnits[0].enemyAi.isMyTurn = true;
@@ -41,10 +43,9 @@ public class EnemySpawn : MonoBehaviour {
     {
         if (mapConfig == null)
             mapConfig = GetComponent<MapConfig>();
-        int x = 0;
-        int y = 0;
-        
-        while (mapConfig.tileMap.tiles[x, y] != 0)
+        int x = -1;
+        int y = -1;
+        while (x == -1 && y == -1 || mapConfig.tileMap.tiles[x, y] != 0)
         {
             int wall = Random.Range(0, 3);
             switch (wall)

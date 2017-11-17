@@ -90,13 +90,14 @@ public class Health : MonoBehaviour
                 //unitConfig.isDead = true;
                 if (!unitConfig.isFriendly)
                 {
-                    unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
+                    
                     mapConfig.turnSystem.enemyUnits.Remove(unitConfig);
                 }
                 else
                 {
                     mapConfig.turnSystem.playerUnits.Remove(unitConfig);
                 }
+                unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
                 mapConfig.turnSystem.AddKillCount(unitConfig.unitClassStats);
             }
             UpdateUnitHealth();
@@ -145,6 +146,8 @@ public class Health : MonoBehaviour
         if (currentUnitHealth <= 0)
         {
             currentUnitHealth = 0;
+
+            unitConfig.SetUnitState(UnitConfig.UnitState.Dead);
             KillUnit();
         }
     }

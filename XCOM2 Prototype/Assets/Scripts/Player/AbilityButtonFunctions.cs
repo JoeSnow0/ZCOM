@@ -10,8 +10,6 @@ public class AbilityButtonFunctions : MonoBehaviour
     public Button abilityButton;
     private MapConfig _mapConfig = null;
     public MapConfig mapConfig { get { if (_mapConfig == null) _mapConfig = GameObject.FindObjectOfType<MapConfig>(); return _mapConfig; } }
-
-    public Text abilityTooltip;
     public enum AbilityStuff
     {
         None = 0,
@@ -70,7 +68,7 @@ public class AbilityButtonFunctions : MonoBehaviour
         {
             return;
         }
-        if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
+        if (mapConfig.turnSystem.enemyUnits.Count == 0 || mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
         {
             return;
         }
@@ -85,16 +83,21 @@ public class AbilityButtonFunctions : MonoBehaviour
             mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
             //select next unit
             mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
-
             return;
         }
         else
         {
+            //Select first enemy unit
+            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
             //Enter shooting mode
             mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
             TurnSystem.EnemyTargeting = true;
-            //Select first enemy unit
-            mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
+            if (TurnSystem.selectedTarget.CheckUnitState(UnitConfig.UnitState.Dead))
+            {
+                //Enter shooting mode
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                TurnSystem.EnemyTargeting = false;      
+            }
             return;
         }
 

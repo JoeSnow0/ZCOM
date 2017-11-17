@@ -85,7 +85,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e796183df52b0ed43a701460d5255b60, type: 2}
+  - {fileID: 2100000, guid: bce1c97ffcc6ad347bf7f53552cc88ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,3 +138,4 @@ MonoBehaviour:
   tileY: 0
   map: {fileID: 0}
   turnSystem: {fileID: 0}
+  clickeble: 0

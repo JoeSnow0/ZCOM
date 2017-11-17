@@ -46,6 +46,8 @@ public class TurnSystem : MonoBehaviour
     public Animator cursorAnimator;
     public Animator unitMarkerAnimator;
     public Image[] markerImage;
+    [Header("Line offset")]
+    public float lineYOffset;
     [Header("Selected Unit")]
     static public UnitConfig selectedUnit;
     static public UnitConfig selectedTarget;
@@ -126,6 +128,7 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
+        UpdateHUD();
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
         {
@@ -183,6 +186,22 @@ public class TurnSystem : MonoBehaviour
             MouseSelect();
         }
 
+
+
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
+        {
+            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+            {
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                SelectUnit(selectedUnit);
+                EnemyTargeting = false;
+            }
+        }
+
         if (!playerTurn)//enemy turn
         {
             bool endturn = true;
@@ -226,20 +245,6 @@ public class TurnSystem : MonoBehaviour
                 }
                 selectedUnit = null;
                 hud.pressEnd(true);
-            }
-        }
-
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
-        {
-            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
-            {
-                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-                SelectUnit(selectedUnit);
-                EnemyTargeting = false;
             }
         }
     }
@@ -453,7 +458,18 @@ public class TurnSystem : MonoBehaviour
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
-                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
+                if (!selected.isFriendly && playerTurn)
+                {
+                    //HACK: Hard coded, fix for multiple abilities
+                    generateAbilityButtons.abilityName.text = selectedUnit.unitAbilities.abilities[0].abilityName;
+                    generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
+                    generateAbilityButtons.abilityTooltip.text = selectedUnit.unitAbilities.abilities[0].tooltip;
+                    //HACK: quick calculations
+                    int minDamage = selectedUnit.unitWeapon.baseDamage + selectedUnit.unitWeapon.numberOfDiceDamage;
+                    int maxDamage = selectedUnit.unitWeapon.baseDamage + selectedUnit.unitWeapon.numberOfDiceDamage * selectedUnit.unitWeapon.numberOfSidesDamage;
+                    generateAbilityButtons.abilityEffect.text = minDamage + " - " + maxDamage + " Damage";
+                }
+                
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -575,8 +591,8 @@ public class TurnSystem : MonoBehaviour
                 while (spawnSetup[number].boss)
                 {
                     number = Random.Range(0, spawnSetup.Length);
-                    enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 }
+                enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 break;
             }
         }
@@ -587,14 +603,24 @@ public class TurnSystem : MonoBehaviour
     private void UpdateHUD()
     {
         unitInfoHolder.SetActive(playerTurn);
-
-        if (selectedUnit != null)
+        
+        if (selectedUnit != null && selectedUnit != lastSelectedUnit)
         {
+            lastSelectedUnit = selectedUnit;
             classInformationAnimator.Play("UnitInfoTransition", -1, 0f);
             className.text = selectedUnit.unitClassStats.unitClassName.ToUpper();
             unitName.text = selectedUnit.unitName;
             classIcon.sprite = selectedUnit.unitClassStats.classIcon;
         }
+
+        /*if(selectedTarget != null && selectedTarget.markerAnimator != null)
+        {
+            selectedTarget.markerAnimator.SetBool("display", true);
+        }
+        else
+        {
+
+        }*/
 
         foreach (UnitConfig unit in playerUnits)//Updates friendly units
         {
@@ -610,13 +636,20 @@ public class TurnSystem : MonoBehaviour
 
         foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
+            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit
+                || selectedTarget == unit && unit.markerAnimator != null)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
             {
                 unit.animatorHealthbar.SetBool("display", true);
+                if(selectedTarget == unit && unit.markerAnimator != null)
+                {
+                    unit.markerAnimator.SetBool("display", true);
+                }
             }
             else if (unit.animatorHealthbar != null)
             {
                 unit.animatorHealthbar.SetBool("display", false);
+                if(unit.markerAnimator != null)
+                    unit.markerAnimator.SetBool("display", false);
             }
         }
     }

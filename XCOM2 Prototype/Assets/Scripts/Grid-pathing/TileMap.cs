@@ -205,7 +205,13 @@ public class TileMap : MonoBehaviour {
             tiles[23, 10] = 1;
             tiles[7, 9] = 1;
             tiles[8, 9] = 1;
-            
+            //car
+            tiles[1, 4] = 1;
+            tiles[1, 5] = 1;
+            tiles[1, 6] = 1;
+            tiles[2, 4] = 1;
+            tiles[2, 5] = 1;
+            tiles[2, 6] = 1;
         }
 
         //Full cover
