@@ -32,6 +32,8 @@ public class EnemySpawn : MonoBehaviour {
                 mapConfig.turnSystem.enemyUnits.Add(enemy);
                 enemy.InitializeEnemy();
                 enemy.actionPoints.ReplenishAllActions();
+                enemy.unitName = "Zombie Håkan";
+
             }
         }
         mapConfig.turnSystem.enemyUnits[0].enemyAi.isMyTurn = true;
