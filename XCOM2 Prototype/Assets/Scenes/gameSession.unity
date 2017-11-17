@@ -11335,31 +11335,6 @@ Prefab:
       propertyPath: cameraControl
       value: 
       objectReference: {fileID: 1959895072}
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: spawnSetup.Array.data[0].spawnNumberOfEnemys
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: spawnSetup.Array.data[1].spawnNumberOfEnemys
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: spawnSetup.Array.data[2].spawnNumberOfEnemys
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: spawnSetup.Array.data[0].boss
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
-        type: 2}
-      propertyPath: lineYOffset
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0

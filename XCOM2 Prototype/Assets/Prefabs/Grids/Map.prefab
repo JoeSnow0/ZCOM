@@ -134,6 +134,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  lineYOffset: 0.2
   mapConfig: {fileID: 114105975272966794}
   generateAbilityButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
@@ -146,21 +147,54 @@ MonoBehaviour:
   spawnSetup:
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    spawnNumberOfEnemys: 3
+    spawnNumberOfEnemys: 1
     activatTurn: 0
+    boss: 1
   - enemyPrefab:
-    - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
-    spawnNumberOfEnemys: 2
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
+    spawnNumberOfEnemys: 3
     activatTurn: 1
+    boss: 0
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
     spawnNumberOfEnemys: 2
     activatTurn: 2
+    boss: 0
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: 37ed89a08e3712d4b97153eac498bd7a, type: 2}
+    - {fileID: 114840236989742042, guid: 4a269331174069d47a4bd9e1c9b51162, type: 2}
+    spawnNumberOfEnemys: 2
+    activatTurn: 2
+    boss: 0
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: 216c03ecefc3b6640b22d1120c011124, type: 2}
+    spawnNumberOfEnemys: 3
+    activatTurn: 2
+    boss: 0
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
+    spawnNumberOfEnemys: 2
+    activatTurn: 2
+    boss: 0
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: 216c03ecefc3b6640b22d1120c011124, type: 2}
+    spawnNumberOfEnemys: 3
+    activatTurn: 2
+    boss: 0
+  - enemyPrefab:
+    - {fileID: 114840236989742042, guid: 37ed89a08e3712d4b97153eac498bd7a, type: 2}
+    spawnNumberOfEnemys: 8
+    activatTurn: 2
+    boss: 0
+  - enemyPrefab:
+    - {fileID: 114439782857521022, guid: c73cdac195bdf9f4f8794cb67c796d78, type: 2}
+    spawnNumberOfEnemys: 1
+    activatTurn: 2
+    boss: 1
   nextTarget: 9
   previousTarget: 304
   leaveAttackMode: 27
   distance: 0
-  killCount: 0
 --- !u!114 &114180962689554276
 MonoBehaviour:
   m_ObjectHideFlags: 1
