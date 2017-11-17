@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114995828931628862}
   - component: {fileID: 114105975272966794}
   - component: {fileID: 114180962689554276}
+  - component: {fileID: 114429691686418728}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -59,6 +60,7 @@ MonoBehaviour:
   enemySpawn: {fileID: 114995828931628862}
   tileMap: {fileID: 114764200081771642}
   stateController: {fileID: 114180962689554276}
+  zombieNameGenerator: {fileID: 114429691686418728}
   managerConfig: {fileID: 0}
 --- !u!114 &114140638950140348
 MonoBehaviour:
@@ -134,6 +136,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  lineYOffset: 0.2
   mapConfig: {fileID: 114105975272966794}
   generateAbilityButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
@@ -146,21 +149,23 @@ MonoBehaviour:
   spawnSetup:
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    spawnNumberOfEnemys: 3
+    spawnNumberOfEnemys: 1
     activatTurn: 0
+    boss: 1
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: 00eed3dd439d85b489999a51d6e40125, type: 2}
-    spawnNumberOfEnemys: 2
+    spawnNumberOfEnemys: 1
     activatTurn: 1
+    boss: 0
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    spawnNumberOfEnemys: 2
+    spawnNumberOfEnemys: 1
     activatTurn: 2
+    boss: 0
   nextTarget: 9
   previousTarget: 304
   leaveAttackMode: 27
   distance: 0
-  killCount: 0
 --- !u!114 &114180962689554276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,6 +178,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelAnimator: {fileID: 0}
+--- !u!114 &114429691686418728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402832461053760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83369f4a5ae937a44b33160704d24f6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zombieNames:
+  - Peter
+  - Johan
+  - "H\xE5kan"
+  - Oskar
+  - Joel
+  - Per-Emil
+  - Kevin
+  - Rasmus
+  - Niklas
+  - Kabi
+  - Daniel
+  - Martin
+  - Ana
+  - Joakim
+  - Wretis
+  - Richard
+  - Dennis
+  - Tim
+  - Emanuel
+  - Pontus
+  - Sebastian
+  - Bob
+  - Amanda
+  - Abraham
+  - Jonathan
+  - Christopher
+  - Jesper
+  - Hogelty
 --- !u!114 &114764200081771642
 MonoBehaviour:
   m_ObjectHideFlags: 1
