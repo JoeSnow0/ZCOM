@@ -10,8 +10,6 @@ public class AbilityButtonFunctions : MonoBehaviour
     public Button abilityButton;
     private MapConfig _mapConfig = null;
     public MapConfig mapConfig { get { if (_mapConfig == null) _mapConfig = GameObject.FindObjectOfType<MapConfig>(); return _mapConfig; } }
-
-    public Text abilityTooltip;
     public enum AbilityStuff
     {
         None = 0,
@@ -70,7 +68,7 @@ public class AbilityButtonFunctions : MonoBehaviour
         {
             return;
         }
-        if (mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
+        if (mapConfig.turnSystem.enemyUnits.Count == 0 || mapConfig.turnSystem.enemyUnits == null || TurnSystem.selectedUnit == null)
         {
             return;
         }
