@@ -80,8 +80,8 @@ public class UnitConfig : MonoBehaviour
         health = GetComponent<Health>();
         movement = GetComponent<UnitMovement>();
 
-        if (enemyAi == null)
-            InitializeEnemy();
+        //if (!isFriendly)
+        //    InitializeEnemy();
 
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
 

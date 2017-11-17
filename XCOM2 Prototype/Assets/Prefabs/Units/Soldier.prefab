@@ -2076,12 +2076,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
-  unitClassStats: {fileID: 0}
 --- !u!114 &114189640506689788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2232,17 +2226,18 @@ MonoBehaviour:
   health: {fileID: 114799151252263356}
   movement: {fileID: 114139811261921410}
   generateAbilityButtons: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
+  animatorHealthbar: {fileID: 95437274474760678}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
-  modelController: {fileID: 1863176207312346}
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6
   animaitionSpeed: 0.05
   isHighlighted: 0
   animator: {fileID: 114189640506689788}
+  markerAnimator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!114 &114794772884591812
