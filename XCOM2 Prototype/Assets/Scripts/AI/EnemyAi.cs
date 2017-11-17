@@ -31,7 +31,7 @@ public class EnemyAi : MonoBehaviour {
         //HACK: AI Movement?
         if (isMyTurn && !mapConfig.turnSystem.playerTurn && unitConfig.actionPoints.CheckAvailableActions(unitConfig.unitClassStats.moveCost) && unitConfig.CheckUnitState(UnitConfig.UnitState.Idle))
         {
-            
+            int currentActions = unitConfig.actionPoints.ReturnAvailableActions();
             foreach (UnitConfig unit in unitConfig.mapConfig.turnSystem.playerUnits)
             {
                 IsPlayerNextToMe(unit.tileX, unit.tileY);
@@ -45,7 +45,7 @@ public class EnemyAi : MonoBehaviour {
                 FindClosestPlayerUnit();
             
             unitConfig.EnemyMoveNextTile();
-            if (unitConfig.actionPoints.CheckAvailableActions(2))
+            if (currentActions == unitConfig.actionPoints.ReturnAvailableActions())
             {
                 unitConfig.actionPoints.SubtractAllActions();
             }
