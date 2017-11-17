@@ -33,6 +33,11 @@ public class EnemySpawn : MonoBehaviour {
                 enemy.InitializeEnemy();
                 enemy.actionPoints.ReplenishAllActions();
                 enemy.unitName = "Zombie Håkan";
+                if (mapConfig.zombieNameGenerator.zombieNames != null)
+                {
+                    int maxNames = (int)mapConfig.zombieNameGenerator.zombieNames.Count;
+                    enemy.unitName = "Zombie " + mapConfig.zombieNameGenerator.zombieNames[Random.Range(0, maxNames)].ToString();
+                }
 
             }
         }
