@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114995828931628862}
   - component: {fileID: 114105975272966794}
   - component: {fileID: 114180962689554276}
-  - component: {fileID: 114107503052876388}
+  - component: {fileID: 114068930301027212}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -45,24 +45,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114105975272966794
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad7ee196e174d9498fda78011c0966d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSystem: {fileID: 114140638950140348}
-  enemySpawn: {fileID: 114995828931628862}
-  tileMap: {fileID: 114764200081771642}
-  stateController: {fileID: 114180962689554276}
-  zombieNameGenerator: {fileID: 114107503052876388}
-  managerConfig: {fileID: 0}
---- !u!114 &114107503052876388
+--- !u!114 &114068930301027212
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -102,6 +85,23 @@ MonoBehaviour:
   - Christopher
   - Jesper
   - Hogelty
+--- !u!114 &114105975272966794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402832461053760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad7ee196e174d9498fda78011c0966d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSystem: {fileID: 114140638950140348}
+  enemySpawn: {fileID: 114995828931628862}
+  tileMap: {fileID: 114764200081771642}
+  stateController: {fileID: 114180962689554276}
+  zombieNameGenerator: {fileID: 114068930301027212}
+  managerConfig: {fileID: 0}
 --- !u!114 &114140638950140348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,8 +188,8 @@ MonoBehaviour:
   enemyIndex: 1
   spawnSetup:
   - enemyPrefab:
-    - {fileID: 114840236989742042, guid: 37ed89a08e3712d4b97153eac498bd7a, type: 2}
-    spawnNumberOfEnemys: 10
+    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
+    spawnNumberOfEnemys: 1
     activatTurn: 0
     boss: 1
   - enemyPrefab:
