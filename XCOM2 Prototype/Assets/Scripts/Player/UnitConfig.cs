@@ -179,8 +179,8 @@ public class UnitConfig : MonoBehaviour
         //draw line 
         if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitState.Idle))//1 long path
         {
-
-            if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(1))//Walk
+            mapConfig.turnSystem.ToggleMarkers(true);
+            if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(2))//Walk
             {
                 currentColor = mapConfig.turnSystem.lineColors[0];
             }
@@ -191,6 +191,7 @@ public class UnitConfig : MonoBehaviour
 
             for (int i = 0; i < mapConfig.turnSystem.markerImage.Length; i++)
             {
+
                 mapConfig.turnSystem.markerImage[i].color = currentColor;
             }
             line.startColor = currentColor;
@@ -228,6 +229,11 @@ public class UnitConfig : MonoBehaviour
                 }
             }
             line.positionCount = line.positionCount-1;
+        }
+        else if(isFriendly && isSelected)
+        {
+            line.positionCount = 0;
+            mapConfig.turnSystem.ToggleMarkers(false);
         }
     }
     public void InitializeEnemy()

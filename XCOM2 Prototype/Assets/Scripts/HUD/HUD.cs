@@ -79,7 +79,7 @@ public class HUD : MonoBehaviour {
             turnSystem.ResetActions(isPlayerTurn);
             
             
-            if (isPlayerTurn)
+            if (isPlayerTurn && TurnSystem.selectedUnit != null)
             {
                 turnSystem.KeyboardSelect(true, turnSystem.playerUnits, TurnSystem.selectedUnit);
             }
