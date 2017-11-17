@@ -424,6 +424,7 @@ public class UnitConfig : MonoBehaviour
             if (accuracy <= 0)
                 break;
         }
+        Debug.Log(accuracy);
         if (accuracy < 0)
             accuracy = 0;
         else if (accuracy > 100)

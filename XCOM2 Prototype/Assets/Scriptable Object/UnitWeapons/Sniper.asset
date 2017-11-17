@@ -17,10 +17,10 @@ MonoBehaviour:
     type: 2}
   value: 0
   baseAim: 40
-  rangeModShort: -10
-  rangeModMedium: -4
-  rangeModLong: 5
-  rangeModFar: 20
+  rangeModShort: -4
+  rangeModMedium: -8
+  rangeModLong: 4
+  rangeModFar: 9
   weaponRange: 0
   baseDamage: 3
   numberOfDiceDamage: 1

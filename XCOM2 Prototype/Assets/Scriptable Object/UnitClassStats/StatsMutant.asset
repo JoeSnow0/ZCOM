@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: StatsMutant
   m_EditorClassIdentifier: 
   unitClassName: Mutant
-  classIcon: {fileID: 0}
-  classModel: {fileID: 1919437502217588, guid: c73cdac195bdf9f4f8794cb67c796d78, type: 2}
-  hitParticleSystem: {fileID: 1422695315692348, guid: 2fc2fcc402b5fdf4595633c0b4cb2323,
+  classIcon: {fileID: 21300000, guid: 5dd40d945416c604da8532129bcee4b3, type: 3}
+  classModel: {fileID: 0}
+  hitParticleSystem: {fileID: 1560964771146858, guid: 05ed566d85622714e9be975fcdee1578,
     type: 2}
   maxUnitHealth: 10
   unitDefense: 0
