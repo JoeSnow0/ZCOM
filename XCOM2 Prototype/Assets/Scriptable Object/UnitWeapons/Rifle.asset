@@ -19,8 +19,8 @@ MonoBehaviour:
   baseAim: 100
   rangeModShort: 3
   rangeModMedium: 5
-  rangeModLong: 10
-  rangeModFar: 40
+  rangeModLong: 6
+  rangeModFar: 7
   weaponRange: 0
   baseDamage: 1
   numberOfDiceDamage: 1
