@@ -35,7 +35,7 @@ public class UnitConfig : MonoBehaviour
     //Unit Position
     public int tileX;
     public int tileY;
-
+    
     //grid Reference
     public List<Node> currentPath = null;
     public List<Node> currentBulletPath = null;
@@ -242,6 +242,7 @@ public class UnitConfig : MonoBehaviour
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
+        actionPoints = GetComponent<ActionPoints>();
         tileX = (int)tileCoords.x;
         tileY = (int)tileCoords.z;
         mapConfig.tileMap.UnitMapData(tileX, tileY);

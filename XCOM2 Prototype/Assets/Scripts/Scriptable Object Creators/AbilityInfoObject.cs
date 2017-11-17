@@ -7,13 +7,15 @@ using UnityEngine.Events;
 [Serializable]
 public class AbilityInfo
 {
+    [Header("Name of ability")]
+    public string abilityName;
     [Header("Name of Keybinding")]
     public string name;
     [Header("Keybind")]
     public KeyCode keybind;
     [Header("Icon")]
     public Sprite icon;
-    [Header("Description")]
+    [Header("Tooltip")]
     [Tooltip("This is used to describe what the ability does")]
     public string tooltip;
     [Header("Ability Cost")]

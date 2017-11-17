@@ -194,7 +194,7 @@ public class CameraControl : MonoBehaviour {
 
         if (cameraStartPosition == null)
         {
-            startPosition = cameraTarget.transform.position;
+            //startPosition = cameraTarget.transform.position;
         }
         else
         {

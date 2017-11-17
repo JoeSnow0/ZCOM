@@ -186,6 +186,22 @@ public class TurnSystem : MonoBehaviour
             MouseSelect();
         }
 
+
+
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
+        {
+            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+            {
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                SelectUnit(selectedUnit);
+                EnemyTargeting = false;
+            }
+        }
+
         if (!playerTurn)//enemy turn
         {
             bool endturn = true;
@@ -229,20 +245,6 @@ public class TurnSystem : MonoBehaviour
                 }
                 selectedUnit = null;
                 hud.pressEnd(true);
-            }
-        }
-
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
-        {
-            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
-            {
-                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-                SelectUnit(selectedUnit);
-                EnemyTargeting = false;
             }
         }
     }
@@ -456,7 +458,18 @@ public class TurnSystem : MonoBehaviour
                 selected = unitList[chosenUnitIndex];
                 selectedTarget = selected;
                 selectedUnit.GetAccuracy(selectedTarget.tileX, selectedTarget.tileY);
-                generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
+                if (!selected.isFriendly && playerTurn)
+                {
+                    //HACK: Hard coded, fix for multiple abilities
+                    generateAbilityButtons.abilityName.text = selectedUnit.unitAbilities.abilities[0].abilityName;
+                    generateAbilityButtons.abilityChanceToHit.text = "Chance to hit: " + UnitConfig.accuracy + "%";
+                    generateAbilityButtons.abilityTooltip.text = selectedUnit.unitAbilities.abilities[0].tooltip;
+                    //HACK: quick calculations
+                    int minDamage = selectedUnit.unitWeapon.baseDamage + selectedUnit.unitWeapon.numberOfDiceDamage;
+                    int maxDamage = selectedUnit.unitWeapon.baseDamage + selectedUnit.unitWeapon.numberOfDiceDamage * selectedUnit.unitWeapon.numberOfSidesDamage;
+                    generateAbilityButtons.abilityEffect.text = minDamage + " - " + maxDamage + " Damage";
+                }
+                
                 break;
             }
             if (unitList[chosenUnitIndex].isFriendly && unitList[chosenUnitIndex].actionPoints.CheckAvailableActions(1))
@@ -578,8 +591,8 @@ public class TurnSystem : MonoBehaviour
                 while (spawnSetup[number].boss)
                 {
                     number = Random.Range(0, spawnSetup.Length);
-                    enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 }
+                enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 break;
             }
         }

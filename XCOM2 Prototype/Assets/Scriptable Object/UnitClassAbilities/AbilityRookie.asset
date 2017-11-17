@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: AbilityRookie
   m_EditorClassIdentifier: 
   abilities:
-  - name: 1
+  - abilityName: Shoot
+    name: 1
     keybind: 49
     icon: {fileID: 21300000, guid: 99bb695ee2df6874bb9c5402f7461d0e, type: 3}
     tooltip: Shoot target
