@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: StatsMutant
   m_EditorClassIdentifier: 
   unitClassName: Mutant
-  classIcon: {fileID: 0}
+  classIcon: {fileID: 21300000, guid: 5dd40d945416c604da8532129bcee4b3, type: 3}
   classModel: {fileID: 0}
   hitParticleSystem: {fileID: 1861490406305566, guid: cb8c82304e6a17e4ba8ccc212a83937e,
     type: 2}
