@@ -236,6 +236,7 @@ public class UnitConfig : MonoBehaviour
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         Vector3 tileCoords = mapConfig.tileMap.WorldCoordToTileCoord((int)transform.position.x, (int)transform.position.z);
         enemyAi = GetComponent<EnemyAi>();
+        actionPoints = GetComponent<ActionPoints>();
         tileX = (int)tileCoords.x;
         tileY = (int)tileCoords.z;
         mapConfig.tileMap.UnitMapData(tileX, tileY);

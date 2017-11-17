@@ -186,6 +186,22 @@ public class TurnSystem : MonoBehaviour
             MouseSelect();
         }
 
+
+
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
+        {
+            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
+            {
+                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
+                SelectUnit(selectedUnit);
+                EnemyTargeting = false;
+            }
+        }
+
         if (!playerTurn)//enemy turn
         {
             bool endturn = true;
@@ -229,20 +245,6 @@ public class TurnSystem : MonoBehaviour
                 }
                 selectedUnit = null;
                 hud.pressEnd(true);
-            }
-        }
-
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyUp(leaveAttackMode) || Input.GetMouseButtonUp(1))
-        {
-            if (mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
-            {
-                mapConfig.stateController.SetCurrentState(StateController.GameState.TacticalMode);
-                SelectUnit(selectedUnit);
-                EnemyTargeting = false;
             }
         }
     }
@@ -578,8 +580,8 @@ public class TurnSystem : MonoBehaviour
                 while (spawnSetup[number].boss)
                 {
                     number = Random.Range(0, spawnSetup.Length);
-                    enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 }
+                enemySpawn.SpawnEnemy(spawnSetup[number], spawnSetup[number].spawnNumberOfEnemys);
                 break;
             }
         }
