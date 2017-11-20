@@ -83,6 +83,10 @@ public class TurnSystem : MonoBehaviour
 
     public Dictionary<string, int> killedUnits = new Dictionary<string, int>();
 
+    //TUTORIAL
+    static public bool hasShot = false;
+    static public bool hasMoved = false;
+
     void Start()
     {
         //Clear lists

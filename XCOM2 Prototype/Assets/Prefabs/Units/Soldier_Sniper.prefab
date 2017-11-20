@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 4356195037146570}
   - component: {fileID: 33666800600854384}
   - component: {fileID: 23654142271668758}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunTwo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,6 +752,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1683865649972982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4796213273186042}
+  - component: {fileID: 108064232442867168}
+  m_Layer: 0
+  m_Name: Point light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1710492184755962
 GameObject:
   m_ObjectHideFlags: 1
@@ -761,7 +777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4496799924634750}
   - component: {fileID: 137181045144238122}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StarMarine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +933,7 @@ GameObject:
   - component: {fileID: 4934291528973080}
   - component: {fileID: 33641718653104320}
   - component: {fileID: 23573487025972616}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,6 +995,22 @@ GameObject:
   - component: {fileID: 4819615107052856}
   m_Layer: 0
   m_Name: RightHandPinky2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1907134242791422
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4243471619636602}
+  - component: {fileID: 108068613974620702}
+  m_Layer: 9
+  m_Name: Spotlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1302,6 +1334,19 @@ Transform:
   m_Father: {fileID: 4180881631413354}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4243471619636602
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907134242791422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.108, z: -0.003}
+  m_LocalScale: {x: 0.74565816, y: 0.7719708, z: 1.8110979}
+  m_Children: []
+  m_Father: {fileID: 4356195037146570}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4260909720463968
 Transform:
   m_ObjectHideFlags: 1
@@ -1414,6 +1459,7 @@ Transform:
   m_LocalScale: {x: 1.32, y: 0.9360001, z: 1.8590002}
   m_Children:
   - {fileID: 4934291528973080}
+  - {fileID: 4243471619636602}
   m_Father: {fileID: 4045604213726512}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1720,6 +1766,19 @@ Transform:
   m_Father: {fileID: 4022985442397270}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4796213273186042
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683865649972982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.398, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4885163327170918}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4818962910115668
 Transform:
   m_ObjectHideFlags: 1
@@ -1815,6 +1874,7 @@ Transform:
   m_Children:
   - {fileID: 4302729356995022}
   - {fileID: 4947742999823016}
+  - {fileID: 4796213273186042}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2088,7 +2148,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2135,6 +2195,78 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!108 &108064232442867168
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683865649972982}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.8377282, g: 0.8161765, b: 1, a: 1}
+  m_Intensity: 10
+  m_Range: 2
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294966783
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!108 &108068613974620702
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907134242791422}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.5294118, b: 0.5294118, a: 1}
+  m_Intensity: 2
+  m_Range: 10
+  m_SpotAngle: 29
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294966783
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!114 &114034395649760910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2146,12 +2278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35e7a16914d6464e994763af41c8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  isMoving: 0
-  isSprinting: 0
-  pathProgress: 0
-  unitClassStats: {fileID: 0}
 --- !u!114 &114060484394707174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2196,17 +2322,18 @@ MonoBehaviour:
   health: {fileID: 114928354666069324}
   movement: {fileID: 114034395649760910}
   generateAbilityButtons: {fileID: 0}
-  animatorHealthbar: {fileID: 0}
+  animatorHealthbar: {fileID: 95369569318952490}
   mapConfig: {fileID: 0}
   isSelected: 0
   isFriendly: 1
-  modelController: {fileID: 1222319124427242}
+  modelController: {fileID: 0}
   tileX: 0
   tileY: 0
   movePoints: 6
   animaitionSpeed: 0.05
   isHighlighted: 0
   animator: {fileID: 0}
+  markerAnimator: {fileID: 0}
   pathProgress: 0
   enemyAi: {fileID: 0}
 --- !u!114 &114204136886674946
