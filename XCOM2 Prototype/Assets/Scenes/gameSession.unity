@@ -2762,6 +2762,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 108583745667669750, guid: c7c090c2ace172049a2783d82f9275a9,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108583745667669750, guid: c7c090c2ace172049a2783d82f9275a9,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.95686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 108583745667669750, guid: c7c090c2ace172049a2783d82f9275a9,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.8392157
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7c090c2ace172049a2783d82f9275a9, type: 2}
   m_IsPrefabParent: 0
@@ -4042,7 +4057,7 @@ Prefab:
     - target: {fileID: 224784897800314956, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -104
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224591379670833048, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -4062,7 +4077,7 @@ Prefab:
     - target: {fileID: 224591379670833048, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -203.57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224524934749409872, guid: 722a98e23115ac94db3fa3e1fcaaefca,
         type: 2}
@@ -11084,6 +11099,17 @@ Prefab:
       propertyPath: cameraControl
       value: 
       objectReference: {fileID: 1959895072}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: spawnSetup.Array.data[1].enemyPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 114439782857521022, guid: c73cdac195bdf9f4f8794cb67c796d78,
+        type: 2}
+    - target: {fileID: 114140638950140348, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+        type: 2}
+      propertyPath: spawnSetup.Array.data[1].spawnNumberOfEnemys
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9, type: 2}
   m_IsPrefabParent: 0
