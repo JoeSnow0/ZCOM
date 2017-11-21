@@ -121,6 +121,20 @@ public class AnimationScript : MonoBehaviour {
 
     public void AttackHit()
     {
+        if(TurnSystem.selectedTarget == null)
+        {
+
+        }
+        else if (unitConfig.isFriendly && target != TurnSystem.selectedTarget)
+        {
+            Debug.Log("selected target for the player unit is wrong");
+            target = TurnSystem.selectedTarget;
+        }
+        else if(!unitConfig.isFriendly)
+        {
+            Debug.Log("selected target for the enemy is wrong");
+            target = TurnSystem.selectedTarget;
+        }
         target.health.TakeDamage(unitConfig.unitWeapon);
     }
 

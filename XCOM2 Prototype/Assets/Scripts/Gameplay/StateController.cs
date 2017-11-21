@@ -26,6 +26,7 @@ public class StateController : MonoBehaviour
         {
             panelAnimator.SetBool("displayPanel", false);
             TurnSystem.EnemyTargeting = false;
+            TurnSystem.selectedTarget = null;
         }
         print(CurrentState);
 

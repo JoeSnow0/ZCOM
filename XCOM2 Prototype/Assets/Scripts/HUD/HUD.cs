@@ -22,8 +22,7 @@ public class HUD : MonoBehaviour {
     [HideInInspector]public int amountTurns;
     int maxTurns;
     public bool isPlayerTurn;
-
-    public TurnSystem turnSystem;
+    
     public MapConfig mapConfig;
 
     void Start () {
@@ -43,14 +42,14 @@ public class HUD : MonoBehaviour {
         if (TurnSystem.totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
         {
             isPlayerTurn = !isPlayerTurn;
-            turnSystem.ToggleMarkers(isPlayerTurn);
+            mapConfig.turnSystem.ToggleMarkers(isPlayerTurn);
 
             if (!isPlayerTurn)
             {
                 playerUI.SetActive(false);
                 alienUI.SetActive(true);
                 alienAnim.Play("AlienActivityOn");
-                turnSystem.enemyIndex = 0;
+                mapConfig.turnSystem.enemyIndex = 0;
                 if(mapConfig.turnSystem.playerUnits.Count > 0)
                     mapConfig.turnSystem.spawnEnemy();
 
@@ -58,14 +57,15 @@ public class HUD : MonoBehaviour {
                 mapConfig.tileMap.ResetColorGrid();
                 mapConfig.turnSystem.className.gameObject.SetActive(false);
 
-                if (turnSystem.playerUnits.Count < 1)
+                if (mapConfig.turnSystem.playerUnits.Count < 1)
                 {
                     victoryScript.winCheck(false);
                 }
+                mapConfig.turnSystem.SelectUnit(mapConfig.turnSystem.playerUnits[0]);
             }
             else
             {
-                if(turnSystem.playerUnits.Count < 1)
+                if(mapConfig.turnSystem.playerUnits.Count < 1)
                 {
                     victoryScript.winCheck(false);
                 }
@@ -76,18 +76,18 @@ public class HUD : MonoBehaviour {
                 mapConfig.turnSystem.cameraControl.playerMovedCamera = false;
             }
             //Add all functionality here, END TURN
-            turnSystem.ResetActions(isPlayerTurn);
+            mapConfig.turnSystem.ResetActions(isPlayerTurn);
             
             
             if (isPlayerTurn && TurnSystem.selectedUnit != null)
             {
-                turnSystem.KeyboardSelect(true, turnSystem.playerUnits, TurnSystem.selectedUnit);
+                mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.playerUnits, TurnSystem.selectedUnit);
             }
 
             if (isPlayerTurn)
                 amountTurns++;
 
-            maxTurns = turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
+            maxTurns = mapConfig.turnSystem.getCurrentTurn(amountTurns); //Sets max turns and sends current turn to turn system
             
 
 
@@ -96,7 +96,7 @@ public class HUD : MonoBehaviour {
             else
             {
                 victoryText.text = "VICTORY";                                                                                                                               
-                victoryText.color = turnSystem.victoryColor;
+                victoryText.color = mapConfig.turnSystem.victoryColor;
             }
         }
         else //Show warning if player has more than 0 actions

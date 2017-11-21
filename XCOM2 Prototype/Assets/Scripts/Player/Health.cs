@@ -102,6 +102,7 @@ public class Health : MonoBehaviour
             }
             UpdateUnitHealth();
         }
+        
         TurnSystem.selectedTarget = null;
     }
 

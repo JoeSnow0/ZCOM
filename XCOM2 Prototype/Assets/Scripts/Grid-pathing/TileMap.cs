@@ -31,6 +31,7 @@ public class TileMap : MonoBehaviour {
 
     public GridMaterials gridMaterials;
     private UnitConfig playerGridColorChange;
+    private MapConfig mapConfig;
     public int mapSizeX;//map size
     public int mapSizeY;
 
@@ -54,6 +55,7 @@ public class TileMap : MonoBehaviour {
         GenerateMapVisual();//make the map visuals
         changedColoredGrid = new List<ClickebleTile>();
         currentGrid = new int[mapSizeX, mapSizeY];
+        mapConfig = GetComponent<MapConfig>();
     }
 
     void GenerateMapData()//make the grid and it's obstacles.
@@ -324,7 +326,7 @@ public class TileMap : MonoBehaviour {
         if (sourceX != targetX && sourceY != targetY)//for diagonally movement
         {
             // we moveing diagonally
-            cost *= Mathf.Sqrt(2f);
+            cost *= 1.3f;
         }
 
         return cost;
@@ -570,7 +572,9 @@ public class TileMap : MonoBehaviour {
 
     public void ChangeGridColor(int movement, int actions, UnitConfig position)
     {
-        
+        if (!mapConfig.turnSystem.playerTurn)
+            return;
+
         playerGridColorChange = position;
 
         for (int x = 0; x < mapSizeX; x++)

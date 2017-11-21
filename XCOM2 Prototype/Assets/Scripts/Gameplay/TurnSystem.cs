@@ -636,8 +636,14 @@ public class TurnSystem : MonoBehaviour
 
         foreach (UnitConfig unit in enemyUnits) //Update enemy units
         {
-            if (!playerTurn && unit.enemyAi.isMyTurn || unit.isHighlighted || selectedUnit != null && selectedUnit.animator.target != null && selectedUnit.animator.target == unit
-                || selectedTarget == unit && unit.markerAnimator != null)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
+            if (!playerTurn && 
+                unit.enemyAi.isMyTurn || 
+                unit.isHighlighted || 
+                selectedUnit != null &&
+                selectedUnit.animator.target != null && 
+                selectedUnit.animator.target == unit || 
+                selectedTarget == unit &&
+                unit.markerAnimator != null)/*|| unit.enemyAi.isHighlighted   CODE FOR IF THE UNIT IS HIGHLIGHTED     */
             {
                 unit.animatorHealthbar.SetBool("display", true);
                 if(selectedTarget == unit && unit.markerAnimator != null)
