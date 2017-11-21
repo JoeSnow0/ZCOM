@@ -11,7 +11,7 @@ public class ObjectiveSurvive : Objective {
         if(maxTurns < 1)
             maxTurns = mapConfig.turnSystem.maxTurns;
         
-        SetDescription("Survive " + maxTurns + " rounds");
+        SetDescription("Survive " + maxTurns + (maxTurns > 1 ? " rounds" : " round"));
 
     }
 

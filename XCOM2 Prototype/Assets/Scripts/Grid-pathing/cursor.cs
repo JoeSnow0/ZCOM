@@ -45,8 +45,10 @@ public class cursor : MonoBehaviour {
                     if (turnSystem.playerTurn) {
                         if (TurnSystem.selectedUnit != null && TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
                         {
-                            if(map != null && map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
+                            if (map != null && map.currentGrid[cursorObject.tileX, cursorObject.tileY] != 99)
+                            {
                                 map.GeneratePathTo(cursorObject.tileX, cursorObject.tileY, TurnSystem.selectedUnit);
+                            }
                             else
                             {
                                 TurnSystem.selectedUnit.currentPath = null;
@@ -63,6 +65,7 @@ public class cursor : MonoBehaviour {
 
 
                         TurnSystem.selectedUnit.MoveNextTile();
+                        TurnSystem.hasMoved = true;
                     }
                 }
             }

@@ -15,8 +15,10 @@ public class Objective : MonoBehaviour {
     protected bool isBonus;
     protected Objective objectiveController;
 
+    [SerializeField] private bool isTutorial = false;
     private victoryCheck victoryScript;
     private List<Objective> objectives = new List<Objective>();
+    private int currentObjectiveIndex = 0;
 
     private void Awake()
     {
@@ -27,10 +29,10 @@ public class Objective : MonoBehaviour {
 
     private void Update()
     {
-        
+
     }
 
-    protected void InitializeObjective(ObjectiveState state = ObjectiveState.InProgress, bool bonus = false)// Initializes objectives that inherit variables, this code is never run in the objective controller
+    protected void InitializeObjective(bool bonus = false, ObjectiveState state = ObjectiveState.InProgress)// Initializes objectives that inherit variables, this code is never run in the objective controller
     {
         mapConfig = GameObject.FindGameObjectWithTag("Map").GetComponent<MapConfig>();
         objectiveAnimatior = GetComponentInChildren<Animator>();
@@ -68,9 +70,11 @@ public class Objective : MonoBehaviour {
             if (!won)
                 return;
         }
+
         if (won)
         {
-            victoryScript.winCheck(true);
+            if(!isTutorial)
+                victoryScript.winCheck(true);
         }
     }
 
@@ -78,7 +82,7 @@ public class Objective : MonoBehaviour {
     {
         objectiveState = state;
         objectiveAnimatior.SetInteger("progress", (int)objectiveState);
-        CheckObjectives(objectiveController.objectives);
+        objectiveController.CheckObjectives(objectiveController.objectives);
     }
 
     protected void SetDescription(string newDescription)// Changes the description, has a built in typewriter effect to it
@@ -88,6 +92,16 @@ public class Objective : MonoBehaviour {
         StartCoroutine(PlayText(description, descriptionText));
     }
 
+    protected void DisableObjective(List<Objective> objectiveList)// Disables the objective
+    {
+        objectiveList.Remove(this);
+        gameObject.SetActive(false);
+        if (objectiveController.currentObjectiveIndex >= objectiveController.transform.childCount - 1)
+        {
+            objectiveController.transform.parent.gameObject.SetActive(false);
+        }
+    }
+
     protected IEnumerator PlayText(string inputText, Text outputText)// Typewriter effect
     {
         float waitDuration = 1f / inputText.Length;
@@ -95,6 +109,30 @@ public class Objective : MonoBehaviour {
         {
             outputText.text += c;
             yield return new WaitForSeconds(waitDuration);
+        }
+    }
+
+    protected IEnumerator DelayDisableObjective(float time, bool enableNext = false)
+    {
+        yield return new WaitForSeconds(time);
+        DisableObjective(objectives);
+        if (enableNext)
+        {
+            objectiveController.EnableObjective();
+        }
+    }
+
+    public List<Objective> GetObjectives()
+    {
+        return objectives;
+    }
+
+    private void EnableObjective()
+    {
+        currentObjectiveIndex++;
+        if(currentObjectiveIndex < transform.childCount)
+        {
+            transform.GetChild(currentObjectiveIndex).gameObject.SetActive(true);
         }
     }
 

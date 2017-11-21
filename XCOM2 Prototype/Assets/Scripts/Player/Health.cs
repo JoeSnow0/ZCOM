@@ -102,7 +102,9 @@ public class Health : MonoBehaviour
             }
             UpdateUnitHealth();
         }
-        
+        if(!unitConfig.isFriendly)// FOR TUTORIAL
+            TurnSystem.hasShot = true; 
+
         TurnSystem.selectedTarget = null;
     }
 
@@ -164,5 +166,10 @@ public class Health : MonoBehaviour
             
         UpdateUnitHealth();
         
+    }
+
+    public int GetHealth()
+    {
+        return currentUnitHealth;
     }
 }
