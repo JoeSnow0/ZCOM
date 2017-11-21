@@ -119,7 +119,6 @@ public class AbilityButtonFunctions : MonoBehaviour
         if (ConfirmAbilityCheck(AbilityStuff.Overwatch) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //This happens when ability is activated
-            Debug.Log("Unit in overwatch");
         }
         else
         {
@@ -142,7 +141,6 @@ public class AbilityButtonFunctions : MonoBehaviour
         if (ConfirmAbilityCheck(AbilityStuff.Hunker) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //This happens when ability is activated
-            Debug.Log("Hunkered down, defense increased");
         }
         else
         {
@@ -166,7 +164,6 @@ public class AbilityButtonFunctions : MonoBehaviour
         if (ConfirmAbilityCheck(AbilityStuff.Reload) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //This happens when ability is activated
-            Debug.Log("Weapon reloaded");
         }
         else
         {
@@ -189,7 +186,6 @@ public class AbilityButtonFunctions : MonoBehaviour
         if (ConfirmAbilityCheck(AbilityStuff.Medkit) && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //This happens when ability is activated
-            Debug.Log("Healing");
         }
         else
         {

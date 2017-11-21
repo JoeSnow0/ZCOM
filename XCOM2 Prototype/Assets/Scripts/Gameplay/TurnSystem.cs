@@ -132,10 +132,7 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
-        if (selectedUnit != null)
-        {
-            Debug.Log(selectedUnit.currentUnitState);
-        }
+        
         UpdateHUD();
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
@@ -158,8 +155,7 @@ public class TurnSystem : MonoBehaviour
             }
         }
 
-
-        Debug.Log(selectedUnit);
+        
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //Select next enemy unit

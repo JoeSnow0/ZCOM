@@ -39,7 +39,7 @@ public class UnitConfig : MonoBehaviour
     //grid Reference
     public List<Node> currentPath = null;
     public List<Node> currentBulletPath = null;
-    List<Node> testDebug = null; // delete all things that has this list later
+    //List<Node> testDebug = null; // delete all things that has this list later
 
     public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
@@ -104,21 +104,21 @@ public class UnitConfig : MonoBehaviour
     }
     void Update()
     {
-        if(testDebug != null)
-        {
-            int currNode = 0;
-            while(currNode < testDebug.Count-1)
-            {
-                Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(testDebug[currNode].x, testDebug[currNode].y) +
-                    new Vector3(0, 1, 0);
-                Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(testDebug[currNode+1].x, testDebug[currNode+1].y) +
-                   new Vector3(0, 1, 0);
+        //if(testDebug != null)
+        //{
+        //    int currNode = 0;
+        //    while(currNode < testDebug.Count-1)
+        //    {
+        //        Vector3 start = mapConfig.tileMap.TileCoordToWorldCoord(testDebug[currNode].x, testDebug[currNode].y) +
+        //            new Vector3(0, 1, 0);
+        //        Vector3 end = mapConfig.tileMap.TileCoordToWorldCoord(testDebug[currNode+1].x, testDebug[currNode+1].y) +
+        //           new Vector3(0, 1, 0);
 
-                Debug.DrawLine(start, end, Color.red);
-                currNode++;
-            }
+        //        Debug.DrawLine(start, end, Color.red);
+        //        currNode++;
+        //    }
             
-        }
+        //}
         if (!isSelected && isFriendly)
         {
             currentPath = null;
@@ -266,8 +266,7 @@ public class UnitConfig : MonoBehaviour
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
-            Debug.Log(unitName + " " + TurnSystem.selectedUnit.unitName);
-            Debug.Log(currentUnitState);
+            
             //animator.AttackStart();
 
 
@@ -412,7 +411,7 @@ public class UnitConfig : MonoBehaviour
     {
         ClickebleTile closest = GetClosestPlayersquare(targetTileX, targetTileY);
         mapConfig.tileMap.GeneratePathTo(closest.tileX, closest.tileY, this, true);
-        testDebug = currentBulletPath;
+        //testDebug = currentBulletPath;
         accuracy = unitWeapon.baseAim;
         int distans;
         if (currentBulletPath == null)

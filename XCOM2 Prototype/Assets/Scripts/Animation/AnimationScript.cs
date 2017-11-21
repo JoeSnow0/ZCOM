@@ -110,7 +110,6 @@ public class AnimationScript : MonoBehaviour {
         }
         else
         {
-            Debug.LogError("Particle system needed, drag particle system to weapon scriptable object");
         }
 
         if (audioSource != null)
@@ -127,12 +126,10 @@ public class AnimationScript : MonoBehaviour {
         }
         else if (unitConfig.isFriendly && target != TurnSystem.selectedTarget)
         {
-            Debug.Log("selected target for the player unit is wrong");
             target = TurnSystem.selectedTarget;
         }
         else if(!unitConfig.isFriendly)
         {
-            Debug.Log("selected target for the enemy is wrong");
             target = TurnSystem.selectedTarget;
         }
         target.health.TakeDamage(unitConfig.unitWeapon);

@@ -78,7 +78,6 @@ public class Health : MonoBehaviour
             dmgText[1].text = "-";
             //Temporary lazy code preventing zombies from missing
             CalculationManager.hit = true;
-            Debug.Log("miss");
         }
         else
         {

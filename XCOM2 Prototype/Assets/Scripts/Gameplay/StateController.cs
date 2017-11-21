@@ -27,8 +27,8 @@ public class StateController : MonoBehaviour
             panelAnimator.SetBool("displayPanel", false);
             TurnSystem.EnemyTargeting = false;
         }
-        print(CurrentState);
 
+        
     }
 
     public bool CheckCurrentState(GameState CompareState)
