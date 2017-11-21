@@ -326,7 +326,7 @@ public class TileMap : MonoBehaviour {
         if (sourceX != targetX && sourceY != targetY)//for diagonally movement
         {
             // we moveing diagonally
-            cost *= 1.3f;
+            cost *= 1.1f;
         }
 
         return cost;

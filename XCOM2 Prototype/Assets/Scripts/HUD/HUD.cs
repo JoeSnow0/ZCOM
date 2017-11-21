@@ -61,7 +61,6 @@ public class HUD : MonoBehaviour {
                 {
                     victoryScript.winCheck(false);
                 }
-                mapConfig.turnSystem.SelectUnit(mapConfig.turnSystem.playerUnits[0]);
             }
             else
             {
@@ -74,6 +73,7 @@ public class HUD : MonoBehaviour {
                 endButton.SetActive(true);
                 mapConfig.turnSystem.className.gameObject.SetActive(true);
                 mapConfig.turnSystem.cameraControl.playerMovedCamera = false;
+                mapConfig.turnSystem.SelectUnit(mapConfig.turnSystem.playerUnits[0]);
             }
             //Add all functionality here, END TURN
             mapConfig.turnSystem.ResetActions(isPlayerTurn);
