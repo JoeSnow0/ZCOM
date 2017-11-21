@@ -44,7 +44,7 @@ public class UnitConfig : MonoBehaviour
     public int movePoints;
     [SerializeField]float animaitionSpeed = 0.05f;
     public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
-    private UnitState currentUnitState;
+    public UnitState currentUnitState;
     
     public bool isHighlighted = false;
 
@@ -129,7 +129,7 @@ public class UnitConfig : MonoBehaviour
             
         }
         //Turn in the direction they're moving.
-        if (CheckUnitState(UnitState.Walking) || CheckUnitState(UnitState.Sprinting))
+        else if (CheckUnitState(UnitState.Walking) || CheckUnitState(UnitState.Sprinting))
         {
             mapConfig.turnSystem.cameraControl.MoveToTarget(transform.position, cameraStartPosition, true);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
@@ -159,6 +159,7 @@ public class UnitConfig : MonoBehaviour
             {
                 
                 mapConfig.tileMap.UnitMapData(tileX, tileY);
+                if(!CheckUnitState(UnitState.Shooting))
                 SetUnitState(UnitState.Idle);
                 currentPath = null;
                 pathIndex = 0;
@@ -177,7 +178,7 @@ public class UnitConfig : MonoBehaviour
             }
         }
         //draw line 
-        if (currentPath != null && isFriendly && TurnSystem.selectedUnit.CheckUnitState(UnitState.Idle))//1 long path
+        if (currentPath != null && isFriendly && CheckUnitState(UnitState.Idle) && isSelected)//1 long path
         {
             mapConfig.turnSystem.ToggleMarkers(true);
             if (currentPath.Count < movePoints + 2 && actionPoints.CheckAvailableActions(2))//Walk
@@ -265,6 +266,8 @@ public class UnitConfig : MonoBehaviour
             //Shoot target
             //Trigger shooting animation
             SetUnitState(UnitState.Shooting);
+            Debug.Log(unitName + " " + TurnSystem.selectedUnit.unitName);
+            Debug.Log(currentUnitState);
             //animator.AttackStart();
 
 
@@ -276,7 +279,7 @@ public class UnitConfig : MonoBehaviour
             TurnSystem.selectedUnit.actionPoints.SubtractAllActions();
             //Stop targeting mode
             //SetUnitState(UnitState.Idle);
-            mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
+            //mapConfig.turnSystem.DeselectUnit(TurnSystem.selectedTarget);
         }
     }
     public void MeleeAttack(UnitConfig self, UnitConfig target)
@@ -370,7 +373,7 @@ public class UnitConfig : MonoBehaviour
         {
             mapConfig.turnSystem.cameraControl.SetCameraTime(0);
             cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-            TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Walking);
+            SetUnitState(UnitConfig.UnitState.Walking);
             actionPoints.SubtractActions(1);
             return;
         }
@@ -388,7 +391,7 @@ public class UnitConfig : MonoBehaviour
             {
                 mapConfig.turnSystem.cameraControl.SetCameraTime(0);
                 cameraStartPosition = mapConfig.turnSystem.cameraControl.GetCameraPosition();
-                TurnSystem.selectedUnit.SetUnitState(UnitConfig.UnitState.Walking);
+                SetUnitState(UnitConfig.UnitState.Walking);
                 actionPoints.SubtractActions(2);
             }
             return;

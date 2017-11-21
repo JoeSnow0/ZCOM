@@ -132,6 +132,10 @@ public class TurnSystem : MonoBehaviour
     }
     void Update()
     {
+        if (selectedUnit != null)
+        {
+            Debug.Log(selectedUnit.currentUnitState);
+        }
         UpdateHUD();
         //Deselect units on enemy turn
         if (!playerTurn && selectedUnit != null)
@@ -148,14 +152,14 @@ public class TurnSystem : MonoBehaviour
                 KeyboardSelect(true, playerUnits, selectedUnit);
             }
             //Select previous unit
-            else if (Input.GetKeyDown(previousTarget))
+            else if (Input.GetKeyDown(previousTarget) && !selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
             {
                 KeyboardSelect(false, playerUnits, selectedUnit);
             }
         }
 
-      
 
+        Debug.Log(selectedUnit);
         if (playerTurn && mapConfig.stateController.CheckCurrentState(StateController.GameState.AttackMode))
         {
             //Select next enemy unit
@@ -277,12 +281,16 @@ public class TurnSystem : MonoBehaviour
         }
     public void DeselectUnit(UnitConfig selection)
     {
+        if (selectedUnit != null && !selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+            return;
         mapConfig.tileMap.ResetColorGrid();
         selection.isSelected = false;
         selection = null;
     }
     public void DeselectAllUnits()
     {
+        if (selectedUnit != null && !selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+            return;
         mapConfig.tileMap.ResetColorGrid();
         if (selectedUnit != null)
         {
@@ -349,6 +357,10 @@ public class TurnSystem : MonoBehaviour
         {
             return;
         }
+        if (!selected.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
         if (selected.isFriendly)
         {
             selectedUnit = selected;
@@ -396,6 +408,11 @@ public class TurnSystem : MonoBehaviour
     //Cycle through list of targets
     public void KeyboardSelect(bool ChooseNext, List<UnitConfig> unitList, UnitConfig selected)
     {
+        //Check if unit is idle
+        if (selected != null && !selected.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
         //if list is empty, exit function
         if (unitList == null)
         {
@@ -405,11 +422,6 @@ public class TurnSystem : MonoBehaviour
         if (selected == null)
         {
             selected = unitList[0];
-        }
-        //Check if unit is idle
-        if (!selected.CheckUnitState(UnitConfig.UnitState.Idle))
-        {
-            return;
         }
         int chosenUnitIndex = unitList.FindIndex(a => a == selected);
         DeselectUnit(selected);

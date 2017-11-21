@@ -194,12 +194,12 @@ MonoBehaviour:
     boss: 1
   - enemyPrefab:
     - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    spawnNumberOfEnemys: 3
+    spawnNumberOfEnemys: 2
     activatTurn: 1
     boss: 0
   - enemyPrefab:
-    - {fileID: 114840236989742042, guid: ea921d9c763fc89439d059d1bc1ecd6a, type: 2}
-    spawnNumberOfEnemys: 2
+    - {fileID: 114840236989742042, guid: 216c03ecefc3b6640b22d1120c011124, type: 2}
+    spawnNumberOfEnemys: 3
     activatTurn: 2
     boss: 0
   - enemyPrefab:

@@ -45,7 +45,7 @@ public class AnimationScript : MonoBehaviour {
                 animator.SetInteger("state", 3);
                 if (target == null)
                 {
-                    if (TurnSystem.selectedUnit = TurnSystem.selectedTarget)
+                    if (TurnSystem.selectedUnit == TurnSystem.selectedTarget)
                     {
                         target = TurnSystem.selectedUnit;
                     }

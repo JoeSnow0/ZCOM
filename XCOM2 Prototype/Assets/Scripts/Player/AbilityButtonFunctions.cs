@@ -88,6 +88,7 @@ public class AbilityButtonFunctions : MonoBehaviour
         else
         {
             //Select first enemy unit
+            
             mapConfig.turnSystem.KeyboardSelect(true, mapConfig.turnSystem.enemyUnits, TurnSystem.selectedTarget);
             //Enter shooting mode
             mapConfig.stateController.SetCurrentState(StateController.GameState.AttackMode);
