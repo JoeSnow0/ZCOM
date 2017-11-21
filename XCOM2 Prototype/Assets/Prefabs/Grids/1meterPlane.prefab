@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 65817326393568604}
   - component: {fileID: 114762923954324166}
   - component: {fileID: 114134616226128776}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 1meterPlane
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4791721898412034}
   - component: {fileID: 33709386460384070}
   - component: {fileID: 23394536265647522}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: flore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,8 +83,8 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: bce1c97ffcc6ad347bf7f53552cc88ea, type: 2}
   m_StaticBatchInfo:
@@ -139,7 +139,6 @@ MonoBehaviour:
   tileY: 0
   map: {fileID: 0}
   turnSystem: {fileID: 0}
-  moveDistanse: 0
   clickeble: 1
 --- !u!114 &114762923954324166
 MonoBehaviour:
