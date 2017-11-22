@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 222272108473333122}
   - component: {fileID: 114121518891803720}
   - component: {fileID: 114293823915238026}
-  - component: {fileID: 114159709734800096}
   m_Layer: 5
   m_Name: ExitPanel
   m_TagString: Button_Type_1
@@ -40,7 +39,6 @@ GameObject:
   - component: {fileID: 224240160036298264}
   - component: {fileID: 222397300335759720}
   - component: {fileID: 114738406796322864}
-  - component: {fileID: 114377072933175928}
   m_Layer: 5
   m_Name: ExitText
   m_TagString: Button_Type_1
@@ -93,7 +91,6 @@ GameObject:
   - component: {fileID: 224425455690064846}
   - component: {fileID: 222727264576568312}
   - component: {fileID: 114959840355137970}
-  - component: {fileID: 114543138614602886}
   m_Layer: 5
   m_Name: HighscoreText
   m_TagString: Button_Type_1
@@ -161,7 +158,6 @@ GameObject:
   - component: {fileID: 222013229750477462}
   - component: {fileID: 114645935464212158}
   - component: {fileID: 114952140993297690}
-  - component: {fileID: 114510320360230832}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Button_Type_1
@@ -211,7 +207,6 @@ GameObject:
   - component: {fileID: 222630564051730588}
   - component: {fileID: 114243112959512998}
   - component: {fileID: 114861141215422840}
-  - component: {fileID: 114260590408760830}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Button_Type_1
@@ -246,7 +241,6 @@ GameObject:
   - component: {fileID: 224017266358596088}
   - component: {fileID: 222640541936319798}
   - component: {fileID: 114553148101741090}
-  - component: {fileID: 114703109217897776}
   m_Layer: 5
   m_Name: BackText
   m_TagString: Button_Type_1
@@ -313,7 +307,6 @@ GameObject:
   - component: {fileID: 222469294814784196}
   - component: {fileID: 114886905133142306}
   - component: {fileID: 114889607307153064}
-  - component: {fileID: 114185145768487126}
   m_Layer: 5
   m_Name: HighscorePanel
   m_TagString: Button_Type_1
@@ -331,7 +324,6 @@ GameObject:
   - component: {fileID: 224938854307063846}
   - component: {fileID: 222075714042283340}
   - component: {fileID: 114342207630776828}
-  - component: {fileID: 114317255351475904}
   m_Layer: 5
   m_Name: BackText
   m_TagString: Button_Type_1
@@ -350,7 +342,6 @@ GameObject:
   - component: {fileID: 222662889560715690}
   - component: {fileID: 114168143116869970}
   - component: {fileID: 114025892617855368}
-  - component: {fileID: 114724412882579516}
   m_Layer: 5
   m_Name: BackPanel
   m_TagString: Button_Type_1
@@ -385,7 +376,6 @@ GameObject:
   - component: {fileID: 224575015135557510}
   - component: {fileID: 222457257772062440}
   - component: {fileID: 114594893252821788}
-  - component: {fileID: 114356526106143362}
   m_Layer: 5
   m_Name: CreditsText
   m_TagString: Button_Type_1
@@ -437,7 +427,6 @@ GameObject:
   - component: {fileID: 222288732685852166}
   - component: {fileID: 114337441092967758}
   - component: {fileID: 114384909003679692}
-  - component: {fileID: 114513281110886208}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Button_Type_1
@@ -558,7 +547,6 @@ GameObject:
   - component: {fileID: 222684256804328702}
   - component: {fileID: 114874498031121690}
   - component: {fileID: 114496581239672574}
-  - component: {fileID: 114921626422139142}
   m_Layer: 5
   m_Name: BackPanel
   m_TagString: Button_Type_1
@@ -609,7 +597,6 @@ GameObject:
   - component: {fileID: 224944528758926806}
   - component: {fileID: 222987300258962562}
   - component: {fileID: 114946117605518562}
-  - component: {fileID: 114051653103416306}
   m_Layer: 5
   m_Name: PlayText
   m_TagString: Button_Type_1
@@ -658,7 +645,6 @@ GameObject:
   - component: {fileID: 222352737375994104}
   - component: {fileID: 114166038330536386}
   - component: {fileID: 114738849512877854}
-  - component: {fileID: 114117314819288148}
   m_Layer: 5
   m_Name: HighscoreButton
   m_TagString: Button_Type_1
@@ -677,7 +663,6 @@ GameObject:
   - component: {fileID: 222355755620882252}
   - component: {fileID: 114826975922626600}
   - component: {fileID: 114942322436017516}
-  - component: {fileID: 114632902130435578}
   m_Layer: 5
   m_Name: CreditsButton
   m_TagString: Button_Type_1
@@ -715,7 +700,6 @@ GameObject:
   - component: {fileID: 222034427345388756}
   - component: {fileID: 114684980130524998}
   - component: {fileID: 114488480987650876}
-  - component: {fileID: 114944262959770972}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Button_Type_1
@@ -734,7 +718,6 @@ GameObject:
   - component: {fileID: 222609580861501686}
   - component: {fileID: 114645185894720292}
   - component: {fileID: 114514946822707522}
-  - component: {fileID: 114870393994800450}
   m_Layer: 5
   m_Name: playPanel
   m_TagString: Button_Type_1
@@ -753,7 +736,6 @@ GameObject:
   - component: {fileID: 222662277598506888}
   - component: {fileID: 114514567830110426}
   - component: {fileID: 114331813704945814}
-  - component: {fileID: 114712441044523804}
   m_Layer: 5
   m_Name: CreditsPanel
   m_TagString: Button_Type_1
@@ -880,17 +862,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Loading ...
---- !u!114 &114051653103416306
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1689002627438484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114071609622253936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -940,17 +911,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114117314819288148
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1782547785936182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114121518891803720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1011,17 +971,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: CREDITS
---- !u!114 &114159709734800096
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000916377566902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114166038330536386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1090,17 +1039,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.07374569, g: 0.9117647, b: 0.8424116, a: 1}
   m_EffectDistance: {x: 4, y: -4}
   m_UseGraphicAlpha: 1
---- !u!114 &114185145768487126
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1290819985981028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114190146970430718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1202,17 +1140,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114260590408760830
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1184498737741668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114260788404264998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1287,17 +1214,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114317255351475904
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1305895645240246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114320967592676864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1398,28 +1314,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: BACK
---- !u!114 &114356526106143362
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1382505626617400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114377072933175928
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1002579784590180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114384909003679692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1574,28 +1468,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.21604672, g: 0.7941176, b: 0.7462774, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
---- !u!114 &114510320360230832
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1064827499310676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114513281110886208
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1510670515812256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114514567830110426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1658,17 +1530,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114543138614602886
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1032063995404574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114547179580326168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1756,17 +1617,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: CREDITS
---- !u!114 &114632902130435578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1792713251727182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114645185894720292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1864,17 +1714,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114703109217897776
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1267800558707066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114706551195282950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1897,28 +1736,6 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
---- !u!114 &114712441044523804
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1950897518788362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114724412882579516
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1324537152851446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114738406796322864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2142,17 +1959,6 @@ MonoBehaviour:
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114870393994800450
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1861846180689364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114874498031121690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2294,17 +2100,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &114921626422139142
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1656666444090268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114942322436017516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2357,17 +2152,6 @@ MonoBehaviour:
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114944262959770972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1843488573914388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a447d3f38e5dd4bbb23c75aeb7ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114946117605518562
 MonoBehaviour:
   m_ObjectHideFlags: 1

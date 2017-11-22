@@ -42,7 +42,8 @@ public class UnitConfig : MonoBehaviour
     //List<Node> testDebug = null; // delete all things that has this list later
 
     public int movePoints;
-    [SerializeField]float animaitionSpeed = 0.05f;
+    public static float normalSpeed = 2.5f;
+    public static float animaitionSpeed = 2.5f;
     public enum UnitState {Idle, Shooting, Walking, Sprinting, Dead};
     public UnitState currentUnitState;
     

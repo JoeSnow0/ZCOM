@@ -41,8 +41,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967ce0aa0d289cc43abf3db98ed025e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitConfig: {fileID: 0}
-  mapConfig: {fileID: 0}
+  unitConfig: {fileID: 114710749034637548, guid: 4c36a5c17caf7f040b8add17d5542ce4,
+    type: 2}
+  mapConfig: {fileID: 114579060432309984, guid: 7300b77e8cac69a4d8cb7fa4e223d9d9,
+    type: 2}
   menuButtons: {fileID: 114711847211086842}
   menuToggle: {fileID: 114281732701316990}
   victoryCheck: {fileID: 114550365347561240}
@@ -78,6 +80,7 @@ MonoBehaviour:
   gameEndText: {fileID: 0}
   gameEndPanel: {fileID: 0}
   markers: {fileID: 0}
+  gameEnded: 0
 --- !u!114 &114711847211086842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,10 +92,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a596a2a5b0faafd46b1768f42b09eef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 0}
-  highScore: {fileID: 0}
-  credits: {fileID: 0}
-  loadingScreen: {fileID: 0}
+  mainMenu: {fileID: 1098950836699652, guid: f5bebc1caa89edf43a043102c14997b3, type: 2}
+  highScore: {fileID: 1205489359881472, guid: 20e3e4353a9030d4aadc3bb35ac2fae7, type: 2}
+  credits: {fileID: 1789550270477450, guid: 882a381ee4d3fc649bdf66404088bc80, type: 2}
+  loadingScreen: {fileID: 1998186926933178, guid: 8eb686c2d3cf7c04995538d4706101a4,
+    type: 2}
 --- !u!224 &224462440664020248
 RectTransform:
   m_ObjectHideFlags: 1

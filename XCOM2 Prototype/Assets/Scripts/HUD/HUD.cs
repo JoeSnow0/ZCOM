@@ -38,7 +38,10 @@ public class HUD : MonoBehaviour {
     public void pressEnd(bool forceEnd)
     {
         warning.SetActive(false);
-
+        if (TurnSystem.selectedUnit != null && !TurnSystem.selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+        {
+            return;
+        }
         if (TurnSystem.totalActions <= 0 || !isPlayerTurn || forceEnd) //If player has used all actions he is taken to the next turn
         {
             isPlayerTurn = !isPlayerTurn;

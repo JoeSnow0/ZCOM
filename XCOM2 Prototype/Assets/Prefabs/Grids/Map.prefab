@@ -9,22 +9,22 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1402832461053760}
+  m_RootGameObject: {fileID: 1470373143255322}
   m_IsPrefabParent: 1
---- !u!1 &1402832461053760
+--- !u!1 &1470373143255322
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4606675595661444}
-  - component: {fileID: 114764200081771642}
-  - component: {fileID: 114140638950140348}
-  - component: {fileID: 114995828931628862}
-  - component: {fileID: 114105975272966794}
-  - component: {fileID: 114180962689554276}
-  - component: {fileID: 114068930301027212}
+  - component: {fileID: 4822515184788786}
+  - component: {fileID: 114554695714459896}
+  - component: {fileID: 114304867461566334}
+  - component: {fileID: 114644357615457110}
+  - component: {fileID: 114579060432309984}
+  - component: {fileID: 114667850730593642}
+  - component: {fileID: 114609076690597238}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -32,12 +32,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4606675595661444
+--- !u!4 &4822515184788786
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1470373143255322}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -45,69 +45,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114068930301027212
+--- !u!114 &114304867461566334
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83369f4a5ae937a44b33160704d24f6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zombieNames:
-  - Peter
-  - Johan
-  - "H\xE5kan"
-  - Oskar
-  - Joel
-  - Per-Emil
-  - Kevin
-  - Rasmus
-  - Niklas
-  - Kabi
-  - Daniel
-  - Martin
-  - Ana
-  - Joakim
-  - Wretis
-  - Richard
-  - Dennis
-  - Tim
-  - Emanuel
-  - Pontus
-  - Sebastian
-  - Bob
-  - Amanda
-  - Abraham
-  - Jonathan
-  - Christopher
-  - Jesper
-  - Hogelty
---- !u!114 &114105975272966794
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad7ee196e174d9498fda78011c0966d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSystem: {fileID: 114140638950140348}
-  enemySpawn: {fileID: 114995828931628862}
-  tileMap: {fileID: 114764200081771642}
-  stateController: {fileID: 114180962689554276}
-  zombieNameGenerator: {fileID: 114068930301027212}
-  managerConfig: {fileID: 0}
---- !u!114 &114140638950140348
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1470373143255322}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9975f76c26a07d242b3bb75fe9dfbeb0, type: 3}
@@ -177,10 +120,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   lineYOffset: 0.2
-  mapConfig: {fileID: 114105975272966794}
+  mapConfig: {fileID: 114579060432309984}
   generateAbilityButtons: {fileID: 0}
   EnemyUnitSpawnType: {fileID: 0}
-  enemySpawn: {fileID: 114995828931628862}
+  enemySpawn: {fileID: 114644357615457110}
   cameraControl: {fileID: 0}
   playerTurn: 1
   endTurn: 0
@@ -237,24 +180,12 @@ MonoBehaviour:
   previousTarget: 304
   leaveAttackMode: 27
   distance: 0
---- !u!114 &114180962689554276
+--- !u!114 &114554695714459896
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelAnimator: {fileID: 0}
---- !u!114 &114764200081771642
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1470373143255322}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e90e5f580dcdde4b92ccab6c38e3f5b, type: 3}
@@ -298,12 +229,69 @@ MonoBehaviour:
   mapSizeX: 30
   mapSizeY: 30
   offset: 2
---- !u!114 &114995828931628862
+--- !u!114 &114579060432309984
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402832461053760}
+  m_GameObject: {fileID: 1470373143255322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad7ee196e174d9498fda78011c0966d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSystem: {fileID: 114304867461566334}
+  enemySpawn: {fileID: 114644357615457110}
+  tileMap: {fileID: 114554695714459896}
+  stateController: {fileID: 114667850730593642}
+  zombieNameGenerator: {fileID: 114609076690597238}
+  managerConfig: {fileID: 0}
+--- !u!114 &114609076690597238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470373143255322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83369f4a5ae937a44b33160704d24f6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zombieNames:
+  - Peter
+  - Johan
+  - "H\xE5kan"
+  - Oskar
+  - Joel
+  - Per-Emil
+  - Kevin
+  - Rasmus
+  - Niklas
+  - Kabi
+  - Daniel
+  - Martin
+  - Ana
+  - Joakim
+  - Wretis
+  - Richard
+  - Dennis
+  - Tim
+  - Emanuel
+  - Pontus
+  - Sebastian
+  - Bob
+  - Amanda
+  - Abraham
+  - Jonathan
+  - Christopher
+  - Jesper
+  - Hogelty
+--- !u!114 &114644357615457110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470373143255322}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 028e7fe15257c1d46977c77bff8f4472, type: 3}
@@ -311,3 +299,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   current: -1
   maxNodes: 0
+--- !u!114 &114667850730593642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470373143255322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ff039acfb1ace48addbe83bd669cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelAnimator: {fileID: 0}

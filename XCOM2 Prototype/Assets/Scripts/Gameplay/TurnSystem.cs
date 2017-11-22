@@ -53,8 +53,6 @@ public class TurnSystem : MonoBehaviour
     static public UnitConfig selectedTarget;
     public MapConfig mapConfig;
     public GenerateAbilityButtons generateAbilityButtons;
-    //Enemy to spawn, can be changed to an array to randomize
-    public GameObject EnemyUnitSpawnType;
 
 
     //Script refs
@@ -144,12 +142,12 @@ public class TurnSystem : MonoBehaviour
         {
 
             //Select next unit
-            if (Input.GetKeyDown(nextTarget))
+            if (Input.GetKeyDown(nextTarget) && selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
             {
                 KeyboardSelect(true, playerUnits, selectedUnit);
             }
             //Select previous unit
-            else if (Input.GetKeyDown(previousTarget) && !selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
+            else if (Input.GetKeyDown(previousTarget) && selectedUnit.CheckUnitState(UnitConfig.UnitState.Idle))
             {
                 KeyboardSelect(false, playerUnits, selectedUnit);
             }
