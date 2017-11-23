@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SpeedBoost : MonoBehaviour {
-    bool isBoosted = false;
+    static bool isBoosted = false;
     
     public Color normal;
     public Color boostColor;

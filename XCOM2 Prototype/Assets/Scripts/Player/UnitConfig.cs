@@ -135,7 +135,6 @@ public class UnitConfig : MonoBehaviour
             mapConfig.turnSystem.cameraControl.MoveToTarget(transform.position, cameraStartPosition, true);
             if (currentPath != null && pathIndex < (currentPath.Count - 1))
             {
-
                 Vector3 previousPosition = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[pathIndex].x, currentPath[pathIndex].y);
                 Vector3 nextPosition = mapConfig.tileMap.TileCoordToWorldCoord(currentPath[pathIndex + 1].x, currentPath[pathIndex + 1].y);
 
@@ -313,7 +312,6 @@ public class UnitConfig : MonoBehaviour
             SetUnitState(UnitState.Walking); //start moving in the update
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
-            animaitionSpeed = 2;
             actionPoints.SubtractActions(unitClassStats.moveCost); //1 should be whatever it costs to move the unit
             return;
         }
@@ -325,7 +323,6 @@ public class UnitConfig : MonoBehaviour
             SetUnitState(UnitState.Sprinting);
             mapConfig.tileMap.ResetColorGrid();
             mapConfig.tileMap.removeUnitMapData(tileX, tileY);
-            animaitionSpeed = 4;
             actionPoints.SubtractAllActions();
             return;
         }
